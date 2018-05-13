@@ -1,0 +1,111 @@
+.registration {
+
+  .main-block {
+    height: 100vh;
+    min-height: 568px;
+    width: 100vw;
+    background: url('../../img/registration/registration.png') no-repeat;
+    background-size: cover;
+  }
+
+  .title {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 23px;
+    font-family: sans-serif;
+    color: #000;
+    font-weight: 900;
+    padding-top: 43px;
+  }
+
+  .tooltip {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .name {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin-top: 15%;
+
+    .name-img {
+      position: absolute;
+      height: 100px;
+      top: -51px;
+      left: 8px;
+    }
+  }
+
+  .email {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin-top: 6%;
+
+    .email-img {
+      position: absolute;
+      height: 84px;
+      top: -20px;
+      left: 13px;
+    }
+  }
+
+  .id {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin-top: 6%;
+
+    .id-img {
+      position: absolute;
+      height: 85px;
+      top: -16px;
+      left: 12px;
+    }
+  }
+
+  .input {
+    padding-left: 20%;
+    font-size: 22px;
+    font-weight: 700;
+    width: 88%;
+    height: 49px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    margin-left: 34px;
+  }
+
+  .save {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 22px;
+    color: #fff;
+    font-weight: 700;
+    width: 95%;
+    line-height: 46px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    margin: 11.7% auto 0;
+    background-color: #ff7300;
+  }
+
+  .warning {
+    border: 2px solid red;
+  }
+}
+
+.test-modal {
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: auto;
+   width: 80%;
+   height: 30%;
+   min-height: 50px;
+ }

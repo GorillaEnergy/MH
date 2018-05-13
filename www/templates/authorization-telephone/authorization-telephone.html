@@ -1,0 +1,112 @@
+<ion-view class="auth-tel">
+  <ion-content>
+
+    <div class="main-block">
+
+      <div class="form-block">
+
+        <div class="tel-block" ng-if="vm.show.phoneMenu">
+          <div class="man">
+            <img src="../../img/authorization/mind-hero-man.png" class="logo">
+          </div>
+
+          <div class="post-zone">
+            <div class="input-block">
+              <img src="../../img/authorization/phone.png" class="phone-ico">
+
+              <div class="country-and-phone">
+                <div class="country-select" ng-click="modalCountry.show()">
+                  {{vm.countryCode}}
+                </div>
+
+                <div class="phone">
+                  <input class="input-phone"
+                         type="tel"
+                         ng-model="vm.phone"
+                         maxlength="10"
+                         autofocus
+                         oninput="this.value = this.value.replace(/\D/, '')">
+                </div>
+              </div>
+            </div>
+
+            <div class="tooltip">
+              <span>insert your number</span>
+            </div>
+
+            <div class="login-button" ng-click="vm.checkPhone()">
+              <span>login</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block" ng-if="vm.show.codeApproval">
+
+          <div class="post-zone">
+
+            <div class="tooltip notification">
+              <p>an sms with a code was set</p>
+              <!--<p>to {{vm.phoneNumberFull}}</p>-->
+              <p>to {{vm.countryCode}} {{vm.phone}}</p>
+            </div>
+
+            <div class="approval-input">
+              <input class="input-code"
+                     type="text"
+                     ng-model="vm.approvalCode"
+                     maxlength="4"
+                     autofocus
+                     oninput="this.value = this.value.replace(/\D/, '')">
+
+            </div>
+
+            <div class="tooltip receive-code">
+              <span>dident recive any code?</span>
+            </div>
+
+            <div class="trouble-block">
+              <div class="trouble">
+                <img src="../../img/authorization/send-again.png" class="send-again-img"
+                     ng-click="vm.sendAgain()">
+              </div>
+              <div class="trouble">
+                <img src="../../img/authorization/change-number.png" class="change-number-img"
+                     ng-click="vm.changeNumber()">
+              </div>
+            </div>
+
+            <div class="login-button" ng-click="vm.checkCode()">
+              <span>continue</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyboard">
+
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>
+
+<script id="country-modal" type="text/ng-template">
+  <ion-modal-view>
+
+    <ion-header-bar class="bar bar-header bar-energized" ng-click="modalCountry.hide()">
+      <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
+      <h1 class="title">Choose your country</h1>
+    </ion-header-bar>
+
+    <ion-content class="padding">
+      <div ng-repeat="country in vm.countryCodes">
+        <ion-radio ng-model="vm.countryCode" ng-value="country.code"
+                   ng-click="vm.chosenCountry()">
+          {{country.name}}:  {{country.code}}
+        </ion-radio>
+      </div>
+    </ion-content>
+
+  </ion-modal-view>
+</script>

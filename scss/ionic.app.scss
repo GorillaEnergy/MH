@@ -1,0 +1,38 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+$positive: #00ac5c !default;
+$green_pastel: #888888;
+$color_primary: #00ac5c;
+$color_primary_dark: $green_pastel;
+$app_color: #00ac5c;
+
+$grey_font_color: rgb(192, 194, 195);
+$dart_grey_p_color: #909395;
+$selectors_font_size: 20px;
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Include all of Ionic
+@import "../www/css/universal";
+@import "../www/lib/ionic/scss/ionic";
+@import "../www/templates/authorization-telephone/authorization-telephone";
+@import "../www/templates/registration/registration";
+@import "../www/templates/new-kid/new-kid";
+@import "../www/templates/menu/menu";
+@import "../www/templates/payment/payment";
+@import "../www/components/segment/scss/ionic.segment";
+@import "../www/components/authorization/country-select";

@@ -1,0 +1,197 @@
+.new-kid {
+
+    .main-block {
+      height: 100vh;
+      width: 100vw;
+      background: url('../../img/kid/new-kid-background.png') no-repeat;
+      background-size: cover;
+      //padding: 2.5%;
+    }
+
+    .title {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 23px;
+      font-family: sans-serif;
+      color: #000;
+      font-weight: 900;
+      padding-top: 43px;
+    }
+
+    .tooltip {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 14px;
+      color: #000;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .name {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      margin-top: 15%;
+
+      .name-img {
+        position: absolute;
+        height: 121px;
+        top: -72px;
+        left: 8px;
+      }
+    }
+
+    .birth-data {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      margin-top: 6%;
+
+      .email-img {
+        position: absolute;
+        height: 120px;
+        top: -40px;
+        left: 4px;
+      }
+    }
+
+    .id {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      margin-top: 6%;
+
+      .id-img {
+        position: absolute;
+        height: 85px;
+        top: -17px;
+        left: 10px;
+      }
+    }
+
+    .grade {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      margin-top: 6%;
+
+      .grade-img {
+        position: absolute;
+        height: 93px;
+        top: -23px;
+        left: 11px;
+      }
+    }
+
+    .phone {
+      margin-top: 25px;
+
+      .input-block {
+        position: relative;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 22px;
+        background-color: #fff;
+        color: black;
+        font-weight: 700;
+        height: 48px;
+        width: 95%;
+        line-height: 46px;
+        border: 2px solid #000;
+        border-radius: 5px;
+        margin: 0 auto;
+
+      }
+      .phone-ico {
+        height: 1.1em;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+      }
+      .country-and-phone {
+        margin: 0 auto;
+        width: 180px;
+        height: 100%;
+        font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .country-select {
+        height: 100%;
+        width: 30%;
+        margin-left: 5px;
+        text-align: right;
+      }
+
+      .phone {
+        height: 100%;
+        width: 60%;
+        margin-right: 5px;
+        text-align: left;
+      }
+      .input-phone {
+        margin-top: -25px;
+        font-size: 16px;
+        font-weight: 700;
+        width: 95%;
+        padding-top: 7%;
+        height: 90%;
+      }
+
+      .tooltip {
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 15px;
+        color: #000;
+        font-weight: 500;
+        margin-top: 4px;
+      }
+    }
+
+    .add-kid {
+      width: 100%;
+      text-align: center;
+
+      .add-kid-img {
+        height: 85px;
+      }
+    }
+
+    .input {
+      padding-left: 18%;
+      font-size: 22px;
+      font-weight: 700;
+      width: 87%;
+      height: 49px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      margin-left: 36px;
+    }
+
+    .continue {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 22px;
+      color: #fff;
+      font-weight: 700;
+      width: 95%;
+      line-height: 46px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      margin: 9px auto 0;
+      background-color: #ff7300;
+    }
+
+  @media (max-height: 500px) {
+    .main-block {
+      height: 100%;
+    }
+    .continue {
+      margin-bottom: 15px;
+    }
+    .input {
+      padding-left: 8%;
+    }
+
+  }
+}

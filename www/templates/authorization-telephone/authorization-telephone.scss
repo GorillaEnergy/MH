@@ -1,0 +1,168 @@
+.auth-tel {
+  ion-content {
+
+    .main-block {
+      height: 100vh;
+      min-height: 568px;
+      width: 100vw;
+      background: url('../../img/authorization/main-backgroun.png') no-repeat;
+      background-size: cover;
+    }
+
+    .form-block {
+      height: 68.3%;
+      width: 100vw;
+      display: table;
+    }
+
+    .tel-block {
+      display: table-cell;
+      vertical-align: bottom;
+    }
+    .code-block {
+      width: 100%;
+      height: 100%;
+      display: table-cell;
+      vertical-align: bottom;
+    }
+
+    .man {
+      width: 100%;
+      text-align: center;
+      .logo {
+        width: 78%;
+        margin: 0 0 32px 65px;
+      }
+    }
+
+    .input-block {
+      position: relative;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 22px;
+      background-color: #fff;
+      color: black;
+      font-weight: 700;
+      height: 48px;
+      width: 95%;
+      line-height: 46px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      margin: 0 auto;
+    }
+
+    .phone-ico {
+      height: 1.1em;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+
+    .country-and-phone {
+      margin: 0 auto;
+      width: 180px;
+      height: 100%;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .country-select {
+      height: 100%;
+      width: 30%;
+      margin-left: 5px;
+      text-align: right;
+    }
+    .phone {
+      height: 100%;
+      width: 60%;
+      margin-right: 5px;
+      text-align: left;
+    }
+
+    .tooltip {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 15px;
+      color: #000;
+      font-weight: 500;
+      margin: 4px 0 31px;
+    }
+
+    .login-button {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 22px;
+      color: white;
+      font-weight: 700;
+      width: 95%;
+      line-height: 46px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      margin: 16px auto;
+      background-color: #ff7300;
+      //background: linear-gradient(to right, #ff7300 50%,#ffae00 100%, transparent);
+
+    }
+
+    .trouble-block {
+      width: 100%;
+      height: 18vh;
+      display: flex;
+    }
+
+    .trouble {
+      width: 50%;
+      height: 100%;
+      position: relative;
+    }
+
+    .send-again-img {
+      position: absolute;
+      height: 54%;
+      top: 38%;
+      right: 6%;
+    }
+
+    .change-number-img {
+      position: absolute;
+      height: 54%;
+      top: 5%;
+      left: 8%;
+    }
+
+    .receive-code {
+      margin: 3px 0;
+    }
+
+    .approval-input {
+      margin: 14px auto 12px;;
+      text-align: -webkit-center;
+    }
+
+    .input-phone {
+      font-size: 16px;
+      font-weight: 700;
+      width: 95%;
+      padding-top: 7%;
+      height: 90%;
+    }
+
+    .input-code {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      width: 95%;
+      height: 49px;
+      border: 2px solid #000;
+      border-radius: 5px;
+    }
+
+    .notification {
+      margin: 0 auto;
+      p {
+        margin: 8px 0;
+      }
+    }
+  }
+}

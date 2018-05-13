@@ -1,0 +1,41 @@
+<ion-view class="registration">
+  <ion-content>
+
+    <div class="main-block">
+
+      <div class="title">
+        <span>payment</span>
+      </div>
+
+      <div class="kids-block" ng-repeat="kid in vm.kids">
+        <div class="kid">
+          <input class="input">
+          <img src="../../img/kid/birth-data.png" class="email-img">
+          <img src="../../img/kid/birth-data.png" class="email-img">
+          <p class="tooltip">birth date</p>
+        </div>
+      </div>
+
+
+
+      <div class="save" ng-click="testModal.show()">proceed</div>
+
+    </div>
+  </ion-content>
+</ion-view>
+
+<script id="payment-modal" type="text/ng-template">
+  <ion-modal-view class="test-modal">
+
+    <ion-header-bar class="bar bar-header bar-energized" ng-click="paymentModal.hide()">
+      <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
+      <h1 class="title">Test Modal</h1>
+    </ion-header-bar>
+
+    <ion-content class="padding">
+      <h3>Lorem ipsus</h3>
+      <button>button</button>
+    </ion-content>
+
+  </ion-modal-view>
+</script>

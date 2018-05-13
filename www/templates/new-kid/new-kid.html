@@ -1,0 +1,90 @@
+<ion-view class="new-kid">
+  <ion-content>
+
+    <div class="main-block">
+
+      <div class="title">
+        <span>new kid</span>
+      </div>
+
+      <div class="name">
+        <input class="input">
+        <img src="../../img/kid/kid.png" class="name-img">
+        <p class="tooltip">kid name</p>
+      </div>
+
+      <div class="birth-data">
+        <input class="input">
+        <img src="../../img/kid/birth-data.png" class="email-img">
+        <p class="tooltip">birth date</p>
+      </div>
+
+      <div class="id">
+        <input class="input">
+        <img src="../../img/kid/id.png" class="id-img">
+        <p class="tooltip">id number</p>
+      </div>
+
+      <div class="grade">
+        <input class="input">
+        <img src="../../img/kid/grade.png" class="grade-img">
+        <p class="tooltip">grade</p>
+      </div>
+
+      <div class="phone">
+
+        <div class="input-block">
+          <img src="../../img/authorization/phone.png" class="phone-ico">
+
+          <div class="country-and-phone">
+            <div class="country-select" ng-click="modalCountry.show()">
+              {{vm.countryCode}}
+            </div>
+
+            <div class="phone">
+              <input class="input-phone"
+                     type="tel"
+                     ng-model="vm.phone"
+                     maxlength="10"
+                     autofocus
+                     oninput="this.value = this.value.replace(/\D/, '')">
+            </div>
+          </div>
+        </div>
+
+        <div class="tooltip">
+          <span>phone number</span>
+        </div>
+      </div>
+
+      <div class="add-kid">
+        <img src="../../img/kid/add-another-kid.png" class="add-kid-img">
+      </div>
+
+      <div class="continue">continue</div>
+
+    </div>
+
+  </ion-content>
+</ion-view>
+
+
+<script id="country-modal" type="text/ng-template">
+  <ion-modal-view>
+
+    <ion-header-bar class="bar bar-header bar-energized" ng-click="modalCountry.hide()">
+      <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
+      <h1 class="title">Choose your country</h1>
+    </ion-header-bar>
+
+    <ion-content class="padding">
+      <div ng-repeat="country in vm.countryCodes">
+        <ion-radio ng-model="vm.countryCode" ng-value="country.code"
+                   ng-click="vm.chosenCountry()">
+          {{country.name}}:  {{country.code}}
+        </ion-radio>
+      </div>
+    </ion-content>
+
+  </ion-modal-view>
+</script>
