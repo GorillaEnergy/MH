@@ -20,24 +20,17 @@
         //         return a + b;
         //     });
         // };
-        // // Initialize Firebase
-        // let config = {
-        //     /*For .uk site*/
-        //     apiKey: "AIzaSyAoQSziGTmVrS7M9t9B8y1gDH1uIaI7CDo",
-        //     authDomain: "elft-4dc55.firebaseapp.com",
-        //     databaseURL: "https://elft-4dc55.firebaseio.com",
-        //     projectId: "elft-4dc55",
-        //     storageBucket: "elft-4dc55.appspot.com",
-        //     messagingSenderId: "33713645199"
-        //     /*For .com site*/
-        //     // apiKey: "AIzaSyBAh0Rt2ZkxOnLODLtkVkpJtfTxRPZWqhY",
-        //     // authDomain: "improvewell-acfd0.firebaseapp.com",
-        //     // databaseURL: "https://improvewell-acfd0.firebaseio.com",
-        //     // projectId: "improvewell-acfd0",
-        //     // storageBucket: "improvewell-acfd0.appspot.com",
-        //     // messagingSenderId: "829567431337"
-        // };
-        // firebase.initializeApp(config);
+
+        // Initialize Firebase
+        let config = {
+          apiKey: "AIzaSyCPyHbouuqslfJIbAynfdeCHlJb_2tJw9M",
+          authDomain: "mind-hero-96b57.firebaseapp.com",
+          databaseURL: "https://mind-hero-96b57.firebaseio.com",
+          projectId: "mind-hero-96b57",
+          storageBucket: "mind-hero-96b57.appspot.com",
+          messagingSenderId: "19872374786"
+        };
+        firebase.initializeApp(config);
         //
         // $ionicPlatform.ready(function () {
         //     setTimeout(function() {
@@ -56,10 +49,6 @@
         //     }
         //
         //     autoLogin();
-        //
-        //     document.addEventListener("resume", function () {
-        //         fcm.subscribe();
-        //     }, false);
         //
         //     function autoLogin () {
         //         let user = userService.getUser();

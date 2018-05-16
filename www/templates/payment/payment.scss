@@ -2,9 +2,10 @@
 
   .main-block {
     height: 100vh;
+    max-height: 100vh;
     min-height: 568px;
     width: 100vw;
-    background: url('../../img/registration/registration.png') no-repeat;
+    background: url('../../img/registration/registration.png') no-repeat center;
     background-size: cover;
   }
 
@@ -15,42 +16,302 @@
     font-family: sans-serif;
     color: #000;
     font-weight: 900;
-    padding-top: 43px;
+    padding: 43px 0 35px 0;
   }
 
-  .tooltip {
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 14px;
-    color: #000;
-    font-weight: 500;
-    margin-top: 2px;
-  }
-
-  .name {
-    position: relative;
+  .data-block {
     width: 100%;
-    text-align: center;
-    margin-top: 15%;
+    height: 85%;
+    overflow: overlay;
+  }
+  .confirm-block {
+    width: 100%;
 
-    .name-img {
-      position: absolute;
-      height: 100px;
-      top: -51px;
-      left: 8px;
+    .save {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 22px;
+      color: #fff;
+      font-weight: 700;
+      width: 95%;
+      line-height: 46px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      margin: 5px auto 0;
+      background-color: #ff7300;
     }
   }
 
+  .kids-block {
+    margin: 29px 0 0;
+    width: 100%;
+    height: auto;
+  }
 
+  .kid {
+    width: 100%;
+    height: 67px;
+    margin: 3px auto 0;
+    position: relative;
+
+    .kid-img {
+      position: absolute;
+      top: -41px;
+      left: 10px;
+      height: 90px;
+
+    }
+    .price {
+      position: absolute;
+      top: -13px;
+      right: 10px;
+      height: 71px;
+    }
+    .info {
+      display: flex;
+      height: 49px;
+      width: 85%;
+      margin: 0 auto;
+      background-color: grey;
+      border: 2px solid #000;
+      border-radius: 5px;
+
+      .edit {
+        margin: 8px 0 5px 16.5%;
+        height: 27px;
+      }
+      .kid-name {
+        width: 40%;
+        padding-top: 10px;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 18px;
+        font-family: sans-serif;
+        color: white;
+        font-weight: 600;
+      }
+    }
+  }
+  .kid-color0 {
+    background-color: darkred !important;
+  }
+  .kid-color1 {
+    background-color: green !important;
+  }
+  .kid-color2 {
+    background-color: darkblue !important;
+  }
+  .kid-color3 {
+    background-color: darkgoldenrod !important;
+  }
+  .kid-color4 {
+    background-color: darkmagenta !important;
+  }
+  .kid-color5 {
+    background-color: darksalmon !important;
+  }
+  .kid-color6 {
+    background-color: darkslategrey !important;
+  }
+  .kid-color7 {
+    background-color: olivedrab !important;
+  }
+
+  .another-kid {
+    text-align: center;
+    width: 100%;
+    margin-top: 8px;
+    .add-img {
+      height: 86px;
+    }
+  }
+
+  .price-block {
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+    .price {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 26px;
+      font-family: sans-serif;
+      color: #000;
+      font-weight: 900;
+      line-height: 38px;
+    }
+    .count {
+      font-size: 38px;
+    }
+  }
 }
 
-.test-modal {
-   top: 0;
-   bottom: 0;
-   left: 0;
-   right: 0;
-   margin: auto;
-   width: 80%;
-   height: 30%;
-   min-height: 50px;
- }
+.pm-backdrop {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background-color: black;
+  opacity: 0.6;
+}
+.payment-modal {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 91%;
+  height: 97.5%;
+  min-height: 50px;
+  padding: 5px;
+  background-color: white;
+  z-index: 2;
+
+
+  .pm-main-block {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #d7d7d7;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    .pm-header {
+      background-color: #edf2f4;
+      border-bottom: 2px solid #d7d7d7;
+      color: #42626e;
+      font-size: 35px;
+      text-align: center;
+      line-height: 95px;
+    }
+    .pm-body {
+      background-color: white;
+    }
+
+    .pm-card {
+      background-color: #e4e4e4;
+      height: 90px;
+      text-align: center;
+      color: red;
+      padding: 30px;
+    }
+    .pm-price {
+      display: flex;
+
+      .pm-amount {
+        width: 75.3%;
+      }
+      .pm-edit {
+        margin: 29px 0 11px;
+        width: 23.5%;
+        line-height: 42px;
+        text-align: center;
+        font-size: 16px;
+        border: 1px solid #bcbcbc;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+    }
+    .pm-name {
+    }
+    .pm-number {
+      margin-top: 14px;
+    }
+    .pm-date {
+      margin-top: 13px;
+      width: 100%;
+      box-sizing: border-box;
+
+      .pm-date-header {
+        width: 100%;
+        display: flex;
+      }
+      .pm-date-first {
+        width: 50%;
+      }
+      .pm-date-second {
+        width: 50%;
+      }
+      .pm-multi-input {
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
+        height: 42px;
+        border-right: 1px solid #bcbcbc;
+
+        .pm-month {
+          width: 40%;
+          text-align: center;
+          height: 42px;
+          padding: 0 !important;
+          margin-left: 5px;
+        }
+        .pm-separator {
+          line-height: 42px;
+        }
+        .pm-years {
+          width: 40%;
+          text-align: center;
+          height: 42px;
+          padding: 0 !important;
+        }
+
+      }
+      .pm-date-input-block {
+        width: 100%;
+        border: 1px solid #bcbcbc;
+        border-radius: 5px;
+        height: 44px;
+        margin-top: 4px;
+        display: flex;
+      }
+    }
+    .pm-post {
+      margin-top: 21px;
+    }
+    .pm-pay-button {
+      background-color: #00c8c4;
+      border-radius: 5px;
+      margin: 24px 0 0 0;
+      color: white;
+      text-align: center;
+      font-size: 27px;
+      line-height: 48px;
+    }
+
+    .topic {
+      color: #42626e;
+      font-size: 19px;
+      margin: 4px 0 0 2px;
+      font-weight: 400;
+    }
+    .topic-value {
+      color: #42626e;
+      font-size: 30px;
+      margin: 16px 0 0 2px;
+      font-weight: 400;
+    }
+
+    .pm-align {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .pm-input {
+      margin-top: 5px;
+      width: 100%;
+      height: 44px;
+      border: 1px solid #bcbcbc;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      padding: 0 20px;
+    }
+
+    .pm-input-security-code {
+      width: 95%;
+      height: 41px;
+      padding: 0 20px;
+    }
+  }
+}

@@ -3,39 +3,144 @@
 
     <div class="main-block">
 
-      <div class="title">
-        <span>payment</span>
-      </div>
+      <div class="data-block">
+        <div class="title">
+          <span>paiment</span>
+        </div>
 
-      <div class="kids-block" ng-repeat="kid in vm.kids">
-        <div class="kid">
-          <input class="input">
-          <img src="../../img/kid/birth-data.png" class="email-img">
-          <img src="../../img/kid/birth-data.png" class="email-img">
-          <p class="tooltip">birth date</p>
+        <div class="kids-block" ng-repeat="(key, kid) in vm.kids">
+          <div class="kid">
+            <img ng-src="../../img/payment/kid{{key}}.png" class="kid-img" ng-if="key <= 2">
+            <img src="../../img/payment/kid0.png" class="kid-img" ng-if="key > 2">
+            <img src="../../img/payment/100$.png" class="price" ng-if="key === 0">
+            <img src="../../img/payment/50$.png" class="price" ng-if="key !== 0">
+
+            <div class="info" ng-class="vm.kidColor(key)">
+
+              <img src="../../img/payment/edit-ico.png" class="edit">
+              <div class="kid-name"><span>{{kid.name}}</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="another-kid">
+          <img src="../../img/payment/add-another-kid.png" class="add-img">
+        </div>
+
+        <div class="price-block">
+          <div class="price"><span>total</span></div>
+          <div class="price count"><span>{{vm.totalPrice}}$</span></div>
         </div>
       </div>
 
-
-
-      <div class="save" ng-click="testModal.show()">proceed</div>
+      <div class="confirm-block">
+        <div class="save" ng-click="paymentModal.show()">proceed</div>
+      </div>
 
     </div>
   </ion-content>
 </ion-view>
 
 <script id="payment-modal" type="text/ng-template">
-  <ion-modal-view class="test-modal">
+  <div class="pm-backdrop" ng-click="paymentModal.hide()"></div>
+  <ion-modal-view class="payment-modal">
 
-    <ion-header-bar class="bar bar-header bar-energized" ng-click="paymentModal.hide()">
-      <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
-      <h1 class="title">Test Modal</h1>
-    </ion-header-bar>
+    <div class="pm-main-block">
+      <div class="pm-header">
+        <span>Pay Invoice</span>
+      </div>
 
-    <ion-content class="padding">
-      <h3>Lorem ipsus</h3>
-      <button>button</button>
-    </ion-content>
+      <div class="pm-body pm-align">
+        <div class="pm-card">
+          no cards img!!!
+        </div>
+
+        <div class="pm-price">
+          <div class="pm-amount">
+            <p class="topic">Payment amount</p>
+            <p class="topic-value">${{vm.totalPrice}}</p>
+          </div>
+
+          <div class="pm-edit">
+            <span>Edit</span>
+          </div>
+        </div>
+
+        <div class="pm-name">
+          <p class="topic">Name on card</p>
+          <input class="pm-input"
+                 type="text"
+                 ng-model="vm.pName"
+                 maxlength="200"
+                 oninput="this.value = this.value.replace(/\d/, '')">
+        </div>
+
+        <div class="pm-number">
+          <p class="topic">Card number</p>
+          <input class="pm-input"
+                 type="text"
+                 ng-model="vm.pNumber"
+                 maxlength="19"
+                 oninput="this.value = this.value.replace(/\D/, '')">
+        </div>
+
+        <div class="pm-date">
+          <div class="pm-date-header">
+            <div class="pm-date-first">
+              <p class="topic">Expiry date</p>
+            </div>
+
+            <div class="pm-date-second">
+              <p class="topic">Security code</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="pm-date-input-block">
+              <div class="pm-multi-input">
+                <input class="pm-month"
+                       type="number"
+                       ng-model="vm.pDateMonth"
+                       maxlength="2"
+                       placeholder="MM"
+                       oninput="this.value = this.value.replace(/\D/, '')">
+                <span class="pm-separator">/</span>
+                <input class="pm-years"
+                       type="number"
+                       ng-model="vm.pDateYear"
+                       maxlength="2"
+                       placeholder="YY"
+                       oninput="this.value = this.value.replace(/\D/, '')">
+              </div>
+
+              <div class="pm-date-second">
+                <input class="pm-input-security-code"
+                       type="text"
+                       ng-model="vm.pSecurity"
+                       maxlength="10"
+                       oninput="this.value = this.value.replace(/\D/, '')">
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="pm-post">
+          <p class="topic">ZIP/Postal code</p>
+          <input class="pm-input"
+                 type="text"
+                 ng-model="vm.pZIP"
+                 maxlength="30"
+                 oninput="this.value = this.value.replace(/\D/, '')">
+        </div>
+
+        <div class="pm-pay-button">
+          <span>Pay ${{vm.totalPrice}}</span>
+        </div>
+      </div>
+    </div>
 
   </ion-modal-view>
 </script>
