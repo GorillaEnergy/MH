@@ -1,0 +1,140 @@
+<ion-view class="new-kid">
+  <ion-content>
+
+    <div class="main-block">
+      <div class="empty-header"></div>
+      <div class="animation-backdrop" ng-if="vm.animation" ng-click="vm.closeList()"></div>
+
+      <div class="kids-block" ng-if="vm.create" ng-click="vm.openList()">
+        <div ng-repeat="(key, kid) in vm.kids">
+
+          <div ng-class="vm.animation ? vm.kidPosition(key) : vm.kidPosition(key, true)" class="kid-main-pos">
+
+            <div class="kid-display" ng-click="vm.editKid(kid, key)">
+              <span ng-if="vm.animation" class="kid-name-after">
+                {{kid.name}} &nbsp;
+              </span>
+
+              <div class="kids-ico" ng-class="'kid-color-' + key">
+                <span>
+                  {{kid.name.charAt(0).toUpperCase()}}
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <span >new kid</span>
+      </div>
+
+      <div class="title" ng-if="!vm.create">
+        <span>{{vm.kid.name}}</span>
+      </div>
+
+
+      <div class="name">
+        <input class="input-kid" type="text" ng-model="vm.name"
+               ng-class="{'warning': vm.warning.name}">
+        <img src="../../img/kid/kid.png" class="name-img">
+        <p class="tooltip">kid name</p>
+      </div>
+
+      <div class="birth-data">
+        <input class="input-kid" type="text" ng-model="vm.date"
+               ng-class="{'warning': vm.warning.date}"
+               placeholder="yyyy-mm-dd">
+        <img src="../../img/kid/birth-data.png" class="email-img">
+        <p class="tooltip">birth date</p>
+      </div>
+
+      <div class="id">
+        <input class="input-kid" type="number" ng-model="vm.id_number"
+               ng-class="{'warning': vm.warning.id_number}">
+        <img src="../../img/kid/id.png" class="id-img">
+        <p class="tooltip">id number</p>
+      </div>
+
+      <div class="grade">
+        <input class="input-kid" type="text" ng-model="vm.grade"
+               ng-class="{'warning': vm.warning.grade}">
+        <img src="../../img/kid/grade.png" class="grade-img">
+        <p class="tooltip">grade</p>
+      </div>
+
+      <div class="phone">
+
+        <div class="input-block" ng-class="{'warning': vm.warning.phone}">
+          <img src="../../img/authorization/phone.png" class="phone-ico">
+
+          <div class="country-and-phone">
+            <div class="country-select" ng-click="modalKidCountry.show()">
+              {{vm.countryCode}}
+            </div>
+
+            <div class="phone">
+              <input class="input-phone"
+                     type="tel"
+                     ng-model="vm.phone"
+                     maxlength="10"
+                     autofocus
+                     oninput="this.value = this.value.replace(/\D/, '')">
+            </div>
+          </div>
+        </div>
+
+        <div class="tooltip">
+          <span>phone number</span>
+        </div>
+      </div>
+
+      <div class="add-kid">
+        <img src="../../img/kid/add-another-kid.png" class="add-kid-img">
+      </div>
+
+      <div class="continue" ng-click="vm.continue()">continue</div>
+
+    </div>
+
+  </ion-content>
+</ion-view>
+
+
+<script id="kid-country-modal" type="text/ng-template">
+  <ion-modal-view>
+
+    <ion-header-bar class="bar bar-header bar-energized" ng-click="modalKidCountry.hide()">
+      <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
+      <h1 class="title">Choose your country</h1>
+    </ion-header-bar>
+
+    <ion-content class="padding">
+      <div ng-repeat="country in vm.countryCodes">
+        <ion-radio ng-model="vm.countryCode" ng-value="country.code"
+                   ng-click="vm.chosenCountry()">
+          {{country.name}}:  {{country.code}}
+        </ion-radio>
+      </div>
+    </ion-content>
+
+  </ion-modal-view>
+</script>
+
+<script id="show-kids" type="text/ng-template">
+  <!--<div class="backdrop" ng-click="kidsListModal.hide()"></div>-->
+  <ion-modal-view class="show-kids-modal-test">
+
+    <ion-content class="padding main-block">
+      <div ng-repeat="(key, kid) in vm.kids" class="kid-modal-common">
+        <div>
+          <span>{{kid.name}} &nbsp;</span>
+
+          <span ng-class="vm.kidColorModal(key)">
+            {{kid.name.charAt(0).toUpperCase()}}
+          </span>
+        </div>
+      </div>
+    </ion-content>
+
+  </ion-modal-view>
+</script>

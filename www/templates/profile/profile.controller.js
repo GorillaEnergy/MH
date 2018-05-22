@@ -2,19 +2,25 @@
   'use strict';
 
   angular.module('app')
-    .controller('RegistrationController', RegistrationController);
+    .controller('ProfileController', ProfileController);
 
-  RegistrationController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal'];
+  ProfileController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal',
+                               '$localStorage', 'user'];
 
 
-  function RegistrationController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal) {
+  function ProfileController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal,
+                             $localStorage, user) {
     const vm = this;
-
-    // userService.setPhone({phone: '+380503332211'});
 
     vm.save = save;
 
+    vm.newUser = $localStorage.newUser;
     vm.warning = {name: false, email: false, id: false};
+
+    vm.name = user.name;
+    vm.email = user.email;
+    vm.id_number = user.id_number;
+    console.log(user);
 
     function save() {
       let permissionToSend = true;
@@ -44,13 +50,13 @@
           }, 1500);
         }
 
-        if (!vm.id) {
+        if (!vm.id_number) {
           vm.warning.id = true;
           permissionToSend = false;
           $timeout(function () {
             vm.warning.id = false
           }, 1500);
-        } else if (String(vm.id).length < 6) {
+        } else if (String(vm.id_number).length < 9) {
           vm.warning.id = true;
           permissionToSend = false;
           $timeout(function () {
@@ -64,20 +70,25 @@
           let status = true;
 
           let data = {
-            id: vm.id,
+            id_number: vm.id_number,
             name: vm.name,
-            email: vm.email,
-            phone: userService.getPhone()
+            email: vm.email
           };
 
-          if (status) {
-            status = false;
-            userService.register(data).then(function (res) {
-              // status = true;
-              console.log(res);
+          if (user.role_id === 2) {
+            data.type = "parent";
+          } else if (user.role_id === 1) {
+            data.type = 'kid';
+          }
 
-              if (res.success) {
-                console.log('OK, go next step -->');
+          if (status) {
+            console.log('data', data);
+            status = false;
+            userService.userUpdate(data).then(function (res) {
+              status = true;
+              userService.setUser(res.data);
+              if (res.status ==="success") {
+                $state.go('kid', {data: 'create'})
               }
             })
           }

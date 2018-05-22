@@ -31,7 +31,9 @@
           messagingSenderId: "19872374786"
         };
         firebase.initializeApp(config);
-        //
+
+
+
         // $ionicPlatform.ready(function () {
         //     setTimeout(function() {
         //         navigator.splashscreen.hide();
@@ -53,9 +55,9 @@
         //     function autoLogin () {
         //         let user = userService.getUser();
         //         if (angular.isDefined(user)) {
-        //             $state.go('tab.dashboard');
+        //           $timeout(function() { $state.go('payment'); });
         //         } else {
-        //             $state.go('authorization');
+        //           $timeout(function() { $state.go('authorization'); });
         //         }
         //     }
         // })

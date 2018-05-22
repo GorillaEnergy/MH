@@ -47,6 +47,8 @@
         function request(method, url, data) {
 
             let user = $localStorage.user;
+            let token = $localStorage.token;
+
             let config = {
                 dataType: 'json',
                 method: method,
@@ -64,12 +66,11 @@
                 config.data = data;
             }
 
-            // if (typeof user != 'undefined') {
-            //     config.url = url + '?auth_key=' + user.auth_key;
-            // }
-            // else {
-                config.url = url;
-            // }
+            if(typeof token != 'undefined') {
+              config.headers.Authorization = 'Bearer ' + token;
+            }
+
+            config.url = url;
 
             $ionicLoading.show({
                 template: 'Loading...',
@@ -140,7 +141,7 @@
                     popUpMessage.showMessage(err.data.message);
                 }
                 else if (err.status === 401) {
-                    $state.go('login');
+                    // $state.go('authorization');
                 }
                 else if (err.status === 500) {
                     popUpMessage.showMessage('Server error: ' + err.status + ' ' + err.data.message);
@@ -168,7 +169,8 @@
             $ionicLoading.hide().then(function () {
                 console.log("The loading indicator is now hidden");
             });
-            console.info('response complete', response.config.url, response);
+            // console.info('response complete', response.config.url, response);
+            console.info(response);
 
             if (!response.data.error) {
                 promise.resolve(response.data);

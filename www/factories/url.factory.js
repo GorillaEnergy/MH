@@ -5,13 +5,17 @@
         .module('factory.url', [])
         .factory('url', [
             function () {
-                let baseUrl = 'https://mind-hero.grassbusinesslabs.tk/';
+                let baseUrl = 'http://api.mind-hero.grassbusinesslabs.tk/';
 
                 return {
-                    user: {
+                    auth: {
                         checkPhone: baseUrl + 'api/check-phone',
-                        logout: baseUrl + 'api/logout',
-                        register: baseUrl + 'api/register',
+                        login: baseUrl + 'api/login',
+                        logout: baseUrl + 'api/logout'
+                    },
+                    user: {
+                      userUpdate: baseUrl + 'api/user-update',
+                      createKid: baseUrl + 'api/create-kid',
                     }
 
                 }

@@ -10,6 +10,28 @@
   function PaymentController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal) {
     const vm = this;
 
+    let  date = new Date();
+    console.log("Time: ", date.getHours() + ' : ' + date.getMinutes());
+
+    // firebase.database().ref().child('test').child ('first').set('first');
+    // firebase.database().ref().child('test').child ('second').set('second');
+
+    let data = {};
+    data.title = 'title';
+    data.value = 10;
+    let fb = firebase.database();
+    // fb.ref().child('test').child('test').set(data);
+
+    // $timeout(function () {
+    //   fb.ref('/test/test').remove();
+    // }, 10000);
+
+    fb.ref('/test').on('value', (snapshot) => {
+      console.log(snapshot.val());
+      // console.log(snapshot.val().limitToLast(1));
+    });
+
+
 
     vm.kids = [{name: 'Joshua'},{name: 'David'},{name: 'Donald'}];
 

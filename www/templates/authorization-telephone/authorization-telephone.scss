@@ -145,6 +145,7 @@
       font-weight: 700;
       width: 95%;
       padding-top: 7%;
+      padding-bottom: 2px;
       height: 90%;
     }
 
@@ -164,5 +165,13 @@
         margin: 8px 0;
       }
     }
+  }
+}
+
+#country-modal {
+
+  .animated.modal.slideInDown.ng-leave {
+    -webkit-animation-name:slideOutUp;
+    animation-name:slideOutUp;
   }
 }

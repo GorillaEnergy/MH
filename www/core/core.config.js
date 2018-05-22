@@ -11,44 +11,78 @@
 
         // if none of the above states are matched, use this as the fallback
         // $urlRouterProvider.otherwise('/authorization');
-        $urlRouterProvider.otherwise('/payment');
+        $urlRouterProvider.otherwise('/kid');
 
         $stateProvider
 
-            // .state('authorization', {
-            //     cache: false,
-            //     url: '/authorization',
-            //     templateUrl: 'templates/authorization-telephone/authorization-telephone.html',
-            //     controller: 'LoginController',
-            //     controllerAs: 'vm'
-            // })
-            // .state('registration', {
-            //     cache: false,
-            //     url: '/registration',
-            //     templateUrl: 'templates/registration/registration.html',
-            //     controller: 'RegistrationController',
-            //     controllerAs: 'vm'
-            // })
-            // .state('new-kid', {
-            //     cache: false,
-            //     url: '/new-kid',
-            //     templateUrl: 'templates/new-kid/new-kid.html',
-            //     controller: 'NewKidController',
-            //     controllerAs: 'vm'
-            // })
-            // .state('menu', {
-            //     cache: false,
-            //     url: '/menu',
-            //     templateUrl: 'templates/menu/menu.html',
-            //     controller: 'MenuController',
-            //     controllerAs: 'vm'
-            // })
+            .state('authorization', {
+                cache: false,
+                url: '/authorization',
+                templateUrl: 'templates/authorization-telephone/authorization-telephone.html',
+                controller: 'AuthorizationController',
+                controllerAs: 'vm',
+                resolve: {
+                  security: function ($timeout, securityService) {
+                    return $timeout(function() { securityService.authorization(); });
+                  }
+                }
+            })
+            .state('profile', {
+                cache: false,
+                url: '/profile',
+                templateUrl: 'templates/profile/profile.html',
+                controller: 'ProfileController',
+                controllerAs: 'vm',
+                resolve: {
+                  security: function ($timeout, securityService) {
+                    return $timeout(function() { securityService.profile(); });
+                  },
+                  user: function (userService) {
+                    return userService.getUser();
+                  }
+                }
+            })
+            .state('kid', {
+                cache: false,
+                url: '/kid',
+                templateUrl: 'templates/kid/kid.html',
+                controller: 'KidController',
+                controllerAs: 'vm',
+                resolve: {
+                  // security: function ($timeout, securityService) {
+                  //   return $timeout(function() { securityService.isLoggedIn(); });
+                  // },
+                  kids: function (userService) {
+                    return userService.getKids();
+                  }
+                },
+                params: {
+                  data: null
+                }
+            })
+            .state('menu', {
+                cache: false,
+                url: '/menu',
+                templateUrl: 'templates/menu/menu.html',
+                controller: 'MenuController',
+                controllerAs: 'vm',
+                resolve: {
+                  security: function ($timeout, securityService) {
+                    return $timeout(function() { securityService.isLoggedIn(); });
+                  }
+                }
+            })
             .state('payment', {
               cache: false,
               url: '/payment',
               templateUrl: 'templates/payment/payment.html',
               controller: 'PaymentController',
-              controllerAs: 'vm'
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.isLoggedIn(); });
+                }
+              }
             })
 
 

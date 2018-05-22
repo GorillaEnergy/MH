@@ -32,6 +32,7 @@
     }
     function logout() {
       console.log('logout');
+      userService.logout();
     }
     function aboutUs() {
       console.log('aboutUs');

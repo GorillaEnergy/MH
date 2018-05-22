@@ -186,13 +186,56 @@
     .pm-body {
       background-color: white;
     }
+    .pm-align {
+      width: 80%;
+      margin: 0 auto;
+    }
 
-    .pm-card {
-      background-color: #e4e4e4;
-      height: 90px;
+    .pm-cards-block {
       text-align: center;
-      color: red;
-      padding: 30px;
+
+      .pm-cards {
+        margin: 33px  auto 20px;
+        display: flex;
+        width: fit-content;
+
+        .pm-visa {
+          height: 37px;
+          width: 62px;
+          margin: 0 5px;
+          background: url('../../img/payment/visa.png') no-repeat center;
+          background-size: 45px;
+          border: 1px solid #bcbcbc;
+          border-radius: 3px;
+        }
+        .pm-master {
+          height: 37px;
+          width: 62px;
+          margin: 0 5px;
+          background: url('../../img/payment/mastercard.png') no-repeat center;
+          background-size: 45px;
+          border: 1px solid #bcbcbc;
+          border-radius: 3px;
+        }
+        .pm-amex {
+          height: 37px;
+          width: 62px;
+          margin: 0 5px;
+          background: url('../../img/payment/american-express.png') no-repeat center;
+          background-size: 65px;
+          border: 1px solid #bcbcbc;
+          border-radius: 3px;
+        }
+        .pm-discover {
+          height: 37px;
+          width: 62px;
+          margin: 0 5px;
+          background: url('../../img/payment/discover.png') no-repeat center;
+          background-size: 65px;
+          border: 1px solid #bcbcbc;
+          border-radius: 3px;
+        }
+      }
     }
     .pm-price {
       display: flex;
@@ -292,11 +335,6 @@
       font-weight: 400;
     }
 
-    .pm-align {
-      width: 80%;
-      margin: 0 auto;
-    }
-
     .pm-input {
       margin-top: 5px;
       width: 100%;
@@ -310,7 +348,7 @@
 
     .pm-input-security-code {
       width: 95%;
-      height: 41px;
+      height: 42px;
       padding: 0 20px;
     }
   }

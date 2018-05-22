@@ -5072,7 +5072,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     // 1) attribute directive on the button/link to this view
     // 2) entering element's attribute
     // 3) entering view's $state config property
-    // 4) view registration data
+    // 4) view profile data
     // 5) global config
     // 6) fallback value
 

@@ -2,12 +2,12 @@
   'use strict';
 
   angular.module('app')
-    .controller('LoginController', LoginController);
+    .controller('AuthorizationController', AuthorizationController);
 
-  LoginController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', 'countryCodes', 'userService'];
+  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', 'countryCodes', 'userService'];
 
 
-  function LoginController($ionicPopup, $ionicModal, $state, $scope, countryCodes, userService) {
+  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, countryCodes, userService) {
     const vm = this;
 
     vm.checkPhone = checkPhone;
@@ -17,12 +17,20 @@
     vm.chosenCountry = chosenCountry;
 
     vm.countryCodes = countryCodes;
-    vm.countryCode = countryCodes[0].code; //country be default
-    vm.phone = '';
+    // vm.countryCode = countryCodes[0].code; //country be default
+    // vm.phone = '';
+
+    vm.countryCode = countryCodes[1].code; //country be default
+    vm.phone = '681662690';
+
     vm.phoneNumberFull = '';
     vm.approvalCode = '';
 
     vm.show = {phoneMenu: true, codeApproval: false};
+
+
+    // let fb = firebase.database();
+    // fb.ref('/chats/1').push({id: 4, description: 'string'});
 
     function checkPhone() {
       if (vm.phone.length >= 7) {
@@ -46,19 +54,38 @@
 
     function checkCode() {
       console.log('checkCode()');
-      // $state.go('confirmation', {data: vm.phoneNumber})
+
+      if (String(vm.approvalCode).length === 4) {
+        let verificationData = {
+          phone: vm.phone,
+          code: vm.countryCode,
+          verification_code: vm.approvalCode
+        };
+
+        let phone = {phone: vm.phone, code: vm.countryCode};
+
+        userService.login(verificationData, phone);
+      } else {
+        console.log('Маловато цыферок :/');
+      }
     }
 
     function sendPhone() {
-      let data = {phone: vm.phoneNumberFull};
+      let data = {phone: vm.phone, code: vm.countryCode};
       userService.checkPhone(data).then(function (res) {
         console.log(res);
+        vm.approvalCode = res.data;
       })
     }
 
 
     $ionicModal.fromTemplateUrl('country-modal', {
-      scope: $scope
+      scope: $scope,
+      animation: 'animated slideInDown',
+      // animation: 'slide-in-up',
+      // animation: 'fade-in',
+      // animation: 'reverse',
+      // hideDelay: 1020
     }).then(function (modal) {
       $scope.modalCountry = modal;
     });

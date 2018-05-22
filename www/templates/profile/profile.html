@@ -3,8 +3,12 @@
 
     <div class="main-block">
 
-      <div class="title">
+      <div class="title" ng-if="vm.newUser">
         <span>new user</span>
+      </div>
+
+      <div class="title" ng-if="!vm.newUser">
+        <span>my profile</span>
       </div>
 
       <div class="name" >
@@ -24,7 +28,7 @@
       <div class="id">
         <input class="input"
                type="number"
-               ng-model="vm.id"
+               ng-model="vm.id_number"
                oninput="this.value = this.value.replace(/\D/, '')"
                ng-class="{'warning': vm.warning.id}">
 
@@ -32,8 +36,8 @@
         <p class="tooltip">id number</p>
       </div>
 
-      <!--<div class="save" ng-click="vm.save()">save</div>-->
-      <div class="save" ng-click="testModal.show()">modal</div>
+      <div class="save" ng-click="vm.save()">save</div>
+      <!--<div class="save" ng-click="testModal.show()">modal</div>-->
 
     </div>
   </ion-content>
