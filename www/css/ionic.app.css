@@ -15,6 +15,30 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+@font-face {
+  font-family: "American";
+  src: url("fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "AmericanPatrius";
+  src: url("fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Lazy";
+  src: url("fonts/Lazy Spring Day.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url("fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -10020,6 +10044,401 @@ a.button {
   -webkit-animation-name: slideOutUp;
   animation-name: slideOutUp; }
 
+.kid-chat-menu .menu-block {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  border-bottom: solid 2px #0b1138; }
+
+.kid-chat-menu .menu-block img {
+  margin-right: 9px;
+  margin-top: 21px;
+  width: 26px; }
+
+.kid-chat-menu .main-block {
+  height: calc(100vh - 72px);
+  min-height: 568px;
+  width: 100vw;
+  background: url("../../img/kid-chat-menu/background.png") no-repeat center;
+  background-size: cover; }
+
+.kid-chat-menu .call-and-chat {
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+  margin-top: 23px;
+  margin-left: 13px; }
+
+.kid-chat-menu .call-and-chat img {
+  width: 210px; }
+
+.kid-chat-menu .chat {
+  position: relative; }
+  .kid-chat-menu .chat span {
+    border-radius: 50%;
+    background-color: #e31b4f;
+    border: solid 2px #0b1138;
+    padding: 2px 5px 2px 5px;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    color: #fff;
+    text-align: center; }
+
+.kid-chat-menu .call {
+  position: absolute;
+  right: 18px;
+  top: 90px; }
+  .kid-chat-menu .call span {
+    border-radius: 50%;
+    background-color: #e31b4f;
+    border: solid 2px #0b1138;
+    padding: 2px 5px 2px 5px;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    color: #fff;
+    text-align: center; }
+
+@media screen and (min-width: 1366px) {
+  .kid-chat-menu .call-and-chat img {
+    width: 500px; }
+  .kid-chat-menu .call {
+    right: 100px; }
+  .kid-chat-menu .chat {
+    margin-left: 100px; } }
+
+@media screen and (max-width: 1024px) {
+  .kid-chat-menu .call-and-chat img {
+    width: 450px; } }
+
+@media screen and (max-width: 823px) {
+  .kid-chat-menu .call-and-chat img {
+    width: 400px; } }
+
+@media screen and (max-width: 768px) {
+  .kid-chat-menu .call-and-chat img {
+    width: 350px; } }
+
+@media screen and (max-width: 640px) {
+  .kid-chat-menu .call-and-chat img {
+    width: 300px; } }
+
+@media screen and (max-width: 414px) {
+  .kid-chat-menu .call-and-chat img {
+    width: 210px; } }
+
+@media screen and (max-width: 375px) {
+  .kid-chat-menu .call-and-chat img {
+    width: 180px; } }
+
+@media screen and (max-width: 320px) {
+  .kid-chat-menu .call-and-chat img {
+    width: 150px; } }
+
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Neue";
+  src: url("../../css/fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Patrius";
+  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Spring";
+  src: url("../../css/fonts/Lazy Spring Day.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+.kid-chat-room .menu-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  border-bottom: solid 2px #0b1138; }
+  .kid-chat-room .menu-block .dialog {
+    z-index: 1;
+    text-align: center;
+    position: absolute;
+    line-height: 30px;
+    width: 100px;
+    padding: 10px 0 10px 0;
+    right: 42px;
+    top: 50px;
+    border: solid 1px #0b1138;
+    border-radius: 10px 0 10px 10px;
+    background-color: #fff; }
+    .kid-chat-room .menu-block .dialog p {
+      margin: 0;
+      text-decoration: underline;
+      font-family: Patrius;
+      font-size: 12px; }
+  .kid-chat-room .menu-block img {
+    width: 15px;
+    margin-left: 9px; }
+  .kid-chat-room .menu-block p {
+    margin: 0 0 0 18px;
+    font-size: 25px;
+    text-transform: uppercase;
+    color: #0b1138;
+    font-family: American; }
+  .kid-chat-room .menu-block .icon-menu {
+    margin-right: 9px;
+    width: 40px; }
+
+.kid-chat-room .main-block {
+  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  height: calc(100vh - 157px); }
+  .kid-chat-room .main-block .other-message {
+    margin-left: 10px;
+    width: 70%; }
+    .kid-chat-room .main-block .other-message .my-message p {
+      font-family: Neue;
+      border-radius: 10px 0px 10px 10px;
+      background-color: #fff;
+      padding: 10px; }
+    .kid-chat-room .main-block .other-message .message-time p {
+      font-size: 12px;
+      margin: 0;
+      font-family: Patrius; }
+  .kid-chat-room .main-block .my-message-block {
+    width: 70%;
+    margin-left: auto;
+    margin-right: 10px; }
+    .kid-chat-room .main-block .my-message-block .my-message p {
+      font-family: Neue;
+      border-radius: 10px 0px 10px 10px;
+      background-color: #64cae2;
+      padding: 10px 0 10px 10px; }
+    .kid-chat-room .main-block .my-message-block .message-time {
+      text-align: right; }
+      .kid-chat-room .main-block .my-message-block .message-time p {
+        font-size: 12px;
+        margin: 0;
+        font-family: Patrius; }
+  .kid-chat-room .main-block .day {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; }
+    .kid-chat-room .main-block .day p {
+      font-size: 10px;
+      font-family: Patrius;
+      color: #fff;
+      text-transform: uppercase;
+      padding: 7px;
+      -webkit-clip-path: polygon(0 10%, 100% 0, 97% 75%, 10% 100%);
+      background-color: #0b1138; }
+
+.kid-chat-room .input-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: solid 2px #64cae2;
+  height: 100px; }
+  .kid-chat-room .input-block .input-and-message {
+    display: inline-flex;
+    align-items: center;
+    width: 95%; }
+    .kid-chat-room .input-block .input-and-message input {
+      height: 45px;
+      width: 86%;
+      border: solid 1px #64cae2;
+      border-radius: 30px; }
+    .kid-chat-room .input-block .input-and-message ::-webkit-input-placeholder {
+      font-size: 17px;
+      font-family: Spring;
+      padding-left: 15px;
+      color: #cdced2; }
+    .kid-chat-room .input-block .input-and-message ::-moz-placeholder {
+      font-size: 17px;
+      font-family: Spring;
+      padding-left: 15px;
+      color: #cdced2; }
+    .kid-chat-room .input-block .input-and-message :-ms-input-placeholder {
+      font-size: 17px;
+      font-family: Spring;
+      padding-left: 15px;
+      color: #cdced2; }
+    .kid-chat-room .input-block .input-and-message :-moz-placeholder {
+      font-size: 17px;
+      font-family: Spring;
+      padding-left: 15px;
+      color: #cdced2; }
+    .kid-chat-room .input-block .input-and-message img {
+      margin-left: auto;
+      height: 40px; }
+
+@media screen and (min-width: 767px) {
+  .kid-chat-room .menu-block .dialog {
+    right: 59px;
+    top: 59px;
+    line-height: 48px;
+    width: 200px; }
+    .kid-chat-room .menu-block .dialog p {
+      font-size: 25px; }
+  .kid-chat-room .menu-block p {
+    font-size: 40px; }
+  .kid-chat-room .menu-block img {
+    width: 30px; }
+  .kid-chat-room .menu-block .icon-menu {
+    width: 60px; }
+  .kid-chat-room .main-block .day p {
+    font-size: 25px;
+    padding: 17px; }
+  .kid-chat-room .main-block .other-message .my-message p {
+    line-height: 30px;
+    font-size: 25px; }
+  .kid-chat-room .main-block .other-message .message-time p {
+    font-size: 20px; }
+  .kid-chat-room .main-block .my-message-block .message-time p {
+    font-size: 20px; }
+  .kid-chat-room .main-block .my-message-block .my-message p {
+    line-height: 30px;
+    font-size: 25px; }
+  .kid-chat-room .input-block .input-and-message input {
+    height: 60px; }
+  .kid-chat-room .input-block .input-and-message ::-webkit-input-placeholder {
+    font-size: 25px;
+    font-family: Spring;
+    padding-left: 15px;
+    color: #cdced2; }
+  .kid-chat-room .input-block .input-and-message ::-moz-placeholder {
+    font-size: 25px;
+    font-family: Spring;
+    padding-left: 15px;
+    color: #cdced2; }
+  .kid-chat-room .input-block .input-and-message :-ms-input-placeholder {
+    font-size: 25px;
+    font-family: Spring;
+    padding-left: 15px;
+    color: #cdced2; }
+  .kid-chat-room .input-block .input-and-message :-moz-placeholder {
+    font-size: 25px;
+    font-family: Spring;
+    padding-left: 15px;
+    color: #cdced2; }
+  .kid-chat-room .input-block .input-and-message img {
+    height: 60px; } }
+
+@media screen and (min-width: 568px) {
+  .kid-chat-room .main-block {
+    height: 100vw; } }
+
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+.kid-chat .menu-block {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  border-bottom: solid 2px #0b1138;
+  margin-top: 24px; }
+
+.kid-chat .menu-block img {
+  width: 15px;
+  margin-left: 9px; }
+
+.kid-chat .menu-block p {
+  margin: auto;
+  font-size: 25px;
+  text-transform: uppercase;
+  color: #0b1138;
+  font-family: American; }
+
+.kid-chat .main-block {
+  padding-top: 24px;
+  height: 100vh;
+  width: 100%;
+  background: url("../../img/kid-chat/background.png") no-repeat center/cover; }
+  .kid-chat .main-block .consulter {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center; }
+
+.kid-chat .chat-block {
+  display: inline-flex;
+  width: 96%;
+  border-radius: 6px;
+  height: 86px;
+  border: solid 2px #0b1138;
+  background-color: #fff;
+  background-image: url(../../img/kid-chat/dots.png);
+  background-size: cover;
+  background-position: center;
+  position: relative; }
+  .kid-chat .chat-block .status {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #33d308;
+    border: solid 2px #0b1138;
+    position: absolute;
+    z-index: 1;
+    top: -8px;
+    left: -5px; }
+  .kid-chat .chat-block span {
+    border-radius: 50%;
+    background-color: #e31b4f;
+    border: solid 2px #0b1138;
+    padding: 2px 5px 2px 5px;
+    position: absolute;
+    z-index: 1;
+    left: 28px;
+    bottom: 13px;
+    color: #fff;
+    text-align: center; }
+  .kid-chat .chat-block .photo-consult {
+    background: url("https://vignette.wikia.nocookie.net/himym/images/5/51/Bender.jpg/revision/latest?cb=20130506083200") no-repeat center/cover;
+    height: 67px;
+    width: 70px;
+    -webkit-clip-path: polygon(0 0, 100% 0, 81% 72%, 0 100%);
+    shape-margin: 20px; }
+  .kid-chat .chat-block .chat-content {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between; }
+    .kid-chat .chat-block .chat-content .date-and-icon {
+      margin-right: 10px; }
+      .kid-chat .chat-block .chat-content .date-and-icon .time {
+        height: 38px; }
+      .kid-chat .chat-block .chat-content .date-and-icon p {
+        margin: 0;
+        font-family: American; }
+      .kid-chat .chat-block .chat-content .date-and-icon .arrow {
+        width: 33px; }
+      .kid-chat .chat-block .chat-content .date-and-icon .lock {
+        width: 25px; }
+    .kid-chat .chat-block .chat-content .info-consult {
+      padding-top: 7px;
+      padding-left: 6px; }
+      .kid-chat .chat-block .chat-content .info-consult p {
+        color: #0b1138; }
+      .kid-chat .chat-block .chat-content .info-consult .consult-name {
+        font-family: American;
+        font-size: 19px; }
+
 .registration .main-block {
   height: 100vh;
   min-height: 568px;
@@ -10114,12 +10533,26 @@ a.button {
   min-height: 50px; }
 
 .new-kid .main-block {
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   width: 100vw;
-  background: url("../../img/kid/new-kid-background.png") no-repeat;
-  background-size: cover; }
+  position: relative; }
 
-.new-kid .empty-header {
+.new-kid .registered {
+  background: url("../../img/kid/regisered-kid-background.png") no-repeat;
+  background-size: cover;
+  background-color: #64cae2;
+  padding-bottom: 9px; }
+
+.new-kid .unregistered {
+  background: url("../../img/kid/unregisered-kid-background.png") no-repeat;
+  background-size: cover;
+  background-color: #64cae2; }
+
+.new-kid .empty-header-big {
+  height: 63px; }
+
+.new-kid .empty-header-small {
   height: 43px; }
 
 .new-kid .animation-backdrop {
@@ -10131,6 +10564,22 @@ a.button {
   background: black;
   opacity: 0.6;
   z-index: 1; }
+
+.new-kid .reg-header {
+  background-color: #fff;
+  border-bottom: 2px solid #0b1138;
+  padding: 36px 0 15px;
+  margin-bottom: -10px;
+  position: absolute;
+  z-index: 1;
+  width: 100%; }
+
+.new-kid .back_arrow {
+  margin: 37px 0 0 11px;
+  height: 23px;
+  position: absolute;
+  top: 0;
+  left: 0; }
 
 .new-kid .kids-block {
   position: relative;
@@ -10235,17 +10684,18 @@ a.button {
   text-transform: uppercase;
   text-align: center;
   font-size: 23px;
-  font-family: sans-serif;
-  color: #000;
-  font-weight: 900; }
+  color: #0b1138;
+  font-weight: 900;
+  font-family: American; }
 
 .new-kid .tooltip {
   text-transform: uppercase;
   text-align: center;
   font-size: 14px;
-  color: #000;
+  color: #0b1138;
   font-weight: 500;
-  margin-top: 2px; }
+  margin-top: 2px;
+  font-family: AmericanPatrius; }
 
 .new-kid .name {
   position: relative;
@@ -10299,14 +10749,15 @@ a.button {
     text-align: center;
     font-size: 22px;
     background-color: #fff;
-    color: black;
-    font-weight: 700;
+    color: #0b1138;
+    font-weight: 500;
     height: 48px;
     width: 95%;
     line-height: 46px;
-    border: 2px solid #000;
+    border: 2px solid #0b1138;
     border-radius: 5px;
-    margin: 0 auto; }
+    margin: 0 auto;
+    font-family: HelveticaNeueCyr; }
   .new-kid .phone .phone-ico {
     height: 1.1em;
     position: absolute;
@@ -10314,11 +10765,10 @@ a.button {
     top: 10px; }
   .new-kid .phone .country-and-phone {
     margin: 0 auto;
-    width: 180px;
+    width: 300px;
     height: 100%;
-    font-size: 16px;
     display: flex;
-    justify-content: space-between; }
+    justify-content: center; }
   .new-kid .phone .country-select {
     height: 100%;
     width: 30%;
@@ -10330,38 +10780,42 @@ a.button {
     margin-right: 5px;
     text-align: left; }
   .new-kid .phone .input-phone {
-    margin-top: -25px;
-    font-size: 16px;
-    font-weight: 700;
-    width: 95%;
-    padding-top: 7%;
-    height: 90%; }
+    margin-left: 7px;
+    font-size: 22px;
+    font-weight: 500;
+    font-family: HelveticaNeueCyr;
+    padding-top: 5px;
+    height: 42px;
+    width: 100%;
+    text-align: left;
+    margin-top: -25px; }
   .new-kid .phone .tooltip {
     text-transform: uppercase;
     text-align: center;
     font-size: 15px;
-    color: #000;
+    color: #0b1138;
     font-weight: 500;
     margin-top: 4px; }
 
-.new-kid .add-kid {
+.new-kid .add-remove-kid {
   width: 100%;
   text-align: center; }
-  .new-kid .add-kid .add-kid-img {
+  .new-kid .add-remove-kid .add-remove-kid-img {
     height: 85px; }
 
 .new-kid .input-kid {
   padding-left: 18%;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 500;
   width: 87%;
   height: 49px;
-  border: 2px solid #000;
+  border: 2px solid #0b1138;
   border-radius: 5px;
   margin-left: 36px;
-  display: unset; }
+  display: unset;
+  font-family: HelveticaNeueCyr; }
 
-.new-kid .continue {
+.new-kid .continue-save-button {
   text-transform: uppercase;
   text-align: center;
   font-size: 22px;
@@ -10369,10 +10823,114 @@ a.button {
   font-weight: 700;
   width: 95%;
   line-height: 46px;
-  border: 2px solid #000;
+  border: 2px solid #0b1138;
   border-radius: 5px;
-  margin: 9px auto 0;
+  margin: 9px auto 0; }
+
+.new-kid .continue-button {
   background-color: #ff7300; }
+
+.new-kid .save-button {
+  background-color: #2fbc09; }
+
+.new-kid .reg-followers {
+  margin-top: 64px;
+  height: auto;
+  width: 100%; }
+  .new-kid .reg-followers .title {
+    font-size: 31px;
+    font-weight: 500; }
+  .new-kid .reg-followers .followers {
+    margin: 28px auto 0;
+    padding-top: 14px;
+    position: relative;
+    font-size: 22px;
+    font-weight: 500;
+    width: 81%;
+    height: 49px;
+    background-color: #fff;
+    border: 2px solid #0b1138;
+    border-radius: 5px;
+    font-family: HelveticaNeueCyr;
+    text-align: center; }
+    .new-kid .reg-followers .followers .follower-img {
+      position: absolute;
+      top: -54px;
+      left: -31px;
+      height: 102px; }
+    .new-kid .reg-followers .followers .follower-remove {
+      position: absolute;
+      top: -23px;
+      right: -62px;
+      height: 83px; }
+  .new-kid .reg-followers .follower-margin {
+    margin: 60px auto 0; }
+  .new-kid .reg-followers .add-follower {
+    text-align: center; }
+    .new-kid .reg-followers .add-follower .add-follower-button {
+      margin-top: 20px;
+      height: 86px; }
+  .new-kid .reg-followers .access-panel {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    width: 95%;
+    height: 80px;
+    margin: 29px auto 0;
+    font-size: 20px;
+    font-weight: 600; }
+    .new-kid .reg-followers .access-panel .block-access {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      background-color: #bf1340;
+      border: 2px solid #0b1138;
+      border-radius: 5px; }
+      .new-kid .reg-followers .access-panel .block-access .block-access-img {
+        height: 54px;
+        margin: 10px 0 0 26px; }
+    .new-kid .reg-followers .access-panel .block-tile {
+      color: white;
+      font-size: 18px;
+      line-height: 0;
+      text-transform: uppercase;
+      font-family: AmericanPatrius;
+      font-weight: 100;
+      display: grid; }
+    .new-kid .reg-followers .access-panel .block {
+      padding-top: 26px;
+      width: 80%; }
+    .new-kid .reg-followers .access-panel .grant {
+      padding-top: 26px;
+      width: 80%; }
+    .new-kid .reg-followers .access-panel .remove {
+      padding-top: 38px;
+      width: 80%; }
+    .new-kid .reg-followers .access-panel .access-remove {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between; }
+      .new-kid .reg-followers .access-panel .access-remove .grant-access {
+        display: flex;
+        height: 100%;
+        width: calc(50% - 4px);
+        background-color: #ff7300;
+        border: 2px solid #0b1138;
+        border-radius: 5px; }
+        .new-kid .reg-followers .access-panel .access-remove .grant-access .grant-access-img {
+          height: 53px;
+          margin: 12px 0 0 13px; }
+      .new-kid .reg-followers .access-panel .access-remove .remove-from-app {
+        display: flex;
+        height: 100%;
+        width: calc(50% - 4px);
+        background-color: #bf1340;
+        border: 2px solid #0b1138;
+        border-radius: 5px; }
+        .new-kid .reg-followers .access-panel .access-remove .remove-from-app .remove-from-app-img {
+          height: 53px;
+          margin: 12px 0 0 24px; }
 
 .new-kid .warning {
   border: 2px solid red !important; }
@@ -10385,26 +10943,82 @@ a.button {
   .new-kid .input {
     padding-left: 8%; } }
 
-.show-kids-modal-test {
+.kid-backdrop {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  opacity: 0.6; }
+
+.kids-exist-modal {
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-  width: 50%;
-  height: 50%;
-  min-height: 50px;
-  padding: 5px;
-  background-color: white;
-  z-index: 2; }
-  .show-kids-modal-test .kid-modal-common {
-    text-align: right; }
-  .show-kids-modal-test .kid-modal-0 {
-    background-color: lawngreen; }
-  .show-kids-modal-test .kid-modal-1 {
-    background-color: red; }
-  .show-kids-modal-test .kid-modal-2 {
-    background-color: yellow; }
+  width: 390px !important;
+  height: 208px !important;
+  min-height: 50px !important;
+  z-index: 2;
+  background-color: #00000000 !important; }
+  .kids-exist-modal .match-main-block {
+    background: url(../../img/kid/modal/dots.png) center no-repeat;
+    background-size: 102%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 0 !important;
+    border: 1px solid #000;
+    border-radius: 5px; }
+    .kids-exist-modal .match-main-block .warning-ico {
+      height: 26px;
+      margin-top: 8px; }
+    .kids-exist-modal .match-main-block .title-km {
+      display: block;
+      text-align: center;
+      font-size: 25px;
+      line-height: 13px;
+      text-transform: uppercase;
+      margin-top: 8px; }
+    .kids-exist-modal .match-main-block .button-km {
+      margin: 23px auto 0;
+      width: 93%;
+      height: 48px;
+      border: 1px solid #000;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 11px;
+      background-color: white; }
+      .kids-exist-modal .match-main-block .button-km .mail-km {
+        height: 23px; }
+      .kids-exist-modal .match-main-block .button-km .mail-title-km {
+        font-size: 17px;
+        text-transform: uppercase;
+        margin-right: 23px; }
+    .kids-exist-modal .match-main-block .cancel-km {
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 17px;
+      text-decoration: underline;
+      margin-top: 14px; }
+
+@media (max-width: 390px) {
+  .kids-exist-modal {
+    width: 350px !important; }
+    .kids-exist-modal .match-main-block {
+      background-size: 115%; }
+      .kids-exist-modal .match-main-block .button-km .mail-title-km {
+        margin-right: 0; } }
+
+@media (max-width: 350px) {
+  .kids-exist-modal {
+    width: 320px !important; }
+    .kids-exist-modal .match-main-block {
+      background-size: 127%; }
+      .kids-exist-modal .match-main-block .button-km .mail-title-km {
+        font-size: 16px; } }
 
 .my-menu .main-block {
   height: -webkit-fill-available;
@@ -10519,17 +11133,20 @@ a.button {
     border: 2px solid #000;
     border-radius: 5px; }
     .registration .kid .info .edit {
-      margin: 8px 0 5px 16.5%;
+      margin: 8px 6px 5px 16.5%;
       height: 27px; }
     .registration .kid .info .kid-name {
       width: 40%;
-      padding-top: 10px;
+      padding-top: 13px;
       text-transform: uppercase;
       text-align: center;
       font-size: 18px;
       font-family: sans-serif;
       color: white;
-      font-weight: 600; }
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
 
 .registration .kid-color0 {
   background-color: darkred !important; }
@@ -10590,12 +11207,12 @@ a.button {
   bottom: 0;
   left: 0;
   right: 0;
+  width: 91% !important;
   margin: auto;
-  width: 91%;
   height: 97.5%;
-  min-height: 50px;
+  min-height: 50px !important;
   padding: 5px;
-  background-color: white;
+  background-color: #fff;
   z-index: 2; }
   .payment-modal .pm-main-block {
     width: 100%;

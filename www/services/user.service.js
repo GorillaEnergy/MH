@@ -13,16 +13,26 @@
         model.login = login;
         model.logout = logout;
 
-        model.userUpdate = userUpdate;
-        model.createKid = createKid;
-        model.getKids = getKids;
+        model.setToken = setToken;
+        model.getToken = getToken;
 
         model.setPhone = setPhone;
         model.getPhone = getPhone;
-        model.getUser = getUser;
-        model.getToken = getToken;
+
+        model.userUpdate = userUpdate;
         model.setUser = setUser;
-        model.setToken = setToken;
+        model.getUser = getUser;
+
+        model.createKid = createKid;
+        model.uploadKids = uploadKids;
+        model.setKids = setKids;
+        model.getKids = getKids;
+
+        model.getFollowers = getFollowers;
+
+        model.setKidIndex = setKidIndex;
+        model.getKidIndex = getKidIndex;
+
 
 
         return model;
@@ -36,14 +46,13 @@
                 setToken(res.data.token);
                 setPhone(phone);
 
-                if (res.data.user.email || res.data.user.name) {
-                  // $rootScope.newUser = false;
-                  $localStorage.newUser = false;
-                  $state.go('menu');
-                } else {
-                  // $rootScope.newUser = true;
-                  $localStorage.newUser = true;
+                if (!res.data.user.name) {
                   $state.go('profile');
+                } else if (res.data.user.role_id === 2) {
+                  console.log('Маршрутизация на parent-main-page, пока не подключена');
+                  // $state.go('parent-main-page');
+                } else if (res.data.user.role_id === 1) {
+                  $state.go('kid-main-page');
                 }
             });
         }
@@ -55,36 +64,68 @@
             // });
         }
 
-        function userUpdate(data) {
-          return http.post(url.user.userUpdate, data);
-        }
-        function createKid(data) {
-          return http.post(url.user.createKid, data);
-        }
-        function getKids() {
-          return $localStorage.kids;
-        }
-
-        function getPhone() {
-            return $localStorage.phone;
-        }
-        function getUser() {
-            return $localStorage.user;
-        }
+        function setToken(token) {
+        $localStorage.token = token;
+      }
         function getToken() {
-            return $localStorage.token;
+          return $localStorage.token;
         }
 
         function setPhone(phone) {
           $localStorage.phone = phone;
         }
-        function setUser(user) {
-            $localStorage.user = user;
-        }
-        function setToken(token) {
-            $localStorage.token = token;
+        function getPhone() {
+          return $localStorage.phone;
         }
 
+        function userUpdate(data) {
+          return http.post(url.user.userUpdate, data);
+        }
+        function setUser(user) {
+        $localStorage.user = user;
+      }
+        function getUser() {
+            return $localStorage.user;
+        }
+
+        function createKid(data) {
+          return http.post(url.user.createKid, data);
+        }
+        function uploadKids() {
+          return http.get(url.user.uploadKids).then(function (res) {
+            setKids(res.data);
+          });
+        }
+        function setKids(kids) {
+          $localStorage.kids = kids;
+        }
+        function getKids() {
+          return $localStorage.kids;
+        }
+
+        function getFollowers() {
+          // return http.get(url.user.uploadFollowers).then(function (res) {
+            // return res.data;
+            return [
+                {
+                  "phone": "0957706890",
+                  "code": "+380"
+                },
+                // {
+                //   "phone": "0681662023",
+                //   "code": "+380"
+                // }
+            ];
+
+          // });
+        }
+
+        function setKidIndex(index) {
+          $localStorage.kid_index = index;
+        }
+        function getKidIndex() {
+          return $localStorage.kid_index;
+        }
     }
 })
 ();

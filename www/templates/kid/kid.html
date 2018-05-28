@@ -1,11 +1,18 @@
 <ion-view class="new-kid">
   <ion-content>
 
-    <div class="main-block">
-      <div class="empty-header"></div>
+    <div class="main-block" ng-class="vm.viewType.edit_registered_kid ? 'registered' : 'unregistered'">
+
+      <div class="reg-header title" ng-if="vm.viewType.edit_registered_kid">
+        <img src="../../img/kid/back_arrow.png" name="back_arrow" class="back_arrow">
+        <span>{{vm.name}}</span>
+      </div>
+
+      <div class="empty-header" ng-class="!vm.viewType.edit_registered_kid ? 'empty-header-small' : 'empty-header-big'"></div>
+
       <div class="animation-backdrop" ng-if="vm.animation" ng-click="vm.closeList()"></div>
 
-      <div class="kids-block" ng-if="vm.create" ng-click="vm.openList()">
+      <div class="kids-block" ng-if="vm.viewType.new_kid" ng-click="vm.openList()">
         <div ng-repeat="(key, kid) in vm.kids">
 
           <div ng-class="vm.animation ? vm.kidPosition(key) : vm.kidPosition(key, true)" class="kid-main-pos">
@@ -28,15 +35,15 @@
         <span >new kid</span>
       </div>
 
-      <div class="title" ng-if="!vm.create">
-        <span>{{vm.kid.name}}</span>
+      <div class="title" ng-if="vm.viewType.edit_unregistered_kid">
+        <span>Edit kid</span>
       </div>
 
 
       <div class="name">
         <input class="input-kid" type="text" ng-model="vm.name"
                ng-class="{'warning': vm.warning.name}">
-        <img src="../../img/kid/kid.png" class="name-img">
+        <img ng-src="../../img/kid/kid.png" class="name-img">
         <p class="tooltip">kid name</p>
       </div>
 
@@ -88,11 +95,73 @@
         </div>
       </div>
 
-      <div class="add-kid">
-        <img src="../../img/kid/add-another-kid.png" class="add-kid-img">
+
+      <div ng-if="vm.viewType.new_kid">
+        <div class="add-remove-kid" ng-click="vm.addAnotherKid()" ng-if="vm.viewType.new_kid">
+          <img src="../../img/kid/add-another-kid.png" class="add-remove-kid-img">
+        </div>
+
+        <div class="continue-save-button continue-button" ng-click="vm.continue()" ng-if="vm.viewType.new_kid">
+          continue
+        </div>
       </div>
 
-      <div class="continue" ng-click="vm.continue()">continue</div>
+      <div ng-if="vm.viewType.edit_unregistered_kid">
+        <div class="add-remove-kid" ng-click="vm.removeKid()" ng-if="vm.viewType.edit_unregistered_kid">
+          <img src="../../img/kid/trash.png" class="add-remove-kid-img">
+        </div>
+
+        <div class="continue-save-button save-button" ng-click="vm.continue()" ng-if="vm.viewType.edit_unregistered_kid">
+          save
+        </div>
+      </div>
+
+      <div ng-if="vm.viewType.edit_registered_kid" class="reg-followers">
+        <div ng-if="vm.followers.length" class="title">
+          <span>following this kid</span>
+        </div>
+
+        <div ng-repeat="(key, follower) in vm.followers" class="followers" ng-class="{'follower-margin': key}">
+            <img src="../../img/kid/follower.png" class="follower-img">
+            <span>{{follower.code}} {{follower.phone}}</span>
+            <img src="../../img/kid/trash.png" class="follower-remove">
+        </div>
+
+        <div class="add-follower">
+          <img src="../../img/kid/add_follower.png" class="add-follower-button">
+        </div>
+
+        <div class="access-panel">
+          <div ng-if="vm.accessing()" class="block-access">
+            <img src="../../img/kid/block.png" class="block-access-img">
+            <div class="block-tile block">
+              <span>block kid from</span>
+              <span>accessing the app</span>
+            </div>
+          </div>
+
+          <div ng-if="!vm.accessing()" class="access-remove">
+            <div class="grant-access">
+              <img src="../../img/kid/grant_access.png" class="grant-access-img">
+              <div class="block-tile grant">
+                <span>grant</span>
+                <span>access</span>
+              </div>
+            </div>
+
+            <div class="remove-from-app">
+              <img src="../../img/kid/remove_from_app.png" class="remove-from-app-img">
+              <div class="block-tile remove">
+                <span>remove</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="continue-save-button save-button">
+          save
+        </div>
+      </div>
 
     </div>
 
@@ -120,21 +189,38 @@
   </ion-modal-view>
 </script>
 
-<script id="show-kids" type="text/ng-template">
-  <!--<div class="backdrop" ng-click="kidsListModal.hide()"></div>-->
-  <ion-modal-view class="show-kids-modal-test">
 
-    <ion-content class="padding main-block">
-      <div ng-repeat="(key, kid) in vm.kids" class="kid-modal-common">
-        <div>
-          <span>{{kid.name}} &nbsp;</span>
+<script id="kid-match-modal" type="text/ng-template">
+  <div class="kid-backdrop" ng-click="matchModal.hide()"></div>
+  <ion-modal-view class="kids-exist-modal">
 
-          <span ng-class="vm.kidColorModal(key)">
-            {{kid.name.charAt(0).toUpperCase()}}
-          </span>
-        </div>
+    <ion-content class="match-main-block">
+
+      <div>
+        <img src="../../img/kid/modal/warning.png" class="warning-ico">
+      </div>
+
+      <div class="title-km">
+        <p>that kid already exist</p>
+        <p>in the app</p>
+      </div>
+
+      <div class="button-km">
+        <img src="../../img/kid/modal/mail.png" class="mail-km">
+        <span class="mail-title-km">contact the administrator</span>
+      </div>
+
+      <div class="cancel-km">
+        <span ng-click="matchModal.hide()">cancel</span>
       </div>
     </ion-content>
 
+  </ion-modal-view>
+</script>
+
+
+<script id="kid-test-modal" type="text/ng-template">
+  <ion-modal-view class="kids-exist-modal">
+    <h1 ng-click="ttest.hide()">Atata</h1>
   </ion-modal-view>
 </script>

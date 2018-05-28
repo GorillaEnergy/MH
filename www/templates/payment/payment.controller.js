@@ -4,11 +4,16 @@
   angular.module('app')
     .controller('PaymentController', PaymentController);
 
-  PaymentController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal'];
+  PaymentController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal',
+                                'kids'];
 
 
-  function PaymentController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal) {
+  function PaymentController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal,
+                             kids) {
     const vm = this;
+
+    vm.ediKid = ediKid;
+    vm.kidColor = kidColor;
 
     let  date = new Date();
     console.log("Time: ", date.getHours() + ' : ' + date.getMinutes());
@@ -31,16 +36,18 @@
       // console.log(snapshot.val().limitToLast(1));
     });
 
-
-
-    vm.kids = [{name: 'Joshua'},{name: 'David'},{name: 'Donald'}];
-
+    vm.kids = kids;
     vm.totalPrice = totalPriceCalc(vm.kids.length);
 
-    vm.kidColor = function (index) {
+    function ediKid(kid, index) {
+
+      console.log(kid);
+      console.log(index);
+    }
+    function kidColor(index) {
       let name = 'kid-color' + index;
       return name;
-    };
+    }
 
     function totalPriceCalc(quantity) {
       if (quantity) {

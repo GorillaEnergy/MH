@@ -16,6 +16,8 @@
                     user: {
                       userUpdate: baseUrl + 'api/user-update',
                       createKid: baseUrl + 'api/create-kid',
+                      uploadKids: baseUrl + 'api/list-kids',
+                      uploadFollower: baseUrl + 'api/list-followers',
                     }
 
                 }

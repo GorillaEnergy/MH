@@ -77,18 +77,21 @@
       border-radius: 5px;
 
       .edit {
-        margin: 8px 0 5px 16.5%;
+        margin: 8px 6px 5px 16.5%;
         height: 27px;
       }
       .kid-name {
         width: 40%;
-        padding-top: 10px;
+        padding-top: 13px;
         text-transform: uppercase;
         text-align: center;
         font-size: 18px;
         font-family: sans-serif;
         color: white;
         font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
@@ -158,12 +161,12 @@
   bottom: 0;
   left: 0;
   right: 0;
+  width: 91%!important;
   margin: auto;
-  width: 91%;
   height: 97.5%;
-  min-height: 50px;
+  min-height: 50px!important;
   padding: 5px;
-  background-color: white;
+  background-color: #fff;
   z-index: 2;
 
 

@@ -9,6 +9,7 @@
     "gulp-sass": "^3.1.0"
   },
   "dependencies": {
+    "@ionic-native/date-picker": "^4.7.0",
     "@ionic/pro": "1.0.20",
     "android-versions": "^1.2.1",
     "angular-chart.js": "^1.1.1",
@@ -17,6 +18,7 @@
     "cordova-ios": "^4.5.4",
     "cordova-plugin-android-native-pdfviewer": "git+https://github.com/gpanos/cordova-plugin-android-native-pdfviewer.git",
     "cordova-plugin-compat": "git+https://github.com/apache/cordova-plugin-compat.git",
+    "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-splashscreen": "^4.1.0",
@@ -37,7 +39,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-android-native-pdfviewer": {},
       "cordova-plugin-compat": {},
-      "cordova-plugin-fcm": {}
+      "cordova-plugin-fcm": {},
+      "cordova-plugin-datepicker": {}
     },
     "platforms": [
       "windows",

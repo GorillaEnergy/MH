@@ -10,8 +10,9 @@
     function mainConfig($stateProvider, $urlRouterProvider) {
 
         // if none of the above states are matched, use this as the fallback
-        // $urlRouterProvider.otherwise('/authorization');
-        $urlRouterProvider.otherwise('/kid');
+        $urlRouterProvider.otherwise('/authorization');
+        // $urlRouterProvider.otherwise('/kid');
+        // $urlRouterProvider.otherwise('/kid-chat');
 
         $stateProvider
 
@@ -49,15 +50,16 @@
                 controller: 'KidController',
                 controllerAs: 'vm',
                 resolve: {
-                  // security: function ($timeout, securityService) {
-                  //   return $timeout(function() { securityService.isLoggedIn(); });
-                  // },
+                  security: function ($timeout, securityService) {
+                    return $timeout(function() { securityService.kid(); });
+                  },
                   kids: function (userService) {
+                    userService.uploadKids();
                     return userService.getKids();
+                  },
+                  followers: function (userService) {
+                    return userService.getFollowers();
                   }
-                },
-                params: {
-                  data: null
                 }
             })
             .state('menu', {
@@ -81,9 +83,62 @@
               resolve: {
                 security: function ($timeout, securityService) {
                   return $timeout(function() { securityService.isLoggedIn(); });
+                },
+                kids: function (userService) {
+                  userService.uploadKids();
+                  return userService.getKids();
                 }
               }
             })
+            .state('kid-main-page', {
+              cache: false,
+              url: '/kid-main-page',
+              templateUrl: 'templates/kid-main-page/kid_main_page.html',
+              controller: 'KidMainPageController',
+              controllerAs: 'vm',
+              resolve: {
+                // security: function ($timeout, securityService) {
+                //   return $timeout(function() { securityService.isLoggedIn(); });
+                // }
+              }
+            })
+            .state('kid-message', {
+              cache: false,
+              url: '/kid-message',
+              templateUrl: 'templates/kid-messages/kid_messages.html',
+              controller: 'KidMessageController',
+              controllerAs: 'vm',
+              resolve: {
+                // security: function ($timeout, securityService) {
+                //   return $timeout(function() { securityService.isLoggedIn(); });
+                // }
+              }
+            })
+            .state('kid-chat', {
+              cache: false,
+              url: '/kid-chat',
+              templateUrl: 'templates/kid-chat/kid_chat.html',
+              controller: 'KidChatController',
+              controllerAs: 'vm',
+              resolve: {
+                // security: function ($timeout, securityService) {
+                //   return $timeout(function() { securityService.isLoggedIn(); });
+                // }
+              }
+            })
+
+            // .state('parent-main-page', {
+            //   cache: false,
+            //   url: '/parent-main-page',
+            //   templateUrl: 'templates/parent_main_page/parent_main_page.html',
+            //   controller: 'ParentMainPageController',
+            //   controllerAs: 'vm',
+            //   resolve: {
+            //     // security: function ($timeout, securityService) {
+            //     //   return $timeout(function() { securityService.isLoggedIn(); });
+            //     // }
+            //   }
+            // })
 
 
     }

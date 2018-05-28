@@ -17,7 +17,7 @@
 
             <div class="info" ng-class="vm.kidColor(key)">
 
-              <img src="../../img/payment/edit-ico.png" class="edit">
+              <img src="../../img/payment/edit-ico.png" class="edit" ng-click="vm.ediKid(kid, key)">
               <div class="kid-name"><span>{{kid.name}}</span></div>
             </div>
 
@@ -67,7 +67,7 @@
             <p class="topic-value">${{vm.totalPrice}}</p>
           </div>
 
-          <div class="pm-edit">
+          <div class="pm-edit" ng-click="paymentModal.hide()">
             <span>Edit</span>
           </div>
         </div>
