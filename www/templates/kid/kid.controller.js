@@ -5,11 +5,11 @@
     .controller('KidController', KidController);
 
   KidController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', 'countryCodes', 'userService',
-                           '$localStorage', '$timeout', 'kids', 'followers'];
+                           '$localStorage', '$timeout', 'kids', 'followers', 'countries'];
 
 
   function KidController($ionicPopup, $ionicModal, $state, $scope, countryCodes, userService,
-                                     $localStorage, $timeout, kids, followers) {
+                                     $localStorage, $timeout, kids, followers, countries) {
     const vm = this;
 
     vm.kidPosition = kidPosition;
@@ -17,12 +17,25 @@
     vm.continue = toPayment;
     vm.addAnotherKid = addAnotherKid;
     vm.removeKid = removeKid;
-    vm.chosenCountry = chosenCountry;
+    vm.removeKidModal = removeKidModal;
+
+    vm.addFollower = addFollower;
+
+    vm.showCountryModal = showCountryModal;
+    vm.hideCountryModal = hideCountryModal;
     vm.showKidMatchModal = showKidMatchModal;
+    vm.hideKidMatchModal = hideKidMatchModal;
+    vm.showKidRemoveModal = showKidRemoveModal;
+    vm.hideKidRemoveModal = hideKidRemoveModal;
+    vm.showFollowerModal = showFollowerModal;
+    vm.hideFollowerModal = hideFollowerModal;
+
     vm.openList = openList;
     vm.closeList = closeList;
     vm.editKid = editKid;
     vm.accessing = accessing;
+    vm.changeAccessRight = changeAccessRight;
+
 
     vm.viewType = {new_kid: false, edit_registered_kid: false, edit_unregistered_kid: false};
     vm.warning = {name: false, date: false, id_number: false, grade: false, phone: false};
@@ -31,14 +44,17 @@
      $localStorage.kid_index = 1;
 
     vm.kids = kids;
-    console.log('vm.kids = ', vm.kids);
-
     vm.followers = followers;
-    console.log('vm.followers = ', vm.followers);
-
-    vm.countryCodes = countryCodes;
+    vm.countryCodes = countries;
     vm.countryCode = userService.getPhone().code; //country be default
     vm.phone = '';
+
+    vm.followerCountryCode = userService.getPhone().code;
+    vm.followerPhone = '';
+
+    // console.log('vm.countryCodes = ', vm.countryCodes);
+    console.log('vm.kids = ', vm.kids);
+    console.log('vm.followers = ', vm.followers);
 
     speciesDefinition();
 
@@ -67,7 +83,6 @@
           console.log('error, have index but not have a kids');
         }
       }
-
       function kidDetail(index) {
         vm.name = kids[index].name;
         vm.birth_date = kids[index].birth_date;
@@ -80,9 +95,32 @@
       }
     }
 
-    function accessing() {
-      return vm.access == '1';
+    function showCountryModal() {
+      $scope.countryModal.show();
     }
+    function hideCountryModal() {
+      $scope.countryModal.hide();
+    }
+    function showKidMatchModal() {
+      $scope.matchModal.show();
+    }
+    function hideKidMatchModal() {
+      $scope.matchModal.hide();
+    }
+    function showKidRemoveModal() {
+      $scope.removeModal.show();
+    }
+    function hideKidRemoveModal() {
+      $scope.removeModal.hide();
+    }
+    function showFollowerModal() {
+      $scope.followerModal.show();
+    }
+    function hideFollowerModal() {
+      $scope.followerModal.hide();
+    }
+
+
     vm.animation = false;
     function openList() {
       if (!vm.animation) { vm.animation = true; }
@@ -114,6 +152,9 @@
     }
     function removeKid() {
       console.log('removeKid');
+    }
+    function removeKidModal() {
+      console.log('removeKidModal');
     }
 
     function saveKid(type) {
@@ -238,32 +279,60 @@
 
     }
 
-    function chosenCountry() {
-      $scope.modalKidCountry.hide();
+    function addFollower() {
+      console.log('addFollower');
     }
+
     $ionicModal.fromTemplateUrl('kid-country-modal', {
       scope: $scope,
     }).then(function (modal) {
-      $scope.modalKidCountry = modal;
+      $scope.countryModal = modal;
     });
 
-    function showKidMatchModal() {
-      $scope.matchModal.show();
-    }
     $ionicModal.fromTemplateUrl('kid-match-modal', {
       scope: $scope,
     }).then(function (modal) {
       $scope.matchModal = modal;
     });
 
-
-    //////
-    $ionicModal.fromTemplateUrl('kid-test-modal', {
+    $ionicModal.fromTemplateUrl('kid-remove-modal', {
       scope: $scope,
     }).then(function (modal) {
-      $scope.ttest = modal;
+      $scope.removeModal = modal;
     });
-    //////
 
+    $ionicModal.fromTemplateUrl('add-follower-modal', {
+      scope: $scope,
+    }).then(function (modal) {
+      $scope.followerModal = modal;
+    });
+
+
+    function accessing() {
+      return vm.access == '1';
+    }
+    function changeAccessRight(access) {
+      let data ={};
+      // data.id = vm.kids[userService.getKidIndex()].id;
+      // data.id_number = vm.kids[userService.getKidIndex()].id_number;
+      data.access = access ? 1 : 0;
+      userService.userUpdate(data).then(function (res) {
+        console.log(res);
+      })
+    }
+    ///////////////////////////
+    getFirebaseToken();
+    function getFirebaseToken() {
+      // $timeout(function () {
+        if (typeof FCMPlugin !== 'undefined') {
+
+          FCMPlugin.getToken(function (token) {
+            console.log(token);
+          });
+        } else {
+          console.log('FCMPlugin is not defined');
+        }
+      // }, 5000);
+    }
   }
 })();

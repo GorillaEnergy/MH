@@ -18,6 +18,9 @@
                       createKid: baseUrl + 'api/create-kid',
                       uploadKids: baseUrl + 'api/list-kids',
                       uploadFollower: baseUrl + 'api/list-followers',
+                    },
+                    countries: {
+                      list: baseUrl + 'api/list-codes'
                     }
 
                 }

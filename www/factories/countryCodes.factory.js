@@ -4,16 +4,20 @@
     .module('factory.countryCodes', [])
     .factory('countryCodes', countryCodes);
 
-  countryCodes.$inject = [];
+  countryCodes.$inject = ['http', 'url',];
 
 
-  function countryCodes() {
-    let countriesCodes = [
-      {code: '+972', name: 'Israel'},
-      {code: '+380', name: 'Ukraine'},
-      {code: '+1', name: 'USA'},
-    ];
+  function countryCodes(http, url) {
+    let model = {};
 
-    return countriesCodes;
+    model.list = list;
+
+    return model;
+
+    function list() {
+      return http.get(url.countries.list).then(function (res) {
+        return res.data;
+      })
+    }
   }
 })();

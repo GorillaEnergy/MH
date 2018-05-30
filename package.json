@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ionic-native/date-picker": "^4.7.0",
+    "@ionic-native/fcm": "^4.7.0",
     "@ionic/pro": "1.0.20",
     "android-versions": "^1.2.1",
     "angular-chart.js": "^1.1.1",

@@ -75,7 +75,7 @@
           <img src="../../img/authorization/phone.png" class="phone-ico">
 
           <div class="country-and-phone">
-            <div class="country-select" ng-click="modalKidCountry.show()">
+            <div class="country-select" ng-click="vm.showCountryModal()">
               {{vm.countryCode}}
             </div>
 
@@ -128,11 +128,11 @@
         </div>
 
         <div class="add-follower">
-          <img src="../../img/kid/add_follower.png" class="add-follower-button">
+          <img src="../../img/kid/add_follower.png" class="add-follower-button" ng-click="vm.showFollowerModal()">
         </div>
 
         <div class="access-panel">
-          <div ng-if="vm.accessing()" class="block-access">
+          <div ng-if="vm.accessing()" class="block-access" ng-click="vm.changeAccessRight(false)">
             <img src="../../img/kid/block.png" class="block-access-img">
             <div class="block-tile block">
               <span>block kid from</span>
@@ -141,7 +141,7 @@
           </div>
 
           <div ng-if="!vm.accessing()" class="access-remove">
-            <div class="grant-access">
+            <div class="grant-access" ng-click="vm.changeAccessRight(true)">
               <img src="../../img/kid/grant_access.png" class="grant-access-img">
               <div class="block-tile grant">
                 <span>grant</span>
@@ -149,7 +149,7 @@
               </div>
             </div>
 
-            <div class="remove-from-app">
+            <div class="remove-from-app" ng-click="vm.showKidRemoveModal()">
               <img src="../../img/kid/remove_from_app.png" class="remove-from-app-img">
               <div class="block-tile remove">
                 <span>remove</span>
@@ -172,7 +172,7 @@
 <script id="kid-country-modal" type="text/ng-template">
   <ion-modal-view>
 
-    <ion-header-bar class="bar bar-header bar-energized" ng-click="modalKidCountry.hide()">
+    <ion-header-bar class="bar bar-header bar-energized" ng-click="vm.hideCountryModal()">
       <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
       <h1 class="title">Choose your country</h1>
     </ion-header-bar>
@@ -180,7 +180,7 @@
     <ion-content class="padding">
       <div ng-repeat="country in vm.countryCodes">
         <ion-radio ng-model="vm.countryCode" ng-value="country.code"
-                   ng-click="vm.chosenCountry()">
+                   ng-click="vm.hideCountryModal()">
           {{country.name}}:  {{country.code}}
         </ion-radio>
       </div>
@@ -219,8 +219,73 @@
 </script>
 
 
-<script id="kid-test-modal" type="text/ng-template">
-  <ion-modal-view class="kids-exist-modal">
-    <h1 ng-click="ttest.hide()">Atata</h1>
+<script id="kid-remove-modal" type="text/ng-template">
+  <div class="kid-backdrop" ng-click="vm.hideKidRemoveModal()"></div>
+  <ion-modal-view class="kids-remove-modal">
+
+    <ion-content class="remove-main-block">
+
+      <div class="title-kr">
+        <span class="question-kr">are you sure?</span>
+        <span class="description-kr">this kid will be removed permanently.</span>
+      </div>
+
+      <div class="button-block-kr">
+        <div class="half-kr">
+          <img src="../../img/kid/modal/no.png" class="no-kr" ng-click="vm.hideKidRemoveModal()">
+        </div>
+
+        <div class="half-kr">
+          <img src="../../img/kid/modal/yes.png" class="yes-kr" ng-click="vm.removeKidModal()">
+        </div>
+      </div>
+    </ion-content>
+
+  </ion-modal-view>
+</script>
+
+<script id="add-follower-modal" type="text/ng-template">
+  <div class="kid-backdrop" ng-click="vm.hideFollowerModal()"></div>
+  <ion-modal-view class="add-follower-modal">
+
+    <ion-content class="follower-main-block">
+
+      <div class="title-f">
+        <span class="question-f">insert parent number</span>
+      </div>
+
+      <div class="phone-block-f">
+
+          <img src="../../img/authorization/phone.png" class="phone-ico-f">
+
+          <div class="country-and-phone-f">
+
+            <div class="country-select-f" ng-click="vm.showCountryModal()">
+              {{vm.countryCode}}
+            </div>
+
+            <div class="phone-f">
+              <input class="input-phone-f"
+                     type="tel"
+                     ng-model="vm.phone"
+                     maxlength="10"
+                     autofocus
+                     oninput="this.value = this.value.replace(/\D/, '')">
+            </div>
+          </div>
+
+      </div>
+
+      <div class="button-block-f">
+        <div class="half-f">
+          <img src="../../img/kid/modal/cancel.png" class="cancel-f" ng-click="vm.hideFollowerModal()">
+        </div>
+
+        <div class="half-f">
+          <img src="../../img/kid/modal/invite.png" class="invite-f" ng-click="vm.addFollower()">
+        </div>
+      </div>
+    </ion-content>
+
   </ion-modal-view>
 </script>

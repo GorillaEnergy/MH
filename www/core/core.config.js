@@ -25,6 +25,9 @@
                 resolve: {
                   security: function ($timeout, securityService) {
                     return $timeout(function() { securityService.authorization(); });
+                  },
+                  countries: function (countryCodes) {
+                    return countryCodes.list();
                   }
                 }
             })
@@ -59,6 +62,9 @@
                   },
                   followers: function (userService) {
                     return userService.getFollowers();
+                  },
+                  countries: function (countryCodes) {
+                    return countryCodes.list();
                   }
                 }
             })
@@ -126,19 +132,34 @@
                 // }
               }
             })
-
-            // .state('parent-main-page', {
-            //   cache: false,
-            //   url: '/parent-main-page',
-            //   templateUrl: 'templates/parent_main_page/parent_main_page.html',
-            //   controller: 'ParentMainPageController',
-            //   controllerAs: 'vm',
-            //   resolve: {
-            //     // security: function ($timeout, securityService) {
-            //     //   return $timeout(function() { securityService.isLoggedIn(); });
-            //     // }
-            //   }
-            // })
+            .state('logs', {
+              cache: false,
+              url: '/logs',
+              templateUrl: 'templates/logs/logs.html',
+              controller: 'LogsController',
+              controllerAs: 'vm',
+              resolve: {
+                // security: function ($timeout, securityService) {
+                //   return $timeout(function() { securityService.isLoggedIn(); });
+                // }
+              }
+            })
+            .state('parent-main-page', {
+              cache: false,
+              url: '/parent-main-page',
+              templateUrl: 'templates/parent-main-page/parent-main-page.html',
+              controller: 'ParentMainPageController',
+              controllerAs: 'vm',
+              resolve: {
+                // security: function ($timeout, securityService) {
+                //   return $timeout(function() { securityService.isLoggedIn(); });
+                // },
+                kids: function (userService) {
+                  userService.uploadKids();
+                  return userService.getKids();
+                }
+              }
+            })
 
 
     }

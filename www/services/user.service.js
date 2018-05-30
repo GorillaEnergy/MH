@@ -4,10 +4,10 @@
     angular.module('service.userService', [])
         .service('userService', userService);
 
-    userService.$inject = ['http', 'url', '$localStorage', '$sessionStorage', '$rootScope', '$state'];
+    userService.$inject = ['http', 'url', '$localStorage', '$sessionStorage', '$state'];
 
 
-    function userService(http, url, $localStorage, $sessionStorage, $rootScope, $state) {
+    function userService(http, url, $localStorage, $sessionStorage, $state) {
         let model = {};
         model.checkPhone = checkPhone;
         model.login = login;
@@ -34,7 +34,6 @@
         model.getKidIndex = getKidIndex;
 
 
-
         return model;
 
         function checkPhone(data) {
@@ -42,6 +41,7 @@
         }
         function login(data, phone) {
             return http.post(url.auth.login, data).then(function (res) {
+              if (res.status === 'success') {
                 setUser(res.data.user);
                 setToken(res.data.token);
                 setPhone(phone);
@@ -54,6 +54,10 @@
                 } else if (res.data.user.role_id === 1) {
                   $state.go('kid-main-page');
                 }
+              } else {
+                console.log('authorization error');
+              }
+
             });
         }
         function logout() {

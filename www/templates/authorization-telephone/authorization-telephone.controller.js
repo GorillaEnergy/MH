@@ -4,10 +4,10 @@
   angular.module('app')
     .controller('AuthorizationController', AuthorizationController);
 
-  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', 'countryCodes', 'userService'];
+  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', 'countries', 'userService'];
 
 
-  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, countryCodes, userService) {
+  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, countries, userService) {
     const vm = this;
 
     vm.checkPhone = checkPhone;
@@ -16,11 +16,11 @@
     vm.changeNumber = changeNumber;
     vm.chosenCountry = chosenCountry;
 
-    vm.countryCodes = countryCodes;
-    // vm.countryCode = countryCodes[0].code; //country be default
+    vm.countryCodes = countries;
+    // vm.countryCode = countries[108].code; //country be default Israel
     // vm.phone = '';
 
-    vm.countryCode = countryCodes[1].code; //country be default
+    vm.countryCode = countries[235].code; //country be default Ukraine
     vm.phone = '681662690';
 
     vm.phoneNumberFull = '';
@@ -56,13 +56,21 @@
       console.log('checkCode()');
 
       if (String(vm.approvalCode).length === 4) {
+        // let verificationData = {
+        //   phone: vm.phone,
+        //   code: vm.countryCode,
+        //   verification_code: vm.approvalCode
+        // };
+        //
+        // let phone = {phone: vm.phone, code: vm.countryCode};
+
         let verificationData = {
-          phone: vm.phone,
-          code: vm.countryCode,
+          phone: '681662690',
+          code: '+380',
           verification_code: vm.approvalCode
         };
 
-        let phone = {phone: vm.phone, code: vm.countryCode};
+        let phone = {phone: '681662690', code: '+380'};;
 
         userService.login(verificationData, phone);
       } else {
@@ -71,7 +79,8 @@
     }
 
     function sendPhone() {
-      let data = {phone: vm.phone, code: vm.countryCode};
+      // let data = {phone: vm.phone, code: vm.countryCode};
+      let data = {phone: '681662690', code: '+380'};
       userService.checkPhone(data).then(function (res) {
         console.log(res);
         vm.approvalCode = res.data;
