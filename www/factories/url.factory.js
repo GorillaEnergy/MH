@@ -15,7 +15,11 @@
                     },
                     user: {
                       userUpdate: baseUrl + 'api/user-update',
+                    },
+                    kid: {
                       createKid: baseUrl + 'api/create-kid',
+                      updateKid: baseUrl + 'api/update-kid',
+                      deleteKid: baseUrl + 'api/delete-kid',
                       uploadKids: baseUrl + 'api/list-kids',
                       uploadFollower: baseUrl + 'api/list-followers',
                     },

@@ -10067,6 +10067,15 @@ a.button {
     margin: 33px 10px 0 0;
     height: 26px; }
 
+.parent-main-page .empty-children {
+  font-family: American;
+  font-size: 22px;
+  text-transform: uppercase;
+  height: fit-content;
+  width: 100%;
+  margin-top: 25px;
+  text-align: center; }
+
 .parent-main-page .kid-block {
   width: 100%;
   height: 97px;
@@ -10316,7 +10325,8 @@ a.button {
 
 .kid-chat-room .main-block {
   background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
-  height: calc(100vh - 157px); }
+  height: calc(100vh - 182px);
+  overflow: scroll; }
   .kid-chat-room .main-block .other-message {
     margin-left: 10px;
     width: 70%; }
@@ -10371,7 +10381,8 @@ a.button {
       height: 45px;
       width: 86%;
       border: solid 1px #64cae2;
-      border-radius: 30px; }
+      border-radius: 30px;
+      padding-left: 10px; }
     .kid-chat-room .input-block .input-and-message ::-webkit-input-placeholder {
       font-size: 17px;
       font-family: Spring;
@@ -10458,37 +10469,36 @@ a.button {
   font-style: normal;
   font-weight: normal; }
 
-.kid-chat .menu-block {
+.kid-messages .menu-block {
   display: flex;
   align-items: center;
   width: 100%;
   height: 72px;
   background-color: #fff;
-  border-bottom: solid 2px #0b1138;
-  margin-top: 24px; }
+  border-bottom: solid 2px #0b1138; }
 
-.kid-chat .menu-block img {
+.kid-messages .menu-block img {
   width: 15px;
   margin-left: 9px; }
 
-.kid-chat .menu-block p {
+.kid-messages .menu-block p {
   margin: auto;
   font-size: 25px;
   text-transform: uppercase;
   color: #0b1138;
   font-family: American; }
 
-.kid-chat .main-block {
+.kid-messages .main-block {
   padding-top: 24px;
-  height: 100vh;
+  height: calc(100vh - 72px);
   width: 100%;
   background: url("../../img/kid-chat/background.png") no-repeat center/cover; }
-  .kid-chat .main-block .consulter {
+  .kid-messages .main-block .consulter {
     margin-bottom: 10px;
     display: flex;
     justify-content: center; }
 
-.kid-chat .chat-block {
+.kid-messages .chat-block {
   display: inline-flex;
   width: 96%;
   border-radius: 6px;
@@ -10499,7 +10509,7 @@ a.button {
   background-size: cover;
   background-position: center;
   position: relative; }
-  .kid-chat .chat-block .status {
+  .kid-messages .chat-block .status {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -10509,7 +10519,7 @@ a.button {
     z-index: 1;
     top: -8px;
     left: -5px; }
-  .kid-chat .chat-block span {
+  .kid-messages .chat-block span {
     border-radius: 50%;
     background-color: #e31b4f;
     border: solid 2px #0b1138;
@@ -10520,33 +10530,33 @@ a.button {
     bottom: 13px;
     color: #fff;
     text-align: center; }
-  .kid-chat .chat-block .photo-consult {
+  .kid-messages .chat-block .photo-consult {
     background: url("https://vignette.wikia.nocookie.net/himym/images/5/51/Bender.jpg/revision/latest?cb=20130506083200") no-repeat center/cover;
     height: 67px;
     width: 70px;
     -webkit-clip-path: polygon(0 0, 100% 0, 81% 72%, 0 100%);
     shape-margin: 20px; }
-  .kid-chat .chat-block .chat-content {
+  .kid-messages .chat-block .chat-content {
     display: inline-flex;
     width: 100%;
     justify-content: space-between; }
-    .kid-chat .chat-block .chat-content .date-and-icon {
+    .kid-messages .chat-block .chat-content .date-and-icon {
       margin-right: 10px; }
-      .kid-chat .chat-block .chat-content .date-and-icon .time {
+      .kid-messages .chat-block .chat-content .date-and-icon .time {
         height: 38px; }
-      .kid-chat .chat-block .chat-content .date-and-icon p {
+      .kid-messages .chat-block .chat-content .date-and-icon p {
         margin: 0;
         font-family: American; }
-      .kid-chat .chat-block .chat-content .date-and-icon .arrow {
+      .kid-messages .chat-block .chat-content .date-and-icon .arrow {
         width: 33px; }
-      .kid-chat .chat-block .chat-content .date-and-icon .lock {
+      .kid-messages .chat-block .chat-content .date-and-icon .lock {
         width: 25px; }
-    .kid-chat .chat-block .chat-content .info-consult {
+    .kid-messages .chat-block .chat-content .info-consult {
       padding-top: 7px;
       padding-left: 6px; }
-      .kid-chat .chat-block .chat-content .info-consult p {
+      .kid-messages .chat-block .chat-content .info-consult p {
         color: #0b1138; }
-      .kid-chat .chat-block .chat-content .info-consult .consult-name {
+      .kid-messages .chat-block .chat-content .info-consult .consult-name {
         font-family: American;
         font-size: 19px; }
 
@@ -11854,6 +11864,258 @@ p {
       width: 95%;
       height: 42px;
       padding: 0 20px; }
+
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Patrius";
+  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+.settings .menu-block {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  border-bottom: solid 2px #0b1138; }
+  .settings .menu-block img {
+    width: 15px;
+    margin-left: 9px;
+    margin-top: 24px; }
+  .settings .menu-block p {
+    margin: 20px auto 0;
+    font-size: 25px;
+    text-transform: uppercase;
+    color: #0b1138;
+    font-family: American; }
+
+.settings .main-block {
+  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  height: calc(100vh - 72px); }
+  .settings .main-block img {
+    width: 30px;
+    margin-right: 10px; }
+  .settings .main-block .menu-point {
+    width: 92%;
+    padding-top: 37px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; }
+  .settings .main-block .menu-point:first-child {
+    padding-top: 29px; }
+  .settings .main-block p {
+    color: #0b1138;
+    text-transform: uppercase;
+    font-family: Patrius;
+    font-size: 16px; }
+  .settings .main-block .gears {
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+    width: 215px; }
+
+.settings .test-block {
+  height: 300px;
+  overflow: scroll; }
+  .settings .test-block .test-p {
+    line-height: 50px; }
+  .settings .test-block .test-p:first-child {
+    background-color: #62ffaa; }
+  .settings .test-block .test-p:last-child {
+    background-color: #ba39ff; }
+
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Patrius";
+  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+.notifications .menu-block {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  border-bottom: solid 2px #0b1138; }
+  .notifications .menu-block img {
+    width: 15px;
+    margin-left: 9px; }
+  .notifications .menu-block p {
+    margin: auto;
+    font-size: 25px;
+    text-transform: uppercase;
+    color: #0b1138;
+    font-family: American; }
+
+.notifications .main-block {
+  padding-top: 23px;
+  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  height: calc(100vh - 72px); }
+  .notifications .main-block .push-notifications {
+    letter-spacing: -1px; }
+    .notifications .main-block .push-notifications h1 {
+      text-align: center;
+      color: #0b1138;
+      font-family: American;
+      font-size: 33px; }
+    .notifications .main-block .push-notifications .first-toggle {
+      width: 90%;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .notifications .main-block .push-notifications .first-toggle .input-label {
+        padding-bottom: 15px;
+        color: #0b1138;
+        width: 70%;
+        max-width: unset;
+        font-size: 16px;
+        font-family: Patrius; }
+        .notifications .main-block .push-notifications .first-toggle .input-label span {
+          font-size: 14px; }
+      .notifications .main-block .push-notifications .first-toggle .item {
+        border: unset;
+        background: unset; }
+        .notifications .main-block .push-notifications .first-toggle .item .toggle {
+          top: 0; }
+      .notifications .main-block .push-notifications .first-toggle .toggle input:checked + .track {
+        border-color: #0b1138;
+        background-color: #0b1138; }
+  .notifications .main-block img {
+    width: 30px;
+    margin-right: 10px; }
+  .notifications .main-block .settings {
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+    width: 230px; }
+
+@media (max-width: 321px) {
+  .parent-setting-notifications .main-block .settings {
+    width: 150px; } }
+
+@media (min-width: 567px) {
+  .parent-setting-notifications .main-block {
+    height: calc(100vw - 72px); }
+    .parent-setting-notifications .main-block .settings {
+      width: 150px; } }
+
+@media (min-width: 767px) {
+  .parent-setting-notifications .menu-block p {
+    font-size: 35px; }
+  .parent-setting-notifications .main-block {
+    height: calc(100vh - 72px); }
+    .parent-setting-notifications .main-block .push-notifications .first-toggle .input-label {
+      font-size: 20px; }
+      .parent-setting-notifications .main-block .push-notifications .first-toggle .input-label span {
+        font-size: 18px; }
+    .parent-setting-notifications .main-block .settings {
+      width: 300px; } }
+
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Patrius";
+  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Neue";
+  src: url("../../css/fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+.about-block .menu-block {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  border-bottom: solid 2px #0b1138; }
+  .about-block .menu-block img {
+    width: 15px;
+    margin-left: 9px; }
+  .about-block .menu-block p {
+    margin: auto;
+    font-size: 25px;
+    text-transform: uppercase;
+    color: #0b1138;
+    font-family: American; }
+
+.about-block .main-block {
+  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  min-height: calc(100vh - 72px); }
+  .about-block .main-block p {
+    font-family: Neue;
+    font-size: 19px;
+    padding: 15px;
+    word-spacing: 4px;
+    text-align: justify;
+    line-height: 25px; }
+
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Patrius";
+  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Neue";
+  src: url("../../css/fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+.terms-condition-block .menu-block {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  border-bottom: solid 2px #0b1138; }
+  .terms-condition-block .menu-block img {
+    width: 15px;
+    margin-left: 9px; }
+  .terms-condition-block .menu-block p {
+    margin: auto;
+    font-size: 25px;
+    text-transform: uppercase;
+    color: #0b1138;
+    font-family: American; }
+
+.terms-condition-block .main-block {
+  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  min-height: calc(100vh - 72px); }
+  .terms-condition-block .main-block p {
+    font-family: Neue;
+    font-size: 19px;
+    padding: 15px;
+    word-spacing: 4px;
+    text-align: justify;
+    line-height: 25px; }
 
 ul#ion-segment {
   display: -webkit-box;

@@ -10,45 +10,39 @@
   function securityService(http, url, $localStorage, $sessionStorage, $rootScope, $state, userService) {
     let model = {};
     model.authorization = authorization;
-    model.profile = profile;
-    model.kid = kid;
-    model.payment = payment;
-    model.isLoggedIn = isLoggedIn;
+    model.onlyKid = onlyKid;
+    model.onlyParent = onlyParent;
+    model.commonAccess = commonAccess;
 
 
     return model;
 
     function authorization() {
       if (userService.getToken()) {
-        return $state.go('menu');
+
+        if (userService.getUser().role_id === 1) {
+          return $state.go('kid-main-page');
+        } else if (userService.getUser().role_id === 2) {
+          return $state.go('parent-main-page');
+        }
+
       }
     }
-
-    function profile() {
+    function onlyKid() {
+      if (!userService.getToken()) {
+        return $state.go('authorization');
+      } else if (userService.getUser().role_id === 2) {
+        return $state.go('parent-main-page');
+      }
+    }
+    function onlyParent() {
       if (!userService.getToken()) {
         return $state.go('authorization');
       } else if (userService.getUser().role_id === 1) {
-        return $state.go('main-child');
+        return $state.go('kid-main-page');
       }
     }
-
-    function kid() {
-      if (!userService.getToken()) {
-        return $state.go('authorization');
-      } else if (userService.getUser().role_id === 1) {
-        return $state.go('main-child');
-      }
-    }
-
-    function payment() {
-      if (!userService.getToken()) {
-        return $state.go('authorization');
-      } else if (userService.getUser().role_id === 1) {
-        return $state.go('main-child');
-      }
-    }
-
-    function isLoggedIn() {
+    function commonAccess() {
       if (!userService.getToken()) {
         return $state.go('authorization');
       }

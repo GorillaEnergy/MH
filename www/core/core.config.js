@@ -12,7 +12,7 @@
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/authorization');
         // $urlRouterProvider.otherwise('/kid');
-        // $urlRouterProvider.otherwise('/kid-chat');
+        // $urlRouterProvider.otherwise('/kid-messages');
 
         $stateProvider
 
@@ -39,7 +39,7 @@
                 controllerAs: 'vm',
                 resolve: {
                   security: function ($timeout, securityService) {
-                    return $timeout(function() { securityService.profile(); });
+                    return $timeout(function() { securityService.onlyParent(); });
                   },
                   user: function (userService) {
                     return userService.getUser();
@@ -54,7 +54,7 @@
                 controllerAs: 'vm',
                 resolve: {
                   security: function ($timeout, securityService) {
-                    return $timeout(function() { securityService.kid(); });
+                    return $timeout(function() { securityService.onlyParent(); });
                   },
                   kids: function (userService) {
                     userService.uploadKids();
@@ -76,7 +76,7 @@
                 controllerAs: 'vm',
                 resolve: {
                   security: function ($timeout, securityService) {
-                    return $timeout(function() { securityService.isLoggedIn(); });
+                    return $timeout(function() { securityService.commonAccess(); });
                   }
                 }
             })
@@ -88,7 +88,7 @@
               controllerAs: 'vm',
               resolve: {
                 security: function ($timeout, securityService) {
-                  return $timeout(function() { securityService.isLoggedIn(); });
+                  return $timeout(function() { securityService.onlyParent(); });
                 },
                 kids: function (userService) {
                   userService.uploadKids();
@@ -103,33 +103,33 @@
               controller: 'KidMainPageController',
               controllerAs: 'vm',
               resolve: {
-                // security: function ($timeout, securityService) {
-                //   return $timeout(function() { securityService.isLoggedIn(); });
-                // }
-              }
-            })
-            .state('kid-message', {
-              cache: false,
-              url: '/kid-message',
-              templateUrl: 'templates/kid-messages/kid_messages.html',
-              controller: 'KidMessageController',
-              controllerAs: 'vm',
-              resolve: {
-                // security: function ($timeout, securityService) {
-                //   return $timeout(function() { securityService.isLoggedIn(); });
-                // }
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.onlyKid(); });
+                }
               }
             })
             .state('kid-chat', {
               cache: false,
               url: '/kid-chat',
-              templateUrl: 'templates/kid-chat/kid_chat.html',
+              templateUrl: 'templates/kid-chat/kid-chat.html',
               controller: 'KidChatController',
               controllerAs: 'vm',
               resolve: {
-                // security: function ($timeout, securityService) {
-                //   return $timeout(function() { securityService.isLoggedIn(); });
-                // }
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.onlyKid(); });
+                }
+              }
+            })
+            .state('kid-messages', {
+              cache: false,
+              url: '/kid-messages',
+              templateUrl: 'templates/kid-messages/kid-messages.html',
+              controller: 'KidMessagesController',
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.onlyKid(); });
+                }
               }
             })
             .state('logs', {
@@ -139,9 +139,9 @@
               controller: 'LogsController',
               controllerAs: 'vm',
               resolve: {
-                // security: function ($timeout, securityService) {
-                //   return $timeout(function() { securityService.isLoggedIn(); });
-                // }
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.onlyParent(); });
+                }
               }
             })
             .state('parent-main-page', {
@@ -151,19 +151,63 @@
               controller: 'ParentMainPageController',
               controllerAs: 'vm',
               resolve: {
-                // security: function ($timeout, securityService) {
-                //   return $timeout(function() { securityService.isLoggedIn(); });
-                // },
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.onlyParent(); });
+                },
                 kids: function (userService) {
-                  userService.uploadKids();
-                  return userService.getKids();
+                  return userService.uploadKids();
+                }
+              }
+            })
+            .state('settings', {
+              cache: false,
+              url: '/settings',
+              templateUrl: 'templates/settings/settings.html',
+              controller: 'SettingsController',
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.commonAccess(); });
+                }
+              }
+            })
+            .state('notifications', {
+              cache: false,
+              url: '/notifications',
+              templateUrl: 'templates/notifications/notifications.html',
+              controller: 'NotificationsController',
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.onlyParent(); });
+                }
+              }
+            })
+            .state('about-us', {
+              cache: false,
+              url: '/about-us',
+              templateUrl: 'templates/about-us/about-us.html',
+              controller: 'AboutUsController',
+              controllerAs: 'vm',
+              resolve: {
+                // security: function ($timeout, securityService) {
+                //   return $timeout(function() { securityService.commonAccess(); });
+                // }
+              }
+            })
+            .state('terms-conditions', {
+              cache: false,
+              url: '/terms-conditions',
+              templateUrl: 'templates/terms-conditions/terms-conditions.html',
+              controller: 'TermsConditionsController',
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.commonAccess(); });
                 }
               }
             })
 
-
     }
-
-
 })();
 

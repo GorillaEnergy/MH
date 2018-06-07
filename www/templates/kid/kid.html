@@ -3,7 +3,7 @@
 
     <div class="main-block" ng-class="vm.viewType.edit_registered_kid ? 'registered' : 'unregistered'">
 
-      <div class="reg-header title" ng-if="vm.viewType.edit_registered_kid">
+      <div class="reg-header title" ng-if="vm.viewType.edit_registered_kid" ng-click="vm.toMainPage()">
         <img src="../../img/kid/back_arrow.png" name="back_arrow" class="back_arrow">
         <span>{{vm.name}}</span>
       </div>
@@ -13,7 +13,7 @@
       <div class="animation-backdrop" ng-if="vm.animation" ng-click="vm.closeList()"></div>
 
       <div class="kids-block" ng-if="vm.viewType.new_kid" ng-click="vm.openList()">
-        <div ng-repeat="(key, kid) in vm.kids">
+        <div ng-repeat="(key, kid) in vm.kids" ng-if="!kid.payment">
 
           <div ng-class="vm.animation ? vm.kidPosition(key) : vm.kidPosition(key, true)" class="kid-main-pos">
 
@@ -32,7 +32,7 @@
           </div>
 
         </div>
-        <span >new kid</span>
+        <span>new kid</span>
       </div>
 
       <div class="title" ng-if="vm.viewType.edit_unregistered_kid">
@@ -48,7 +48,7 @@
       </div>
 
       <div class="birth-data">
-        <input class="input-kid" type="text" ng-model="vm.date"
+        <input class="input-kid" type="text" ng-model="vm.birth_date"
                ng-class="{'warning': vm.warning.date}"
                placeholder="yyyy-mm-dd">
         <img src="../../img/kid/birth-data.png" class="email-img">
@@ -107,8 +107,8 @@
       </div>
 
       <div ng-if="vm.viewType.edit_unregistered_kid">
-        <div class="add-remove-kid" ng-click="vm.removeKid()" ng-if="vm.viewType.edit_unregistered_kid">
-          <img src="../../img/kid/trash.png" class="add-remove-kid-img">
+        <div class="add-remove-kid" ng-if="vm.viewType.edit_unregistered_kid">
+          <img src="../../img/kid/trash.png" class="add-remove-kid-img" ng-click="vm.removeKid()">
         </div>
 
         <div class="continue-save-button save-button" ng-click="vm.continue()" ng-if="vm.viewType.edit_unregistered_kid">
@@ -158,7 +158,7 @@
           </div>
         </div>
 
-        <div class="continue-save-button save-button">
+        <div class="continue-save-button save-button" ng-click="vm.saveCurrentKid()">
           save
         </div>
       </div>

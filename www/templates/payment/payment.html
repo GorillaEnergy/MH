@@ -8,7 +8,7 @@
           <span>paiment</span>
         </div>
 
-        <div class="kids-block" ng-repeat="(key, kid) in vm.kids">
+        <div class="kids-block" ng-repeat="(key, kid) in vm.kids" ng-if="!kid.payment">
           <div class="kid">
             <img ng-src="../../img/payment/kid{{key}}.png" class="kid-img" ng-if="key <= 2">
             <img src="../../img/payment/kid0.png" class="kid-img" ng-if="key > 2">
@@ -17,7 +17,7 @@
 
             <div class="info" ng-class="vm.kidColor(key)">
 
-              <img src="../../img/payment/edit-ico.png" class="edit" ng-click="vm.ediKid(kid, key)">
+              <img src="../../img/payment/edit-ico.png" class="edit" ng-click="vm.ediKid(key)">
               <div class="kid-name"><span>{{kid.name}}</span></div>
             </div>
 
@@ -25,7 +25,8 @@
         </div>
 
         <div class="another-kid">
-          <img src="../../img/payment/add-another-kid.png" class="add-img">
+          <img src="../../img/payment/add-another-kid.png" class="add-img"
+          ng-click="vm.addKid()">
         </div>
 
         <div class="price-block">

@@ -24,7 +24,9 @@
         model.getUser = getUser;
 
         model.createKid = createKid;
+        model.updateKid = updateKid;
         model.uploadKids = uploadKids;
+        model.deleteKid = deleteKid;
         model.setKids = setKids;
         model.getKids = getKids;
 
@@ -49,8 +51,7 @@
                 if (!res.data.user.name) {
                   $state.go('profile');
                 } else if (res.data.user.role_id === 2) {
-                  console.log('Маршрутизация на parent-main-page, пока не подключена');
-                  // $state.go('parent-main-page');
+                  $state.go('parent-main-page');
                 } else if (res.data.user.role_id === 1) {
                   $state.go('kid-main-page');
                 }
@@ -86,19 +87,26 @@
           return http.post(url.user.userUpdate, data);
         }
         function setUser(user) {
-        $localStorage.user = user;
-      }
+          $localStorage.user = user;
+        }
         function getUser() {
             return $localStorage.user;
         }
 
         function createKid(data) {
-          return http.post(url.user.createKid, data);
+          return http.post(url.kid.createKid, data);
+        }
+        function updateKid(data) {
+          return http.post(url.kid.updateKid, data);
         }
         function uploadKids() {
-          return http.get(url.user.uploadKids).then(function (res) {
+          return http.get(url.kid.uploadKids).then(function (res) {
             setKids(res.data);
+            return res.data;
           });
+        }
+        function deleteKid(data) {
+          return http.post(url.kid.deleteKid, data);
         }
         function setKids(kids) {
           $localStorage.kids = kids;

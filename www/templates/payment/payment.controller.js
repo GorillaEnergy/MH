@@ -4,46 +4,36 @@
   angular.module('app')
     .controller('PaymentController', PaymentController);
 
-  PaymentController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal',
+  PaymentController.$inject = ['$localStorage', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal',
                                 'kids'];
 
 
-  function PaymentController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal,
+  function PaymentController($localStorage, $state, $scope, $stateParams, userService, $timeout, $ionicModal,
                              kids) {
     const vm = this;
 
     vm.ediKid = ediKid;
     vm.kidColor = kidColor;
+    vm.addKid = addKid;
 
     let  date = new Date();
     console.log("Time: ", date.getHours() + ' : ' + date.getMinutes());
-
-    // firebase.database().ref().child('test').child ('first').set('first');
-    // firebase.database().ref().child('test').child ('second').set('second');
-
-    let data = {};
-    data.title = 'title';
-    data.value = 10;
-    let fb = firebase.database();
-    // fb.ref().child('test').child('test').set(data);
-
-    // $timeout(function () {
-    //   fb.ref('/test/test').remove();
-    // }, 10000);
-
-    fb.ref('/test').on('value', (snapshot) => {
-      console.log(snapshot.val());
-      // console.log(snapshot.val().limitToLast(1));
-    });
+    // console.log(date.toISOString());
+    // console.log(date.toISOString().split('.')[0].split('T').join(' '));
 
     vm.kids = kids;
     vm.totalPrice = totalPriceCalc(vm.kids.length);
 
-    function ediKid(kid, index) {
-
-      console.log(kid);
-      console.log(index);
+    function ediKid(index) {
+      $localStorage.kid_index = index;
+      $state.go('kid');
     }
+
+    function addKid() {
+      delete $localStorage.kid_index;
+      $state.go('kid');
+    }
+
     function kidColor(index) {
       let name = 'kid-color' + index;
       return name;
@@ -66,10 +56,5 @@
     }).then(function (modal) {
       $scope.paymentModal = modal;
     });
-
-    function chosenCountry() {
-      $scope.paymentModal.hide();
-    }
-
   }
 })();

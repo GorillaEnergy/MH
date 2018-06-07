@@ -56,21 +56,13 @@
       console.log('checkCode()');
 
       if (String(vm.approvalCode).length === 4) {
-        // let verificationData = {
-        //   phone: vm.phone,
-        //   code: vm.countryCode,
-        //   verification_code: vm.approvalCode
-        // };
-        //
-        // let phone = {phone: vm.phone, code: vm.countryCode};
-
         let verificationData = {
-          phone: '681662690',
-          code: '+380',
+          phone: vm.phone,
+          code: vm.countryCode,
           verification_code: vm.approvalCode
         };
 
-        let phone = {phone: '681662690', code: '+380'};;
+        let phone = {phone: vm.phone, code: vm.countryCode};
 
         userService.login(verificationData, phone);
       } else {
@@ -79,8 +71,7 @@
     }
 
     function sendPhone() {
-      // let data = {phone: vm.phone, code: vm.countryCode};
-      let data = {phone: '681662690', code: '+380'};
+      let data = {phone: vm.phone, code: vm.countryCode};
       userService.checkPhone(data).then(function (res) {
         console.log(res);
         vm.approvalCode = res.data;
