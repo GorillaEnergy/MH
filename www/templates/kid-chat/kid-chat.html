@@ -1,0 +1,38 @@
+<ion-view class="kid-chat-room">
+  <ion-content>
+    <div class="menu-block">
+
+      <img src="../../img/kid-chat-room/back-arrow.png" ng-click="vm.toMessages()">
+      <p ng-if="vm.consultantName" ng-click="vm.toMessages()">
+        {{vm.consultantName}}
+      </p>
+      <img src="../../img/kid-chat-room/icon.png" class="icon-menu" ng-click="vm.blockButton()">
+
+      <div class="dialog" ng-if="vm.reportMenu">
+        <p ng-click="vm.report()">report</p>
+        <p ng-click="vm.block()">block</p>
+      </div>
+    </div>
+    <div class="main-block">
+      <div ng-repeat="(key, message) in vm.messages">
+        <div class="day" ng-if="vm.dateHeader($index)">
+          <p>{{vm.dateConverter(message.date)}}</p>
+          <!--<p>{{vm.date | date : "dd MMMM yyyy"}}</p>-->
+        </div>
+        <div ng-class="vm.ownMessage(key) ? 'my-message-block' : 'other-message' ">
+          <div class="message-time" ng-if="vm.timeHeader($index)">
+            <p>{{vm.timeConverter(message.date)}}</p>
+          </div>
+          <div class="my-message"><p>{{message.text}}</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-block">
+      <div class="input-and-message">
+        <input type="text" placeholder="Message" ng-model="vm.message_input">
+        <img src="../../img/kid-chat-room/enter-message.png" ng-click="vm.sendMessage()">
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

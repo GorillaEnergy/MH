@@ -1,0 +1,49 @@
+<ion-view class="notifications">
+  <ion-content>
+    <div class="menu-block" ng-click="vm.toSettings()">
+      <img src="../../img/kid-chat-room/back-arrow.png">
+      <p>notifications</p>
+    </div>
+    <div class="main-block">
+      <div class="without-picture">
+        <div class="push-notifications">
+          <h1>push notifications</h1>
+          <div class="first-toggle">
+            <ion-label>new comment<br><span>from consulters</span></ion-label>
+            <label class="toggle">
+              <input type="checkbox" ng-model="vm.comments" ng-true-value="1" ng-false-value="0"
+                     ng-change="vm.commentsChange()">
+              <div class="track">
+                <div class="handle"></div>
+              </div>
+            </label>
+          </div>
+          <div class="first-toggle">
+            <ion-label>recomendations<br><span>pinned lectures</span></ion-label>
+            <label class="toggle">
+              <input type="checkbox" ng-model="vm.recommendations" ng-true-value="1" ng-false-value="0"
+                     ng-change="vm.recommendationsChange()">
+              <div class="track">
+                <div class="handle"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="push-notifications">
+          <h1>text message notifications</h1>
+          <div class="first-toggle">
+            <ion-label>messages<br><span>when kids are messaging</span></ion-label>
+            <label class="toggle">
+              <input type="checkbox" ng-model="vm.messages" ng-true-value="1" ng-false-value="0"
+                     ng-change="vm.messagesChange()">
+              <div class="track">
+                <div class="handle"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <img src="../../img/notifications/bottom-picture.png" class="settings">
+    </div>
+  </ion-content>
+</ion-view>

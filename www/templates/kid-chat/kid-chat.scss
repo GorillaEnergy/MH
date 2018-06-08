@@ -1,0 +1,277 @@
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Neue";
+  src: url("../../css/fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Patrius";
+  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Spring";
+  src: url("../../css/fonts/Lazy Spring Day.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+.kid-chat-room {
+  .menu-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 72px;
+    background-color: #fff;
+    border-bottom: solid 2px #0b1138;
+    .dialog{
+      z-index: 1;
+      text-align: center;
+      position: absolute;
+      line-height: 30px;
+      width: 100px;
+      padding: 10px 0 10px 0;
+      right: 42px;
+      top: 50px;
+      border: solid 1px #0b1138;
+      border-radius: 10px 0 10px 10px;
+      background-color: #fff;
+      p{
+        margin: 0;
+        text-decoration: underline;
+        font-family:Patrius;
+        font-size:12px;
+      }
+    }
+    img {
+      width: 15px;
+      margin-left: 9px;
+    }
+    p {
+      margin: 0 0 0 18px;
+      font-size: 25px;
+      text-transform: uppercase;
+      color: #0b1138;
+      font-family: American;
+    }
+    .icon-menu{
+      margin-right: 9px;
+      width: 40px;
+    }
+  }
+  .main-block{
+    background: url('../../img/kid-chat-room/background.png') no-repeat center / cover;
+    height: calc(100vh - 182px);
+    overflow: scroll;
+    .other-message{
+      margin-left: 10px;
+      width: 70%;
+      .my-message{
+        p{
+          font-family: Neue;
+          border-radius: 10px 0px 10px 10px;
+          background-color: #fff;
+          padding: 10px ;
+        }
+      }
+      .message-time{
+        p{
+          font-size: 12px;
+          margin: 0;
+          font-family:Patrius;
+        }
+      }
+    }
+    .my-message-block{
+      width: 70%;
+      margin-left: auto;
+      margin-right: 10px;
+      .my-message{
+        p{
+          font-family: Neue;
+          border-radius: 10px 0px 10px 10px;
+          background-color: #64cae2;
+          padding: 10px 0 10px 10px;
+        }
+      }
+      .message-time{
+        text-align: right;
+        p{
+          font-size: 12px;
+          margin: 0;
+          font-family:Patrius;
+        }
+      }
+    }
+    .day{
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      p{
+        font-size:10px;
+        font-family:Patrius;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 7px;
+        -webkit-clip-path: polygon(0 10%,100% 0,97% 75%,10% 100%);
+        background-color: #0b1138;
+      }
+    }
+  }
+  .input-block{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: solid 2px #64cae2;
+    height: 100px;
+    .input-and-message{
+      display: inline-flex;
+      align-items: center;
+      width: 95%;
+    input{
+      height: 45px;
+      width: 86%;
+      border: solid 1px #64cae2;
+      border-radius: 30px;
+      padding-left: 10px;
+    }
+      ::-webkit-input-placeholder {
+        font-size:17px;
+        font-family: Spring;
+        padding-left: 15px;
+        color: #cdced2;
+      }
+      ::-moz-placeholder {
+        font-size:17px;
+        font-family: Spring;
+        padding-left: 15px;
+        color: #cdced2;
+      }
+      :-ms-input-placeholder {
+        font-size:17px;
+        font-family: Spring;
+        padding-left: 15px;
+        color: #cdced2;
+      }
+      :-moz-placeholder {
+        font-size:17px;
+        font-family: Spring;
+        padding-left: 15px;
+        color: #cdced2;
+      }
+      img{
+        margin-left: auto;
+        height: 40px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 767px){
+  .kid-chat-room{
+    .menu-block {
+      .dialog{
+        right: 59px;
+        top: 59px;
+        line-height: 48px;
+        width: 200px;
+          p{
+            font-size: 25px;
+          }
+      }
+      p{
+        font-size: 40px;
+      }
+      img{
+        width: 30px;
+      }
+      .icon-menu{
+        width: 60px;
+      }
+    }
+    .main-block{
+      .day{
+        p{
+          font-size: 25px;
+          padding: 17px;
+        }
+      }
+      .other-message{
+        .my-message{
+          p{
+            line-height: 30px;
+            font-size: 25px;
+          }
+        }
+        .message-time{
+          p{
+            font-size: 20px;
+          }
+        }
+      }
+      .my-message-block {
+        .message-time{
+          p{
+            font-size: 20px;
+          }
+        }
+        .my-message {
+          p{
+            line-height: 30px;
+            font-size: 25px;
+          }
+        }
+      }
+    }
+    .input-block{
+      .input-and-message{
+        input{
+          height: 60px;
+        }
+        ::-webkit-input-placeholder {
+          font-size:25px;
+          font-family: Spring;
+          padding-left: 15px;
+          color: #cdced2;
+        }
+        ::-moz-placeholder {
+          font-size:25px;
+          font-family: Spring;
+          padding-left: 15px;
+          color: #cdced2;
+        }
+        :-ms-input-placeholder {
+          font-size:25px;
+          font-family: Spring;
+          padding-left: 15px;
+          color: #cdced2;
+        }
+        :-moz-placeholder {
+          font-size:25px;
+          font-family: Spring;
+          padding-left: 15px;
+          color: #cdced2;
+        }
+        img{
+          height: 60px;
+        }
+      }
+    }
+  }
+}
+@media screen and(min-width: 568px){
+  .kid-chat-room {
+    .main-block{
+      height: 100vw;
+  }
+  }
+}
+
+
+

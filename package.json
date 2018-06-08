@@ -15,7 +15,7 @@
     "android-versions": "^1.2.1",
     "angular-chart.js": "^1.1.1",
     "cordova": "^7.1.0",
-    "cordova-android": "^6.3.0",
+    "cordova-android": "6.3.0",
     "cordova-ios": "^4.5.4",
     "cordova-plugin-android-native-pdfviewer": "git+https://github.com/gpanos/cordova-plugin-android-native-pdfviewer.git",
     "cordova-plugin-compat": "git+https://github.com/apache/cordova-plugin-compat.git",
@@ -44,9 +44,7 @@
       "cordova-plugin-datepicker": {}
     },
     "platforms": [
-      "windows",
-      "android",
-      "ios"
+      "windows"
     ]
   }
 }

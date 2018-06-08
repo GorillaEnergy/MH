@@ -1,0 +1,42 @@
+<ion-view class="settings">
+    <ion-content>
+        <div class="menu-block" ng-click="vm.toMenu()">
+            <img src="../../img/kid-chat-room/back-arrow.png">
+            <p ng-if="vm.settings">{{vm.settings}}</p>
+        </div>
+        <div class="main-block">
+            <div class="menu-point" ng-click="vm.toNotifications()">
+                <p>notifications</p>
+                <img src="../../img/kid-chat/arrow-to-chat.png">
+            </div>
+            <div class="menu-point" ng-click="vm.toTutorial()">
+                <p>tutorial</p>
+                <img src="../../img/kid-chat/arrow-to-chat.png">
+            </div>
+            <div class="menu-point" ng-click="vm.toProfile()">
+                <p>profile</p>
+                <img src="../../img/kid-chat/arrow-to-chat.png">
+            </div>
+            <div class="menu-point" ng-click="vm.toKid()">
+                <p>add kid</p>
+                <img src="../../img/kid-chat/arrow-to-chat.png">
+            </div>
+            <div class="menu-point" ng-click="vm.addParent()">
+                <p>add parent</p>
+                <img src="../../img/kid-chat/arrow-to-chat.png">
+            </div>
+            <div class="menu-point" ng-click="vm.toTC()">
+                <p>terms & conditions</p>
+                <img src="../../img/kid-chat/arrow-to-chat.png">
+            </div>
+            <img src="../../img/settings/gears.png" class="gears">
+        </div>
+
+        <!--<div class="test-block" id="root">-->
+          <!--<p ng-repeat="elm in vm.testArr" class="test-p"  id="anchor{{elm}}">-->
+            <!--{{elm}}-->
+          <!--</p>-->
+        <!--</div>-->
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,132 @@
+.parent-main-page {
+
+  .main-block {
+    height: 100vh;
+    min-height: 100vh;
+    width: 100vw;
+    background: url(../../img/parent-main-page/parent-main-page-bg.png) no-repeat;
+    background-size: cover;
+    background-position: inherit;
+    position: relative;
+    padding: 75px 10px 10px;
+  }
+
+  .header {
+    width: 100%;
+    height: 73px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    text-align: right;
+    border-bottom: 2px solid #0b1138;
+
+    .toolbar-btn {
+      margin: 33px 10px 0 0;
+      height: 26px;
+    }
+  }
+
+  .empty-children {
+    font-family: American;
+    font-size: 22px;
+    text-transform: uppercase;
+    height: fit-content;
+    width: 100%;
+    margin-top: 25px;
+    text-align: center;
+  }
+
+  .kid-block {
+    width: 100%;
+    height: 97px;
+    margin: 0 auto;
+    //position: relative;
+    padding-top: 50px;
+  }
+  .kid {
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px solid #0b1138;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #2fbc09;
+  }
+  .kid-with-cloud {
+    width: calc(100% - 35px);
+    padding: 11px 90px 0 90px;
+    margin-left: 20px;
+    margin-right: 15px;
+  }
+  .kid-without-cloud {
+    width: calc(100% - 20px);
+    padding: 11px 90px 0 90px;
+    margin-left: 20px;
+  }
+  .kid-img {
+    position: absolute;
+    bottom: -3px;
+    left: -20px;
+    height: 90px;
+  }
+  .kid-warning {
+    position: absolute;
+    bottom: 14px;
+    left: 34px;
+    height: 45px;
+  }
+  .kid-call-now {
+    position: absolute;
+    bottom: 14px;
+    left: 34px;
+    height: 45px;
+  }
+  .kid-name {
+    font-family: American;
+    font-size: 24px;
+    color: white;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 100%;
+    width: 100%;
+  }
+  .kid-cloud {
+    position: absolute;
+    bottom: -12px;
+    right: -19px;
+    height: 72px;
+  }
+
+  .kid-color-warnnig {
+    background-color: #bf1340 !important;
+  }
+  .kid-color0 {
+    background-color: orangered !important;
+  }
+  .kid-color1 {
+    background-color: #2fbc09 !important;
+  }
+  .kid-color2 {
+    background-color: #0748da !important;
+  }
+  .kid-color3 {
+    background-color: darkgoldenrod !important;
+  }
+  .kid-color4 {
+    background-color: darkmagenta !important;
+  }
+  .kid-color5 {
+    background-color: darksalmon !important;
+  }
+  .kid-color6 {
+    background-color: darkslategrey !important;
+  }
+  .kid-color7 {
+    background-color: olivedrab !important;
+  }
+
+
+}

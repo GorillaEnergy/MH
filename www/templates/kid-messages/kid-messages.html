@@ -1,0 +1,36 @@
+<ion-view class="kid-messages">
+  <ion-content>
+    <div class="menu-block" ng-click="vm.toKidMainPage()">
+      <img src="../../img/kid-chat/back-arrow.png">
+      <p>Messages</p>
+    </div>
+    <div class="main-block">
+      <div ng-repeat="(key,consultant) in vm.consultants" class="consulter">
+        <div class="chat-block" ng-click="vm.toChat(key, consultant)">
+          <div class="status" ng-if="consultant.status"></div>
+          <span ng-if="consultant.missed_messages">{{consultant.missed_messages}}</span>
+          <div class="photo-consult">
+          </div>
+
+          <div class="chat-content">
+
+            <div class="info-consult">
+              <p class="consult-name" ng-if="consultant.name">{{consultant.name}}</p>
+              <p ng-if="consultant.description">{{consultant.description}}</p>
+            </div>
+
+            <div class="date-and-icon">
+              <div class="time">
+                <p ng-if="consultant.date">{{consultant.date}}</p>
+                <p ng-if="consultant.time">{{consultant.time}}</p>
+              </div>
+              <img src="../../img/kid-chat/arrow-to-chat.png" class="arrow" ng-if="consultant.access">
+              <img src="../../img/kid-chat/locker.png" class="lock" ng-if="!consultant.access">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Patrius";
+  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Neue";
+  src: url("../../css/fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+.terms-condition-block {
+  .menu-block {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 72px;
+    background-color: #fff;
+    border-bottom: solid 2px #0b1138;
+    img {
+      width: 15px;
+      margin-left: 9px;
+    }
+    p {
+      margin: auto;
+      font-size: 25px;
+      text-transform: uppercase;
+      color: #0b1138;
+      font-family: American;
+    }
+  }
+  .main-block {
+    background: url('../../img/kid-chat-room/background.png') no-repeat center / cover;
+    min-height: calc(100vh - 72px);
+    p{
+      font-family: Neue;
+      font-size: 19px;
+      padding: 15px;
+      word-spacing: 4px;
+      text-align: justify;
+      line-height: 25px;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+<ion-view class="psy-logs">
+    <ion-content>
+        <div class="menu-block">
+
+            <img src="../../img/kid-chat-room/back-arrow.png">
+            <p ng-if="vm.kidName">{{vm.kidName}}</p>
+            <img src="../../img/logs/settings.png" class="icon-menu">
+        </div>
+        <div class="main-block">
+           <div ng-repeat="consult in vm.consulters">
+            <div class="miss-call" ng-if="consult.status === 'end'">
+                <div class="title-date">
+                    <p ng-if="consult.name">{{consult.name}}</p>
+                    <p class="date"  ng-if="consult.date">{{consult.date}} <br><span ng-if="consult.time">{{consult.time}}</span></p>
+                </div>
+                <div class="message-block" >
+                    <p ng-if="consult.description">{{consult.description}}</p>
+                    <img src="../../img/logs/down-arrow.png">
+
+                </div>
+            </div>
+            <div class="call-kid" ng-if="consult.status === 'miss'">
+                <div class="title-date">
+                    <p ng-if="consult.name">{{consult.name}}</p>
+                    <p class="date" ng-if="consult.date"> <img src="../../img/logs/warning.png">{{consult.date}} <br><span>{{consult.time}}</span></p>
+                </div>
+                <div class="message-block">
+                    <div class="call-the-kid">
+                        <img src="../../img/logs/phone.png">
+                        <p>call the kid</p>
+                    </div>
+                    <p ng-if="consult.description">{{consult.description}}</p>
+                    <img src="../../img/logs/down-arrow.png">
+                </div>
+            </div>
+            <div class="call-right-now" ng-if="consult.status === 'call'">
+                <div class="title-date">
+                    <p ng-if="consult.name">{{consult.name}}</p>
+                    <p class="date"> <img src="../../img/logs/white-phone.png"> in call <br>right now!</p>
+                </div>
+                <div class="message-block">
+                    <p ng-if="consult.description">{{consult.description}}</p>
+                    <img src="../../img/logs/down-arrow.png">
+                </div>
+            </div>
+           </div>
+        </div>
+
+
+    </ion-content>
+</ion-view>
+
