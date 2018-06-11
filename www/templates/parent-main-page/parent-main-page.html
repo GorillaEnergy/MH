@@ -4,21 +4,21 @@
     <div class="main-block">
 
       <div class="header">
-        <img src="../../img/parent-main-page/tool_bar.png" class="toolbar-btn"
+        <img src="./img/parent-main-page/tool_bar.png" class="toolbar-btn"
              ng-click="vm.toMenu()">
       </div>
 
       <div ng-repeat="(key, kid) in vm.kids" class="kid-block" ng-if="kid.payment">
         <div class="kid" ng-class="vm.clouds ? 'kid-with-cloud' : 'kid-without-cloud'">
-          <img ng-src="../../img/parent-main-page/kid{{key}}.png" class="kid-img">
-          <img src="../../img/parent-main-page/warning.png" class="kid-warning" ng-if="vm.warning">
-          <img src="../../img/parent-main-page/in_call_right_now.png" class="kid-call-now" ng-if="vm.callRightNow">
+          <img ng-src="./img/parent-main-page/kid{{key}}.png" class="kid-img">
+          <img src="./img/parent-main-page/warning.png" class="kid-warning" ng-if="vm.warning">
+          <img src="./img/parent-main-page/in_call_right_now.png" class="kid-call-now" ng-if="vm.callRightNow">
 
           <div class="kid-name" ng-click="vm.kidLogs(key)">
               {{kid.name}}
           </div>
 
-          <img ng-src="../../img/parent-main-page/empty_cloud.png" class="kid-cloud" ng-if="vm.clouds">
+          <img ng-src="./img/parent-main-page/empty_cloud.png" class="kid-cloud" ng-if="vm.clouds">
         </div>
       </div>
 

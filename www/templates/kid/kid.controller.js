@@ -13,7 +13,7 @@
     const vm = this;
 
     vm.kidPosition = kidPosition;
-    vm.kidColorModal = kidColorModal;
+    vm.kidColorAnimation = kidColorAnimation;
     vm.continue = toPayment;
     vm.saveCurrentKid = saveCurrentKid;
     vm.addAnotherKid = addAnotherKid;
@@ -152,8 +152,12 @@
       }
     }
 
-    function kidColorModal(index) {
-      return 'kid-modal-' + index;
+    function kidColorAnimation(index) {
+      if (index <= 5) {
+        return 'kid-color-' + index;
+      } else {
+        return 'kid-color-overflow';
+      }
     }
 
     function editKid(kid, index) {

@@ -67,16 +67,17 @@
     }
   }
   .main-block{
-    background: url('../../img/kid-chat-room/background.png') no-repeat center / cover;
+    background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
     height: calc(100vh - 182px);
     overflow: scroll;
     .other-message{
-      margin-left: 10px;
       width: 70%;
+      margin-left: 10px;
+      margin-bottom: 10px;
       .my-message{
         p{
           font-family: Neue;
-          border-radius: 10px 0px 10px 10px;
+          border-radius: 10px 0 10px 10px;
           background-color: #fff;
           padding: 10px ;
         }
@@ -93,10 +94,11 @@
       width: 70%;
       margin-left: auto;
       margin-right: 10px;
+      margin-bottom: 10px;
       .my-message{
         p{
           font-family: Neue;
-          border-radius: 10px 0px 10px 10px;
+          border-radius: 10px 0 10px 10px;
           background-color: #64cae2;
           padding: 10px 0 10px 10px;
         }

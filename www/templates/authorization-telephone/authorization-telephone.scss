@@ -5,7 +5,7 @@
       height: 100vh;
       min-height: 568px;
       width: 100vw;
-      background: url('../../img/authorization/main-backgroun.png') no-repeat;
+      background: url('../img/authorization/main-backgroun.png') no-repeat #64cae2;
       background-size: cover;
     }
 
@@ -60,27 +60,25 @@
 
     .country-and-phone {
       margin: 0 auto;
-      width: 180px;
+      width: 200px;
       height: 100%;
-      font-size: 16px;
+      font-size: 22px;
       display: flex;
       justify-content: space-between;
     }
 
     .country-select {
+      //font-family: "HelveticaNeueCyr";
+      font-weight: 600;
       height: 100%;
       width: 30%;
       margin-left: 5px;
       text-align: right;
     }
-    .phone {
-      height: 100%;
-      width: 60%;
-      margin-right: 5px;
-      text-align: left;
-    }
 
     .tooltip {
+      font-family: "AmericanPatrius";
+      letter-spacing: -1px;
       text-transform: uppercase;
       text-align: center;
       font-size: 15px;
@@ -90,24 +88,29 @@
     }
 
     .login-button {
+      font-family: AmericanPatrius;
       text-transform: uppercase;
       text-align: center;
-      font-size: 22px;
+      font-size: 19px;
       color: white;
-      font-weight: 700;
+      font-weight: 500;
       width: 95%;
       line-height: 46px;
       border: 2px solid #000;
       border-radius: 5px;
       margin: 16px auto;
-      background-color: #ff7300;
+      background: url('../img/authorization/dots.png') center no-repeat;
+      background-size: 140%;
+      box-sizing: border-box;
       //background: linear-gradient(to right, #ff7300 50%,#ffae00 100%, transparent);
-
+    }
+    .button-title {
+      padding-top: 5px;
     }
 
     .trouble-block {
       width: 100%;
-      height: 18vh;
+      height: 132px;
       display: flex;
     }
 
@@ -119,14 +122,16 @@
 
     .send-again-img {
       position: absolute;
-      height: 54%;
+      //height: 54%;
+      height: 72px;
       top: 38%;
       right: 6%;
     }
 
     .change-number-img {
       position: absolute;
-      height: 54%;
+      //height: 54%;
+      height: 72px;
       top: 5%;
       left: 8%;
     }
@@ -141,12 +146,17 @@
     }
 
     .input-phone {
-      font-size: 16px;
-      font-weight: 700;
+      //font-family: "HelveticaNeueCyr";
+      //font-weight: 700;
+      font-size: 22px;
+      font-weight: 600;
       width: 95%;
-      padding-top: 7%;
-      padding-bottom: 2px;
-      height: 90%;
+      height: 100%;
+      line-height: 0;
+      padding-bottom: 0;
+      padding-top: 0;
+      box-sizing: border-box;
+      margin-left: 10px;
     }
 
     .input-code {
@@ -165,6 +175,21 @@
         margin: 8px 0;
       }
     }
+  }
+}
+
+@media (max-height: 640px) {
+  .form-block {
+    height: 75% !important;
+  }
+}
+@media (max-height: 360px) {
+  .form-block {
+    height: 100% !important;
+  }
+  .auth-tel ion-content .man .logo {
+    width: 65%;
+    margin: 0 0 10px 65px;
   }
 }
 

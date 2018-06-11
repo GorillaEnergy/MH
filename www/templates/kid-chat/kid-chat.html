@@ -2,11 +2,11 @@
   <ion-content>
     <div class="menu-block">
 
-      <img src="../../img/kid-chat-room/back-arrow.png" ng-click="vm.toMessages()">
+      <img src="./img/kid-chat-room/back-arrow.png" ng-click="vm.toMessages()">
       <p ng-if="vm.consultantName" ng-click="vm.toMessages()">
         {{vm.consultantName}}
       </p>
-      <img src="../../img/kid-chat-room/icon.png" class="icon-menu" ng-click="vm.blockButton()">
+      <img src="./img/kid-chat-room/icon.png" class="icon-menu" ng-click="vm.blockButton()">
 
       <div class="dialog" ng-if="vm.reportMenu">
         <p ng-click="vm.report()">report</p>
@@ -23,7 +23,9 @@
           <div class="message-time" ng-if="vm.timeHeader($index)">
             <p>{{vm.timeConverter(message.date)}}</p>
           </div>
-          <div class="my-message"><p>{{message.text}}</p></div>
+          <div class="my-message">
+            <p>{{message.text}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -31,7 +33,7 @@
     <div class="input-block">
       <div class="input-and-message">
         <input type="text" placeholder="Message" ng-model="vm.message_input">
-        <img src="../../img/kid-chat-room/enter-message.png" ng-click="vm.sendMessage()">
+        <img src="./img/kid-chat-room/enter-message.png" ng-click="vm.sendMessage()">
       </div>
     </div>
   </ion-content>

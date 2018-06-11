@@ -2,14 +2,15 @@
 
 var defaults = require('./core.defaults');
 var helpers = require('../helpers/index');
+var layouts = require('./core.layouts');
 
 module.exports = function(Chart) {
 
 	Chart.scaleService = {
-		// Scale profile object. Extensions can register new scale types (such as log or DB scales) and then
+		// Scale registration object. Extensions can register new scale types (such as log or DB scales) and then
 		// use the new chart options to grab the correct scale
 		constructors: {},
-		// Use a profile function so that we can move to an ES6 map when we no longer need to support
+		// Use a registration function so that we can move to an ES6 map when we no longer need to support
 		// old browsers
 
 		// Scale config defaults
@@ -38,7 +39,7 @@ module.exports = function(Chart) {
 				scale.fullWidth = scale.options.fullWidth;
 				scale.position = scale.options.position;
 				scale.weight = scale.options.weight;
-				Chart.layoutService.addBox(chart, scale);
+				layouts.addBox(chart, scale);
 			});
 		}
 	};

@@ -1,18 +1,18 @@
 <ion-view class="kid-chat-menu">
   <ion-content>
     <div class="menu-block">
-      <img src="../../img/kid-chat-menu/button.png">
+      <img src="./img/kid-chat-menu/button.png" ng-click="vm.toMenu()">
 
     </div>
       <div class="main-block">
         <div class="call-and-chat">
           <div class="chat" ng-click="vm.toChat()">
-            <img src="../../img/kid-chat-menu/Chat-Hero.png">
+            <img src="./img/kid-chat-menu/Chat-Hero.png">
             <span ng-if="vm.missedMessages">{{vm.missedMessages}}</span>
           </div>
 
           <div class="call" ng-click="vm.toCall()">
-            <img src="../../img/kid-chat-menu/Call-Hero.png">
+            <img src="./img/kid-chat-menu/Call-Hero.png">
             <span ng-if="vm.missedCalls">{{vm.missedCalls}}</span>
           </div>
         </div>

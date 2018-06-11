@@ -8,7 +8,8 @@
         <span>{{vm.name}}</span>
       </div>
 
-      <div class="empty-header" ng-class="!vm.viewType.edit_registered_kid ? 'empty-header-small' : 'empty-header-big'"></div>
+      <div class="empty-header"
+           ng-class="!vm.viewType.edit_registered_kid ? 'empty-header-small' : 'empty-header-big'"></div>
 
       <div class="animation-backdrop" ng-if="vm.animation" ng-click="vm.closeList()"></div>
 
@@ -22,7 +23,8 @@
                 {{kid.name}} &nbsp;
               </span>
 
-              <div class="kids-ico" ng-class="'kid-color-' + key">
+              <!--<div class="kids-ico" ng-class="'kid-color-' + key">-->
+              <div class="kids-ico" ng-class="vm.kidColorAnimation(key)">
                 <span>
                   {{kid.name.charAt(0).toUpperCase()}}
                 </span>
@@ -32,7 +34,9 @@
           </div>
 
         </div>
-        <span>new kid</span>
+        <!--<div>-->
+        <span class="new-kid-title">new kid</span>
+        <!--</div>-->
       </div>
 
       <div class="title" ng-if="vm.viewType.edit_unregistered_kid">
@@ -40,53 +44,54 @@
       </div>
 
 
-      <div class="name">
-        <input class="input-kid" type="text" ng-model="vm.name"
-               ng-class="{'warning': vm.warning.name}">
-        <img ng-src="../../img/kid/kid.png" class="name-img">
-        <p class="tooltip">kid name</p>
-      </div>
+      <div class="data-block">
+        <div class="name">
+          <input class="input-kid" type="text" ng-model="vm.name"
+                 ng-class="{'warning': vm.warning.name}">
+          <img ng-src="./img/kid/kid.png" class="name-img">
+          <p class="tooltip">kid name</p>
+        </div>
 
-      <div class="birth-data">
-        <input class="input-kid" type="text" ng-model="vm.birth_date"
-               ng-class="{'warning': vm.warning.date}"
-               placeholder="yyyy-mm-dd">
-        <img src="../../img/kid/birth-data.png" class="email-img">
-        <p class="tooltip">birth date</p>
-      </div>
+        <div class="birth-data">
+          <input class="input-kid" type="text" ng-model="vm.birth_date"
+                 ng-class="{'warning': vm.warning.date}"
+                 placeholder="yyyy-mm-dd">
+          <img src="./img/kid/birth-data.png" class="birth-img">
+          <p class="tooltip">birth date</p>
+        </div>
 
-      <div class="id">
-        <input class="input-kid" type="number" ng-model="vm.id_number"
-               ng-class="{'warning': vm.warning.id_number}">
-        <img src="../../img/kid/id.png" class="id-img">
-        <p class="tooltip">id number</p>
-      </div>
+        <div class="id">
+          <input class="input-kid" type="number" ng-model="vm.id_number"
+                 ng-class="{'warning': vm.warning.id_number}">
+          <img src="./img/kid/id.png" class="id-img">
+          <p class="tooltip">id number</p>
+        </div>
 
-      <div class="grade">
-        <input class="input-kid" type="text" ng-model="vm.grade"
-               ng-class="{'warning': vm.warning.grade}">
-        <img src="../../img/kid/grade.png" class="grade-img">
-        <p class="tooltip">grade</p>
+        <div class="grade">
+          <input class="input-kid" type="text" ng-model="vm.grade"
+                 ng-class="{'warning': vm.warning.grade}">
+          <img src="./img/kid/grade.png" class="grade-img">
+          <p class="tooltip">grade</p>
+        </div>
+
       </div>
 
       <div class="phone">
 
         <div class="input-block" ng-class="{'warning': vm.warning.phone}">
-          <img src="../../img/authorization/phone.png" class="phone-ico">
+          <img src="./img/authorization/phone.png" class="phone-ico">
 
           <div class="country-and-phone">
             <div class="country-select" ng-click="vm.showCountryModal()">
               {{vm.countryCode}}
             </div>
 
-            <div class="phone">
-              <input class="input-phone"
-                     type="tel"
-                     ng-model="vm.phone"
-                     maxlength="10"
-                     autofocus
-                     oninput="this.value = this.value.replace(/\D/, '')">
-            </div>
+            <input class="input-phone"
+                   type="tel"
+                   ng-model="vm.phone"
+                   maxlength="10"
+                   autofocus
+                   oninput="this.value = this.value.replace(/\D/, '')">
           </div>
         </div>
 
@@ -95,10 +100,9 @@
         </div>
       </div>
 
-
       <div ng-if="vm.viewType.new_kid">
-        <div class="add-remove-kid" ng-click="vm.addAnotherKid()" ng-if="vm.viewType.new_kid">
-          <img src="../../img/kid/add-another-kid.png" class="add-remove-kid-img">
+        <div class="add-remove-kid" ng-if="vm.viewType.new_kid">
+          <img src="./img/kid/add-another-kid.png" class="add-remove-kid-img" ng-click="vm.addAnotherKid()">
         </div>
 
         <div class="continue-save-button continue-button" ng-click="vm.continue()" ng-if="vm.viewType.new_kid">
@@ -108,10 +112,11 @@
 
       <div ng-if="vm.viewType.edit_unregistered_kid">
         <div class="add-remove-kid" ng-if="vm.viewType.edit_unregistered_kid">
-          <img src="../../img/kid/trash.png" class="add-remove-kid-img" ng-click="vm.removeKid()">
+          <img src="./img/kid/trash.png" class="add-remove-kid-img" ng-click="vm.removeKid()">
         </div>
 
-        <div class="continue-save-button save-button" ng-click="vm.continue()" ng-if="vm.viewType.edit_unregistered_kid">
+        <div class="continue-save-button save-button" ng-click="vm.continue()"
+             ng-if="vm.viewType.edit_unregistered_kid">
           save
         </div>
       </div>
@@ -122,18 +127,18 @@
         </div>
 
         <div ng-repeat="(key, follower) in vm.followers" class="followers" ng-class="{'follower-margin': key}">
-            <img src="../../img/kid/follower.png" class="follower-img">
-            <span>{{follower.code}} {{follower.phone}}</span>
-            <img src="../../img/kid/trash.png" class="follower-remove">
+          <img src="./img/kid/follower.png" class="follower-img">
+          <span>{{follower.code}} {{follower.phone}}</span>
+          <img src="./img/kid/trash.png" class="follower-remove">
         </div>
 
         <div class="add-follower">
-          <img src="../../img/kid/add_follower.png" class="add-follower-button" ng-click="vm.showFollowerModal()">
+          <img src="./img/kid/add_follower.png" class="add-follower-button" ng-click="vm.showFollowerModal()">
         </div>
 
         <div class="access-panel">
           <div ng-if="vm.accessing()" class="block-access" ng-click="vm.changeAccessRight(false)">
-            <img src="../../img/kid/block.png" class="block-access-img">
+            <img src="./img/kid/block.png" class="block-access-img">
             <div class="block-tile block">
               <span>block kid from</span>
               <span>accessing the app</span>
@@ -142,7 +147,7 @@
 
           <div ng-if="!vm.accessing()" class="access-remove">
             <div class="grant-access" ng-click="vm.changeAccessRight(true)">
-              <img src="../../img/kid/grant_access.png" class="grant-access-img">
+              <img src="./img/kid/grant_access.png" class="grant-access-img">
               <div class="block-tile grant">
                 <span>grant</span>
                 <span>access</span>
@@ -150,7 +155,7 @@
             </div>
 
             <div class="remove-from-app" ng-click="vm.showKidRemoveModal()">
-              <img src="../../img/kid/remove_from_app.png" class="remove-from-app-img">
+              <img src="./img/kid/remove_from_app.png" class="remove-from-app-img">
               <div class="block-tile remove">
                 <span>remove</span>
               </div>
@@ -181,7 +186,7 @@
       <div ng-repeat="country in vm.countryCodes">
         <ion-radio ng-model="vm.countryCode" ng-value="country.code"
                    ng-click="vm.hideCountryModal()">
-          {{country.name}}:  {{country.code}}
+          {{country.name}}: {{country.code}}
         </ion-radio>
       </div>
     </ion-content>
@@ -197,7 +202,7 @@
     <ion-content class="match-main-block">
 
       <div>
-        <img src="../../img/kid/modal/warning.png" class="warning-ico">
+        <img src="./img/kid/modal/warning.png" class="warning-ico">
       </div>
 
       <div class="title-km">
@@ -206,7 +211,7 @@
       </div>
 
       <div class="button-km">
-        <img src="../../img/kid/modal/mail.png" class="mail-km">
+        <img src="./img/kid/modal/mail.png" class="mail-km">
         <span class="mail-title-km">contact the administrator</span>
       </div>
 
@@ -232,11 +237,11 @@
 
       <div class="button-block-kr">
         <div class="half-kr">
-          <img src="../../img/kid/modal/no.png" class="no-kr" ng-click="vm.hideKidRemoveModal()">
+          <img src="./img/kid/modal/no.png" class="no-kr" ng-click="vm.hideKidRemoveModal()">
         </div>
 
         <div class="half-kr">
-          <img src="../../img/kid/modal/yes.png" class="yes-kr" ng-click="vm.removeKidModal()">
+          <img src="./img/kid/modal/yes.png" class="yes-kr" ng-click="vm.removeKidModal()">
         </div>
       </div>
     </ion-content>
@@ -256,33 +261,33 @@
 
       <div class="phone-block-f">
 
-          <img src="../../img/authorization/phone.png" class="phone-ico-f">
+        <img src="./img/authorization/phone.png" class="phone-ico-f">
 
-          <div class="country-and-phone-f">
+        <div class="country-and-phone-f">
 
-            <div class="country-select-f" ng-click="vm.showCountryModal()">
-              {{vm.countryCode}}
-            </div>
-
-            <div class="phone-f">
-              <input class="input-phone-f"
-                     type="tel"
-                     ng-model="vm.phone"
-                     maxlength="10"
-                     autofocus
-                     oninput="this.value = this.value.replace(/\D/, '')">
-            </div>
+          <div class="country-select-f" ng-click="vm.showCountryModal()">
+            {{vm.countryCode}}
           </div>
+
+          <div class="phone-f">
+            <input class="input-phone-f"
+                   type="tel"
+                   ng-model="vm.phone"
+                   maxlength="10"
+                   autofocus
+                   oninput="this.value = this.value.replace(/\D/, '')">
+          </div>
+        </div>
 
       </div>
 
       <div class="button-block-f">
         <div class="half-f">
-          <img src="../../img/kid/modal/cancel.png" class="cancel-f" ng-click="vm.hideFollowerModal()">
+          <img src="./img/kid/modal/cancel.png" class="cancel-f" ng-click="vm.hideFollowerModal()">
         </div>
 
         <div class="half-f">
-          <img src="../../img/kid/modal/invite.png" class="invite-f" ng-click="vm.addFollower()">
+          <img src="./img/kid/modal/invite.png" class="invite-f" ng-click="vm.addFollower()">
         </div>
       </div>
     </ion-content>

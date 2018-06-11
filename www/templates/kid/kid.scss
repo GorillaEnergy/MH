@@ -5,17 +5,18 @@
       min-height: 100vh;
       width: 100vw;
       position: relative;
+      padding-bottom: 10px;
     }
     .registered {
-      background: url('../../img/kid/regisered-kid-background.png') no-repeat;
+      background: url('../img/kid/regisered-kid-background.png') no-repeat #64cae2;
       background-size: cover;
-      background-color: #64cae2;
+      //background-color: #64cae2;
       padding-bottom: 9px;
     }
     .unregistered {
-      background: url('../../img/kid/unregisered-kid-background.png') no-repeat;
+      background: url('../img/kid/unregisered-kid-background.png') no-repeat #64cae2;
       background-size: cover;
-      background-color: #64cae2;
+      //background-color: #64cae2;
     }
     .empty-header-big {
       height: 63px;
@@ -113,11 +114,39 @@
       animation-duration: 0.5s;
       animation-fill-mode: forwards;
     }
+
     .kid-before-position-2 { top: 30px; z-index: 3; }
     .kid-after-position-2 {
       top: 30px;
       z-index: 3;
       animation-name: position-2;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+    }
+
+    .kid-before-position-3 { top: 45px; z-index: 3; }
+    .kid-after-position-3 {
+      top: 45px;
+      z-index: 4;
+      animation-name: position-3;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+    }
+
+    .kid-before-position-4 { top: 60px; z-index: 3; }
+    .kid-after-position-4 {
+      top: 60px;
+      z-index: 4;
+      animation-name: position-4;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+    }
+
+    .kid-before-position-5 { top: 75px; z-index: 3; }
+    .kid-after-position-5 {
+      top: 75px;
+      z-index: 3;
+      animation-name: position-5;
       animation-duration: 0.5s;
       animation-fill-mode: forwards;
     }
@@ -130,10 +159,26 @@
       from {top: 30px;}
       to {top: 90px;}
     }
+    @keyframes position-3 {
+      from {top: 45px;}
+      to {top: 135px;}
+    }
+    @keyframes position-4 {
+      from {top: 60px;}
+      to {top: 180px;}
+    }
+    @keyframes position-5 {
+      from {top: 75px;}
+      to {top: 225px;}
+    }
 
-    .kid-color-0 { background-color: lawngreen; }
-    .kid-color-1 { background-color: red; }
-    .kid-color-2 { background-color: yellow; }
+    .kid-color-0 { background-color: rgb(255, 115, 0); }
+    .kid-color-1 { background-color: rgb(255, 210, 0); }
+    .kid-color-2 { background-color: rgb(186, 0, 255); }
+    .kid-color-3 { background-color: rgb(255, 27, 79); }
+    .kid-color-4 { background-color: rgb(0, 79, 255); }
+    .kid-color-5 { background-color: rgb(47, 188, 9); }
+    .kid-color-overflow { background-color: darkslategrey; }
 
     .title {
       text-transform: uppercase;
@@ -154,64 +199,71 @@
       font-family: AmericanPatrius;
     }
 
+    .new-kid-title {
+      font-family: American;
+      font-size: 31px;
+      font-weight: 500;
+    }
+    .data-block {
+      width: 100vw;
+      padding: 0 10px 0 40px;
+    }
+
     .name {
       position: relative;
       width: 100%;
       text-align: center;
-      margin-top: 15%;
+      margin-top: 60px;
 
       .name-img {
         position: absolute;
         height: 121px;
-        top: -72px;
-        left: 8px;
+        top: -71px;
+        left: -33px;
       }
     }
-
     .birth-data {
       position: relative;
       width: 100%;
       text-align: center;
-      margin-top: 6%;
+      margin-top: 26px;
 
-      .email-img {
+      .birth-img {
         position: absolute;
-        height: 120px;
+        height: 119px;
         top: -40px;
-        left: 4px;
+        left: -36px;
       }
     }
-
     .id {
       position: relative;
       width: 100%;
       text-align: center;
-      margin-top: 6%;
+      margin-top: 26px;
 
       .id-img {
         position: absolute;
-        height: 85px;
-        top: -17px;
-        left: 10px;
+        height: 86px;
+        top: -19px;
+        left: -31px;
       }
     }
-
     .grade {
       position: relative;
       width: 100%;
       text-align: center;
-      margin-top: 6%;
+      margin-top: 23px;
 
       .grade-img {
         position: absolute;
-        height: 93px;
+        height: 94px;
         top: -23px;
-        left: 11px;
+        left: -31px;
       }
     }
-
     .phone {
       margin-top: 25px;
+      padding: 0 10px;
 
       .input-block {
         position: relative;
@@ -220,14 +272,14 @@
         font-size: 22px;
         background-color: #fff;
         color: #0b1138;
-        font-weight: 500;
+        font-weight: 600;
         height: 48px;
-        width: 95%;
+        width: 100%;
         line-height: 46px;
         border: 2px solid #0b1138;
         border-radius: 5px;
         margin: 0 auto;
-        font-family: HelveticaNeueCyr;
+        //font-family: HelveticaNeueCyr;
 
       }
       .phone-ico {
@@ -238,7 +290,7 @@
       }
       .country-and-phone {
         margin: 0 auto;
-        width: 300px;
+        width: 200px;
         height: 100%;
         display: flex;
         justify-content: center;
@@ -259,13 +311,10 @@
       .input-phone {
         margin-left: 7px;
         font-size: 22px;
-        font-weight: 500;
-        font-family: HelveticaNeueCyr;
-        padding-top: 5px;
-        height: 42px;
+        font-weight: 600;
+        height: 100%;
         width: 100%;
         text-align: left;
-        margin-top: -25px;
       }
 
       .tooltip {
@@ -288,16 +337,15 @@
     }
 
     .input-kid {
-      padding-left: 18%;
+      padding-left: 75px;
       font-size: 22px;
-      font-weight: 500;
-      width: 87%;
+      font-weight: 600;
+      width: 100%;
       height: 49px;
       border: 2px solid #0b1138;
       border-radius: 5px;
-      margin-left: 36px;
       display: unset;
-      font-family: HelveticaNeueCyr;
+      //font-family: HelveticaNeueCyr;
     }
 
     .continue-save-button {
@@ -314,15 +362,13 @@
       //background-color: #ff7300;
     }
     .continue-button {
-      //background: url('../../img/kid/new-kid-background.png') no-repeat;
-      //background-size: cover;
-      background-color: #ff7300;
+      background: url('../img/kid/continue.png') center no-repeat;
+      background-size: 140%;
 
     }
     .save-button {
-      //background: url('../../img/kid/new-kid-background.png') no-repeat;
-      //background-size: cover;
-      background-color: #2fbc09;
+      background: url('../img/kid/save.png') center no-repeat;
+      background-size: 140%;
 
     }
 
@@ -334,6 +380,7 @@
       .title {
         font-size: 31px;
         font-weight: 500;
+        //font-family: American;
       }
 
       .followers {
@@ -469,7 +516,7 @@
 
     @media (max-height: 500px) {
       .main-block {
-        height: 100%;
+        //height: 100%;
       }
       .continue {
         margin-bottom: 15px;
@@ -502,8 +549,8 @@
   background-color: #00000000 !important;
 
   .match-main-block {
-    background: url(../../img/kid/modal/dots.png) center no-repeat;
-    background-size: 102%;
+    background: url('../img/kid/modal/dots.png') center no-repeat;
+    background-size: 140%;
     width: 100%;
     height: 100%;
     text-align: center;
@@ -566,8 +613,8 @@
   background-color: #00000000 !important;
 
   .remove-main-block {
-    background: url(../../img/kid/modal/dots.png) center no-repeat;
-    background-size: 102%;
+    background: url('../img/kid/modal/dots.png') center no-repeat;
+    background-size: 140%;
     width: 100%;
     height: 195px;
     text-align: center;
@@ -632,8 +679,8 @@
   background-color: #00000000 !important;
 
   .follower-main-block {
-    background: url(../../img/kid/modal/dots.png) center no-repeat;
-    background-size: 102%;
+    background: url('../img/kid/modal/dots.png') center no-repeat;
+    background-size: 140%;
     width: 100%;
     height: 195px;
     text-align: center;

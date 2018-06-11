@@ -1,6 +1,6 @@
 {
   "name": "highcharts-ng",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "highcharts-ng",
   "keywords": [
     "angular"
@@ -44,6 +44,7 @@
     "phantomjs-prebuilt": "^2.1.7"
   },
   "scripts": {
+    "build": "grunt",
     "test": "grunt test"
   },
   "main": "./dist/highcharts-ng",

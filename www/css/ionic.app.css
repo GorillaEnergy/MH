@@ -9637,10 +9637,10 @@ a.button {
     margin-top: env(safe-area-inset-top); }
 
 .platform-ios.platform-cordova:not(.fullscreen) .bar-header {
-  padding-left: calc( constant(safe-area-inset-left) + 5px);
+  padding-left: calc( constant(safe-area-inset-left) + 5px);
   padding-left: calc(env(safe-area-inset-left) + 5px);
-  padding-right: calc( constant(safe-area-inset-right) + 5px);
-  padding-right: calc( env(safe-area-inset-right) + 5px); }
+  padding-right: calc( constant(safe-area-inset-right) + 5px);
+  padding-right: calc( env(safe-area-inset-right) + 5px); }
   .platform-ios.platform-cordova:not(.fullscreen) .bar-header .buttons:last-child {
     right: calc(constant(safe-area-inset-right) + 5px);
     right: calc(env(safe-area-inset-right) + 5px); }
@@ -9902,7 +9902,7 @@ a.button {
   height: 100vh;
   min-height: 568px;
   width: 100vw;
-  background: url("../../img/authorization/main-backgroun.png") no-repeat;
+  background: url("../img/authorization/main-backgroun.png") no-repeat #64cae2;
   background-size: cover; }
 
 .auth-tel ion-content .form-block {
@@ -9950,25 +9950,22 @@ a.button {
 
 .auth-tel ion-content .country-and-phone {
   margin: 0 auto;
-  width: 180px;
+  width: 200px;
   height: 100%;
-  font-size: 16px;
+  font-size: 22px;
   display: flex;
   justify-content: space-between; }
 
 .auth-tel ion-content .country-select {
+  font-weight: 600;
   height: 100%;
   width: 30%;
   margin-left: 5px;
   text-align: right; }
 
-.auth-tel ion-content .phone {
-  height: 100%;
-  width: 60%;
-  margin-right: 5px;
-  text-align: left; }
-
 .auth-tel ion-content .tooltip {
+  font-family: "AmericanPatrius";
+  letter-spacing: -1px;
   text-transform: uppercase;
   text-align: center;
   font-size: 15px;
@@ -9977,21 +9974,27 @@ a.button {
   margin: 4px 0 31px; }
 
 .auth-tel ion-content .login-button {
+  font-family: AmericanPatrius;
   text-transform: uppercase;
   text-align: center;
-  font-size: 22px;
+  font-size: 19px;
   color: white;
-  font-weight: 700;
+  font-weight: 500;
   width: 95%;
   line-height: 46px;
   border: 2px solid #000;
   border-radius: 5px;
   margin: 16px auto;
-  background-color: #ff7300; }
+  background: url("../img/authorization/dots.png") center no-repeat;
+  background-size: 140%;
+  box-sizing: border-box; }
+
+.auth-tel ion-content .button-title {
+  padding-top: 5px; }
 
 .auth-tel ion-content .trouble-block {
   width: 100%;
-  height: 18vh;
+  height: 132px;
   display: flex; }
 
 .auth-tel ion-content .trouble {
@@ -10001,13 +10004,13 @@ a.button {
 
 .auth-tel ion-content .send-again-img {
   position: absolute;
-  height: 54%;
+  height: 72px;
   top: 38%;
   right: 6%; }
 
 .auth-tel ion-content .change-number-img {
   position: absolute;
-  height: 54%;
+  height: 72px;
   top: 5%;
   left: 8%; }
 
@@ -10019,12 +10022,15 @@ a.button {
   text-align: -webkit-center; }
 
 .auth-tel ion-content .input-phone {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 22px;
+  font-weight: 600;
   width: 95%;
-  padding-top: 7%;
-  padding-bottom: 2px;
-  height: 90%; }
+  height: 100%;
+  line-height: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+  box-sizing: border-box;
+  margin-left: 10px; }
 
 .auth-tel ion-content .input-code {
   text-align: center;
@@ -10040,6 +10046,17 @@ a.button {
   .auth-tel ion-content .notification p {
     margin: 8px 0; }
 
+@media (max-height: 640px) {
+  .form-block {
+    height: 75% !important; } }
+
+@media (max-height: 360px) {
+  .form-block {
+    height: 100% !important; }
+  .auth-tel ion-content .man .logo {
+    width: 65%;
+    margin: 0 0 10px 65px; } }
+
 #country-modal .animated.modal.slideInDown.ng-leave {
   -webkit-animation-name: slideOutUp;
   animation-name: slideOutUp; }
@@ -10048,7 +10065,7 @@ a.button {
   height: 100vh;
   min-height: 100vh;
   width: 100vw;
-  background: url(../../img/parent-main-page/parent-main-page-bg.png) no-repeat;
+  background: url("../img/parent-main-page/parent-main-page-bg.png") no-repeat;
   background-size: cover;
   background-position: inherit;
   position: relative;
@@ -10182,7 +10199,7 @@ a.button {
   height: calc(100vh - 72px);
   min-height: 568px;
   width: 100vw;
-  background: url("../../img/kid-chat-menu/background.png") no-repeat center;
+  background: url("../img/kid-chat-menu/background.png") no-repeat center;
   background-size: cover; }
 
 .kid-chat-menu .call-and-chat {
@@ -10324,15 +10341,16 @@ a.button {
     width: 40px; }
 
 .kid-chat-room .main-block {
-  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 182px);
   overflow: scroll; }
   .kid-chat-room .main-block .other-message {
+    width: 70%;
     margin-left: 10px;
-    width: 70%; }
+    margin-bottom: 10px; }
     .kid-chat-room .main-block .other-message .my-message p {
       font-family: Neue;
-      border-radius: 10px 0px 10px 10px;
+      border-radius: 10px 0 10px 10px;
       background-color: #fff;
       padding: 10px; }
     .kid-chat-room .main-block .other-message .message-time p {
@@ -10342,10 +10360,11 @@ a.button {
   .kid-chat-room .main-block .my-message-block {
     width: 70%;
     margin-left: auto;
-    margin-right: 10px; }
+    margin-right: 10px;
+    margin-bottom: 10px; }
     .kid-chat-room .main-block .my-message-block .my-message p {
       font-family: Neue;
-      border-radius: 10px 0px 10px 10px;
+      border-radius: 10px 0 10px 10px;
       background-color: #64cae2;
       padding: 10px 0 10px 10px; }
     .kid-chat-room .main-block .my-message-block .message-time {
@@ -10492,7 +10511,7 @@ a.button {
   padding-top: 24px;
   height: calc(100vh - 72px);
   width: 100%;
-  background: url("../../img/kid-chat/background.png") no-repeat center/cover; }
+  background: url("../img/kid-chat/background.png") no-repeat center/cover; }
   .kid-messages .main-block .consulter {
     margin-bottom: 10px;
     display: flex;
@@ -10564,7 +10583,7 @@ a.button {
   height: 100vh;
   min-height: 568px;
   width: 100vw;
-  background: url("../../img/registration/registration.png") no-repeat;
+  background: url("../img/registration/registration.png") no-repeat;
   background-size: cover; }
 
 .registration .title {
@@ -10657,18 +10676,17 @@ a.button {
   height: auto;
   min-height: 100vh;
   width: 100vw;
-  position: relative; }
+  position: relative;
+  padding-bottom: 10px; }
 
 .new-kid .registered {
-  background: url("../../img/kid/regisered-kid-background.png") no-repeat;
+  background: url("../img/kid/regisered-kid-background.png") no-repeat #64cae2;
   background-size: cover;
-  background-color: #64cae2;
   padding-bottom: 9px; }
 
 .new-kid .unregistered {
-  background: url("../../img/kid/unregisered-kid-background.png") no-repeat;
-  background-size: cover;
-  background-color: #64cae2; }
+  background: url("../img/kid/unregisered-kid-background.png") no-repeat #64cae2;
+  background-size: cover; }
 
 .new-kid .empty-header-big {
   height: 63px; }
@@ -10780,6 +10798,39 @@ a.button {
   animation-duration: 0.5s;
   animation-fill-mode: forwards; }
 
+.new-kid .kid-before-position-3 {
+  top: 45px;
+  z-index: 3; }
+
+.new-kid .kid-after-position-3 {
+  top: 45px;
+  z-index: 4;
+  animation-name: position-3;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+.new-kid .kid-before-position-4 {
+  top: 60px;
+  z-index: 3; }
+
+.new-kid .kid-after-position-4 {
+  top: 60px;
+  z-index: 4;
+  animation-name: position-4;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+.new-kid .kid-before-position-5 {
+  top: 75px;
+  z-index: 3; }
+
+.new-kid .kid-after-position-5 {
+  top: 75px;
+  z-index: 3;
+  animation-name: position-5;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
 @keyframes position-1 {
   from {
     top: 15px; }
@@ -10792,14 +10843,44 @@ a.button {
   to {
     top: 90px; } }
 
+@keyframes position-3 {
+  from {
+    top: 45px; }
+  to {
+    top: 135px; } }
+
+@keyframes position-4 {
+  from {
+    top: 60px; }
+  to {
+    top: 180px; } }
+
+@keyframes position-5 {
+  from {
+    top: 75px; }
+  to {
+    top: 225px; } }
+
 .new-kid .kid-color-0 {
-  background-color: lawngreen; }
+  background-color: #ff7300; }
 
 .new-kid .kid-color-1 {
-  background-color: red; }
+  background-color: #ffd200; }
 
 .new-kid .kid-color-2 {
-  background-color: yellow; }
+  background-color: #ba00ff; }
+
+.new-kid .kid-color-3 {
+  background-color: #ff1b4f; }
+
+.new-kid .kid-color-4 {
+  background-color: #004fff; }
+
+.new-kid .kid-color-5 {
+  background-color: #2fbc09; }
+
+.new-kid .kid-color-overflow {
+  background-color: darkslategrey; }
 
 .new-kid .title {
   text-transform: uppercase;
@@ -10818,52 +10899,62 @@ a.button {
   margin-top: 2px;
   font-family: AmericanPatrius; }
 
+.new-kid .new-kid-title {
+  font-family: American;
+  font-size: 31px;
+  font-weight: 500; }
+
+.new-kid .data-block {
+  width: 100vw;
+  padding: 0 10px 0 40px; }
+
 .new-kid .name {
   position: relative;
   width: 100%;
   text-align: center;
-  margin-top: 15%; }
+  margin-top: 60px; }
   .new-kid .name .name-img {
     position: absolute;
     height: 121px;
-    top: -72px;
-    left: 8px; }
+    top: -71px;
+    left: -33px; }
 
 .new-kid .birth-data {
   position: relative;
   width: 100%;
   text-align: center;
-  margin-top: 6%; }
-  .new-kid .birth-data .email-img {
+  margin-top: 26px; }
+  .new-kid .birth-data .birth-img {
     position: absolute;
-    height: 120px;
+    height: 119px;
     top: -40px;
-    left: 4px; }
+    left: -36px; }
 
 .new-kid .id {
   position: relative;
   width: 100%;
   text-align: center;
-  margin-top: 6%; }
+  margin-top: 26px; }
   .new-kid .id .id-img {
     position: absolute;
-    height: 85px;
-    top: -17px;
-    left: 10px; }
+    height: 86px;
+    top: -19px;
+    left: -31px; }
 
 .new-kid .grade {
   position: relative;
   width: 100%;
   text-align: center;
-  margin-top: 6%; }
+  margin-top: 23px; }
   .new-kid .grade .grade-img {
     position: absolute;
-    height: 93px;
+    height: 94px;
     top: -23px;
-    left: 11px; }
+    left: -31px; }
 
 .new-kid .phone {
-  margin-top: 25px; }
+  margin-top: 25px;
+  padding: 0 10px; }
   .new-kid .phone .input-block {
     position: relative;
     text-transform: uppercase;
@@ -10871,14 +10962,13 @@ a.button {
     font-size: 22px;
     background-color: #fff;
     color: #0b1138;
-    font-weight: 500;
+    font-weight: 600;
     height: 48px;
-    width: 95%;
+    width: 100%;
     line-height: 46px;
     border: 2px solid #0b1138;
     border-radius: 5px;
-    margin: 0 auto;
-    font-family: HelveticaNeueCyr; }
+    margin: 0 auto; }
   .new-kid .phone .phone-ico {
     height: 1.1em;
     position: absolute;
@@ -10886,7 +10976,7 @@ a.button {
     top: 10px; }
   .new-kid .phone .country-and-phone {
     margin: 0 auto;
-    width: 300px;
+    width: 200px;
     height: 100%;
     display: flex;
     justify-content: center; }
@@ -10903,13 +10993,10 @@ a.button {
   .new-kid .phone .input-phone {
     margin-left: 7px;
     font-size: 22px;
-    font-weight: 500;
-    font-family: HelveticaNeueCyr;
-    padding-top: 5px;
-    height: 42px;
+    font-weight: 600;
+    height: 100%;
     width: 100%;
-    text-align: left;
-    margin-top: -25px; }
+    text-align: left; }
   .new-kid .phone .tooltip {
     text-transform: uppercase;
     text-align: center;
@@ -10925,16 +11012,14 @@ a.button {
     height: 85px; }
 
 .new-kid .input-kid {
-  padding-left: 18%;
+  padding-left: 75px;
   font-size: 22px;
-  font-weight: 500;
-  width: 87%;
+  font-weight: 600;
+  width: 100%;
   height: 49px;
   border: 2px solid #0b1138;
   border-radius: 5px;
-  margin-left: 36px;
-  display: unset;
-  font-family: HelveticaNeueCyr; }
+  display: unset; }
 
 .new-kid .continue-save-button {
   text-transform: uppercase;
@@ -10949,10 +11034,12 @@ a.button {
   margin: 9px auto 0; }
 
 .new-kid .continue-button {
-  background-color: #ff7300; }
+  background: url("../img/kid/continue.png") center no-repeat;
+  background-size: 140%; }
 
 .new-kid .save-button {
-  background-color: #2fbc09; }
+  background: url("../img/kid/save.png") center no-repeat;
+  background-size: 140%; }
 
 .new-kid .reg-followers {
   margin-top: 64px;
@@ -11057,8 +11144,6 @@ a.button {
   border: 2px solid red !important; }
 
 @media (max-height: 500px) {
-  .new-kid .main-block {
-    height: 100%; }
   .new-kid .continue {
     margin-bottom: 15px; }
   .new-kid .input {
@@ -11084,8 +11169,8 @@ a.button {
   z-index: 2;
   background-color: #00000000 !important; }
   .kids-exist-modal .match-main-block {
-    background: url(../../img/kid/modal/dots.png) center no-repeat;
-    background-size: 102%;
+    background: url("../img/kid/modal/dots.png") center no-repeat;
+    background-size: 140%;
     width: 100%;
     height: 100%;
     text-align: center;
@@ -11137,8 +11222,8 @@ a.button {
   z-index: 2;
   background-color: #00000000 !important; }
   .kids-remove-modal .remove-main-block {
-    background: url(../../img/kid/modal/dots.png) center no-repeat;
-    background-size: 102%;
+    background: url("../img/kid/modal/dots.png") center no-repeat;
+    background-size: 140%;
     width: 100%;
     height: 195px;
     text-align: center;
@@ -11189,8 +11274,8 @@ a.button {
   z-index: 2;
   background-color: #00000000 !important; }
   .add-follower-modal .follower-main-block {
-    background: url(../../img/kid/modal/dots.png) center no-repeat;
-    background-size: 102%;
+    background: url("../img/kid/modal/dots.png") center no-repeat;
+    background-size: 140%;
     width: 100%;
     height: 195px;
     text-align: center;
@@ -11530,7 +11615,7 @@ p {
 .my-menu .main-block {
   height: -webkit-fill-available;
   width: 100vw;
-  background: url("../../img/menu/menu-background.png") no-repeat;
+  background: url("../img/menu/menu-background.png") no-repeat;
   background-size: cover; }
 
 .my-menu .header {
@@ -11579,7 +11664,7 @@ p {
   max-height: 100vh;
   min-height: 568px;
   width: 100vw;
-  background: url("../../img/registration/registration.png") no-repeat center;
+  background: url("../img/registration/registration.png") no-repeat center;
   background-size: cover; }
 
 .registration .title {
@@ -11750,7 +11835,7 @@ p {
           height: 37px;
           width: 62px;
           margin: 0 5px;
-          background: url("../../img/payment/visa.png") no-repeat center;
+          background: url("../img/payment/visa.png") no-repeat center;
           background-size: 45px;
           border: 1px solid #bcbcbc;
           border-radius: 3px; }
@@ -11758,7 +11843,7 @@ p {
           height: 37px;
           width: 62px;
           margin: 0 5px;
-          background: url("../../img/payment/mastercard.png") no-repeat center;
+          background: url("../img/payment/mastercard.png") no-repeat center;
           background-size: 45px;
           border: 1px solid #bcbcbc;
           border-radius: 3px; }
@@ -11766,7 +11851,7 @@ p {
           height: 37px;
           width: 62px;
           margin: 0 5px;
-          background: url("../../img/payment/american-express.png") no-repeat center;
+          background: url("../img/payment/american-express.png") no-repeat center;
           background-size: 65px;
           border: 1px solid #bcbcbc;
           border-radius: 3px; }
@@ -11774,7 +11859,7 @@ p {
           height: 37px;
           width: 62px;
           margin: 0 5px;
-          background: url("../../img/payment/discover.png") no-repeat center;
+          background: url("../img/payment/discover.png") no-repeat center;
           background-size: 65px;
           border: 1px solid #bcbcbc;
           border-radius: 3px; }
@@ -11896,7 +11981,7 @@ p {
     font-family: American; }
 
 .settings .main-block {
-  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 72px); }
   .settings .main-block img {
     width: 30px;
@@ -11962,7 +12047,7 @@ p {
 
 .notifications .main-block {
   padding-top: 23px;
-  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 72px); }
   .notifications .main-block .push-notifications {
     letter-spacing: -1px; }
@@ -12061,7 +12146,7 @@ p {
     font-family: American; }
 
 .about-block .main-block {
-  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   min-height: calc(100vh - 72px); }
   .about-block .main-block p {
     font-family: Neue;
@@ -12107,7 +12192,7 @@ p {
     font-family: American; }
 
 .terms-condition-block .main-block {
-  background: url("../../img/kid-chat-room/background.png") no-repeat center/cover;
+  background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   min-height: calc(100vh - 72px); }
   .terms-condition-block .main-block p {
     font-family: Neue;

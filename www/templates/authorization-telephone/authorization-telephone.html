@@ -7,26 +7,24 @@
 
         <div class="tel-block" ng-if="vm.show.phoneMenu">
           <div class="man">
-            <img src="../../img/authorization/mind-hero-man.png" class="logo">
+            <img src="./img/authorization/mind-hero-man.png" class="logo">
           </div>
 
           <div class="post-zone">
             <div class="input-block">
-              <img src="../../img/authorization/phone.png" class="phone-ico">
+              <img src="./img/authorization/phone.png" class="phone-ico">
 
               <div class="country-and-phone">
                 <div class="country-select" ng-click="modalCountry.show()">
                   {{vm.countryCode}}
                 </div>
 
-                <div class="phone">
-                  <input class="input-phone"
-                         type="tel"
-                         ng-model="vm.phone"
-                         maxlength="10"
-                         autofocus
-                         oninput="this.value = this.value.replace(/\D/, '')">
-                </div>
+                <input class="input-phone"
+                       type="tel"
+                       ng-model="vm.phone"
+                       maxlength="10"
+                       autofocus
+                       oninput="this.value = this.value.replace(/\D/, '')">
               </div>
             </div>
 
@@ -61,31 +59,26 @@
             </div>
 
             <div class="tooltip receive-code">
-              <span>dident recive any code?</span>
+              <span>didn't receive any code?</span>
             </div>
 
             <div class="trouble-block">
               <div class="trouble">
-                <img src="../../img/authorization/send-again.png" class="send-again-img"
+                <img src="./img/authorization/send-again.png" class="send-again-img"
                      ng-click="vm.sendAgain()">
               </div>
               <div class="trouble">
-                <img src="../../img/authorization/change-number.png" class="change-number-img"
+                <img src="./img/authorization/change-number.png" class="change-number-img"
                      ng-click="vm.changeNumber()">
               </div>
             </div>
 
             <div class="login-button" ng-click="vm.checkCode()">
-              <span>continue</span>
+              <span class="button-title">continue</span>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="keyboard">
-
-      </div>
-
     </div>
   </ion-content>
 </ion-view>
@@ -102,7 +95,7 @@
       <div ng-repeat="country in vm.countryCodes">
         <ion-radio ng-model="vm.countryCode" ng-value="country.code"
                    ng-click="vm.chosenCountry()">
-          {{country.name}}:  {{country.code}}
+          {{country.name}}: {{country.code}}
         </ion-radio>
       </div>
     </ion-content>

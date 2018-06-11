@@ -12,6 +12,7 @@
 
         vm.toChat = toChat;
         vm.toCall = toCall;
+        vm.toMenu = toMenu;
 
         vm.missedCalls = 0;
         vm.missedMessages = 0;
@@ -26,6 +27,10 @@
         function toCall() {
           console.log('to call');
           // $state.go('kid-call');
+        }
+        function toMenu() {
+          console.log('to menu');
+          $state.go('menu');
         }
 
         fb.ref('/chats/' + kid_id + '/total_kid_unread').on('value', (snapshot) => {
