@@ -34,10 +34,19 @@
   }
   .main-block {
     background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
-    height: calc(100vh - 72px);
+    min-height: calc(100vh - 72px);
+    width: 100vw;
+    position: relative;
     img{
       width: 30px;
       margin-right: 10px;
+    }
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 100vw;
     }
     .menu-point{
       width: 92%;
@@ -58,24 +67,11 @@
     }
     .gears {
       position: absolute;
+      z-index: 1;
       bottom: 0;
       right: -10px;
-      width: 215px;
-    }
-  }
-
-  .test-block {
-    height: 300px;
-    overflow: scroll;
-
-    .test-p {
-      line-height: 50px;
-    }
-    .test-p:first-child {
-      background-color: #62ffaa;
-    }
-    .test-p:last-child {
-      background-color: #ba39ff;
+      //width: 215px;
+      width: 29.2vh;
     }
   }
 }

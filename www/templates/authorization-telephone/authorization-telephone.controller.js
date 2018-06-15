@@ -29,6 +29,12 @@
     vm.show = {phoneMenu: true, codeApproval: false};
 
 
+    vm.test = function () {
+      console.log('on-focus');
+    };
+    vm.test2 = function () {
+      console.log('on-blur');
+    };
     // let fb = firebase.database();
     // fb.ref('/chats/1').push({id: 4, description: 'string'});
 

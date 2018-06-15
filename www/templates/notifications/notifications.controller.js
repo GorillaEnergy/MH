@@ -4,11 +4,14 @@
   angular.module('app')
     .controller('NotificationsController', NotificationsController);
 
-  NotificationsController.$inject = ['$state', 'userService'];
+  NotificationsController.$inject = ['$state', '$timeout', '$window', 'userService'];
 
 
-  function NotificationsController($state, userService) {
+  function NotificationsController($state, $timeout, $window, userService) {
     const vm = this;
+
+    $timeout(function () {$(".main-block").height($(".without-picture").height());});
+    angular.element($window).bind("resize",function(e){$(".main-block").height($(".without-picture").height());});
 
     vm.toSettings = toSettings;
 

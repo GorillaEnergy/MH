@@ -43,13 +43,9 @@
     vm.viewType = {new_kid: false, edit_registered_kid: false, edit_unregistered_kid: false};
     vm.warning = {name: false, date: false, id_number: false, grade: false, phone: false};
 
-    //только для отладки
-    // delete $localStorage.kid_index;
-    // $localStorage.kid_index = 1;
-    //////////////////////////////////////////
-
-    kids ? vm.kids = kids : vm.kids = [];
+    // kids ? vm.kids = kids : vm.kids = [];
     // vm.kids = kids;
+    vm.kids = kidFilter();
     vm.followers = followers;
     vm.countryCodes = countries;
     vm.countryCode = userService.getPhone().code; //country be default
@@ -61,6 +57,15 @@
     // console.log('vm.countryCodes = ', vm.countryCodes);
     console.log('vm.kids = ', vm.kids);
     console.log('vm.followers = ', vm.followers);
+
+    function kidFilter() {
+      let maximum_kid = 6;
+      let data = [];
+      angular.forEach(kids, function (kid, index) {
+        if (!kid.register && index <= maximum_kid ) { data.push(kid) }
+      });
+      return data;
+    }
 
     speciesDefinition();
 
@@ -78,7 +83,7 @@
         if (vm.kids.length) {
           //проверка оплаты
           console.log(vm.kids[kid_index].payment);
-          if (vm.kids[kid_index].payment == '1') {
+          if (vm.kids[kid_index].register == '1') {
             vm.viewType.new_kid = false;
             vm.viewType.edit_registered_kid = true;
             vm.viewType.edit_unregistered_kid = false;
@@ -101,31 +106,24 @@
     function showCountryModal() {
       $scope.countryModal.show();
     }
-
     function hideCountryModal() {
       $scope.countryModal.hide();
     }
-
     function showKidMatchModal() {
       $scope.matchModal.show();
     }
-
     function hideKidMatchModal() {
       $scope.matchModal.hide();
     }
-
     function showKidRemoveModal() {
       $scope.removeModal.show();
     }
-
     function hideKidRemoveModal() {
       $scope.removeModal.hide();
     }
-
     function showFollowerModal() {
       $scope.followerModal.show();
     }
-
     function hideFollowerModal() {
       $scope.followerModal.hide();
     }
@@ -162,7 +160,12 @@
 
     function editKid(kid, index) {
       if (vm.animation) {
-        $localStorage.kid_index = index;
+        for (let i = 0; i < kids.length; i++) {
+          if (kids[i].id === kid.id) {
+            $localStorage.kid_index = i;
+          }
+        }
+
         speciesDefinition();
         closeList();
       }

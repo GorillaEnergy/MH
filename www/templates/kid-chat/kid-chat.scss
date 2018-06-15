@@ -23,6 +23,9 @@
   font-weight: normal;
 }
 .kid-chat-room {
+  height: 100vh;
+  width: 100vw;
+
   .menu-block {
     display: flex;
     justify-content: space-between;
@@ -51,8 +54,10 @@
       }
     }
     img {
-      width: 15px;
+      width: 35px;
+      //width: 15px;
       margin-left: 9px;
+      padding: 10px;
     }
     p {
       margin: 0 0 0 18px;
@@ -63,13 +68,27 @@
     }
     .icon-menu{
       margin-right: 9px;
-      width: 40px;
+      width: 60px;
     }
   }
   .main-block{
     background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
-    height: calc(100vh - 182px);
+    height: calc(100vh - 172px);
     overflow: scroll;
+    position: relative;
+    .load {
+      margin-top: 10px;
+      color: #0b1138;
+      z-index: 1;
+      position: fixed;
+      left: calc(50% - 33px);
+      right: auto;
+      background-color: #59abbe;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 25px;
+      font-family: AmericanPatrius;
+    }
     .other-message{
       width: 70%;
       margin-left: 10px;
@@ -133,6 +152,7 @@
     align-items: center;
     border-top: solid 2px #64cae2;
     height: 100px;
+    box-sizing: border-box;
     .input-and-message{
       display: inline-flex;
       align-items: center;
@@ -172,6 +192,38 @@
         margin-left: auto;
         height: 40px;
       }
+    }
+  }
+
+  .locked-block {
+    display: flex;
+    justify-content: space-between;
+    border-top: solid 2px #0b1138;
+    height: 100px;
+    box-sizing: border-box;
+    padding: 15px;
+    font-family: American;
+
+    .locked-user {
+      display: flex;
+
+      img{
+        height: 40px;
+        margin-top: 9px;
+      }
+      span {
+        margin: 26px 0 0 11px;
+        font-size: 15px;
+        color: #0b1138;
+        font-family: AmericanPatrius;
+      }
+    }
+    .unlock {
+      border: solid 2px #0b1138;
+      border-radius: 35px;
+      color: #0b1138;
+      font-size: 33px;
+      padding: 26px 24px;
     }
   }
 }
@@ -267,13 +319,110 @@
     }
   }
 }
-@media screen and(min-width: 568px){
-  .kid-chat-room {
-    .main-block{
-      height: 100vw;
+@media (min-height: 360px){
+  .kid-chat-room .locked-block .locked-user span {
+    font-size: 13px;
   }
+  .kid-chat-room .locked-block .unlock {
+    padding: 26px 16px;
   }
 }
 
 
 
+.report-backdrop {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background-color: black;
+  opacity: 0.6;
+}
+.report-modal {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 91%!important;
+  max-width: 360px;
+  margin: auto;
+  height: fit-content;
+  min-height: 5px!important;
+  //background-color: #fff;
+  border: 2px solid #0b1138;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0) !important;
+
+  .main-block-report {
+    position: relative;
+    //height: 235px;
+    height: auto;
+    width: 100%;
+    background: url('../img/kid-chat/modal-background.png') no-repeat center / cover;
+    background-size: 103% 103%;
+
+    .cancel-report {
+      position: absolute;
+      top: 8px;
+      right: 13px;
+      height: 25px;
+    }
+
+    .reason-block {
+      padding: 15px 0 10px;
+      margin: 0 auto;
+      width: fit-content;
+    }
+
+    .title-report {
+      font-family: American;
+      font-size: 25px;
+      margin-top: 4px;
+    }
+
+    .reasons-report {
+      height: auto;
+      box-sizing: border-box;
+    }
+    .reason-report {
+      font-family: AmericanPatrius;
+      margin: 12px 0;
+      display: flex;
+      img{
+        height: 15px;
+        //margin-top: 2px;
+      }
+      p {
+        margin: 0 0 0 10px;
+        font-size: 13px;
+      }
+    }
+    .send-report {
+      padding: 12px 21px 4px;
+      margin: 0px auto 0;
+      border: 2px solid #0b1138;
+      border-radius: 21px;
+      font-family: American;
+      font-size: 21px;
+      width: fit-content;
+      background-color: white;
+    }
+
+    .report-textarea-block {
+      width: 100%;
+      padding: 10px;
+      border-top: 2px solid #0b1138;
+      background-color: white;
+
+      textarea {
+        border: 2px solid #b9f2fe;
+        border-radius: 10px;
+        width: 100%;
+        font-family: Neue;
+        color: #0b1138;
+        padding: 5px;
+      }
+    }
+  }
+
+}

@@ -24,6 +24,8 @@
                        ng-model="vm.phone"
                        maxlength="10"
                        autofocus
+                       ng-focus="vm.test()"
+                       ng-blur="vm.test2()"
                        oninput="this.value = this.value.replace(/\D/, '')">
               </div>
             </div>

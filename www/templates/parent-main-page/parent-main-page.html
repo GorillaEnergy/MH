@@ -8,7 +8,8 @@
              ng-click="vm.toMenu()">
       </div>
 
-      <div ng-repeat="(key, kid) in vm.kids" class="kid-block" ng-if="kid.payment">
+      <!--<div ng-repeat="(key, kid) in vm.kids" class="kid-block">-->
+      <div ng-repeat="(key, kid) in vm.kids" class="kid-block" ng-if="kid.register">
         <div class="kid" ng-class="vm.clouds ? 'kid-with-cloud' : 'kid-without-cloud'">
           <img ng-src="./img/parent-main-page/kid{{key}}.png" class="kid-img">
           <img src="./img/parent-main-page/warning.png" class="kid-warning" ng-if="vm.warning">

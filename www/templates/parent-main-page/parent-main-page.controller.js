@@ -4,11 +4,11 @@
   angular.module('app')
     .controller('ParentMainPageController', ParentMainPageController);
 
-  ParentMainPageController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout',
+  ParentMainPageController.$inject = ['$ionicPopup', '$state', '$scope', '$localStorage', '$stateParams', 'userService', '$timeout',
                                       '$ionicModal', 'kids'];
 
 
-  function ParentMainPageController($ionicPopup, $state, $scope, $stateParams, userService, $timeout,
+  function ParentMainPageController($ionicPopup, $state, $scope, $localStorage, $stateParams, userService, $timeout,
                                     $ionicModal, kids) {
     const vm = this;
 
@@ -18,6 +18,7 @@
     vm.emptyKids = emptyKids;
 
     vm.kids = kids;
+    // vm.kids = kidFilter();
     console.log(kids);
 
     // не несет смысловой нагрузки, нужно для создания вьюхи
@@ -27,6 +28,13 @@
     vm.emptyData = false;
     vm.clouds = false;
     ////////////////////////////////////////////////////////
+    function kidFilter() {
+      let data = [];
+      angular.forEach(kids, function (kid) {
+        if (kid.register) { console.log(kid); data.push(kid) }
+      });
+      return data;
+    }
 
     function kidColor(index) {
       let name = 'kid-color' + index;
@@ -39,13 +47,13 @@
     function kidLogs(index) {
       console.log('index', index);
       $localStorage.log_index = index;
-      console.log('kidLogs');
-      // $state.go('logs');
+      console.log('to logs');
+      $state.go('logs');
     }
     function emptyKids() {
       let status = true;
       for (let i = 0; i<vm.kids.length; i++) {
-        if (vm.kids[i].payment) {
+        if (vm.kids[i].register) {
           status = false;
           break;
         }

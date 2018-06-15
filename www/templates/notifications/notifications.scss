@@ -35,7 +35,16 @@
   .main-block {
     padding-top:23px;
     background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
-    height: calc(100vh - 72px);
+    min-height: calc(100vh - 72px);
+    width: 100vw;
+    position: relative;
+    .without-picture {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 100vw;
+    }
     .push-notifications{
       letter-spacing: -1px;
       h1{
@@ -82,7 +91,9 @@
       position: absolute;
       bottom: 0;
       right: -10px;
-      width: 230px;
+      z-index: 1;
+      //width: 230px;
+      width: 32.1vh;
     }
   }
 }

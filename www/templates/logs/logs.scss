@@ -26,7 +26,7 @@ p{
   margin: 0;
 }
 .psy-logs {
-  background: url('../../img/logs/bg.png') no-repeat top / cover;
+  background: url('../img/logs/bg.png') no-repeat top / cover;
   .menu-block {
     display: flex;
     justify-content: space-between;
@@ -74,7 +74,7 @@ p{
   .main-block{
     height:100vh;
     .miss-call{
-      background: url('../../img/logs/second-dots.png') no-repeat right/ cover #fff;
+      background: url('../img/logs/second-dots.png') no-repeat right/ cover #fff;
       border-radius: 5px;
       width: 95%;
       height: 145px;
@@ -89,7 +89,7 @@ p{
         height: 50px;
         border-bottom: solid 2px #0b1138;
         border-radius: 6px;
-        background: url('../../img/logs/dots.png') no-repeat right/ cover #ffae00;
+        background: url('../img/logs/dots.png') no-repeat right/ cover #ffae00;
         p{
           font-family:American;
           font-size: 28px;
@@ -125,7 +125,7 @@ p{
       }
     }
     .call-kid{
-      background: url('../../img/logs/second-dots.png') no-repeat right/ cover #fff;
+      background: url('../img/logs/second-dots.png') no-repeat right/ cover #fff;
       border-radius: 5px;
       width: 95%;
       height: 145px;
@@ -140,7 +140,7 @@ p{
         height: 50px;
         border-bottom: solid 2px #0b1138;
         border-radius: 6px;
-        background: url('../../img/logs/third-dots.png') no-repeat right/ cover #bf1340;
+        background: url('../img/logs/third-dots.png') no-repeat right/ cover #bf1340;
         p{
           font-family:American;
           font-size: 28px;
@@ -202,7 +202,7 @@ p{
       }
     }
     .call-right-now{
-      background: url('../../img/logs/second-dots.png') no-repeat right/ cover #fff;
+      background: url('../img/logs/second-dots.png') no-repeat right/ cover #fff;
       border-radius: 5px;
       width: 95%;
       height: 145px;

@@ -14,7 +14,7 @@
       <div class="animation-backdrop" ng-if="vm.animation" ng-click="vm.closeList()"></div>
 
       <div class="kids-block" ng-if="vm.viewType.new_kid" ng-click="vm.openList()">
-        <div ng-repeat="(key, kid) in vm.kids" ng-if="!kid.payment">
+        <div ng-repeat="(key, kid) in vm.kids" ng-if="!kid.register">
 
           <div ng-class="vm.animation ? vm.kidPosition(key) : vm.kidPosition(key, true)" class="kid-main-pos">
 

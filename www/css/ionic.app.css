@@ -10302,129 +10302,169 @@ a.button {
   font-style: normal;
   font-weight: normal; }
 
-.kid-chat-room .menu-block {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 72px;
-  background-color: #fff;
-  border-bottom: solid 2px #0b1138; }
-  .kid-chat-room .menu-block .dialog {
-    z-index: 1;
-    text-align: center;
-    position: absolute;
-    line-height: 30px;
-    width: 100px;
-    padding: 10px 0 10px 0;
-    right: 42px;
-    top: 50px;
-    border: solid 1px #0b1138;
-    border-radius: 10px 0 10px 10px;
-    background-color: #fff; }
-    .kid-chat-room .menu-block .dialog p {
-      margin: 0;
-      text-decoration: underline;
-      font-family: Patrius;
-      font-size: 12px; }
-  .kid-chat-room .menu-block img {
-    width: 15px;
-    margin-left: 9px; }
-  .kid-chat-room .menu-block p {
-    margin: 0 0 0 18px;
-    font-size: 25px;
-    text-transform: uppercase;
-    color: #0b1138;
-    font-family: American; }
-  .kid-chat-room .menu-block .icon-menu {
-    margin-right: 9px;
-    width: 40px; }
-
-.kid-chat-room .main-block {
-  background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
-  height: calc(100vh - 182px);
-  overflow: scroll; }
-  .kid-chat-room .main-block .other-message {
-    width: 70%;
-    margin-left: 10px;
-    margin-bottom: 10px; }
-    .kid-chat-room .main-block .other-message .my-message p {
-      font-family: Neue;
+.kid-chat-room {
+  height: 100vh;
+  width: 100vw; }
+  .kid-chat-room .menu-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 72px;
+    background-color: #fff;
+    border-bottom: solid 2px #0b1138; }
+    .kid-chat-room .menu-block .dialog {
+      z-index: 1;
+      text-align: center;
+      position: absolute;
+      line-height: 30px;
+      width: 100px;
+      padding: 10px 0 10px 0;
+      right: 42px;
+      top: 50px;
+      border: solid 1px #0b1138;
       border-radius: 10px 0 10px 10px;
-      background-color: #fff;
+      background-color: #fff; }
+      .kid-chat-room .menu-block .dialog p {
+        margin: 0;
+        text-decoration: underline;
+        font-family: Patrius;
+        font-size: 12px; }
+    .kid-chat-room .menu-block img {
+      width: 35px;
+      margin-left: 9px;
       padding: 10px; }
-    .kid-chat-room .main-block .other-message .message-time p {
-      font-size: 12px;
-      margin: 0;
-      font-family: Patrius; }
-  .kid-chat-room .main-block .my-message-block {
-    width: 70%;
-    margin-left: auto;
-    margin-right: 10px;
-    margin-bottom: 10px; }
-    .kid-chat-room .main-block .my-message-block .my-message p {
-      font-family: Neue;
-      border-radius: 10px 0 10px 10px;
-      background-color: #64cae2;
-      padding: 10px 0 10px 10px; }
-    .kid-chat-room .main-block .my-message-block .message-time {
-      text-align: right; }
-      .kid-chat-room .main-block .my-message-block .message-time p {
+    .kid-chat-room .menu-block p {
+      margin: 0 0 0 18px;
+      font-size: 25px;
+      text-transform: uppercase;
+      color: #0b1138;
+      font-family: American; }
+    .kid-chat-room .menu-block .icon-menu {
+      margin-right: 9px;
+      width: 60px; }
+  .kid-chat-room .main-block {
+    background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
+    height: calc(100vh - 172px);
+    overflow: scroll;
+    position: relative; }
+    .kid-chat-room .main-block .load {
+      margin-top: 10px;
+      color: #0b1138;
+      z-index: 1;
+      position: fixed;
+      left: calc(50% - 33px);
+      right: auto;
+      background-color: #59abbe;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 25px;
+      font-family: AmericanPatrius; }
+    .kid-chat-room .main-block .other-message {
+      width: 70%;
+      margin-left: 10px;
+      margin-bottom: 10px; }
+      .kid-chat-room .main-block .other-message .my-message p {
+        font-family: Neue;
+        border-radius: 10px 0 10px 10px;
+        background-color: #fff;
+        padding: 10px; }
+      .kid-chat-room .main-block .other-message .message-time p {
         font-size: 12px;
         margin: 0;
         font-family: Patrius; }
-  .kid-chat-room .main-block .day {
+    .kid-chat-room .main-block .my-message-block {
+      width: 70%;
+      margin-left: auto;
+      margin-right: 10px;
+      margin-bottom: 10px; }
+      .kid-chat-room .main-block .my-message-block .my-message p {
+        font-family: Neue;
+        border-radius: 10px 0 10px 10px;
+        background-color: #64cae2;
+        padding: 10px 0 10px 10px; }
+      .kid-chat-room .main-block .my-message-block .message-time {
+        text-align: right; }
+        .kid-chat-room .main-block .my-message-block .message-time p {
+          font-size: 12px;
+          margin: 0;
+          font-family: Patrius; }
+    .kid-chat-room .main-block .day {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px; }
+      .kid-chat-room .main-block .day p {
+        font-size: 10px;
+        font-family: Patrius;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 7px;
+        -webkit-clip-path: polygon(0 10%, 100% 0, 97% 75%, 10% 100%);
+        background-color: #0b1138; }
+  .kid-chat-room .input-block {
     display: flex;
     justify-content: center;
-    margin-top: 10px; }
-    .kid-chat-room .main-block .day p {
-      font-size: 10px;
-      font-family: Patrius;
-      color: #fff;
-      text-transform: uppercase;
-      padding: 7px;
-      -webkit-clip-path: polygon(0 10%, 100% 0, 97% 75%, 10% 100%);
-      background-color: #0b1138; }
-
-.kid-chat-room .input-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top: solid 2px #64cae2;
-  height: 100px; }
-  .kid-chat-room .input-block .input-and-message {
-    display: inline-flex;
     align-items: center;
-    width: 95%; }
-    .kid-chat-room .input-block .input-and-message input {
-      height: 45px;
-      width: 86%;
-      border: solid 1px #64cae2;
-      border-radius: 30px;
-      padding-left: 10px; }
-    .kid-chat-room .input-block .input-and-message ::-webkit-input-placeholder {
-      font-size: 17px;
-      font-family: Spring;
-      padding-left: 15px;
-      color: #cdced2; }
-    .kid-chat-room .input-block .input-and-message ::-moz-placeholder {
-      font-size: 17px;
-      font-family: Spring;
-      padding-left: 15px;
-      color: #cdced2; }
-    .kid-chat-room .input-block .input-and-message :-ms-input-placeholder {
-      font-size: 17px;
-      font-family: Spring;
-      padding-left: 15px;
-      color: #cdced2; }
-    .kid-chat-room .input-block .input-and-message :-moz-placeholder {
-      font-size: 17px;
-      font-family: Spring;
-      padding-left: 15px;
-      color: #cdced2; }
-    .kid-chat-room .input-block .input-and-message img {
-      margin-left: auto;
-      height: 40px; }
+    border-top: solid 2px #64cae2;
+    height: 100px;
+    box-sizing: border-box; }
+    .kid-chat-room .input-block .input-and-message {
+      display: inline-flex;
+      align-items: center;
+      width: 95%; }
+      .kid-chat-room .input-block .input-and-message input {
+        height: 45px;
+        width: 86%;
+        border: solid 1px #64cae2;
+        border-radius: 30px;
+        padding-left: 10px; }
+      .kid-chat-room .input-block .input-and-message ::-webkit-input-placeholder {
+        font-size: 17px;
+        font-family: Spring;
+        padding-left: 15px;
+        color: #cdced2; }
+      .kid-chat-room .input-block .input-and-message ::-moz-placeholder {
+        font-size: 17px;
+        font-family: Spring;
+        padding-left: 15px;
+        color: #cdced2; }
+      .kid-chat-room .input-block .input-and-message :-ms-input-placeholder {
+        font-size: 17px;
+        font-family: Spring;
+        padding-left: 15px;
+        color: #cdced2; }
+      .kid-chat-room .input-block .input-and-message :-moz-placeholder {
+        font-size: 17px;
+        font-family: Spring;
+        padding-left: 15px;
+        color: #cdced2; }
+      .kid-chat-room .input-block .input-and-message img {
+        margin-left: auto;
+        height: 40px; }
+  .kid-chat-room .locked-block {
+    display: flex;
+    justify-content: space-between;
+    border-top: solid 2px #0b1138;
+    height: 100px;
+    box-sizing: border-box;
+    padding: 15px;
+    font-family: American; }
+    .kid-chat-room .locked-block .locked-user {
+      display: flex; }
+      .kid-chat-room .locked-block .locked-user img {
+        height: 40px;
+        margin-top: 9px; }
+      .kid-chat-room .locked-block .locked-user span {
+        margin: 26px 0 0 11px;
+        font-size: 15px;
+        color: #0b1138;
+        font-family: AmericanPatrius; }
+    .kid-chat-room .locked-block .unlock {
+      border: solid 2px #0b1138;
+      border-radius: 35px;
+      color: #0b1138;
+      font-size: 33px;
+      padding: 26px 24px; }
 
 @media screen and (min-width: 767px) {
   .kid-chat-room .menu-block .dialog {
@@ -10478,9 +10518,85 @@ a.button {
   .kid-chat-room .input-block .input-and-message img {
     height: 60px; } }
 
-@media screen and (min-width: 568px) {
-  .kid-chat-room .main-block {
-    height: 100vw; } }
+@media (min-height: 360px) {
+  .kid-chat-room .locked-block .locked-user span {
+    font-size: 13px; }
+  .kid-chat-room .locked-block .unlock {
+    padding: 26px 16px; } }
+
+.report-backdrop {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background-color: black;
+  opacity: 0.6; }
+
+.report-modal {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 91% !important;
+  max-width: 360px;
+  margin: auto;
+  height: fit-content;
+  min-height: 5px !important;
+  border: 2px solid #0b1138;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0) !important; }
+  .report-modal .main-block-report {
+    position: relative;
+    height: auto;
+    width: 100%;
+    background: url("../img/kid-chat/modal-background.png") no-repeat center/cover;
+    background-size: 103% 103%; }
+    .report-modal .main-block-report .cancel-report {
+      position: absolute;
+      top: 8px;
+      right: 13px;
+      height: 25px; }
+    .report-modal .main-block-report .reason-block {
+      padding: 15px 0 10px;
+      margin: 0 auto;
+      width: fit-content; }
+    .report-modal .main-block-report .title-report {
+      font-family: American;
+      font-size: 25px;
+      margin-top: 4px; }
+    .report-modal .main-block-report .reasons-report {
+      height: auto;
+      box-sizing: border-box; }
+    .report-modal .main-block-report .reason-report {
+      font-family: AmericanPatrius;
+      margin: 12px 0;
+      display: flex; }
+      .report-modal .main-block-report .reason-report img {
+        height: 15px; }
+      .report-modal .main-block-report .reason-report p {
+        margin: 0 0 0 10px;
+        font-size: 13px; }
+    .report-modal .main-block-report .send-report {
+      padding: 12px 21px 4px;
+      margin: 0px auto 0;
+      border: 2px solid #0b1138;
+      border-radius: 21px;
+      font-family: American;
+      font-size: 21px;
+      width: fit-content;
+      background-color: white; }
+    .report-modal .main-block-report .report-textarea-block {
+      width: 100%;
+      padding: 10px;
+      border-top: 2px solid #0b1138;
+      background-color: white; }
+      .report-modal .main-block-report .report-textarea-block textarea {
+        border: 2px solid #b9f2fe;
+        border-radius: 10px;
+        width: 100%;
+        font-family: Neue;
+        color: #0b1138;
+        padding: 5px; }
 
 @font-face {
   font-family: "American";
@@ -11396,7 +11512,7 @@ p {
   margin: 0; }
 
 .psy-logs {
-  background: url("../../img/logs/bg.png") no-repeat top/cover; }
+  background: url("../img/logs/bg.png") no-repeat top/cover; }
   .psy-logs .menu-block {
     display: flex;
     justify-content: space-between;
@@ -11438,7 +11554,7 @@ p {
   .psy-logs .main-block {
     height: 100vh; }
     .psy-logs .main-block .miss-call {
-      background: url("../../img/logs/second-dots.png") no-repeat right/cover #fff;
+      background: url("../img/logs/second-dots.png") no-repeat right/cover #fff;
       border-radius: 5px;
       width: 95%;
       height: 145px;
@@ -11453,7 +11569,7 @@ p {
         height: 50px;
         border-bottom: solid 2px #0b1138;
         border-radius: 6px;
-        background: url("../../img/logs/dots.png") no-repeat right/cover #ffae00; }
+        background: url("../img/logs/dots.png") no-repeat right/cover #ffae00; }
         .psy-logs .main-block .miss-call .title-date p {
           font-family: American;
           font-size: 28px;
@@ -11482,7 +11598,7 @@ p {
           padding: 10px 0 0 10px;
           width: 87%; }
     .psy-logs .main-block .call-kid {
-      background: url("../../img/logs/second-dots.png") no-repeat right/cover #fff;
+      background: url("../img/logs/second-dots.png") no-repeat right/cover #fff;
       border-radius: 5px;
       width: 95%;
       height: 145px;
@@ -11497,7 +11613,7 @@ p {
         height: 50px;
         border-bottom: solid 2px #0b1138;
         border-radius: 6px;
-        background: url("../../img/logs/third-dots.png") no-repeat right/cover #bf1340; }
+        background: url("../img/logs/third-dots.png") no-repeat right/cover #bf1340; }
         .psy-logs .main-block .call-kid .title-date p {
           font-family: American;
           font-size: 28px;
@@ -11547,7 +11663,7 @@ p {
           font-size: 17px;
           width: 37%; }
     .psy-logs .main-block .call-right-now {
-      background: url("../../img/logs/second-dots.png") no-repeat right/cover #fff;
+      background: url("../img/logs/second-dots.png") no-repeat right/cover #fff;
       border-radius: 5px;
       width: 95%;
       height: 145px;
@@ -11982,10 +12098,18 @@ p {
 
 .settings .main-block {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
-  height: calc(100vh - 72px); }
+  min-height: calc(100vh - 72px);
+  width: 100vw;
+  position: relative; }
   .settings .main-block img {
     width: 30px;
     margin-right: 10px; }
+  .settings .main-block .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100vw; }
   .settings .main-block .menu-point {
     width: 92%;
     padding-top: 37px;
@@ -12002,19 +12126,10 @@ p {
     font-size: 16px; }
   .settings .main-block .gears {
     position: absolute;
+    z-index: 1;
     bottom: 0;
     right: -10px;
-    width: 215px; }
-
-.settings .test-block {
-  height: 300px;
-  overflow: scroll; }
-  .settings .test-block .test-p {
-    line-height: 50px; }
-  .settings .test-block .test-p:first-child {
-    background-color: #62ffaa; }
-  .settings .test-block .test-p:last-child {
-    background-color: #ba39ff; }
+    width: 29.2vh; }
 
 @font-face {
   font-family: "American";
@@ -12048,7 +12163,15 @@ p {
 .notifications .main-block {
   padding-top: 23px;
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
-  height: calc(100vh - 72px); }
+  min-height: calc(100vh - 72px);
+  width: 100vw;
+  position: relative; }
+  .notifications .main-block .without-picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100vw; }
   .notifications .main-block .push-notifications {
     letter-spacing: -1px; }
     .notifications .main-block .push-notifications h1 {
@@ -12086,7 +12209,8 @@ p {
     position: absolute;
     bottom: 0;
     right: -10px;
-    width: 230px; }
+    z-index: 1;
+    width: 32.1vh; }
 
 @media (max-width: 321px) {
   .parent-setting-notifications .main-block .settings {
@@ -12201,6 +12325,28 @@ p {
     word-spacing: 4px;
     text-align: justify;
     line-height: 25px; }
+
+.test .parent {
+  position: relative;
+  height: auto;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #0b1138; }
+
+.test .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100vw;
+  color: white; }
+
+.test .img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  height: 100px; }
 
 ul#ion-segment {
   display: -webkit-box;

@@ -208,6 +208,14 @@
               }
             })
 
+
+            .state('test', {
+              cache: false,
+              url: '/test',
+              templateUrl: 'templates/test/test.html',
+              controller: 'TestController',
+              controllerAs: 'vm'
+            })
     }
 })();
 

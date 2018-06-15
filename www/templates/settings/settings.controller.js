@@ -4,11 +4,14 @@
   angular.module('app')
     .controller('SettingsController', SettingsController);
 
-  SettingsController.$inject = ['$state', '$localStorage', '$timeout', '$anchorScroll', '$location', 'userService'];
+  SettingsController.$inject = ['$state', '$localStorage', '$timeout', '$interval', '$window', '$anchorScroll', '$location', 'userService'];
 
 
-  function SettingsController($state, $localStorage, $timeout, $anchorScroll, $location, userService) {
+  function SettingsController($state, $localStorage, $timeout, $interval, $window, $anchorScroll, $location, userService) {
     const vm = this;
+
+    $timeout(function () {$(".main-block").height($(".content").height());});
+    angular.element($window).bind("resize",function(e){$(".main-block").height($(".content").height());});
 
     vm.toMenu = toMenu;
 
@@ -20,6 +23,7 @@
     vm.toTC = toTC;
 
     vm.settings = 'settings';
+
 
     function toMenu() {
       console.log('to menu');
@@ -52,36 +56,6 @@
       $state.go('terms-conditions');
     }
 
-    // //////////////////////////////////////////
-    // let root = document.getElementById("root");
-    // let uploadTestArr = [0,1,2,3,4,5,6,7,8,9];
-    // vm.testArr = [10,11,12,13,14,15,16,17,18,19];
-    //
-    // /////// scroll position -> bottom ////////
-    // // если используется ng-repeat нужно выполнять через $timeout
-    //   $timeout(function () {
-    //     root.scrollTo(0, root.scrollHeight);
-    //   });
-    // //////////////////////////////////////////
-    //
-    //
-    // /////// событие при scrollTop === 0 //////
-    // angular.element(root).bind('scroll', function(){
-    //   if (root.scrollTop === 0) {
-    //     let scrollPosition = 'anchor' + vm.testArr[0];
-    //     console.log('scrollPosition = ', scrollPosition);
-    //
-    //     // $location.hash(scrollPosition);
-    //     $anchorScroll($location.hash(scrollPosition));
-    //
-    //     // let tmpArr = uploadTestArr.concat(vm.testArr);
-    //     // vm.testArr = tmpArr;
-    //
-    //     // uploadTestArr.reverse();
-    //     // for (let i =0; i< uploadTestArr.length; i++) { vm.testArr.unshift(uploadTestArr[i]) }
-    //   }
-    // });
-    // //////////////////////////////////////////
   }
 
 })();

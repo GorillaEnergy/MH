@@ -13,8 +13,12 @@
         <p ng-click="vm.block()">block</p>
       </div>
     </div>
-    <div class="main-block">
-      <div ng-repeat="(key, message) in vm.messages">
+    <div class="main-block" id="chat">
+      <div class="load" ng-if="vm.loadMoreMessages">
+        <span>Loading</span>
+      </div>
+
+      <div ng-repeat="(key, message) in vm.messages" id="anchor{{key}}">
         <div class="day" ng-if="vm.dateHeader($index)">
           <p>{{vm.dateConverter(message.date)}}</p>
           <!--<p>{{vm.date | date : "dd MMMM yyyy"}}</p>-->
@@ -30,11 +34,56 @@
       </div>
     </div>
 
-    <div class="input-block">
+    <div class="input-block" ng-if="vm.blocked">
       <div class="input-and-message">
         <input type="text" placeholder="Message" ng-model="vm.message_input">
         <img src="./img/kid-chat-room/enter-message.png" ng-click="vm.sendMessage()">
       </div>
     </div>
+
+    <div class="locked-block" ng-if="!vm.blocked">
+      <div class="locked-user">
+        <img src="./img/kid-chat/locker.png">
+        <span>user is blocked</span>
+      </div>
+      <div class="unlock" ng-click="vm.unblock()"> unlock </div>
+    </div>
   </ion-content>
 </ion-view>
+
+<script id="report-modal" type="text/ng-template">
+  <div class="report-backdrop" ng-click="reportModal.hide()"></div>
+  <ion-modal-view class="report-modal">
+
+    <div class="main-block-report">
+      <img src="./img/kid-chat/cancel.png"  class="cancel-report"
+           ng-click="reportModal.hide()">
+
+      <div class="reason-block">
+        <div class="title-report">choose report reason</div>
+        <div class="reasons-report">
+          <div ng-repeat="(key, reason) in vm.reportReasonList" ng-click="vm.selectedReason(key)"
+               class="reason-report">
+            <img src="./img/kid-chat/checked.png" ng-if="vm.checked(key)">
+            <img src="./img/kid-chat/unchecked.png" ng-if="!vm.checked(key)">
+            <p>{{reason}}</p>
+          </div>
+
+          <div ng-click="vm.selectedReason('other')" class="reason-report">
+            <img src="./img/kid-chat/checked.png" ng-if="vm.checked('other')">
+            <img src="./img/kid-chat/unchecked.png" ng-if="!vm.checked('other')">
+            <p>other reason</p>
+          </div>
+        </div>
+        <div class="send-report" ng-click="vm.sendReport()">
+          send
+        </div>
+      </div>
+
+      <div ng-if="vm.reportTextField()" class="report-textarea-block">
+        <textarea ng-model="vm.reportTextValue" rows="6" maxlength="256"></textarea>
+      </div>
+    </div>
+
+  </ion-modal-view>
+</script>
