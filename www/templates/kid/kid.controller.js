@@ -59,11 +59,23 @@
     console.log('vm.followers = ', vm.followers);
 
     function kidFilter() {
-      let maximum_kid = 6;
+      let kid_index = userService.getKidIndex();
       let data = [];
-      angular.forEach(kids, function (kid, index) {
-        if (!kid.register && index <= maximum_kid ) { data.push(kid) }
-      });
+
+      kids[kid_index].register ? getRegisteredKid() : getUnregisteredKid() ;
+
+      function getRegisteredKid() {
+        console.log('getRegisteredKid');
+        let kid = kids[kid_index];
+        data.push(kid);
+      }
+      function getUnregisteredKid() {
+        console.log('getUnregisteredKid');
+        let maximum_kid = 6;
+        angular.forEach(kids, function (kid, index) {
+          if (!kid.register && index <= maximum_kid ) { data.push(kid) }
+        });
+      }
       return data;
     }
 
@@ -82,7 +94,7 @@
         //проверка на коректность данных
         if (vm.kids.length) {
           //проверка оплаты
-          console.log(vm.kids[kid_index].payment);
+          console.log(vm.kids[kid_index].register);
           if (vm.kids[kid_index].register == '1') {
             vm.viewType.new_kid = false;
             vm.viewType.edit_registered_kid = true;
@@ -158,7 +170,7 @@
       }
     }
 
-    function editKid(kid, index) {
+    function editKid(kid) {
       if (vm.animation) {
         for (let i = 0; i < kids.length; i++) {
           if (kids[i].id === kid.id) {
@@ -177,6 +189,7 @@
 
     function saveCurrentKid() {
       console.log('saveCurrentKid registered');
+      saveKid('toLogs');
     }
 
     function addAnotherKid() {
@@ -190,7 +203,7 @@
       userService.deleteKid(data).then(function (res) {
         console.log(res);
         if (res.status == "success") {
-          vm.kids.length > 1 ? vm.kids.splice($localStorage.kid_index, 1) : vm.kids = []
+          vm.kids.length > 1 ? vm.kids.splice($localStorage.kid_index, 1) : vm.kids = [];
           $localStorage.kids = angular.copy(vm.kids);
           delete $localStorage.kid_index;
           speciesDefinition();
@@ -202,6 +215,27 @@
 
     function removeKidModal() {
       console.log('removeKidModal');
+      let data = { kid_id: vm.kids[userService.getKidIndex()].id };
+      userService.deleteKid(data).then(function (res) {
+        console.log(res);
+        if (res.status == "success") {
+          vm.kids.length > 1 ? vm.kids.splice($localStorage.kid_index, 1) : vm.kids = [];
+
+          let kids = angular.copy($localStorage.kids);
+          for(let i = 0; i < kids.length; i++) {
+            if (kids[i].id === vm.kids.id) {
+              kids.splice($localStorage.kid_index, 1);
+              break;
+            }
+          }
+
+          $localStorage.kids = kids;
+          delete $localStorage.kid_index;
+          $state.go('parent-main-page')
+        } else {
+          console.log('remove err');
+        }
+      })
     }
 
     function saveKid(type) {
@@ -272,8 +306,8 @@
         let coincidence = false;
 
         if (vm.kids.length && permissionToSend) {
-          for (let i = 0; i < vm.kids.length; i++) {
-            let kid = vm.kids[i];
+          for (let i = 0; i < kids.length; i++) {
+            let kid = kids[i];
 
             if (i !== $localStorage.kid_index) {
               if (kid.id_number == vm.id_number || kid.phone.phone == vm.phone) {
@@ -294,13 +328,14 @@
       function send() {
         let data = {
           name: vm.name,
-          birth_date: vm.birth_date,
+          // birth_date: vm.birth_date,
+          birth_date: new Date() * 1,
           id_number: vm.id_number,
           grade: vm.grade
         };
 
         if (angular.isDefined($localStorage.kid_index)) {
-          data.kid_id = vm.kids[$localStorage.kid_index].id;
+          data.kid_id = kids[$localStorage.kid_index].id;
           data.phone = {phone: vm.phone, code: vm.countryCode};
           userService.updateKid(data).then(function (res) {
             console.log(res);
@@ -335,6 +370,10 @@
               } else if (type === 'toPayment') {
                 console.log('$state.go(\'payment\');');
                 $state.go('payment');
+              } else if (type === 'toLogs') {
+                console.log('$state.go(\'logs\');');
+                $localStorage.log_index = angular.copy($localStorage.kid_index);
+                $state.go('logs');
               }
             }
           })
@@ -360,7 +399,7 @@
       vm.grade = kids[index].grade;
       vm.phone = kids[index].phone.phone;
       vm.code = kids[index].phone.code;
-      vm.access = kids[index].access;
+      vm.access = angular.copy(kids[index].access);
       vm.payment = kids[index].payment;
     }
 
@@ -399,12 +438,16 @@
 
     function changeAccessRight(access) {
       let data = {};
-      // data.id = vm.kids[userService.getKidIndex()].id;
-      // data.id_number = vm.kids[userService.getKidIndex()].id_number;
+      data.kid_id = vm.kids[userService.getKidIndex()].id;
       data.access = access ? 1 : 0;
-      userService.userUpdate(data).then(function (res) {
-        console.log(res);
 
+      userService.updateKid(data).then(function (res) {
+        console.log(res.data.access);
+        if (res.status === 'success') {
+          vm.access = res.data.access;
+
+          console.log('vm.access = ', vm.access);
+        }
       })
     }
 
@@ -412,5 +455,26 @@
       console.log('toMainPage');
       $state.go('parent-main-page')
     }
+
+
+    vm.birth_date = new Date();
+    vm.dateConverter = dateConverter;
+    function dateConverter(date) {
+      let timestamp = date * 1;
+
+      let day = new Date(timestamp).getDate();
+      let month = new Date(timestamp).getMonth() + 1;
+      let year = new Date(timestamp).getFullYear();
+
+      if (day < 10) { day = '0' + String(day); }
+      if (month < 10) { month = '0' + String(month); }
+
+      return day + '-' + month + '-' + year;
+    }
+
+    // setInterval(function () {
+    //   console.log(vm.dateConverter(vm.birth_date));
+    //   console.log(vm.birth_date);
+    // }, 5000)
   }
 })();

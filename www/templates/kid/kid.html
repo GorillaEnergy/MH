@@ -18,7 +18,7 @@
 
           <div ng-class="vm.animation ? vm.kidPosition(key) : vm.kidPosition(key, true)" class="kid-main-pos">
 
-            <div class="kid-display" ng-click="vm.editKid(kid, key)">
+            <div class="kid-display" ng-click="vm.editKid(kid)">
               <span ng-if="vm.animation" class="kid-name-after">
                 {{kid.name}} &nbsp;
               </span>
@@ -52,11 +52,22 @@
           <p class="tooltip">kid name</p>
         </div>
 
-        <div class="birth-data">
-          <input class="input-kid" type="text" ng-model="vm.birth_date"
-                 ng-class="{'warning': vm.warning.date}"
-                 placeholder="yyyy-mm-dd">
-          <img src="./img/kid/birth-data.png" class="birth-img">
+        <!--<div class="birth-date">-->
+          <!--<input class="input-kid" type="text" ng-model="vm.birth_date"-->
+                 <!--ng-class="{'warning': vm.warning.date}"-->
+                 <!--placeholder="yyyy-mm-dd">-->
+          <!--<img src="./img/kid/birth-date.png" class="birth-img">-->
+          <!--<p class="tooltip">birth date</p>-->
+        <!--</div>-->
+
+        <div class="birth-date">
+          <label for="datepicker">
+            <div class="date-label" ng-class="{'warning': vm.warning.date}">
+              {{vm.dateConverter(vm.birth_date)}}
+            </div>
+          </label>
+          <input id="datepicker" type="date" ng-model="vm.birth_date" class="hidden-date-input">
+          <img src="./img/kid/birth-date.png" class="birth-img">
           <p class="tooltip">birth date</p>
         </div>
 
@@ -90,7 +101,6 @@
                    type="tel"
                    ng-model="vm.phone"
                    maxlength="10"
-                   autofocus
                    oninput="this.value = this.value.replace(/\D/, '')">
           </div>
         </div>
@@ -137,7 +147,8 @@
         </div>
 
         <div class="access-panel">
-          <div ng-if="vm.accessing()" class="block-access" ng-click="vm.changeAccessRight(false)">
+          <!--<div ng-if="vm.accessing()" class="block-access" ng-click="vm.changeAccessRight(false)">-->
+          <div ng-if="vm.access" class="block-access" ng-click="vm.changeAccessRight(false)">
             <img src="./img/kid/block.png" class="block-access-img">
             <div class="block-tile block">
               <span>block kid from</span>
@@ -145,7 +156,8 @@
             </div>
           </div>
 
-          <div ng-if="!vm.accessing()" class="access-remove">
+          <!--<div ng-if="!vm.accessing()" class="access-remove">-->
+          <div ng-if="!vm.access" class="access-remove">
             <div class="grant-access" ng-click="vm.changeAccessRight(true)">
               <img src="./img/kid/grant_access.png" class="grant-access-img">
               <div class="block-tile grant">
@@ -274,7 +286,6 @@
                    type="tel"
                    ng-model="vm.phone"
                    maxlength="10"
-                   autofocus
                    oninput="this.value = this.value.replace(/\D/, '')">
           </div>
         </div>

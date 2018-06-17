@@ -12,9 +12,9 @@
   .title {
     text-transform: uppercase;
     text-align: center;
-    font-size: 23px;
-    font-family: sans-serif;
-    color: #000;
+    font-size: 32px;
+    font-family: American;
+    color: #0b1138;
     font-weight: 900;
     padding: 43px 0 35px 0;
   }
@@ -28,17 +28,19 @@
     width: 100%;
 
     .save {
+      font-family: AmericanPatrius;
       text-transform: uppercase;
       text-align: center;
-      font-size: 22px;
+      font-size: 19px;
       color: #fff;
       font-weight: 700;
-      width: 95%;
+      width: calc(100% - 20px);
       line-height: 46px;
-      border: 2px solid #000;
+      border: 2px solid #0b1138;
       border-radius: 5px;
       margin: 5px auto 0;
-      background-color: #ff7300;
+      background: url("../img/payment/kid-color-0.png") no-repeat center;
+      background-size: 140%;
     }
   }
 
@@ -70,10 +72,10 @@
     .info {
       display: flex;
       height: 49px;
-      width: 85%;
+      //width: 85%;
+      width: calc(100% - 60px);
       margin: 0 auto;
-      background-color: grey;
-      border: 2px solid #000;
+      border: 2px solid #0b1138;
       border-radius: 5px;
 
       .edit {
@@ -82,43 +84,54 @@
       }
       .kid-name {
         width: 40%;
-        padding-top: 13px;
+        padding-top: 12px;
+        letter-spacing: 1px;
         text-transform: uppercase;
         text-align: center;
-        font-size: 18px;
-        font-family: sans-serif;
-        color: white;
+        font-size: 24px;
+        font-family: American;
+        color: #fff;
         font-weight: 600;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        text-shadow: 1px 1px 1px #0b1138, 0 0 1px #0b1138;
       }
     }
   }
-  .kid-color0 {
-    background-color: darkred !important;
+
+  .kid-color-0 {
+    background: url("../img/payment/kid-color-0.png") no-repeat center;
+    background-size: 140%;
   }
-  .kid-color1 {
-    background-color: green !important;
+  .kid-color-1 {
+    background: url("../img/payment/kid-color-1.png") no-repeat center;
+    background-size: 140%;
   }
-  .kid-color2 {
-    background-color: darkblue !important;
+  .kid-color-2 {
+    background: url("../img/payment/kid-color-2.png") no-repeat center;
+    background-size: 140%;
   }
-  .kid-color3 {
-    background-color: darkgoldenrod !important;
+  .kid-color-3 {
+    background: url("../img/payment/kid-color-3.png") no-repeat center;
+    background-size: 140%;
   }
-  .kid-color4 {
-    background-color: darkmagenta !important;
+  .kid-color-4 {
+    background: url("../img/payment/kid-color-4.png") no-repeat center;
+    background-size: 140%;
   }
-  .kid-color5 {
-    background-color: darksalmon !important;
+  .kid-color-5 {
+    background: url("../img/payment/kid-color-5.png") no-repeat center;
+    background-size: 140%;
   }
-  .kid-color6 {
-    background-color: darkslategrey !important;
-  }
-  .kid-color7 {
-    background-color: olivedrab !important;
-  }
+
+  //.kid-color-0 { background-color: rgb(255, 115, 0); }
+  //.kid-color-1 { background-color: rgb(255, 210, 0); }
+  //.kid-color-2 { background-color: rgb(186, 0, 255); }
+  //.kid-color-3 { background-color: rgb(255, 27, 79); }
+  //.kid-color-4 { background-color: rgb(0, 79, 255); }
+  //.kid-color-5 { background-color: rgb(47, 188, 9); }
+  .kid-color-overflow { background-color: darkslategrey; }
 
   .another-kid {
     text-align: center;
@@ -137,8 +150,8 @@
       text-transform: uppercase;
       text-align: center;
       font-size: 26px;
-      font-family: sans-serif;
-      color: #000;
+      font-family: American;
+      color: #0b1138;
       font-weight: 900;
       line-height: 38px;
     }

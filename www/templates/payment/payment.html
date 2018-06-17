@@ -8,10 +8,10 @@
           <span>payment</span>
         </div>
 
-        <div class="kids-block" ng-repeat="(key, kid) in vm.kids" ng-if="!kid.payment">
+        <div class="kids-block" ng-repeat="(key, kid) in vm.kids" ng-if="!kid.register">
           <div class="kid">
-            <img ng-src="./img/payment/kid{{key}}.png" class="kid-img" ng-if="key <= 2">
-            <img src="./img/payment/kid0.png" class="kid-img" ng-if="key > 2">
+            <!--<img ng-src="./img/payment/kid{{key}}.png" class="kid-img" ng-if="key <= 2">-->
+            <!--<img src="./img/payment/kid0.png" class="kid-img" ng-if="key > 2">-->
             <img src="./img/payment/100$.png" class="price" ng-if="key === 0">
             <img src="./img/payment/50$.png" class="price" ng-if="key !== 0">
 
@@ -20,6 +20,8 @@
               <img src="./img/payment/edit-ico.png" class="edit" ng-click="vm.ediKid(key)">
               <div class="kid-name"><span>{{kid.name}}</span></div>
             </div>
+
+            <div class="kid-dots"></div>
 
           </div>
         </div>
@@ -34,9 +36,9 @@
           <div class="price count"><span>{{vm.totalPrice}}$</span></div>
         </div>
       </div>
-
       <div class="confirm-block">
-        <div class="save" ng-click="paymentModal.show()">proceed</div>
+        <!--<div class="save" ng-click="paymentModal.show()">proceed</div>-->
+        <div class="save">proceed</div>
       </div>
 
     </div>

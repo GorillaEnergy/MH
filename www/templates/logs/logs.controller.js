@@ -46,9 +46,12 @@
       $state.go('parent-main-page')
     }
     function toKid() {
-      for(let i = 0; i < kids.length; i++) {
-        if (kid.id === kids[i].id) { $localStorage.kid_index = i; break;}
-      }
+      // for(let i = 0; i < kids.length; i++) {
+      //   if (kid.id === kids[i].id) { $localStorage.kid_index = i; break;}
+      // }
+
+      $localStorage.kid_index = angular.copy($localStorage.log_index);
+
       console.log('to kid page');
       $state.go('kid');
     }

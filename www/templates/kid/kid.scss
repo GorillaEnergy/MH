@@ -222,12 +222,33 @@
         left: -33px;
       }
     }
-    .birth-data {
+    .birth-date {
       position: relative;
       width: 100%;
       text-align: center;
       margin-top: 26px;
 
+      .date-label {
+        height: 49px;
+        width:100%;
+        display: inline-block;
+        text-transform: uppercase;
+        text-align: left;
+        font-size: 22px;
+        background-color: #fff;
+        color: #0b1138;
+        font-weight: 600;
+        line-height: 46px;
+        border: 2px solid #0b1138;
+        border-radius: 5px;
+        margin: 0 auto;
+        padding-left: 75px;
+      }
+      .hidden-date-input {
+        visibility: hidden!important;
+        height: 0;
+        padding: 0;
+      }
       .birth-img {
         position: absolute;
         height: 119px;
@@ -385,9 +406,9 @@
 
       .followers {
         margin: 28px auto 0;
-        padding-top: 14px;
+        padding: 14px 0 0 60px;
         position: relative;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 500;
         width: 81%;
         height: 49px;
@@ -395,7 +416,7 @@
         border: 2px solid #0b1138;
         border-radius: 5px;
         font-family: HelveticaNeueCyr;
-        text-align: center;
+        text-align: left;
 
         .follower-img {
           position: absolute;
@@ -438,9 +459,10 @@
           width: 100%;
           height: 100%;
           display: flex;
-          background-color: #bf1340;
           border: 2px solid #0b1138;
           border-radius: 5px;
+          background: url('../img/kid/block-reg-kid.png') center no-repeat;
+          background-size: 140%;
 
           .block-access-img {
             height: 54px;
@@ -468,7 +490,7 @@
           width: 80%;
         }
         .remove {
-          padding-top: 38px;
+          padding-top: 41px;
           width: 80%;
         }
 
@@ -482,9 +504,10 @@
             display: flex;
             height: 100%;
             width: calc(50% - 4px);
-            background-color: #ff7300;
             border: 2px solid #0b1138;
             border-radius: 5px;
+            background: url('../img/kid/access-reg-kid.png') center no-repeat;
+            background-size: 140%;
 
             .grant-access-img {
               height: 53px;
@@ -495,13 +518,14 @@
             display: flex;
             height: 100%;
             width: calc(50% - 4px);
-            background-color: #bf1340;
             border: 2px solid #0b1138;
             border-radius: 5px;
+            background: url('../img/kid/rem-reg-kid.png') center no-repeat;
+            background-size: 140%;
 
             .remove-from-app-img {
               height: 53px;
-              margin: 12px 0 0 24px;
+              margin: 12px 0 0 13px;
             }
           }
         }
@@ -607,10 +631,10 @@
   right: 0;
   margin: auto;
   width: 390px !important;
-  height: 208px !important;
+  height: 195px !important;
   min-height: 50px !important;
   z-index: 2;
-  background-color: #00000000 !important;
+  background-color: rgba(0, 0, 0, 0) !important;
 
   .remove-main-block {
     background: url('../img/kid/modal/dots.png') center no-repeat;
@@ -673,10 +697,10 @@
   right: 0;
   margin: auto;
   width: 390px !important;
-  height: 208px !important;
+  height: 195px !important;
   min-height: 50px !important;
   z-index: 2;
-  background-color: #00000000 !important;
+  background-color: rgba(0, 0, 0, 0) !important;
 
   .follower-main-block {
     background: url('../img/kid/modal/dots.png') center no-repeat;
@@ -789,6 +813,13 @@
         margin-right: 0;
       }
     }
+  }
+
+  .kids-remove-modal {
+    width: 350px!important;
+  }
+  .add-follower-modal {
+    width: 350px!important;
   }
 }
 @media (max-width: 350px) {
