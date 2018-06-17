@@ -10147,6 +10147,8 @@ a.button {
   text-overflow: ellipsis;
   height: 100%;
   width: 100%; }
+  .parent-main-page .kid-name .name-paragraph {
+    margin-top: 2px; }
 
 .parent-main-page .kid-cloud {
   position: absolute;
@@ -10695,87 +10697,91 @@ a.button {
         font-family: American;
         font-size: 19px; }
 
-.registration .main-block {
+.profile .main-block {
   height: 100vh;
   min-height: 568px;
   width: 100vw;
   background: url("../img/registration/registration.png") no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  padding: 0 10px; }
 
-.registration .title {
+.profile .title {
+  font-family: American;
   text-transform: uppercase;
   text-align: center;
-  font-size: 23px;
-  font-family: sans-serif;
-  color: #000;
+  font-size: 31px;
+  color: #0b1138;
   font-weight: 900;
   padding-top: 43px; }
 
-.registration .tooltip {
+.profile .tooltip {
+  font-family: AmericanPatrius;
   text-transform: uppercase;
   text-align: center;
   font-size: 14px;
-  color: #000;
+  color: #0b1138;
   font-weight: 500;
   margin-top: 2px; }
 
-.registration .name {
+.profile .name {
   position: relative;
   width: 100%;
   text-align: center;
-  margin-top: 15%; }
-  .registration .name .name-img {
+  margin-top: 62px; }
+  .profile .name .name-img {
     position: absolute;
     height: 100px;
     top: -51px;
-    left: 8px; }
+    left: -2px; }
 
-.registration .email {
+.profile .email {
   position: relative;
   width: 100%;
   text-align: center;
-  margin-top: 6%; }
-  .registration .email .email-img {
+  margin-top: 26px; }
+  .profile .email .email-img {
     position: absolute;
     height: 84px;
     top: -20px;
-    left: 13px; }
+    left: 2px; }
 
-.registration .id {
+.profile .id {
   position: relative;
   width: 100%;
   text-align: center;
-  margin-top: 6%; }
-  .registration .id .id-img {
+  margin-top: 26px; }
+  .profile .id .id-img {
     position: absolute;
-    height: 85px;
-    top: -16px;
-    left: 12px; }
+    height: 86px;
+    top: -19px;
+    left: 1px; }
 
-.registration .input {
-  padding-left: 20%;
+.profile .input {
+  padding-left: 70px;
   font-size: 22px;
   font-weight: 700;
-  width: 88%;
+  width: calc(100% - 32px);
   height: 49px;
-  border: 2px solid #000;
+  border: 2px solid #0b1138;
   border-radius: 5px;
-  margin-left: 34px; }
+  margin-left: 32px; }
 
-.registration .save {
+.profile .save {
+  font-family: AmericanPatrius;
   text-transform: uppercase;
   text-align: center;
-  font-size: 22px;
+  font-size: 19px;
   color: #fff;
   font-weight: 700;
-  width: 95%;
+  width: 100%;
   line-height: 46px;
-  border: 2px solid #000;
+  border: 2px solid #0b1138;
   border-radius: 5px;
-  margin: 11.7% auto 0;
-  background-color: #ff7300; }
+  margin: 46px auto 0;
+  background: url("../img/registration/save-button.png") center no-repeat;
+  background-size: 140%; }
 
-.registration .warning {
+.profile .warning {
   border: 2px solid red; }
 
 .test-modal {
@@ -11519,7 +11525,6 @@ p {
     align-items: center;
     width: 100%;
     height: 72px;
-    margin-bottom: 25px;
     background-color: #fff;
     border-bottom: solid 2px #0b1138; }
     .psy-logs .menu-block .dialog {
@@ -11541,26 +11546,38 @@ p {
         font-size: 12px; }
     .psy-logs .menu-block img {
       width: 15px;
-      margin-left: 9px; }
+      padding: 10px;
+      margin-left: 9px;
+      box-sizing: unset; }
     .psy-logs .menu-block p {
-      margin: 0 0 0 18px;
+      margin: 6px 0 0 18px;
       font-size: 25px;
       text-transform: uppercase;
       color: #0b1138;
       font-family: American; }
     .psy-logs .menu-block .icon-menu {
-      margin-right: 9px;
       width: 30px; }
   .psy-logs .main-block {
-    height: 100vh; }
-    .psy-logs .main-block .miss-call {
+    height: calc(100vh - 72px);
+    overflow: scroll;
+    padding: 15px 15px 0 15px; }
+    .psy-logs .main-block .open-arrow {
+      position: absolute;
+      bottom: 5px;
+      right: 3px;
+      align-self: flex-end;
+      width: 40px;
+      margin-bottom: 5px; }
+    .psy-logs .main-block .normal-log {
       background: url("../img/logs/second-dots.png") no-repeat right/cover #fff;
       border-radius: 5px;
-      width: 95%;
-      height: 145px;
-      margin: auto;
-      border: solid 1px #0b1138; }
-      .psy-logs .main-block .miss-call .title-date {
+      width: 100%;
+      min-height: 145px;
+      height: fit-content;
+      margin-bottom: 15px;
+      border: solid 1px #0b1138;
+      position: relative; }
+      .psy-logs .main-block .normal-log .title-date {
         padding: 0 10px;
         display: inline-flex;
         align-items: center;
@@ -11568,43 +11585,47 @@ p {
         width: 100%;
         height: 50px;
         border-bottom: solid 2px #0b1138;
-        border-radius: 6px;
+        border-radius: 4px;
         background: url("../img/logs/dots.png") no-repeat right/cover #ffae00; }
-        .psy-logs .main-block .miss-call .title-date p {
+        .psy-logs .main-block .normal-log .title-date p {
+          margin: 0;
           font-family: American;
           font-size: 28px;
           color: #FFFFFF; }
-        .psy-logs .main-block .miss-call .title-date .date {
+        .psy-logs .main-block .normal-log .title-date .date {
           text-align: center;
           font-family: Patrius;
           color: #0b1138;
           font-size: 12px; }
-      .psy-logs .main-block .miss-call .message-block {
+      .psy-logs .main-block .normal-log .message-block {
         display: inline-flex;
-        width: 100%;
-        height: 93px; }
-        .psy-logs .main-block .miss-call .message-block img {
-          align-self: flex-end;
-          width: 40px;
-          margin-bottom: 5px; }
-        .psy-logs .main-block .miss-call .message-block p {
+        width: 100%; }
+        .psy-logs .main-block .normal-log .message-block p {
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          height: 70px;
+          text-overflow: ellipsis;
           font-family: Neue;
           font-size: 17px;
           padding: 10px 0 0 10px;
-          width: 87%; }
-    .psy-logs .main-block .call-kid {
+          width: calc(100vw - 70px); }
+    .psy-logs .main-block .emergency-log {
       background: url("../img/logs/second-dots.png") no-repeat right/cover #fff;
       border-radius: 5px;
-      width: 95%;
-      height: 145px;
-      margin: 15px auto;
-      border: solid 1px #0b1138; }
-      .psy-logs .main-block .call-kid .title-date {
+      width: 100%;
+      min-height: 145px;
+      margin-bottom: 15px;
+      border: solid 1px #0b1138;
+      position: relative; }
+      .psy-logs .main-block .emergency-log .open-arrow {
+        position: absolute;
+        bottom: 5px;
+        right: 3px;
+        align-self: flex-end;
+        width: 40px;
+        margin-bottom: 5px; }
+      .psy-logs .main-block .emergency-log .title-date {
         padding: 0 10px;
         display: inline-flex;
         align-items: center;
@@ -11612,47 +11633,51 @@ p {
         width: 100%;
         height: 50px;
         border-bottom: solid 2px #0b1138;
-        border-radius: 6px;
+        border-radius: 4px;
         background: url("../img/logs/third-dots.png") no-repeat right/cover #bf1340; }
-        .psy-logs .main-block .call-kid .title-date p {
+        .psy-logs .main-block .emergency-log .title-date p {
+          margin: 0;
           font-family: American;
           font-size: 28px;
           color: #FFFFFF; }
-        .psy-logs .main-block .call-kid .title-date .date {
+        .psy-logs .main-block .emergency-log .title-date .date-block {
           display: inline-flex;
-          align-items: center;
-          font-family: Patrius;
-          text-align: center;
-          color: #fff;
-          font-size: 12px; }
-          .psy-logs .main-block .call-kid .title-date .date img {
+          align-items: center; }
+          .psy-logs .main-block .emergency-log .title-date .date-block .date {
+            font-family: Patrius;
+            text-align: center;
+            color: #fff;
+            font-size: 12px; }
+          .psy-logs .main-block .emergency-log .title-date .date-block img {
+            position: static;
             height: 30px;
             margin-right: 10px; }
-      .psy-logs .main-block .call-kid .message-block {
+      .psy-logs .main-block .emergency-log .message-block {
         display: inline-flex;
         align-items: flex-start;
         width: 100%;
         height: 93px; }
-        .psy-logs .main-block .call-kid .message-block .call-the-kid {
-          margin-top: 13px;
+        .psy-logs .main-block .emergency-log .message-block .call-the-kid {
+          margin-top: 30px;
           padding-left: 10px;
-          display: inline-flex;
-          align-items: center;
           width: 50%; }
-          .psy-logs .main-block .call-kid .message-block .call-the-kid img {
+          .psy-logs .main-block .emergency-log .message-block .call-the-kid a {
+            display: flex;
+            text-decoration: none; }
+          .psy-logs .main-block .emergency-log .message-block .call-the-kid img {
             width: 30px; }
-          .psy-logs .main-block .call-kid .message-block .call-the-kid p {
+          .psy-logs .main-block .emergency-log .message-block .call-the-kid p {
             text-transform: uppercase;
             font-family: Patrius;
-            font-size: 16px;
+            font-size: 14px;
             color: #0b1138;
             padding: 0 0 0 10px;
             width: 100%; }
-        .psy-logs .main-block .call-kid .message-block img {
+        .psy-logs .main-block .emergency-log .message-block img {
           align-self: flex-end;
           width: 40px;
           margin-bottom: 5px; }
-        .psy-logs .main-block .call-kid .message-block p {
+        .psy-logs .main-block .emergency-log .message-block p {
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
@@ -11662,71 +11687,35 @@ p {
           font-family: Neue;
           font-size: 17px;
           width: 37%; }
-    .psy-logs .main-block .call-right-now {
-      background: url("../img/logs/second-dots.png") no-repeat right/cover #fff;
-      border-radius: 5px;
-      width: 95%;
-      height: 145px;
-      margin: 15px auto;
-      border: solid 1px #0b1138; }
-      .psy-logs .main-block .call-right-now .title-date {
-        padding: 0 10px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        height: 50px;
-        border-bottom: solid 2px #0b1138;
-        border-radius: 6px;
-        background: url("../../img/logs/fourth-dots.png") no-repeat right/cover #2fbc09; }
-        .psy-logs .main-block .call-right-now .title-date p {
-          font-family: American;
-          font-size: 28px;
-          color: #FFFFFF; }
-        .psy-logs .main-block .call-right-now .title-date .date {
-          display: inline-flex;
-          align-items: center;
-          font-family: Patrius;
-          text-align: center;
-          color: #000;
-          font-size: 13px; }
-          .psy-logs .main-block .call-right-now .title-date .date img {
-            height: 30px;
-            margin-right: 10px; }
-      .psy-logs .main-block .call-right-now .message-block {
-        display: inline-flex;
-        align-items: flex-start;
-        width: 100%;
-        height: 93px; }
-        .psy-logs .main-block .call-right-now .message-block .call-the-kid {
-          margin-top: 13px;
-          padding-left: 10px;
-          display: inline-flex;
-          align-items: center;
-          width: 50%; }
-          .psy-logs .main-block .call-right-now .message-block .call-the-kid img {
-            width: 30px; }
-          .psy-logs .main-block .call-right-now .message-block .call-the-kid p {
-            text-transform: uppercase;
-            font-family: Patrius;
-            font-size: 16px;
-            color: #0b1138;
-            padding: 0 0 0 10px;
-            width: 100%; }
-        .psy-logs .main-block .call-right-now .message-block img {
-          align-self: flex-end;
-          width: 40px;
-          margin-bottom: 5px; }
-        .psy-logs .main-block .call-right-now .message-block p {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          height: 70px;
-          font-family: Neue;
+      .psy-logs .main-block .emergency-log .full-emergency-log {
+        padding: 0 0 0 0; }
+        .psy-logs .main-block .emergency-log .full-emergency-log p {
+          margin: -20px 40px 5px 10px;
           font-size: 17px;
-          padding: 10px 0 0 10px;
-          width: 87%; }
+          color: #0b1138;
+          font-family: Neue; }
+  .psy-logs .show-all-content-in-normal-status {
+    display: unset !important; }
+  .psy-logs .arrow-clockwise {
+    transform: rotate(180deg);
+    animation-name: rotate-clockwise;
+    animation-duration: 0.5s; }
+  .psy-logs .arrow-counterclockwise {
+    transform: rotate(0deg);
+    animation-name: rotate-counterclockwise;
+    animation-duration: 0.5s; }
+
+@keyframes rotate-clockwise {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(180deg); } }
+
+@keyframes rotate-counterclockwise {
+  from {
+    transform: rotate(180deg); }
+  to {
+    transform: rotate(0deg); } }
 
 .my-menu .main-block {
   height: -webkit-fill-available;

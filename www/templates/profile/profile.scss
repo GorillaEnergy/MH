@@ -1,4 +1,4 @@
-.registration {
+.profile {
 
   .main-block {
     height: 100vh;
@@ -6,23 +6,25 @@
     width: 100vw;
     background: url('../img/registration/registration.png') no-repeat;
     background-size: cover;
+    padding: 0 10px;
   }
 
   .title {
+    font-family: American;
     text-transform: uppercase;
     text-align: center;
-    font-size: 23px;
-    font-family: sans-serif;
-    color: #000;
+    font-size: 31px;
+    color: #0b1138;
     font-weight: 900;
     padding-top: 43px;
   }
 
   .tooltip {
+    font-family: AmericanPatrius;
     text-transform: uppercase;
     text-align: center;
     font-size: 14px;
-    color: #000;
+    color: #0b1138;
     font-weight: 500;
     margin-top: 2px;
   }
@@ -31,13 +33,13 @@
     position: relative;
     width: 100%;
     text-align: center;
-    margin-top: 15%;
+    margin-top: 62px;
 
     .name-img {
       position: absolute;
       height: 100px;
       top: -51px;
-      left: 8px;
+      left: -2px;
     }
   }
 
@@ -45,13 +47,13 @@
     position: relative;
     width: 100%;
     text-align: center;
-    margin-top: 6%;
+    margin-top: 26px;
 
     .email-img {
       position: absolute;
       height: 84px;
       top: -20px;
-      left: 13px;
+      left: 2px;
     }
   }
 
@@ -59,39 +61,41 @@
     position: relative;
     width: 100%;
     text-align: center;
-    margin-top: 6%;
+    margin-top: 26px;
 
     .id-img {
       position: absolute;
-      height: 85px;
-      top: -16px;
-      left: 12px;
+      height: 86px;
+      top: -19px;
+      left: 1px;
     }
   }
 
   .input {
-    padding-left: 20%;
+    padding-left: 70px;
     font-size: 22px;
     font-weight: 700;
-    width: 88%;
+    width: calc(100% - 32px);
     height: 49px;
-    border: 2px solid #000;
+    border: 2px solid #0b1138;
     border-radius: 5px;
-    margin-left: 34px;
+    margin-left: 32px;
   }
 
   .save {
+    font-family: AmericanPatrius;
     text-transform: uppercase;
     text-align: center;
-    font-size: 22px;
+    font-size: 19px;
     color: #fff;
     font-weight: 700;
-    width: 95%;
+    width: 100%;
     line-height: 46px;
-    border: 2px solid #000;
+    border: 2px solid #0b1138;
     border-radius: 5px;
-    margin: 11.7% auto 0;
-    background-color: #ff7300;
+    margin: 46px auto 0;
+    background: url('../img/registration/save-button.png') center no-repeat;
+    background-size: 140%;
   }
 
   .warning {

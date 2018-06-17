@@ -92,6 +92,9 @@
     text-overflow: ellipsis;
     height: 100%;
     width: 100%;
+    .name-paragraph {
+      margin-top: 2px;
+    }
   }
   .kid-cloud {
     position: absolute;

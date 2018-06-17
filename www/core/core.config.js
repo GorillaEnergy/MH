@@ -141,6 +141,9 @@
               resolve: {
                 security: function ($timeout, securityService) {
                   return $timeout(function() { securityService.onlyParent(); });
+                },
+                consultants: function ($timeout, consultantService) {
+                  return  consultantService.consultantList();
                 }
               }
             })

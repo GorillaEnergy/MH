@@ -412,33 +412,5 @@
       console.log('toMainPage');
       $state.go('parent-main-page')
     }
-
-    ///////////////////////////
-    // getFirebaseToken();
-    // onTokenRefresh();
-
-    function getFirebaseToken() {
-      if (typeof FCMPlugin != 'undefined') {
-        FCMPlugin.getToken((token) => {
-          console.log(token);
-        }, (error) => {
-          console.log('error retrieving token: ' + error);
-        });
-      } else {
-        console.log('FCMPlugin is not defined');
-      }
-    }
-
-    function onTokenRefresh() {
-      setInterval(() => {
-        if (typeof FCMPlugin != 'undefined') {
-          FCMPlugin.onTokenRefresh(function (token) {
-            alert(token);
-          });
-        } else {
-          console.log('FCMPlugin is not defined');
-        }
-      }, 1000);
-    }
   }
 })();

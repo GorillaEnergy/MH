@@ -14,7 +14,7 @@
 
     vm.save = save;
 
-    vm.newUser = $localStorage.newUser;
+    vm.newUser = !$localStorage.kids;
     vm.warning = {name: false, email: false, id: false};
 
     vm.name = user.name;

@@ -33,7 +33,6 @@ p{
     align-items: center;
     width: 100%;
     height: 72px;
-    margin-bottom: 25px;
     background-color: #fff;
     border-bottom: solid 2px #0b1138;
     .dialog{
@@ -57,29 +56,43 @@ p{
     }
     img {
       width: 15px;
+      padding: 10px;
       margin-left: 9px;
+      box-sizing: unset;
     }
     p {
-      margin: 0 0 0 18px;
+      margin: 6px 0 0 18px;
       font-size: 25px;
       text-transform: uppercase;
       color: #0b1138;
       font-family: American;
     }
     .icon-menu{
-      margin-right: 9px;
       width: 30px;
     }
   }
   .main-block{
-    height:100vh;
-    .miss-call{
+    height: calc(100vh - 72px);
+    overflow: scroll;
+    padding: 15px 15px 0 15px;
+
+    .open-arrow{
+      position: absolute;
+      bottom: 5px;
+      right: 3px;
+      align-self: flex-end;
+      width: 40px;
+      margin-bottom: 5px;
+    }
+    .normal-log{
       background: url('../img/logs/second-dots.png') no-repeat right/ cover #fff;
       border-radius: 5px;
-      width: 95%;
-      height: 145px;
-      margin:auto;
+      width: 100%;
+      min-height: 145px;
+      height: fit-content;
+      margin-bottom: 15px;
       border: solid 1px #0b1138;
+      position: relative;
       .title-date{
         padding: 0 10px;
         display: inline-flex;
@@ -88,9 +101,10 @@ p{
         width: 100%;
         height: 50px;
         border-bottom: solid 2px #0b1138;
-        border-radius: 6px;
+        border-radius: 4px;
         background: url('../img/logs/dots.png') no-repeat right/ cover #ffae00;
         p{
+          margin: 0;
           font-family:American;
           font-size: 28px;
           color: #FFFFFF;
@@ -105,32 +119,38 @@ p{
       .message-block{
         display: inline-flex;
         width: 100%;
-        height: 93px;
-        img{
-          align-self: flex-end;
-          width: 40px;
-          margin-bottom: 5px;
-        }
+        //height: 93px;
         p{
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          height: 70px;
-          font-family:Neue;
-          font-size:17px;
+          text-overflow: ellipsis;
+          font-family: Neue;
+          font-size: 17px;
           padding: 10px 0 0 10px;
-          width: 87%;
+          width: calc(100vw - 70px);
         }
       }
     }
-    .call-kid{
+    .emergency-log{
       background: url('../img/logs/second-dots.png') no-repeat right/ cover #fff;
       border-radius: 5px;
-      width: 95%;
-      height: 145px;
-      margin:15px auto;
+      width: 100%;
+      min-height: 145px;
+      margin-bottom: 15px;
       border: solid 1px #0b1138;
+      position: relative;
+
+      .open-arrow{
+        position: absolute;
+        bottom: 5px;
+        right: 3px;
+        align-self: flex-end;
+        width: 40px;
+        margin-bottom: 5px;
+      }
+
       .title-date{
         padding: 0 10px;
         display: inline-flex;
@@ -139,21 +159,25 @@ p{
         width: 100%;
         height: 50px;
         border-bottom: solid 2px #0b1138;
-        border-radius: 6px;
+        border-radius: 4px;
         background: url('../img/logs/third-dots.png') no-repeat right/ cover #bf1340;
         p{
+          margin: 0;
           font-family:American;
           font-size: 28px;
           color: #FFFFFF;
         }
-        .date{
+        .date-block {
           display: inline-flex;
           align-items: center;
-          font-family:Patrius;
-          text-align: center;
-          color: #fff;
-          font-size: 12px;
+          .date{
+            font-family:Patrius;
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+          }
           img{
+            position: static;
             height:30px;
             margin-right: 10px;
           }
@@ -165,11 +189,13 @@ p{
         width: 100%;
         height: 93px;
         .call-the-kid{
-          margin-top: 13px;
+          margin-top: 30px;
           padding-left: 10px;
-          display: inline-flex;
-          align-items: center;
           width: 50%;
+          a {
+            display: flex;
+            text-decoration: none;
+          }
           img{
             width: 30px;;
           }
@@ -177,7 +203,7 @@ p{
 
             text-transform: uppercase;
             font-family:Patrius;
-            font-size:16px;
+            font-size:14px;
             color: #0b1138;
             padding: 0 0 0 10px;
             width: 100%;
@@ -200,86 +226,43 @@ p{
           width: 37%;
         }
       }
-    }
-    .call-right-now{
-      background: url('../img/logs/second-dots.png') no-repeat right/ cover #fff;
-      border-radius: 5px;
-      width: 95%;
-      height: 145px;
-      margin:15px auto;
-      border: solid 1px #0b1138;
-      .title-date{
-        padding: 0 10px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        height: 50px;
-        border-bottom: solid 2px #0b1138;
-        border-radius: 6px;
-        background: url('../../img/logs/fourth-dots.png') no-repeat right/ cover #2fbc09;
-        p{
-          font-family:American;
-          font-size: 28px;
-          color: #FFFFFF;
-        }
-        .date{
-          display: inline-flex;
-          align-items: center;
-          font-family:Patrius;
-          text-align: center;
-          color: #000;
-          font-size: 13px;
-          img{
-            height:30px;
-            margin-right: 10px;
-          }
-        }
-      }
-      .message-block{
-        display: inline-flex;
-        align-items: flex-start;
-        width: 100%;
-        height: 93px;
-        .call-the-kid{
-          margin-top: 13px;
-          padding-left: 10px;
-          display: inline-flex;
-          align-items: center;
-          width: 50%;
-          img{
-            width: 30px;;
-          }
-          p{
-            text-transform: uppercase;
-            font-family:Patrius;
-            font-size:16px;
-            color: #0b1138;
-            padding: 0 0 0 10px;
-            width: 100%;
 
-          }
-        }
-        img{
-          align-self: flex-end;
-          width: 40px;
-          margin-bottom: 5px;
-        }
-        p{
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          height: 70px;
-          font-family:Neue;
-          font-size:17px;
-          padding: 10px 0 0 10px;
-          width: 87%;
+      .full-emergency-log {
+        padding: 0 0 0 0;
+        p {
+          margin: -20px 40px 5px 10px;
+          font-size: 17px;
+          color: #0b1138;
+          font-family: Neue;
         }
       }
     }
   }
+
+  .show-all-content-in-normal-status {
+    display: unset !important;
+  }
+
+  .arrow-clockwise {
+    transform: rotate(180deg);
+
+    animation-name: rotate-clockwise;
+    animation-duration: 0.5s;
+    //animation-fill-mode: forwards;
+  }
+  .arrow-counterclockwise {
+    transform: rotate(0deg);
+
+    animation-name: rotate-counterclockwise;
+    animation-duration: 0.5s;
+    //animation-fill-mode: forwards;
+  }
+  @keyframes rotate-clockwise {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(180deg);}
+  }
+  @keyframes rotate-counterclockwise {
+    from {transform: rotate(180deg);}
+    to {transform: rotate(0deg);}
+  }
 }
-
-
-

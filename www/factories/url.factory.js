@@ -25,6 +25,9 @@
                     },
                     countries: {
                       list: baseUrl + 'api/list-codes'
+                    },
+                    consultants : {
+                      consultantsList: baseUrl + 'api/list-consultants'
                     }
 
                 }

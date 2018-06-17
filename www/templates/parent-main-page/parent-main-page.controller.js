@@ -17,9 +17,11 @@
     vm.kidLogs = kidLogs;
     vm.emptyKids = emptyKids;
 
-    vm.kids = kids;
-    // vm.kids = kidFilter();
-    console.log(kids);
+    // vm.kids = kids;
+    vm.kids = kidFilter();
+    // console.log('All kids', kids);
+    // console.log('Registered kids', vm.kids);
+
 
     // не несет смысловой нагрузки, нужно для создания вьюхи
     vm.callRightNow = true;
@@ -28,27 +30,14 @@
     vm.emptyData = false;
     vm.clouds = false;
     ////////////////////////////////////////////////////////
+
+
     function kidFilter() {
       let data = [];
       angular.forEach(kids, function (kid) {
-        if (kid.register) { console.log(kid); data.push(kid) }
+        if (kid.register) { data.push(kid) }
       });
       return data;
-    }
-
-    function kidColor(index) {
-      let name = 'kid-color' + index;
-      return name;
-    }
-    function toMenu() {
-      console.log('toMenu');
-      $state.go('menu');
-    }
-    function kidLogs(index) {
-      console.log('index', index);
-      $localStorage.log_index = index;
-      console.log('to logs');
-      $state.go('logs');
     }
     function emptyKids() {
       let status = true;
@@ -59,6 +48,22 @@
         }
       }
       return status;
+    }
+
+    function kidColor(index) {
+      let name = 'kid-color' + index;
+      return name;
+    }
+    function toMenu() {
+      console.log('toMenu');
+      $state.go('menu');
+    }
+    function kidLogs(id) {
+      for(let i = 0; i < kids.length; i++) {
+        if (id === kids[i].id) { $localStorage.log_index = i; break;}
+      }
+      console.log('to logs');
+      $state.go('logs');
     }
   }
 })();
