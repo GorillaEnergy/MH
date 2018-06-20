@@ -93,7 +93,7 @@
           <img src="./img/authorization/phone.png" class="phone-ico">
 
           <div class="country-and-phone">
-            <div class="country-select" ng-click="vm.showCountryModal()">
+            <div class="country-select" ng-click="vm.showCountryModal(true)">
               {{vm.countryCode}}
             </div>
 
@@ -138,8 +138,8 @@
 
         <div ng-repeat="(key, follower) in vm.followers" class="followers" ng-class="{'follower-margin': key}">
           <img src="./img/kid/follower.png" class="follower-img">
-          <span>{{follower.code}} {{follower.phone}}</span>
-          <img src="./img/kid/trash.png" class="follower-remove">
+          <span>{{ vm.followerPhone(follower) }}</span>
+          <img src="./img/kid/trash.png" class="follower-remove" ng-click="vm.removeFollower(follower, key)">
         </div>
 
         <div class="add-follower">
@@ -195,8 +195,15 @@
     </ion-header-bar>
 
     <ion-content class="padding">
-      <div ng-repeat="country in vm.countryCodes">
+      <div ng-repeat="country in vm.countryCodes" ng-if="vm.useCodeForKid">
         <ion-radio ng-model="vm.countryCode" ng-value="country.code"
+                   ng-click="vm.hideCountryModal()">
+          {{country.name}}: {{country.code}}
+        </ion-radio>
+      </div>
+
+      <div ng-repeat="country in vm.countryCodes" ng-if="!vm.useCodeForKid">
+        <ion-radio ng-model="vm.countryCodeFollower" ng-value="country.code"
                    ng-click="vm.hideCountryModal()">
           {{country.name}}: {{country.code}}
         </ion-radio>
@@ -277,14 +284,14 @@
 
         <div class="country-and-phone-f">
 
-          <div class="country-select-f" ng-click="vm.showCountryModal()">
-            {{vm.countryCode}}
+          <div class="country-select-f" ng-click="vm.showCountryModal(false)">
+            {{vm.countryCodeFollower}}
           </div>
 
           <div class="phone-f">
             <input class="input-phone-f"
                    type="tel"
-                   ng-model="vm.phone"
+                   ng-model="vm.phoneFollower"
                    maxlength="10"
                    oninput="this.value = this.value.replace(/\D/, '')">
           </div>

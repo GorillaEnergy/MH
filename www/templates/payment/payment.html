@@ -17,7 +17,7 @@
 
             <div class="info" ng-class="vm.kidColor(key)">
 
-              <img src="./img/payment/edit-ico.png" class="edit" ng-click="vm.ediKid(key)">
+              <img src="./img/payment/edit-ico.png" class="edit" ng-click="vm.editKid(kid)">
               <div class="kid-name"><span>{{kid.name}}</span></div>
             </div>
 
@@ -38,7 +38,7 @@
       </div>
       <div class="confirm-block">
         <!--<div class="save" ng-click="paymentModal.show()">proceed</div>-->
-        <div class="save">proceed</div>
+        <div class="save" ng-click="vm.toMenu()">proceed</div>
       </div>
 
     </div>

@@ -4,10 +4,10 @@
     angular.module('service.userService', [])
         .service('userService', userService);
 
-    userService.$inject = ['http', 'url', '$localStorage', '$sessionStorage', '$state'];
+    userService.$inject = ['http', 'url', '$localStorage', '$sessionStorage', '$state', '$timeout'];
 
 
-    function userService(http, url, $localStorage, $sessionStorage, $state) {
+    function userService(http, url, $localStorage, $sessionStorage, $state, $timeout) {
         let model = {};
         model.checkPhone = checkPhone;
         model.login = login;
@@ -30,6 +30,8 @@
         model.setKids = setKids;
         model.getKids = getKids;
 
+        model.addFollower = addFollower;
+        model.removeFollower = removeFollower;
         model.getFollowers = getFollowers;
 
         model.setKidIndex = setKidIndex;
@@ -62,16 +64,14 @@
             });
         }
         function logout() {
-            // return http.post(url.auth.logout).then(function (res) {
-                $localStorage.$reset();
-                $sessionStorage.$reset();
-                $state.go('authorization')
-            // });
+          $localStorage.$reset();
+          $sessionStorage.$reset();
+          $state.go('authorization')
         }
 
         function setToken(token) {
-        $localStorage.token = token;
-      }
+          $localStorage.token = token;
+        }
         function getToken() {
           return $localStorage.token;
         }
@@ -115,21 +115,22 @@
           return $localStorage.kids;
         }
 
+        function addFollower(data) {
+          return http.post(url.kid.add_follower, data);
+        }
+        function removeFollower(data) {
+          return http.post(url.kid.remove_follower, data);
+        }
         function getFollowers() {
-          // return http.get(url.user.uploadFollowers).then(function (res) {
-            // return res.data;
-            return [
-                {
-                  "phone": "0959954535",
-                  "code": "+380"
-                },
-                // {
-                //   "phone": "0681662023",
-                //   "code": "+380"
-                // }
-            ];
-
-          // });
+          if (angular.isDefined($localStorage.kid_index)) {
+            let data = {kid_id: $localStorage.kids[$localStorage.kid_index].id};
+            return http.post(url.kid.followers_list, data).then(function (res) {
+              console.log(res);
+              if (res.status == 'success') { return res.data; } else { return [] }
+            });
+          } else {
+            return []
+          }
         }
 
         function setKidIndex(index) {

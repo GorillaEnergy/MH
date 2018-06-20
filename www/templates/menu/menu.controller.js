@@ -4,11 +4,13 @@
   angular.module('app')
     .controller('MenuController', MenuController);
 
-  MenuController.$inject = ['$state', 'userService'];
+  MenuController.$inject = ['$state', '$localStorage', '$sessionStorage', 'userService'];
 
 
-  function MenuController($state, userService) {
+  function MenuController($state, $localStorage, $sessionStorage, userService) {
     const vm = this;
+
+    vm.userType = userType;
 
     vm.toMainPage = toMainPage;
     vm.paymentDetail = paymentDetail;
@@ -17,6 +19,21 @@
     vm.logout = logout;
     vm.aboutUs = aboutUs;
     vm.contactUs = contactUs;
+
+    // let user_role = userService.getUser().role_id;
+    function userType(type) {
+      if (userService.getUser()) {
+        let user_role = userService.getUser().role_id;
+        if (type === 'parent' && user_role == '2') {
+          return true;
+        } else if (type === 'kid' && user_role == '1') {
+          return true;
+        } else  {
+          return false;
+        }
+      }
+
+    }
 
     function toMainPage() {
       let user_role = userService.getUser().role_id;
@@ -27,8 +44,8 @@
       }
     }
     function paymentDetail() {
-      console.log('payment-detail');
-      // $state.go('payment-detail');
+      console.log('payments-history');
+      $state.go('payments-history');
     }
     function settings() {
       console.log('to settings');
@@ -36,10 +53,15 @@
     }
     function additionalContent() {
       console.log('additional-content');
+      $state.go('additional-content');
     }
     function logout() {
       console.log('logout');
       userService.logout();
+
+      // $localStorage.$reset();
+      // $sessionStorage.$reset();
+      // $state.go('authorization')
     }
     function aboutUs() {
       console.log('about-us');

@@ -21,6 +21,8 @@
     vm.removeKidModal = removeKidModal;
 
     vm.addFollower = addFollower;
+    vm.followerPhone = followerPhone;
+    vm.removeFollower = removeFollower;
 
     vm.showCountryModal = showCountryModal;
     vm.hideCountryModal = hideCountryModal;
@@ -43,16 +45,16 @@
     vm.viewType = {new_kid: false, edit_registered_kid: false, edit_unregistered_kid: false};
     vm.warning = {name: false, date: false, id_number: false, grade: false, phone: false};
 
-    // kids ? vm.kids = kids : vm.kids = [];
-    // vm.kids = kids;
     vm.kids = kidFilter();
     vm.followers = followers;
     vm.countryCodes = countries;
     vm.countryCode = userService.getPhone().code; //country be default
     vm.phone = '';
 
-    vm.followerCountryCode = userService.getPhone().code;
-    vm.followerPhone = '';
+    vm.countryCodeFollower = userService.getPhone().code; //country be default
+    vm.phoneFollower = '';
+    vm.useCodeForKid = true;
+    vm.birth_date = new Date();
 
     // console.log('vm.countryCodes = ', vm.countryCodes);
     console.log('vm.kids = ', vm.kids);
@@ -62,7 +64,15 @@
       let kid_index = userService.getKidIndex();
       let data = [];
 
-      kids[kid_index].register ? getRegisteredKid() : getUnregisteredKid() ;
+      if (angular.isDefined(userService.getKidIndex())) {
+        if (kids[userService.getKidIndex()].register) {
+          getRegisteredKid()
+        } else {
+          getUnregisteredKid()
+        }
+      } else {
+        getUnregisteredKid()
+      }
 
       function getRegisteredKid() {
         console.log('getRegisteredKid');
@@ -82,6 +92,7 @@
     speciesDefinition();
 
     function speciesDefinition() {
+      console.log('speciesDefinition');
       //3 состояния (новый ребёнок, редактирование оплаченого ребёнка, редактирование неоплаченного ребёнка)
       if (!angular.isDefined(userService.getKidIndex())) {
         vm.viewType.new_kid = true;
@@ -94,8 +105,8 @@
         //проверка на коректность данных
         if (vm.kids.length) {
           //проверка оплаты
-          console.log(vm.kids[kid_index].register);
-          if (vm.kids[kid_index].register == '1') {
+          console.log(kids[kid_index].register);
+          if (kids[kid_index].register == '1') {
             vm.viewType.new_kid = false;
             vm.viewType.edit_registered_kid = true;
             vm.viewType.edit_unregistered_kid = false;
@@ -115,7 +126,8 @@
       }
     }
 
-    function showCountryModal() {
+    function showCountryModal(type) {
+      type ? vm.useCodeForKid = true : vm.useCodeForKid = false;
       $scope.countryModal.show();
     }
     function hideCountryModal() {
@@ -150,6 +162,7 @@
     }
 
     function closeList() {
+      console.log('closeList');
       vm.animation = false;
     }
 
@@ -171,6 +184,10 @@
     }
 
     function editKid(kid) {
+      console.log('editKid');
+      console.log(kid);
+      console.log('kids = ', kids);
+      console.log('vm.kids = ', vm.kids);
       if (vm.animation) {
         for (let i = 0; i < kids.length; i++) {
           if (kids[i].id === kid.id) {
@@ -198,6 +215,8 @@
 
     function removeKid() {
       console.log('removeKid');
+      console.log(vm.kids);
+      console.log(kids);
       let data = {kid_id: vm.kids[$localStorage.kid_index].id};
       console.log(data);
       userService.deleteKid(data).then(function (res) {
@@ -205,6 +224,7 @@
         if (res.status == "success") {
           vm.kids.length > 1 ? vm.kids.splice($localStorage.kid_index, 1) : vm.kids = [];
           $localStorage.kids = angular.copy(vm.kids);
+          kids = angular.copy(vm.kids);
           delete $localStorage.kid_index;
           speciesDefinition();
         } else {
@@ -239,6 +259,7 @@
     }
 
     function saveKid(type) {
+      console.log('saveKid type = ', type);
       let permissionToSend = true;
       checkFieldsToFill();
       checkForCoincidence();
@@ -305,6 +326,9 @@
       function checkForCoincidence() {
         let coincidence = false;
 
+        console.log(vm.kids);
+        console.log(kids);
+
         if (vm.kids.length && permissionToSend) {
           for (let i = 0; i < kids.length; i++) {
             let kid = kids[i];
@@ -329,7 +353,7 @@
         let data = {
           name: vm.name,
           // birth_date: vm.birth_date,
-          birth_date: new Date() * 1,
+          birth_date: vm.birth_date * 1,
           id_number: vm.id_number,
           grade: vm.grade
         };
@@ -346,8 +370,14 @@
               $localStorage.kids = angular.copy(kids);
               vm.kids[$localStorage.kid_index] = res.data;
 
-              console.log('$state.go(\'payment\');');
-              $state.go('payment');
+              if (type === 'toPayment') {
+                console.log('$state.go(\'payment\');');
+                $state.go('payment');
+              } else if (type === 'toLogs') {
+                console.log('$state.go(\'logs\');');
+                $localStorage.log_index = angular.copy($localStorage.kid_index);
+                $state.go('logs');
+              }
             }
           })
         } else {
@@ -370,10 +400,6 @@
               } else if (type === 'toPayment') {
                 console.log('$state.go(\'payment\');');
                 $state.go('payment');
-              } else if (type === 'toLogs') {
-                console.log('$state.go(\'logs\');');
-                $localStorage.log_index = angular.copy($localStorage.kid_index);
-                $state.go('logs');
               }
             }
           })
@@ -383,7 +409,7 @@
 
     function resetView() {
       vm.name = null;
-      vm.birth_date = null;
+      vm.birth_date = new Date();
       vm.id_number = null;
       vm.grade = null;
       vm.phone = null;
@@ -393,18 +419,61 @@
     }
 
     function kidDetail(index) {
+      // vm.name = vm.kids[index].name;
+      // vm.birth_date = new Date(Number(vm.kids[index].birth_date));
+      // vm.id_number = vm.kids[index].id_number;
+      // vm.grade = vm.kids[index].grade;
+      // vm.phone = vm.kids[index].phone.phone;
+      // vm.code = vm.kids[index].phone.code;
+      // vm.access = angular.copy(vm.kids[index].access);
+
       vm.name = kids[index].name;
-      vm.birth_date = kids[index].birth_date;
+      vm.birth_date = new Date(Number(kids[index].birth_date));
       vm.id_number = kids[index].id_number;
       vm.grade = kids[index].grade;
       vm.phone = kids[index].phone.phone;
       vm.code = kids[index].phone.code;
       vm.access = angular.copy(kids[index].access);
-      vm.payment = kids[index].payment;
     }
 
     function addFollower() {
       console.log('addFollower');
+      let data = {
+        phone: vm.phoneFollower,
+        code: vm.countryCodeFollower,
+        kid_id: kids[userService.getKidIndex()].id,
+        type: "follower"
+      };
+      userService.addFollower(data).then(function (res) {
+        if (res.status === 'success') {
+          vm.followers.push(res.data);
+          vm.hideFollowerModal()
+        } else {
+          console.log('add follower error');
+        }
+      })
+    }
+    function followerPhone(follower) {
+      return follower.phone.code + ' ' + follower.phone.phone;
+    }
+    function removeFollower(follower, index) {
+      console.log('removeFollower');
+      console.log(follower);
+      let data = {
+        phone: follower.phone.phone,
+        code: follower.phone.code,
+        // kid_id: follower.pivot.kid_id,
+        kid_id: $localStorage.kids[$localStorage.kid_index].id,
+        type: "follower"
+      };
+      userService.removeFollower(data).then(function (res) {
+        if (res.status === 'success') {
+          vm.followers.splice(index, 1);
+        } else {
+          console.log('add follower error');
+        }
+      })
+
     }
 
     $ionicModal.fromTemplateUrl('kid-country-modal', {
@@ -457,7 +526,6 @@
     }
 
 
-    vm.birth_date = new Date();
     vm.dateConverter = dateConverter;
     function dateConverter(date) {
       let timestamp = date * 1;
@@ -470,11 +538,7 @@
       if (month < 10) { month = '0' + String(month); }
 
       return day + '-' + month + '-' + year;
+      // return year + '-' + month + '-' + day;
     }
-
-    // setInterval(function () {
-    //   console.log(vm.dateConverter(vm.birth_date));
-    //   console.log(vm.birth_date);
-    // }, 5000)
   }
 })();

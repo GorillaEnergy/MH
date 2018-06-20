@@ -83,6 +83,7 @@
     });
 
     function bindScrollAndLoadMessages() {
+      console.log('bindScrollAndLoadMessages()');
       // if (accessToLoadMoreMessages) {
       //   accessToLoadMoreMessages = false;
       //   $timeout(function () { accessToLoadMoreMessages = true; }, 300)
@@ -110,7 +111,7 @@
 
           $timeout(function () {
             chatHeightNew = angular.element("#chat")[0].scrollHeight;
-            chat_body.scrollTop = chatHeightNew - chatHeightOld;
+            chat_body.scrollTop = angular.copy(chatHeightNew - chatHeightOld);
           }, 0)
         });
       });
@@ -225,6 +226,7 @@
       if (vm.message_input) {
         fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').push(data);
         vm.message_input = '';
+        scrollToBottom()
       }
     }
     function sendReport() {
@@ -245,14 +247,20 @@
         console.log('опускаем скролл');
         chat_not_ready = false;
         $timeout(function () {
+          console.log(chat_body.scrollHeight);
           chat_body.scrollTo(0, chat_body.scrollHeight);
+          // chat_body.scrollTop = chat_body.scrollHeight;
+          // console.log(chat_body.scrollTop);
         });
       }
     }
 
     /////// событие при scrollTop === 0 //////
     angular.element(chat_body).bind('scroll', function(){
+      console.log(chat_body.scrollTop);
+      console.log(chat_body.scrollHeight);
       if (chat_body.scrollTop === 0) {
+        console.log('ctat position top');
         // console.log(chat_body.scrollTop);
         bindScrollAndLoadMessages();
       }

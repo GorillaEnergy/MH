@@ -96,6 +96,18 @@
                 }
               }
             })
+            .state('payments-history', {
+              cache: false,
+              url: '/payments-history',
+              templateUrl: 'templates/payments-history/payments-history.html',
+              controller: 'PaymentsHistoryController',
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.onlyParent(); });
+                }
+              }
+            })
             .state('kid-main-page', {
               cache: false,
               url: '/kid-main-page',
@@ -203,6 +215,18 @@
               url: '/terms-conditions',
               templateUrl: 'templates/terms-conditions/terms-conditions.html',
               controller: 'TermsConditionsController',
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.commonAccess(); });
+                }
+              }
+            })
+            .state('additional-content', {
+              cache: false,
+              url: '/additional-content',
+              templateUrl: 'templates/additional-content/additional-content.html',
+              controller: 'AdditionalContentController',
               controllerAs: 'vm',
               resolve: {
                 security: function ($timeout, securityService) {

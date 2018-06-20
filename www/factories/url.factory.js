@@ -21,7 +21,9 @@
                       updateKid: baseUrl + 'api/update-kid',
                       deleteKid: baseUrl + 'api/delete-kid',
                       uploadKids: baseUrl + 'api/list-kids',
-                      uploadFollower: baseUrl + 'api/list-followers',
+                      add_follower: baseUrl + 'api/add-another-parent',
+                      remove_follower: baseUrl + 'api/delete-another-parent',
+                      followers_list: baseUrl + 'api/list-followers'
                     },
                     countries: {
                       list: baseUrl + 'api/list-codes'

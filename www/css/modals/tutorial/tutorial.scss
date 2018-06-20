@@ -1,0 +1,41 @@
+.tutorial-modal {
+  background: url("../img/tutorial/tutorial-bg.png") no-repeat center;
+  background-size: cover;
+  position: relative;
+  height: fit-content;
+
+
+  .close-tutorial-modal {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    height: 55px;
+  }
+
+  .slider-main-block {
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 40px 0;
+  }
+  .tutorial-header {
+    font-family: American;
+    text-transform: uppercase;
+    font-size: 25px;
+    margin: 0;
+  }
+  .tutorial-content {
+    font-family: Neue;
+    margin: 0;
+
+  }
+  .tutorial-img {
+    width: calc(100% - 20px);
+    margin: 0 auto;
+  }
+
+}

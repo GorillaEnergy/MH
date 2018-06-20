@@ -10,9 +10,11 @@
 
       <div class="first-section">
         <img src="./img/menu/payment-details.png" class="payment img-high"
-             ng-click="vm.paymentDetail()">
+             ng-click="vm.paymentDetail()" ng-if="vm.userType('parent')">
         <img src="./img/menu/settings.png" class="settings img-high"
-             ng-click="vm.settings()">
+             ng-click="vm.settings()" ng-if="vm.userType('parent')">
+        <img src="./img/menu/settings-kid.png" class="additional-content img-high"
+             ng-click="vm.settings()" ng-if="vm.userType('kid')">
       </div>
 
       <div class="second-section">
@@ -28,8 +30,11 @@
         <div class="right">
           <img src="./img/menu/about-us.png" class="about-us img-low"
                ng-click="vm.aboutUs()">
-          <img src="./img/menu/contact-us.png" class="contact-us img-low"
-               ng-click="vm.contactUs()">
+
+          <a href="mailto:somemail@someservice.com">
+            <img src="./img/menu/contact-us.png" class="contact-us img-low"
+                 ng-click="vm.contactUs()">
+          </a>
         </div>
       </div>
 

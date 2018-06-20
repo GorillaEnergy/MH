@@ -20,7 +20,7 @@
         img: 'link',
         access: true,
         description: 'lorem ipsus',
-        time: '15.32',
+        time: '15:32',
         date: '17.01.18',
         missed_messages: null
       },

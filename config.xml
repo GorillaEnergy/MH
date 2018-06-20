@@ -3,7 +3,7 @@
     <name>MindHero</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.0.106:8100" />
+    <content original-src="index.html" src="http://192.168.42.236:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -88,6 +88,15 @@
     <allow-navigation href="http://192.168.42.84:8100" />
     <allow-navigation href="http://192.168.1.110:8100" />
     <allow-navigation href="http://192.168.0.106:8100" />
+    <allow-navigation href="http://192.168.42.142:8100" />
+    <allow-navigation href="http://192.168.42.237:8100" />
+    <allow-navigation href="http://192.168.1.105:8100" />
+    <allow-navigation href="http://192.168.42.223:8100" />
+    <allow-navigation href="http://192.168.42.111:8100" />
+    <allow-navigation href="http://169.254.94.233:8100" />
+    <allow-navigation href="http://192.168.42.250:8100" />
+    <allow-navigation href="http://169.254.29.5:8100" />
+    <allow-navigation href="http://192.168.42.236:8100" />
     <engine name="windows" spec="5.0.0" />
     <engine name="android" spec="6.3.0" />
 </widget>

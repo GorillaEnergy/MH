@@ -9906,6 +9906,142 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.additional-content .main-block {
+  min-height: 100vh;
+  height: fit-content;
+  width: 100vw;
+  background: url("../img/menu/menu-background.png") no-repeat center;
+  background-size: cover;
+  text-align: center; }
+
+.additional-content .header {
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  position: relative;
+  border-bottom: 2px solid #0b1138;
+  text-align: center;
+  font-family: American;
+  font-size: 25px;
+  padding-top: 35px;
+  color: #0b1138; }
+  .additional-content .header .tool-bar-back {
+    height: 45px;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+  .additional-content .header .tool-bar-favorites {
+    height: 45px;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0; }
+
+.additional-content .title-block {
+  margin-top: 24px;
+  margin-bottom: 20px;
+  color: #0b1138;
+  text-align: center; }
+  .additional-content .title-block .live-now-upcoming-title {
+    font-family: American;
+    font-size: 32px;
+    text-transform: uppercase;
+    color: #0b1138;
+    margin: 0; }
+
+.additional-content .live-now-main-block {
+  display: flex;
+  overflow: -webkit-paged-y;
+  width: auto;
+  padding-left: 10px;
+  box-sizing: border-box;
+  margin-bottom: 43px; }
+
+.additional-content .upcoming-main-block {
+  display: flex;
+  overflow: -webkit-paged-y;
+  width: auto;
+  padding-left: 10px;
+  box-sizing: border-box; }
+
+.additional-content .event-block {
+  margin-right: 6px;
+  height: 196px;
+  width: 261px;
+  position: relative;
+  border: 1px solid #0b1138;
+  box-sizing: border-box; }
+  .additional-content .event-block .event-description {
+    position: absolute;
+    top: 74px;
+    left: 75px;
+    text-align: center; }
+  .additional-content .event-block .event-title {
+    font-family: American;
+    font-size: 24.5px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0 0 3px 0; }
+  .additional-content .event-block .event-live {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .additional-content .event-block .event-date {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .additional-content .event-block .event-time {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .additional-content .event-block .event-bg {
+    height: 195px;
+    width: 259px; }
+
+.additional-content .search-button {
+  margin-top: 18px;
+  height: 87px; }
+
+.additional-content .search-block {
+  position: absolute;
+  top: 74px;
+  left: 0;
+  background-color: #fff;
+  border-top: 1px solid #64cae2;
+  border-bottom: 1px solid #64cae2;
+  height: 50px;
+  width: 100vw;
+  padding: 5px 0 5px 12px;
+  text-align: left; }
+  .additional-content .search-block .loupe {
+    height: 24px;
+    position: absolute;
+    top: 12px;
+    left: 21px; }
+  .additional-content .search-block .search-input {
+    width: calc(100% - 54px);
+    border: 1px solid #64cae2;
+    border-radius: 17px;
+    height: 100%;
+    font-family: Lazy;
+    font-size: 16px;
+    z-index: 5;
+    padding-left: 50px;
+    padding-top: 7px; }
+  .additional-content .search-block .close {
+    padding: 10px;
+    height: 47px;
+    position: absolute;
+    top: 0;
+    right: 0; }
+
 .auth-tel ion-content .main-block {
   height: 100vh;
   min-height: 568px;
@@ -10069,6 +10205,79 @@ a.button {
   -webkit-animation-name: slideOutUp;
   animation-name: slideOutUp; }
 
+.country-modal .country-filter {
+  height: 40px;
+  width: 100%;
+  border: 1px solid #0b1138;
+  font-size: 18px;
+  padding: 0 14px;
+  margin-bottom: 10px; }
+
+.access-denied-modal {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 390px !important;
+  height: 208px !important;
+  min-height: 50px !important;
+  z-index: 2;
+  background-color: black !important; }
+  .access-denied-modal .main-block {
+    background: url("../img/kid/modal/dots.png") center no-repeat;
+    background-size: 140%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 0 !important;
+    border: 2px solid #0a184c;
+    border-radius: 5px; }
+    .access-denied-modal .main-block .data-block {
+      width: 100%;
+      text-align: center;
+      margin-top: 24px;
+      margin-bottom: 27px; }
+      .access-denied-modal .main-block .data-block .warning-line {
+        display: flex;
+        width: fit-content;
+        margin: 0 auto; }
+        .access-denied-modal .main-block .data-block .warning-line .warning-ico {
+          height: 24px;
+          margin-right: 10px;
+          margin-top: -6px; }
+    .access-denied-modal .main-block .title-km {
+      display: block;
+      text-align: center;
+      font-size: 17px;
+      line-height: 13px;
+      text-transform: uppercase;
+      margin-top: 8px;
+      font-family: AmericanPatrius; }
+    .access-denied-modal .main-block .close {
+      height: 80px;
+      margin: 0 auto; }
+
+@media (max-width: 390px) {
+  .access-denied-modal {
+    width: 350px !important; }
+    .access-denied-modal .match-main-block {
+      background-size: 115%; }
+      .access-denied-modal .match-main-block .button-km .mail-title-km {
+        margin-right: 0; }
+  .kids-remove-modal {
+    width: 350px !important; }
+  .add-follower-modal {
+    width: 350px !important; } }
+
+@media (max-width: 350px) {
+  .access-denied-modal {
+    width: 320px !important; }
+    .access-denied-modal .match-main-block {
+      background-size: 127%; }
+      .access-denied-modal .match-main-block .button-km .mail-title-km {
+        font-size: 16px; } }
+
 .parent-main-page .main-block {
   height: 100vh;
   min-height: 100vh;
@@ -10077,7 +10286,7 @@ a.button {
   background-size: cover;
   background-position: inherit;
   position: relative;
-  padding: 75px 10px 10px; }
+  padding: 75px 18px 10px; }
 
 .parent-main-page .header {
   width: 100%;
@@ -10104,17 +10313,17 @@ a.button {
 .parent-main-page .kid-block {
   width: 100%;
   height: 97px;
-  margin: 0 auto;
   padding-top: 50px; }
 
 .parent-main-page .kid {
   position: relative;
   height: 100%;
   box-sizing: border-box;
-  border: 1px solid #0b1138;
+  border: 2px solid #0b1138;
   border-radius: 5px;
   text-align: center;
-  background-color: #2fbc09; }
+  background: url("../img/parent-main-page/dots-blue.png") no-repeat center;
+  background-size: 140%; }
 
 .parent-main-page .kid-with-cloud {
   width: calc(100% - 35px);
@@ -10147,6 +10356,8 @@ a.button {
 
 .parent-main-page .kid-name {
   font-family: American;
+  padding: 11px 90px 0 90px;
+  margin: 0 auto;
   font-size: 24px;
   color: white;
   text-transform: uppercase;
@@ -10156,6 +10367,7 @@ a.button {
   height: 100%;
   width: 100%; }
   .parent-main-page .kid-name .name-paragraph {
+    text-shadow: 1px 1px 1px #0b1138, 0 0 1px #0b1138;
     margin-top: 2px; }
 
 .parent-main-page .kid-cloud {
@@ -10190,6 +10402,18 @@ a.button {
 
 .parent-main-page .kid-color7 {
   background-color: olivedrab !important; }
+
+.parent-main-page .kid-emergency-bg {
+  background: url("../img/parent-main-page/dots-red.png") no-repeat center;
+  background-size: 140%; }
+
+.parent-main-page .kid-call-now-bg {
+  background: url("../img/parent-main-page/dots-green.png") no-repeat center;
+  background-size: 140%; }
+
+.parent-main-page .kid-normal-bg {
+  background: url("../img/parent-main-page/dots-blue.png") no-repeat center;
+  background-size: 140%; }
 
 .kid-chat-menu .menu-block {
   display: flex;
@@ -10810,12 +11034,12 @@ a.button {
   padding-bottom: 10px; }
 
 .new-kid .registered {
-  background: url("../img/kid/regisered-kid-background.png") no-repeat #64cae2;
+  background: url("../img/kid/regisered-kid-background.png") no-repeat center #64cae2;
   background-size: cover;
   padding-bottom: 9px; }
 
 .new-kid .unregistered {
-  background: url("../img/kid/unregisered-kid-background.png") no-repeat #64cae2;
+  background: url("../img/kid/unregisered-kid-background.png") no-repeat center #64cae2;
   background-size: cover; }
 
 .new-kid .empty-header-big {
@@ -11036,7 +11260,8 @@ a.button {
 
 .new-kid .data-block {
   width: 100vw;
-  padding: 0 10px 0 40px; }
+  padding: 0 10px 0 40px;
+  margin-top: 80px; }
 
 .new-kid .name {
   position: relative;
@@ -12107,6 +12332,95 @@ p {
   font-style: normal;
   font-weight: normal; }
 
+.parent-payments .menu-block {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  border-bottom: solid 2px #0b1138; }
+  .parent-payments .menu-block img {
+    width: 35px;
+    padding: 10px; }
+  .parent-payments .menu-block p {
+    margin: auto;
+    font-size: 25px;
+    text-transform: uppercase;
+    color: #0b1138;
+    font-family: American; }
+
+.parent-payments .main-block {
+  background: url("../img/payments-history/bg.png") no-repeat center/cover;
+  min-height: 100vh;
+  padding: 30px 0 10px; }
+  .parent-payments .main-block .info-block {
+    text-align: center;
+    min-height: 75vh; }
+    .parent-payments .main-block .info-block .payment-block {
+      padding: 0 15px;
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto 10px;
+      border: solid 2px #0b1138;
+      border-radius: 6px;
+      background: url("../img/kid-chat/dots.png") no-repeat center/cover #fff;
+      width: 95%;
+      height: 85px; }
+      .parent-payments .main-block .info-block .payment-block .price {
+        font-family: American;
+        font-size: 30px;
+        color: #2fbc09;
+        transform: rotate(-20deg); }
+      .parent-payments .main-block .info-block .payment-block .kids {
+        font-family: American;
+        font-size: 60px;
+        color: #0b1138; }
+      .parent-payments .main-block .info-block .payment-block .date {
+        text-align: right; }
+        .parent-payments .main-block .info-block .payment-block .date p {
+          font-family: Patrius;
+          align-items: center;
+          color: #0b1138;
+          font-weight: 600; }
+      .parent-payments .main-block .info-block .payment-block .invoice {
+        margin-top: 7px;
+        display: inline-flex; }
+        .parent-payments .main-block .info-block .payment-block .invoice img {
+          margin-left: 5px;
+          height: 44px; }
+  .parent-payments .main-block .creditcard-block .change {
+    text-align: center;
+    margin: auto;
+    width: 95%;
+    line-height: 50px;
+    border: solid 2px #0b1138;
+    border-radius: 6px;
+    background: url("../../img/payments-history/dots.png") no-repeat center/cover #ff7300; }
+    .parent-payments .main-block .creditcard-block .change p {
+      color: #fff;
+      font-family: Patrius;
+      font-size: 18px;
+      margin: 0; }
+
+@media (max-width: 360px) {
+  .parent-payments .main-block .info-block .payment-block .kids {
+    font-size: 35px; }
+  .parent-payments .main-block .info-block .payment-block .invoice img {
+    height: 30px; } }
+
+@font-face {
+  font-family: "American";
+  src: url("../../css/fonts/American Captain.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Patrius";
+  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
 .settings .menu-block {
   display: flex;
   align-items: center;
@@ -12531,3 +12845,34 @@ ul#ion-segment[dark] li {
 
 ul#ion-segment[dark] li:hover:not(.active) {
   background-color: rgba(68, 68, 68, 0.1); }
+
+.tutorial-modal {
+  background: url("../img/tutorial/tutorial-bg.png") no-repeat center;
+  background-size: cover;
+  position: relative;
+  height: fit-content; }
+  .tutorial-modal .close-tutorial-modal {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    height: 55px; }
+  .tutorial-modal .slider-main-block {
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 40px 0; }
+  .tutorial-modal .tutorial-header {
+    font-family: American;
+    text-transform: uppercase;
+    font-size: 25px;
+    margin: 0; }
+  .tutorial-modal .tutorial-content {
+    font-family: Neue;
+    margin: 0; }
+  .tutorial-modal .tutorial-img {
+    width: calc(100% - 20px);
+    margin: 0 auto; }

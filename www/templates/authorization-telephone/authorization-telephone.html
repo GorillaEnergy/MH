@@ -86,20 +86,41 @@
 </ion-view>
 
 <script id="country-modal" type="text/ng-template">
-  <ion-modal-view>
+  <ion-modal-view class="country-modal">
 
-    <ion-header-bar class="bar bar-header bar-energized" ng-click="modalCountry.hide()">
-      <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
-      <h1 class="title">Choose your country</h1>
+    <ion-header-bar class="bar bar-header bar-calm" ng-click="modalCountry.hide()">
+      <a class="button icon-left ion-chevron-left button-clear button-dark"></a>
     </ion-header-bar>
 
     <ion-content class="padding">
-      <div ng-repeat="country in vm.countryCodes">
+      <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
+      <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter">
         <ion-radio ng-model="vm.countryCode" ng-value="country.code"
                    ng-click="vm.chosenCountry()">
           {{country.name}}: {{country.code}}
         </ion-radio>
       </div>
+    </ion-content>
+
+  </ion-modal-view>
+</script>
+
+<script id="access-denied" type="text/ng-template">
+  <div class="kid-backdrop" ng-click="accessDeniedModal.hide()"></div>
+  <ion-modal-view class="access-denied-modal">
+
+    <ion-content class="main-block">
+
+      <div class="data-block">
+        <div class="warning-line">
+          <img src="./img/authorization/warning.png" class="warning-ico">
+          <p class="title-km">no access</p>
+        </div>
+
+        <p class="title-km">please contact your parent</p>
+      </div>
+
+      <img src="./img/authorization/close.png" class="close" ng-click="accessDeniedModal.hide()">
     </ion-content>
 
   </ion-modal-view>

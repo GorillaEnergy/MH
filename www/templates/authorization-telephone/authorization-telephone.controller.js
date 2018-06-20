@@ -4,10 +4,10 @@
   angular.module('app')
     .controller('AuthorizationController', AuthorizationController);
 
-  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', '$localStorage', 'countries', 'userService'];
+  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', '$localStorage', 'countries', 'userService', '$timeout'];
 
 
-  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, $localStorage, countries, userService) {
+  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, $localStorage, countries, userService, $timeout) {
     const vm = this;
 
     vm.checkPhone = checkPhone;
@@ -21,7 +21,7 @@
     // vm.phone = '';
 
     vm.countryCode = countries[235].code; //country be default Ukraine
-    vm.phone = '681662690';
+    vm.phone = '674939948';
 
     vm.phoneNumberFull = '';
     vm.approvalCode = '';
@@ -102,19 +102,19 @@
     function sendPhone() {
       let data = {phone: vm.phone, code: vm.countryCode};
       userService.checkPhone(data).then(function (res) {
-        console.log(res);
-        vm.approvalCode = res.data;
+        if (res.status == 'success') {
+          console.log(res);
+          vm.approvalCode = res.data;
+        } else {
+          console.log('access denied');
+          $scope.accessDeniedModal.show();
+        }
       })
     }
-
 
     $ionicModal.fromTemplateUrl('country-modal', {
       scope: $scope,
       animation: 'animated slideInDown',
-      // animation: 'slide-in-up',
-      // animation: 'fade-in',
-      // animation: 'reverse',
-      // hideDelay: 1020
     }).then(function (modal) {
       $scope.modalCountry = modal;
     });
@@ -122,5 +122,11 @@
     function chosenCountry() {
       $scope.modalCountry.hide();
     }
+
+    $ionicModal.fromTemplateUrl('access-denied', {
+      scope: $scope,
+    }).then(function (modal) {
+      $scope.accessDeniedModal = modal;
+    });
   }
 })();

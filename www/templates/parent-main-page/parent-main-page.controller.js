@@ -17,6 +17,11 @@
     vm.kidLogs = kidLogs;
     vm.emptyKids = emptyKids;
 
+
+    vm.warning = warning;
+    vm.callNow = callRightNow;
+    vm.clouds = clouds;
+
     // vm.kids = kids;
     vm.kids = kidFilter();
     // console.log('All kids', kids);
@@ -24,13 +29,50 @@
 
 
     // не несет смысловой нагрузки, нужно для создания вьюхи
-    vm.callRightNow = true;
-    vm.lastCall = '12:25';
-    // vm.warning = true;
-    vm.emptyData = false;
-    vm.clouds = false;
+    vm.kidsStatus = [
+      {
+        callRightNow: true,
+        lastCall: '12:25',
+        warning: false,
+        clouds: true,
+      },
+      {
+        callRightNow: false,
+        lastCall: '12:25',
+        warning: true,
+        clouds: true,
+      },
+      {
+        callRightNow: false,
+        lastCall: '15:43',
+        warning: false,
+        clouds: false,
+      }
+    ];
     ////////////////////////////////////////////////////////
 
+
+    function warning(index) {
+      if (index < 2) {
+        return vm.kidsStatus[index].warning;
+      } else {
+        return false;
+      }
+    }
+    function callRightNow(index) {
+      if (index < 2) {
+        return vm.kidsStatus[index].callRightNow;
+      } else {
+        return false;
+      }
+    }
+    function clouds(index) {
+      if (index < 2) {
+        return vm.kidsStatus[index].clouds;
+      } else {
+        return false;
+      }
+    }
 
     function kidFilter() {
       let data = [];
@@ -51,8 +93,13 @@
     }
 
     function kidColor(index) {
-      let name = 'kid-color' + index;
-      return name;
+      if (index < 2) {
+        if (vm.kidsStatus[index].warning) {
+          return 'kid-emergency-bg'
+        } else if (vm.kidsStatus[index].callRightNow) {
+          return 'kid-call-now-bg'
+        }
+      }
     }
     function toMenu() {
       console.log('toMenu');

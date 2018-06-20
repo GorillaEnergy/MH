@@ -12,7 +12,9 @@
                              kids) {
     const vm = this;
 
-    vm.ediKid = ediKid;
+    vm.toMenu = toMenu;
+
+    vm.editKid = editKid;
     vm.kidColor = kidColor;
     vm.addKid = addKid;
 
@@ -35,9 +37,28 @@
       return data;
     }
 
-    function ediKid(index) {
-      $localStorage.kid_index = index;
-      $state.go('kid');
+    function toMenu() {
+      angular.forEach(vm.kids, function (kid) {
+        let data = {
+          kid_id: kid.id,
+          register: 1,
+          access: 1
+        };
+        userService.updateKid(data);
+      });
+
+      console.log('to menu');
+      $timeout(function () { $state.go('menu'); }, 1500)
+    }
+
+    function editKid(kid) {
+      for (let i = 0; i < kids.length; i++) {
+        if ( kid.id === kids[i].id ) {
+          $localStorage.kid_index = i;
+          $state.go('kid');
+          break;
+        }
+      }
     }
 
     function addKid() {

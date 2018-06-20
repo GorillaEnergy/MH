@@ -13,6 +13,7 @@
     const vm = this;
 
     vm.save = save;
+    vm.closeTutorial = closeTutorial;
 
     vm.newUser = !$localStorage.kids;
     vm.warning = {name: false, email: false, id: false};
@@ -88,7 +89,20 @@
               status = true;
               userService.setUser(res.data);
               if (res.status ==="success") {
-                $state.go('kid', {data: 'create'})
+                let toKidsPage = true;
+                if (angular.isDefined($localStorage.kids)) {
+                  let kids = $localStorage.kids;
+                  for (let i = 0; i < kids.length; i++) {
+                    if ( kids[i].register == '1' ) { toKidsPage = false; break; }
+                  }
+                }
+
+                if (toKidsPage) {
+                  delete $localStorage.kid_index;
+                  $state.go('kid')
+                } else {
+                  $state.go('settings')
+                }
               }
             })
           }
@@ -96,16 +110,60 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    $ionicModal.fromTemplateUrl('test-modal', {
-      scope: $scope
+
+    $ionicModal.fromTemplateUrl('tutorial-modal', {
+      scope: $scope,
     }).then(function (modal) {
-      $scope.testModal = modal;
+      $scope.tutorialModal = modal;
     });
 
-    function chosenCountry() {
-      $scope.testModal.hide();
+    showTutorial();
+    function showTutorial() {
+      if (!angular.isDefined($localStorage.kids)) {
+        $timeout(function () { $scope.tutorialModal.show(); }, 1000)
+      }
     }
+    function closeTutorial() {
+      $scope.tutorialModal.hide();
+    }
+
+
+
+    $scope.sliderData = {};
+    $scope.sliderData.bgColors = [];
+    $scope.sliderData.currentPage = 0;
+
+    for (let i = 0; i < 10; i++) {
+      $scope.sliderData.bgColors.push("bgColor_" + i);
+    }
+
+    let setupSlider = function() {
+      //some options to pass to our slider
+      $scope.sliderData.sliderOptions = {
+        initialSlide: 0,
+        direction: 'horizontal', //horizontal or vertical
+        speed: 300 //0.3s transition
+      };
+
+      //create delegate reference to link with slider
+      $scope.sliderData.sliderDelegate = null;
+
+      //watch our sliderDelegate reference, and use it when it becomes available
+      $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
+        if (newVal != null) {
+          $scope.sliderData.sliderDelegate.on('slideChangeEnd', function() {
+            $scope.sliderData.currentPage = $scope.sliderData.sliderDelegate.activeIndex;
+            //use $scope.$apply() to refresh any content external to the slider
+            $scope.$apply();
+          });
+        }
+      });
+    };
+
+    setupSlider();
+
 
   }
 })();
