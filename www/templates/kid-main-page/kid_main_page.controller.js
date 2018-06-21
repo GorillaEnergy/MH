@@ -4,10 +4,10 @@
     angular.module('app')
         .controller('KidMainPageController', KidMainPageController);
 
-    KidMainPageController.$inject = ['$state', '$timeout', 'userService'];
+    KidMainPageController.$inject = ['$state', '$timeout', 'userService', 'live_content'];
 
 
-    function KidMainPageController($state, $timeout, userService) {
+    function KidMainPageController($state, $timeout, userService, live_content) {
         const vm = this;
 
         vm.toChat = toChat;
@@ -16,6 +16,7 @@
 
         vm.missedCalls = 0;
         vm.missedMessages = 0;
+        vm.live_content = live_content;
 
         let fb = firebase.database();
         let kid_id = userService.getUser().id;

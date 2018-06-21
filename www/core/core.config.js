@@ -117,6 +117,9 @@
               resolve: {
                 security: function ($timeout, securityService) {
                   return $timeout(function() { securityService.onlyKid(); });
+                },
+                live_content: function (additionalContentService) {
+                  return additionalContentService.getContent();
                 }
               }
             })
@@ -174,6 +177,9 @@
                 },
                 kids: function (userService) {
                   return userService.uploadKids();
+                },
+                live_content: function (additionalContentService) {
+                  return additionalContentService.getContent();
                 }
               }
             })

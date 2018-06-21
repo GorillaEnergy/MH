@@ -14,11 +14,14 @@
     width: 26px;
   }
   .main-block {
-    height: calc(100vh - 72px);
-    min-height: 568px;
+    min-height: calc(100vh - 72px);
+    height: fit-content;
     width: 100vw;
     background: url('../img/kid-chat-menu/background.png') no-repeat center;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .call-and-chat {
     position: relative;
@@ -26,12 +29,14 @@
     display: inline-flex;
     margin-top: 23px;
     margin-left: 13px;
+    height: calc(100vh - 311px);
   }
   .call-and-chat img {
     width: 210px;
   }
   .chat{
     position: relative;
+    right: 0;
     span{
       border-radius: 50%;
       background-color: #e31b4f;
@@ -47,8 +52,8 @@
   }
   .call {
     position: absolute;
-    right: 18px;
-    top: 90px;
+    left: calc(50% + -20px);
+    top: 57px;
     span{
       border-radius: 50%;
       background-color: #e31b4f;
@@ -60,6 +65,66 @@
       top: 0;
       color: #fff;
       text-align: center;
+    }
+  }
+
+  .live-now-main-block {
+    display: flex;
+    overflow: -webkit-paged-y;
+    width: auto;
+    padding-left: 10px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .event-block:last-child {
+    margin-right: 10px;
+  }
+  .event-block {
+    margin-right: 6px;
+    height: 196px;
+    width: 261px;
+    position: relative;
+    border: 1px solid #0b1138;
+    box-sizing: border-box;
+
+    .event-description {
+      position: absolute;
+      top: 74px;
+      left: 75px;
+      text-align: center;
+    }
+    .event-title {
+      font-family: American;
+      font-size: 24.5px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0 0 3px 0;
+    }
+    .event-live {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0;
+    }
+    .event-date {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0;
+    }
+    .event-time {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0;
+    }
+    .event-bg {
+      height: 195px;
+      width: 259px;
     }
   }
 }

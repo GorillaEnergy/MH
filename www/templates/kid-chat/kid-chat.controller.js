@@ -4,10 +4,12 @@
   angular.module('app')
     .controller('KidChatController', KidChatController);
 
-  KidChatController.$inject = ['$state', '$timeout', '$anchorScroll', '$location', '$ionicModal', '$scope', 'userService'];
+  KidChatController.$inject = ['$state', '$timeout', '$anchorScroll', '$location', '$ionicModal', '$scope', 'userService',
+                               'toastr'];
 
 
-  function KidChatController($state, $timeout, $anchorScroll, $location, $ionicModal, $scope, userService) {
+  function KidChatController($state, $timeout, $anchorScroll, $location, $ionicModal, $scope, userService,
+                             toastr) {
     const vm = this;
 
     vm.toMessages = toMessages;
@@ -238,6 +240,7 @@
       }
       $timeout(function () {
         console.log('hide modal');
+        toastr.success('Report sent');
         $scope.reportModal.hide();
       }, 200)
     }

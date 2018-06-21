@@ -5,11 +5,11 @@
     .controller('ParentMainPageController', ParentMainPageController);
 
   ParentMainPageController.$inject = ['$ionicPopup', '$state', '$scope', '$localStorage', '$stateParams', 'userService', '$timeout',
-                                      '$ionicModal', 'kids'];
+                                      '$ionicModal', 'kids', 'live_content'];
 
 
   function ParentMainPageController($ionicPopup, $state, $scope, $localStorage, $stateParams, userService, $timeout,
-                                    $ionicModal, kids) {
+                                    $ionicModal, kids, live_content) {
     const vm = this;
 
     vm.kidColor = kidColor;
@@ -22,7 +22,7 @@
     vm.callNow = callRightNow;
     vm.clouds = clouds;
 
-    // vm.kids = kids;
+    vm.live_content = live_content;
     vm.kids = kidFilter();
     // console.log('All kids', kids);
     // console.log('Registered kids', vm.kids);

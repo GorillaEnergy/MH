@@ -10279,14 +10279,17 @@ a.button {
         font-size: 16px; } }
 
 .parent-main-page .main-block {
-  height: 100vh;
+  height: fit-content;
   min-height: 100vh;
   width: 100vw;
   background: url("../img/parent-main-page/parent-main-page-bg.png") no-repeat;
   background-size: cover;
   background-position: inherit;
   position: relative;
-  padding: 75px 18px 10px; }
+  padding: 75px 0 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
 
 .parent-main-page .header {
   width: 100%;
@@ -10309,6 +10312,9 @@ a.button {
   width: 100%;
   margin-top: 25px;
   text-align: center; }
+
+.parent-main-page .kids-block {
+  padding: 0 18px; }
 
 .parent-main-page .kid-block {
   width: 100%;
@@ -10415,6 +10421,63 @@ a.button {
   background: url("../img/parent-main-page/dots-blue.png") no-repeat center;
   background-size: 140%; }
 
+.parent-main-page .content-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+.parent-main-page .live-now-main-block {
+  display: flex;
+  overflow: -webkit-paged-y;
+  width: auto;
+  padding-left: 10px;
+  box-sizing: border-box;
+  margin-top: 30px;
+  margin-bottom: 43px; }
+
+.parent-main-page .event-block:last-child {
+  margin-right: 10px; }
+
+.parent-main-page .event-block {
+  margin-right: 6px;
+  height: 196px;
+  width: 261px;
+  position: relative;
+  border: 1px solid #0b1138;
+  box-sizing: border-box; }
+  .parent-main-page .event-block .event-description {
+    position: absolute;
+    top: 74px;
+    left: 75px;
+    text-align: center; }
+  .parent-main-page .event-block .event-title {
+    font-family: American;
+    font-size: 24.5px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0 0 3px 0; }
+  .parent-main-page .event-block .event-live {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .parent-main-page .event-block .event-date {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .parent-main-page .event-block .event-time {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .parent-main-page .event-block .event-bg {
+    height: 195px;
+    width: 259px; }
+
 .kid-chat-menu .menu-block {
   display: flex;
   justify-content: flex-end;
@@ -10430,24 +10493,29 @@ a.button {
   width: 26px; }
 
 .kid-chat-menu .main-block {
-  height: calc(100vh - 72px);
-  min-height: 568px;
+  min-height: calc(100vh - 72px);
+  height: fit-content;
   width: 100vw;
   background: url("../img/kid-chat-menu/background.png") no-repeat center;
-  background-size: cover; }
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
 
 .kid-chat-menu .call-and-chat {
   position: relative;
   width: 100%;
   display: inline-flex;
   margin-top: 23px;
-  margin-left: 13px; }
+  margin-left: 13px;
+  height: calc(100vh - 311px); }
 
 .kid-chat-menu .call-and-chat img {
   width: 210px; }
 
 .kid-chat-menu .chat {
-  position: relative; }
+  position: relative;
+  right: 0; }
   .kid-chat-menu .chat span {
     border-radius: 50%;
     background-color: #e31b4f;
@@ -10462,8 +10530,8 @@ a.button {
 
 .kid-chat-menu .call {
   position: absolute;
-  right: 18px;
-  top: 90px; }
+  left: calc(50% + -20px);
+  top: 57px; }
   .kid-chat-menu .call span {
     border-radius: 50%;
     background-color: #e31b4f;
@@ -10475,6 +10543,58 @@ a.button {
     top: 0;
     color: #fff;
     text-align: center; }
+
+.kid-chat-menu .live-now-main-block {
+  display: flex;
+  overflow: -webkit-paged-y;
+  width: auto;
+  padding-left: 10px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+.kid-chat-menu .event-block:last-child {
+  margin-right: 10px; }
+
+.kid-chat-menu .event-block {
+  margin-right: 6px;
+  height: 196px;
+  width: 261px;
+  position: relative;
+  border: 1px solid #0b1138;
+  box-sizing: border-box; }
+  .kid-chat-menu .event-block .event-description {
+    position: absolute;
+    top: 74px;
+    left: 75px;
+    text-align: center; }
+  .kid-chat-menu .event-block .event-title {
+    font-family: American;
+    font-size: 24.5px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0 0 3px 0; }
+  .kid-chat-menu .event-block .event-live {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .kid-chat-menu .event-block .event-date {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .kid-chat-menu .event-block .event-time {
+    font-family: AmericanPatrius;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    margin: 0; }
+  .kid-chat-menu .event-block .event-bg {
+    height: 195px;
+    width: 259px; }
 
 @media screen and (min-width: 1366px) {
   .kid-chat-menu .call-and-chat img {

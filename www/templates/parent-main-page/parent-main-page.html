@@ -8,19 +8,34 @@
              ng-click="vm.toMenu()">
       </div>
 
-      <!--<div ng-repeat="(key, kid) in vm.kids" class="kid-block">-->
-      <div ng-repeat="(key, kid) in vm.kids" class="kid-block" ng-if="kid.register">
-        <div class="kid">
-          <!--<img ng-src="./img/parent-main-page/kid{{key}}.png" class="kid-img">-->
-          <img src="./img/parent-main-page/warning.png" class="kid-warning" ng-if="vm.warning(key)">
-          <img src="./img/parent-main-page/in_call_right_now.png" class="kid-call-now" ng-if="vm.callNow(key)">
+      <div class="kids-block">
+        <div ng-repeat="(key, kid) in vm.kids" class="kid-block" ng-if="kid.register">
+          <div class="kid">
+            <!--<img ng-src="./img/parent-main-page/kid{{key}}.png" class="kid-img">-->
+            <img src="./img/parent-main-page/warning.png" class="kid-warning" ng-if="vm.warning(key)">
+            <img src="./img/parent-main-page/in_call_right_now.png" class="kid-call-now" ng-if="vm.callNow(key)">
 
-          <div class="kid-name" ng-click="vm.kidLogs(kid.id, key)" ng-class="vm.kidColor(key)">
-            <p class="name-paragraph">{{kid.name}}</p>
+            <div class="kid-name" ng-click="vm.kidLogs(kid.id, key)" ng-class="vm.kidColor(key)">
+              <p class="name-paragraph">{{kid.name}}</p>
+            </div>
+
+            <img ng-src="./img/parent-main-page/empty_cloud.png" class="kid-cloud" ng-if="vm.clouds(key)">
           </div>
-
-          <img ng-src="./img/parent-main-page/empty_cloud.png" class="kid-cloud" ng-if="vm.clouds(key)">
         </div>
+      </div>
+
+      <div class="live-now-main-block">
+
+        <div ng-repeat="(key, live_event) in vm.live_content" class="event-block">
+          <div class="event-description">
+            <p class="event-title">{{live_event.title}}</p>
+            <p class="event-live">{{live_event.status}}</p>
+          </div>
+          <img src="./img/additional-content/1.png" class="event-bg" ng-if="key === 0">
+          <img src="./img/additional-content/2.png" class="event-bg" ng-if="key > 0">
+        </div>
+
+        <div style="padding: 1px;"></div>
       </div>
 
       <div ng-if="vm.emptyKids()" class="empty-children">

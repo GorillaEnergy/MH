@@ -2,6 +2,7 @@
     'use strict';
 
     angular.module('app.services', [
+        'service.additionalContentService',
         'service.userService',
         'service.consultantService',
         'service.securityService',
