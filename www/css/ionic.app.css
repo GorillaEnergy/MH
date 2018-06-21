@@ -11034,12 +11034,12 @@ a.button {
   padding-bottom: 10px; }
 
 .new-kid .registered {
-  background: url("../img/kid/regisered-kid-background.png") no-repeat center #64cae2;
+  background: url("../img/kid/regisered-kid-background.png") no-repeat center top #64cae2;
   background-size: cover;
   padding-bottom: 9px; }
 
 .new-kid .unregistered {
-  background: url("../img/kid/unregisered-kid-background.png") no-repeat center #64cae2;
+  background: url("../img/kid/unregisered-kid-background.png") no-repeat center top #64cae2;
   background-size: cover; }
 
 .new-kid .empty-header-big {
@@ -11816,6 +11816,8 @@ p {
       font-family: American; }
     .psy-logs .menu-block .icon-menu {
       width: 30px; }
+    .psy-logs .menu-block .empty-block {
+      width: 53px; }
   .psy-logs .main-block {
     height: calc(100vh - 72px);
     overflow: scroll;

@@ -4,10 +4,11 @@
   angular.module('app')
     .controller('LogsController', LogsController);
 
-  LogsController.$inject = ['$ionicModal', '$state', '$scope', '$timeout', '$localStorage', 'userService', 'consultants'];
+  LogsController.$inject = ['$ionicModal', '$state', '$scope', '$timeout', '$localStorage', 'userService', 'consultants',
+                            'rights_to_kid'];
 
 
-  function LogsController($ionicModal, $state, $scope, $timeout, $localStorage, userService, consultants) {
+  function LogsController($ionicModal, $state, $scope, $timeout, $localStorage, userService, consultants, rights_to_kid) {
     const vm = this;
 
     vm.toMainPage = toMainPage;
@@ -31,8 +32,10 @@
     let kid = kids[$localStorage.log_index];
     vm.kidName = getKidName();
     vm.pushView = [];
+    vm.editRights = rights_to_kid;
 
     console.log('consultants', consultants);
+    console.log('rights to edit kid', rights_to_kid);
 
     function getKidName() {
       let full_name = kid.name;

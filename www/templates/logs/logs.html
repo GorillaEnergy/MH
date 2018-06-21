@@ -4,7 +4,8 @@
 
             <img src="./img/kid-chat-room/back-arrow.png" ng-click="vm.toMainPage()">
             <p ng-if="vm.kidName">{{vm.kidName}}</p>
-            <img src="./img/logs/settings.png" class="icon-menu" ng-click="vm.toKid()">
+            <img src="./img/logs/settings.png" class="icon-menu" ng-click="vm.toKid()" ng-if="vm.editRights">
+            <div class="empty-block" ng-if="!vm.editRights"></div>
         </div>
         <div class="main-block">
 

@@ -4,10 +4,12 @@
   angular.module('app')
     .controller('SettingsController', SettingsController);
 
-  SettingsController.$inject = ['$state', '$localStorage', '$timeout', '$window', '$ionicModal', '$scope', '$ionicSlideBoxDelegate', 'userService'];
+  SettingsController.$inject = ['$state', '$localStorage', '$timeout', '$window', '$ionicModal', '$scope',
+                                '$ionicSlideBoxDelegate', 'userService', 'toastr', 'countries'];
 
 
-  function SettingsController($state, $localStorage, $timeout, $window, $ionicModal, $scope, $ionicSlideBoxDelegate, userService) {
+  function SettingsController($state, $localStorage, $timeout, $window, $ionicModal, $scope,
+                              $ionicSlideBoxDelegate, userService, toastr, countries) {
     const vm = this;
 
     $timeout(function () {$(".main-block").height($(".content").height());});
@@ -21,11 +23,14 @@
     vm.closeTutorial = closeTutorial;
     vm.toProfile = toProfile;
     vm.toKid = toKid;
+    vm.addParentModal = addParentModal;
     vm.addParent = addParent;
     vm.toTC = toTC;
 
     vm.settings = 'settings';
-
+    vm.countryCodes = countries;
+    vm.countryCode = userService.getUser().phone.code; //country be default Ukraine
+    vm.phone = '';
 
     function access() {
       let user_role = userService.getUser().role_id;
@@ -59,15 +64,46 @@
       delete $localStorage.kid_index;
       $state.go('kid');
     }
-    function addParent() {
+    function addParentModal() {
       console.log('addParent');
-      // $state.go('notifications');
+      $scope.parentModal.show();
     }
     function toTC() {
       console.log('to terms & conditions');
       $state.go('terms-conditions');
     }
 
+
+    function addParent() {
+      console.log('addFollower');
+      let data = {
+        phone: vm.phone,
+        code: vm.countryCode,
+        type: "owner"
+      };
+      console.log(data);
+      userService.addFollower(data).then(function (res) {
+        if (res.status === 'success') {
+          toastr.success('Parent added');
+          $scope.parentModal.hide()
+        } else {
+          $scope.parentModal.hide()
+        }
+      })
+    }
+
+
+    $ionicModal.fromTemplateUrl('add-follower-modal', {
+      scope: $scope,
+    }).then(function (modal) {
+      $scope.parentModal = modal;
+    });
+
+    $ionicModal.fromTemplateUrl('country-codes-modal', {
+      scope: $scope,
+    }).then(function (modal) {
+      $scope.countryModal = modal;
+    });
 
     $ionicModal.fromTemplateUrl('tutorial-modal', {
       scope: $scope,
@@ -78,12 +114,7 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     $scope.sliderData = {};
-    $scope.sliderData.bgColors = [];
     $scope.sliderData.currentPage = 0;
-
-    for (let i = 0; i < 10; i++) {
-      $scope.sliderData.bgColors.push("bgColor_" + i);
-    }
 
     let setupSlider = function() {
       //some options to pass to our slider
@@ -97,15 +128,15 @@
       $scope.sliderData.sliderDelegate = null;
 
       //watch our sliderDelegate reference, and use it when it becomes available
-      $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
-        if (newVal != null) {
-          $scope.sliderData.sliderDelegate.on('slideChangeEnd', function() {
-            $scope.sliderData.currentPage = $scope.sliderData.sliderDelegate.activeIndex;
-            //use $scope.$apply() to refresh any content external to the slider
-            $scope.$apply();
-          });
-        }
-      });
+      // $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
+      //   if (newVal != null) {
+      //     $scope.sliderData.sliderDelegate.on('slideChangeEnd', function() {
+      //       $scope.sliderData.currentPage = $scope.sliderData.sliderDelegate.activeIndex;
+      //       //use $scope.$apply() to refresh any content external to the slider
+      //       $scope.$apply();
+      //     });
+      //   }
+      // });
     };
 
     setupSlider();

@@ -5,11 +5,11 @@
     .controller('ProfileController', ProfileController);
 
   ProfileController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal',
-                               '$localStorage', 'user'];
+                               '$localStorage', 'user', 'toastr'];
 
 
   function ProfileController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal,
-                             $localStorage, user) {
+                             $localStorage, user, toastr) {
     const vm = this;
 
     vm.save = save;
@@ -29,21 +29,24 @@
       send();
 
       function checkFields() {
-        if (!vm.name) {
-          vm.warning.name = true;
+        if (!vm.id_number) {
+          toastr.error('Please enter the id number');
+          vm.warning.id = true;
           permissionToSend = false;
           $timeout(function () {
-            vm.warning.name = false
+            vm.warning.id = false
           }, 1500);
-        } else if (vm.name.length < 4 || vm.name.indexOf(' ') === -1) {
-          vm.warning.name = true;
+        } else if (String(vm.id_number).length < 9) {
+          toastr.error('Minimum length of the id number field 9');
+          vm.warning.id = true;
           permissionToSend = false;
           $timeout(function () {
-            vm.warning.name = false
+            vm.warning.id = false
           }, 1500);
         }
 
         if (!vm.email) {
+          toastr.error('Please enter the email');
           vm.warning.email = true;
           permissionToSend = false;
           $timeout(function () {
@@ -51,17 +54,19 @@
           }, 1500);
         }
 
-        if (!vm.id_number) {
-          vm.warning.id = true;
+        if (!vm.name) {
+          toastr.error('Please enter the name');
+          vm.warning.name = true;
           permissionToSend = false;
           $timeout(function () {
-            vm.warning.id = false
+            vm.warning.name = false
           }, 1500);
-        } else if (String(vm.id_number).length < 9) {
-          vm.warning.id = true;
+        } else if (vm.name.length < 4 || vm.name.indexOf(' ') === -1) {
+          toastr.error('Please enter the first name and last name');
+          vm.warning.name = true;
           permissionToSend = false;
           $timeout(function () {
-            vm.warning.id = false
+            vm.warning.name = false
           }, 1500);
         }
       }

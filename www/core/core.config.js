@@ -156,6 +156,9 @@
                 },
                 consultants: function ($timeout, consultantService) {
                   return  consultantService.consultantList();
+                },
+                rights_to_kid: function (userService) {
+                  return userService.rightsToKid();
                 }
               }
             })
@@ -183,6 +186,9 @@
               resolve: {
                 security: function ($timeout, securityService) {
                   return $timeout(function() { securityService.commonAccess(); });
+                },
+                countries: function (countryCodes) {
+                  return countryCodes.list();
                 }
               }
             })

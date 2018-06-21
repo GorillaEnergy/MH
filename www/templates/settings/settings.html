@@ -22,7 +22,7 @@
               <p>add kid</p>
               <img src="./img/kid-chat/arrow-to-chat.png">
             </div>
-            <div class="menu-point" ng-click="vm.addParent()" ng-if="vm.access()">
+            <div class="menu-point" ng-click="vm.addParentModal()" ng-if="vm.access()">
               <p>add parent</p>
               <img src="./img/kid-chat/arrow-to-chat.png">
             </div>
@@ -37,18 +37,35 @@
     </ion-content>
 </ion-view>
 
-<!--<script id="tutorial-modal" type="text/ng-template">-->
-  <!--<ion-modal-view class="tutorial-modal">-->
-    <!--<ion-content>-->
+<script id="tutorial-modal" type="text/ng-template">
+  <ion-modal-view class="tutorial-modal">
+    <ion-content>
 
-      <!--<img src="./img/tutorial/close.png" class="close-tutorial-modal"-->
-          <!--ng-click="vm.closeTutorial()">-->
+      <img src="./img/tutorial/close.png" class="close-tutorial-modal"
+          ng-click="vm.closeTutorial()">
 
-      <!--<ion-slides options="sliderData.sliderOptions" slider="sliderData.sliderDelegate">-->
-        <!--<ion-slide-page>-->
-          <!--<div class="slider-main-block">-->
-            <!--<div>-->
-              <!--<p class="tutorial-header">search</p>-->
+      <ion-slides options="sliderData.sliderOptions" slider="sliderData.sliderDelegate">
+        <ion-slide-page>
+          <div class="slider-main-block">
+            <div>
+              <p class="tutorial-header">search</p>
+              <p class="tutorial-content">
+                Try using the search field in the navigation
+                bar to find the content you are looking for.
+                Type in software, skills, or other keywords
+                directly into the search field and browse
+                through the results to find the content
+                you are looking for.
+              </p>
+            </div>
+            <img src="./img/tutorial/phone.png" class="tutorial-img">
+          </div>
+        </ion-slide-page>
+
+        <ion-slide-page>
+          <div class="slider-main-block">
+            <div>
+              <p class="tutorial-header">slider 2</p>
               <!--<p class="tutorial-content">-->
                 <!--Try using the search field in the navigation-->
                 <!--bar to find the content you are looking for.-->
@@ -57,45 +74,93 @@
                 <!--through the results to find the content-->
                 <!--you are looking for.-->
               <!--</p>-->
-            <!--</div>-->
+            </div>
             <!--<img src="./img/tutorial/phone.png" class="tutorial-img">-->
-          <!--</div>-->
-        <!--</ion-slide-page>-->
+          </div>
+        </ion-slide-page>
 
-        <!--<ion-slide-page>-->
-          <!--<div class="slider-main-block">-->
-            <!--<div>-->
-              <!--<p class="tutorial-header">slider 2</p>-->
-              <!--&lt;!&ndash;<p class="tutorial-content">&ndash;&gt;-->
-                <!--&lt;!&ndash;Try using the search field in the navigation&ndash;&gt;-->
-                <!--&lt;!&ndash;bar to find the content you are looking for.&ndash;&gt;-->
-                <!--&lt;!&ndash;Type in software, skills, or other keywords&ndash;&gt;-->
-                <!--&lt;!&ndash;directly into the search field and browse&ndash;&gt;-->
-                <!--&lt;!&ndash;through the results to find the content&ndash;&gt;-->
-                <!--&lt;!&ndash;you are looking for.&ndash;&gt;-->
-              <!--&lt;!&ndash;</p>&ndash;&gt;-->
-            <!--</div>-->
-            <!--&lt;!&ndash;<img src="./img/tutorial/phone.png" class="tutorial-img">&ndash;&gt;-->
-          <!--</div>-->
-        <!--</ion-slide-page>-->
+        <ion-slide-page>
+          <div class="slider-main-block">
+            <div>
+              <p class="tutorial-header">slider 3</p>
+              <!--<p class="tutorial-content">-->
+                <!--Try using the search field in the navigation-->
+                <!--bar to find the content you are looking for.-->
+                <!--Type in software, skills, or other keywords-->
+                <!--directly into the search field and browse-->
+                <!--through the results to find the content-->
+                <!--you are looking for.-->
+              <!--</p>-->
+            </div>
+            <!--<img src="./img/tutorial/phone.png" class="tutorial-img">-->
+          </div>
+        </ion-slide-page>
 
-        <!--<ion-slide-page>-->
-          <!--<div class="slider-main-block">-->
-            <!--<div>-->
-              <!--<p class="tutorial-header">slider 3</p>-->
-              <!--&lt;!&ndash;<p class="tutorial-content">&ndash;&gt;-->
-                <!--&lt;!&ndash;Try using the search field in the navigation&ndash;&gt;-->
-                <!--&lt;!&ndash;bar to find the content you are looking for.&ndash;&gt;-->
-                <!--&lt;!&ndash;Type in software, skills, or other keywords&ndash;&gt;-->
-                <!--&lt;!&ndash;directly into the search field and browse&ndash;&gt;-->
-                <!--&lt;!&ndash;through the results to find the content&ndash;&gt;-->
-                <!--&lt;!&ndash;you are looking for.&ndash;&gt;-->
-              <!--&lt;!&ndash;</p>&ndash;&gt;-->
-            <!--</div>-->
-            <!--&lt;!&ndash;<img src="./img/tutorial/phone.png" class="tutorial-img">&ndash;&gt;-->
-          <!--</div>-->
-        <!--</ion-slide-page>-->
+    </ion-content>
+  </ion-modal-view>
+</script>
 
-    <!--</ion-content>-->
-  <!--</ion-modal-view>-->
-<!--</script>-->
+<script id="add-follower-modal" type="text/ng-template">
+  <div class="kid-backdrop" ng-click="parentModal.hide()"></div>
+  <ion-modal-view class="add-follower-modal">
+
+    <ion-content class="follower-main-block">
+
+      <div class="title-f">
+        <span class="question-f">insert parent number</span>
+      </div>
+
+      <div class="phone-block-f">
+
+        <img src="./img/authorization/phone.png" class="phone-ico-f">
+
+        <div class="country-and-phone-f">
+
+          <div class="country-select-f" ng-click="countryModal.show()">
+            {{vm.countryCode}}
+          </div>
+
+          <div class="phone-f">
+            <input class="input-phone-f"
+                   type="tel"
+                   ng-model="vm.phone"
+                   maxlength="10"
+                   oninput="this.value = this.value.replace(/\D/, '')">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="button-block-f">
+        <div class="half-f">
+          <img src="./img/kid/modal/cancel.png" class="cancel-f" ng-click="parentModal.hide()">
+        </div>
+
+        <div class="half-f">
+          <img src="./img/kid/modal/invite.png" class="invite-f" ng-click="vm.addParent()">
+        </div>
+      </div>
+    </ion-content>
+
+  </ion-modal-view>
+</script>
+
+<script id="country-codes-modal" type="text/ng-template">
+  <ion-modal-view class="country-modal">
+
+    <ion-header-bar class="bar bar-header bar-calm" ng-click="countryModal.hide()">
+      <a class="button icon-left ion-chevron-left button-clear button-dark"></a>
+    </ion-header-bar>
+
+    <ion-content class="padding">
+      <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
+      <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter">
+        <ion-radio ng-model="vm.countryCode" ng-value="country.code"
+                   ng-click="countryModal.hide()">
+          {{country.name}}: {{country.code}}
+        </ion-radio>
+      </div>
+    </ion-content>
+
+  </ion-modal-view>
+</script>

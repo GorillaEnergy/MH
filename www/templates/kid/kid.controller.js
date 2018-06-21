@@ -5,11 +5,11 @@
     .controller('KidController', KidController);
 
   KidController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', 'countryCodes', 'userService',
-    '$localStorage', '$timeout', 'kids', 'followers', 'countries'];
+    '$localStorage', '$timeout', 'kids', 'followers', 'countries', 'toastr'];
 
 
   function KidController($ionicPopup, $ionicModal, $state, $scope, countryCodes, userService,
-                         $localStorage, $timeout, kids, followers, countries) {
+                         $localStorage, $timeout, kids, followers, countries, toastr) {
     const vm = this;
 
     vm.kidPosition = kidPosition;
@@ -56,11 +56,11 @@
     vm.useCodeForKid = true;
     vm.birth_date = new Date();
 
-    // console.log('vm.countryCodes = ', vm.countryCodes);
     console.log('vm.kids = ', vm.kids);
     console.log('vm.followers = ', vm.followers);
 
     function kidFilter() {
+      let kids = userService.getKids();
       let kid_index = userService.getKidIndex();
       let data = [];
 
@@ -93,6 +93,7 @@
 
     function speciesDefinition() {
       console.log('speciesDefinition');
+      let kids = userService.getKids();
       //3 состояния (новый ребёнок, редактирование оплаченого ребёнка, редактирование неоплаченного ребёнка)
       if (!angular.isDefined(userService.getKidIndex())) {
         vm.viewType.new_kid = true;
@@ -102,8 +103,9 @@
         console.log('new_kid');
       } else {
         let kid_index = userService.getKidIndex();
+        console.log('kid_index = ', kid_index);
         //проверка на коректность данных
-        if (vm.kids.length) {
+        if (kids.length) {
           //проверка оплаты
           console.log(kids[kid_index].register);
           if (kids[kid_index].register == '1') {
@@ -184,6 +186,7 @@
     }
 
     function editKid(kid) {
+      let kids = userService.getKids();
       console.log('editKid');
       console.log(kid);
       console.log('kids = ', kids);
@@ -215,17 +218,25 @@
 
     function removeKid() {
       console.log('removeKid');
+      let kids = userService.getKids();
       console.log(vm.kids);
       console.log(kids);
-      let data = {kid_id: vm.kids[$localStorage.kid_index].id};
+      let data = {kid_id: kids[$localStorage.kid_index].id};
       console.log(data);
       userService.deleteKid(data).then(function (res) {
         console.log(res);
         if (res.status == "success") {
-          vm.kids.length > 1 ? vm.kids.splice($localStorage.kid_index, 1) : vm.kids = [];
-          $localStorage.kids = angular.copy(vm.kids);
-          kids = angular.copy(vm.kids);
+          // vm.kids.length > 1 ? vm.kids.splice($localStorage.kid_index, 1) : vm.kids = [];
+          // $localStorage.kids = angular.copy(vm.kids);
+          // kids = angular.copy(vm.kids);
+          // kids = angular.copy($localStorage.kids);
+
+
+          kids.splice($localStorage.kid_index, 1);
+          $localStorage.kids = angular.copy(kids);
           delete $localStorage.kid_index;
+
+          vm.kids = kidFilter();
           speciesDefinition();
         } else {
           console.log('remove err');
@@ -241,16 +252,11 @@
         if (res.status == "success") {
           vm.kids.length > 1 ? vm.kids.splice($localStorage.kid_index, 1) : vm.kids = [];
 
-          let kids = angular.copy($localStorage.kids);
-          for(let i = 0; i < kids.length; i++) {
-            if (kids[i].id === vm.kids.id) {
-              kids.splice($localStorage.kid_index, 1);
-              break;
-            }
-          }
-
-          $localStorage.kids = kids;
+          let kids = userService.getKids();
+          kids.splice($localStorage.kid_index, 1);
+          $localStorage.kids = angular.copy(kids);
           delete $localStorage.kid_index;
+
           $state.go('parent-main-page')
         } else {
           console.log('remove err');
@@ -270,43 +276,17 @@
 
 
       function checkFieldsToFill() {
-        if (!vm.name) {
-          vm.warning.name = true;
+        if (String(vm.phone).length < 9) {
+          toastr.error('Please enter the phone (minimum 9 char)');
+          vm.warning.phone = true;
           permissionToSend = false;
           $timeout(function () {
-            vm.warning.name = false
-          }, 1500);
-        } else if (vm.name.length < 4 || vm.name.indexOf(' ') === -1) {
-          vm.warning.name = true;
-          permissionToSend = false;
-          $timeout(function () {
-            vm.warning.name = false
-          }, 1500);
-        }
-
-        if (!vm.birth_date) {
-          vm.warning.date = true;
-          permissionToSend = false;
-          $timeout(function () {
-            vm.warning.date = false
-          }, 1500);
-        }
-
-        if (!vm.id_number) {
-          vm.warning.id_number = true;
-          permissionToSend = false;
-          $timeout(function () {
-            vm.warning.id_number = false
-          }, 1500);
-        } else if (String(vm.id_number).length < 9) {
-          vm.warning.id_number = true;
-          permissionToSend = false;
-          $timeout(function () {
-            vm.warning.id_number = false
+            vm.warning.phone = false
           }, 1500);
         }
 
         if (!vm.grade) {
+          toastr.error('Please enter the grade');
           vm.warning.grade = true;
           permissionToSend = false;
           $timeout(function () {
@@ -314,18 +294,52 @@
           }, 1500);
         }
 
-        if (String(vm.phone).length < 9) {
-          vm.warning.phone = true;
+        if (!vm.id_number) {
+          toastr.error('Please enter the id number');
+          vm.warning.id_number = true;
           permissionToSend = false;
           $timeout(function () {
-            vm.warning.phone = false
+            vm.warning.id_number = false
+          }, 1500);
+        } else if (String(vm.id_number).length < 9) {
+          toastr.error('Minimum length of the id number field 9');
+          vm.warning.id_number = true;
+          permissionToSend = false;
+          $timeout(function () {
+            vm.warning.id_number = false
+          }, 1500);
+        }
+
+        if (vm.birth_date > new Date()) {
+          toastr.error('Incorrect date');
+          vm.warning.date = true;
+          permissionToSend = false;
+          $timeout(function () {
+            vm.warning.date = false
+          }, 1500);
+        }
+
+
+        if (!vm.name) {
+          toastr.error('Please enter the name');
+          vm.warning.name = true;
+          permissionToSend = false;
+          $timeout(function () {
+            vm.warning.name = false
+          }, 1500);
+        } else if (vm.name.length < 4 || vm.name.indexOf(' ') === -1) {
+          toastr.error('Please enter the first name and last name');
+          vm.warning.name = true;
+          permissionToSend = false;
+          $timeout(function () {
+            vm.warning.name = false
           }, 1500);
         }
       }
 
       function checkForCoincidence() {
         let coincidence = false;
-
+        let kids = userService.getKids();
         console.log(vm.kids);
         console.log(kids);
 
@@ -350,24 +364,25 @@
       }
 
       function send() {
+        let kids = userService.getKids();
+        let kid = kids[userService.getKidIndex()];
         let data = {
           name: vm.name,
-          // birth_date: vm.birth_date,
           birth_date: vm.birth_date * 1,
           id_number: vm.id_number,
           grade: vm.grade
         };
 
         if (angular.isDefined($localStorage.kid_index)) {
-          data.kid_id = kids[$localStorage.kid_index].id;
+          data.kid_id = kid.id;
           data.phone = {phone: vm.phone, code: vm.countryCode};
           userService.updateKid(data).then(function (res) {
             console.log(res);
             if (res.status === 'success') {
 
-              let kids = $localStorage.kids;
-              kids[$localStorage.kid_index] = res.data;
-              $localStorage.kids = angular.copy(kids);
+              let kidsList = $localStorage.kids;
+              kidsList[$localStorage.kid_index] = res.data;
+              $localStorage.kids = angular.copy(kidsList);
               vm.kids[$localStorage.kid_index] = res.data;
 
               if (type === 'toPayment') {
@@ -387,12 +402,12 @@
             console.log(res);
             if (res.status === 'success') {
 
-              let kids = $localStorage.kids;
-              if (!kids) {
-                kids = [];
+              let kidsList = $localStorage.kids;
+              if (!kidsList) {
+                kidsList = [];
               }
-              kids.push(res.data);
-              $localStorage.kids = kids;
+              kidsList.push(res.data);
+              $localStorage.kids = angular.copy(kidsList);
               vm.kids.push(res.data);
 
               if (type === 'addAnother') {
@@ -419,14 +434,7 @@
     }
 
     function kidDetail(index) {
-      // vm.name = vm.kids[index].name;
-      // vm.birth_date = new Date(Number(vm.kids[index].birth_date));
-      // vm.id_number = vm.kids[index].id_number;
-      // vm.grade = vm.kids[index].grade;
-      // vm.phone = vm.kids[index].phone.phone;
-      // vm.code = vm.kids[index].phone.code;
-      // vm.access = angular.copy(vm.kids[index].access);
-
+      let kids = userService.getKids();
       vm.name = kids[index].name;
       vm.birth_date = new Date(Number(kids[index].birth_date));
       vm.id_number = kids[index].id_number;
@@ -462,7 +470,6 @@
       let data = {
         phone: follower.phone.phone,
         code: follower.phone.code,
-        // kid_id: follower.pivot.kid_id,
         kid_id: $localStorage.kids[$localStorage.kid_index].id,
         type: "follower"
       };

@@ -23,7 +23,8 @@
                       uploadKids: baseUrl + 'api/list-kids',
                       add_follower: baseUrl + 'api/add-another-parent',
                       remove_follower: baseUrl + 'api/delete-another-parent',
-                      followers_list: baseUrl + 'api/list-followers'
+                      followers_list: baseUrl + 'api/list-followers',
+                      rights_to_kid: baseUrl + 'api/check-status-parent'
                     },
                     countries: {
                       list: baseUrl + 'api/list-codes'

@@ -29,6 +29,7 @@
         model.deleteKid = deleteKid;
         model.setKids = setKids;
         model.getKids = getKids;
+        model.rightsToKid = rightsToKid;
 
         model.addFollower = addFollower;
         model.removeFollower = removeFollower;
@@ -51,6 +52,7 @@
                 setPhone(phone);
 
                 if (!res.data.user.name) {
+                  $localStorage.kids = [];
                   $state.go('profile');
                 } else if (res.data.user.role_id === 2) {
                   $state.go('parent-main-page');
@@ -113,6 +115,13 @@
         }
         function getKids() {
           return $localStorage.kids;
+        }
+        function rightsToKid() {
+          let data = { kid_id: getKids()[$localStorage.log_index].id };
+          console.log(data);
+          return http.post(url.kid.rights_to_kid, data).then(function (res) {
+            if (res.status === 'success') { return true } else { return false }
+          });
         }
 
         function addFollower(data) {
