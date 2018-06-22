@@ -75,3 +75,19 @@
     }
   }
 }
+
+.country-modal {
+  .country-filter {
+    height: 40px;
+    width: 100%;
+    border: 1px solid #0b1138;
+    font-size: 18px;
+    padding: 0 14px;
+    margin-bottom: 10px;
+  }
+  .codes-block {
+    width: 100%;
+    height: calc(100vh - 94px);
+    overflow: scroll;
+  }
+}

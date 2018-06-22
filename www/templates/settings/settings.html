@@ -145,21 +145,25 @@
   </ion-modal-view>
 </script>
 
+
 <script id="country-codes-modal" type="text/ng-template">
   <ion-modal-view class="country-modal">
 
-    <ion-header-bar class="bar bar-header bar-calm" ng-click="countryModal.hide()">
+    <ion-header-bar class="bar bar-header bar-calm" ng-click="modalCountry.hide()">
       <a class="button icon-left ion-chevron-left button-clear button-dark"></a>
     </ion-header-bar>
 
     <ion-content class="padding">
       <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
-      <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter">
-        <ion-radio ng-model="vm.countryCode" ng-value="country.code"
-                   ng-click="countryModal.hide()">
-          {{country.name}}: {{country.code}}
-        </ion-radio>
+      <div class="codes-block">
+        <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter">
+          <ion-radio ng-model="vm.countryCode" ng-value="country.code"
+                     ng-click="countryModal.hide()">
+            {{country.name}}: {{country.code}}
+          </ion-radio>
+        </div>
       </div>
+
     </ion-content>
 
   </ion-modal-view>

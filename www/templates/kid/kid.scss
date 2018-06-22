@@ -1,4 +1,4 @@
-.new-kid {
+.kid {
 
     .main-block {
       height: auto;
@@ -312,15 +312,17 @@
       }
       .country-and-phone {
         margin: 0 auto;
-        width: 200px;
+        //width: 200px;
+        width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
       }
       .country-select {
         height: 100%;
-        width: 30%;
-        margin-left: 5px;
+        //width: 30%;
+        width: calc(45% - 40px);
+        margin-left: 40px;
         text-align: right;
       }
 
@@ -331,11 +333,13 @@
         text-align: left;
       }
       .input-phone {
+        color: #0b1138;
         margin-left: 7px;
         font-size: 22px;
         font-weight: 600;
         height: 100%;
-        width: 100%;
+        //width: 100%;
+        width: 65%;
         text-align: left;
       }
 
@@ -561,6 +565,23 @@
   background-color: #000;
   opacity: 0.6;
 }
+
+.country-modal {
+  .country-filter {
+    height: 40px;
+    width: 100%;
+    border: 1px solid #0b1138;
+    font-size: 18px;
+    padding: 0 14px;
+    margin-bottom: 10px;
+  }
+  .codes-block {
+    width: 100%;
+    height: calc(100vh - 94px);
+    overflow: scroll;
+  }
+}
+
 .kids-exist-modal {
   top: 0;
   bottom: 0;

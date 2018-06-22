@@ -31,12 +31,12 @@
     let token_device = 'c4_fDcbikt0:APA91bFy8KG6e-FVdP71DvCdMumtv_8GJyzHv5liRYZ7SELdy_C9zZqktI3vudxlc6-9ki47J7CbnGQZrrMdjW38K2J6p3RVJPp_RSWbR2XN_xz23878-LSGyd0z_F_TyfOP9XkDmSCN';
 
 
-    vm.test = function () {
-      console.log('on-focus');
-    };
-    vm.test2 = function () {
-      console.log('on-blur');
-    };
+    // vm.test = function () {
+    //   console.log('on-focus');
+    // };
+    // vm.test2 = function () {
+    //   console.log('on-blur');
+    // };
 
     getDeviceToken();
     function getDeviceToken() {

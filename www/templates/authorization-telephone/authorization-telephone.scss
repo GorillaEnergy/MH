@@ -60,18 +60,21 @@
 
     .country-and-phone {
       margin: 0 auto;
-      width: 200px;
+      width: 100%;
+      //width: fit-content;
       height: 100%;
       font-size: 22px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      //justify-content: space-between;
     }
 
     .country-select {
       font-weight: 600;
       height: 100%;
-      width: 30%;
-      margin-left: 5px;
+      width: calc(45% - 40px);
+      //width: fit-content;
+      margin-left: 40px;
       text-align: right;
     }
 
@@ -146,12 +149,11 @@
     }
 
     .input-phone {
-      //font-family: "HelveticaNeueCyr";
-      //font-weight: 700;
       color: #0b1138;
       font-size: 22px;
       font-weight: 600;
-      width: 95%;
+      width: 65%;
+      //width: 130px;
       height: 100%;
       line-height: 0;
       padding-bottom: 0;
@@ -211,6 +213,11 @@
     font-size: 18px;
     padding: 0 14px;
     margin-bottom: 10px;
+  }
+  .codes-block {
+    width: 100%;
+    height: calc(100vh - 94px);
+    overflow: scroll;
   }
 }
 
