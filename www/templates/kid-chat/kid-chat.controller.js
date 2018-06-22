@@ -263,9 +263,9 @@
       console.log(chat_body.scrollTop);
       console.log(chat_body.scrollHeight);
       if (chat_body.scrollTop === 0) {
-        console.log('ctat position top');
+        console.log('chat position top');
         // console.log(chat_body.scrollTop);
-        bindScrollAndLoadMessages();
+        // bindScrollAndLoadMessages();
       }
     });
 

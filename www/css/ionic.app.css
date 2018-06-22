@@ -9912,7 +9912,8 @@ a.button {
   width: 100vw;
   background: url("../img/menu/menu-background.png") no-repeat center;
   background-size: cover;
-  text-align: center; }
+  text-align: center;
+  overflow: scroll !important; }
 
 .additional-content .header {
   width: 100%;
@@ -10004,6 +10005,18 @@ a.button {
   .additional-content .event-block .event-bg {
     height: 195px;
     width: 259px; }
+  .additional-content .event-block .to-favorite {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    padding: 10px;
+    height: 45px; }
+  .additional-content .event-block .play {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    padding: 10px;
+    height: 50px; }
 
 .additional-content .search-button {
   margin-top: 18px;
@@ -10042,6 +10055,190 @@ a.button {
     top: 0;
     right: 0; }
 
+.additional-content .main-block {
+  min-height: 100vh;
+  height: fit-content;
+  width: 100vw;
+  background: url("../img/menu/menu-background.png") no-repeat center;
+  background-size: cover;
+  text-align: center; }
+
+.additional-content .header {
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  position: relative;
+  border-bottom: 2px solid #0b1138;
+  text-align: center;
+  font-family: American;
+  font-size: 25px;
+  padding-top: 35px;
+  color: #0b1138; }
+  .additional-content .header .tool-bar-back {
+    height: 45px;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+  .additional-content .header .tool-bar-favorites {
+    height: 45px;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0; }
+
+.additional-content .favorites-main-block {
+  display: block;
+  overflow: scroll;
+  height: fit-content;
+  width: 100%;
+  padding: 15px 30px 0 30px;
+  box-sizing: border-box; }
+  .additional-content .favorites-main-block .event-block {
+    height: calc((100vw - 60px) * 0.75);
+    width: 100%;
+    position: relative;
+    border: 1px solid #0b1138;
+    box-sizing: border-box;
+    margin-bottom: 15px; }
+    .additional-content .favorites-main-block .event-block .event-description {
+      position: absolute;
+      left: 0;
+      top: calc(50% - 30px);
+      width: 100%;
+      text-align: center; }
+    .additional-content .favorites-main-block .event-block .event-title {
+      font-family: American;
+      font-size: 24.5px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0 0 3px 0; }
+    .additional-content .favorites-main-block .event-block .event-live {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0; }
+    .additional-content .favorites-main-block .event-block .event-date {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0; }
+    .additional-content .favorites-main-block .event-block .event-time {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0; }
+    .additional-content .favorites-main-block .event-block .event-bg {
+      height: 100%;
+      width: 100%; }
+    .additional-content .favorites-main-block .event-block .to-favorite {
+      position: absolute;
+      top: 0;
+      right: 5px;
+      padding: 10px;
+      height: 50px; }
+    .additional-content .favorites-main-block .event-block .play {
+      position: absolute;
+      bottom: 0;
+      right: 5px;
+      padding: 10px;
+      height: 60px; }
+
+.additional-content .main-block {
+  min-height: 100vh;
+  height: fit-content;
+  width: 100vw;
+  background: url("../img/menu/menu-background.png") no-repeat center;
+  background-size: cover;
+  text-align: center; }
+
+.additional-content .header {
+  width: 100%;
+  height: 72px;
+  background-color: #fff;
+  position: relative;
+  border-bottom: 2px solid #0b1138;
+  text-align: center;
+  font-family: American;
+  font-size: 25px;
+  padding-top: 35px;
+  color: #0b1138; }
+  .additional-content .header .tool-bar-back {
+    height: 45px;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+  .additional-content .header .tool-bar-favorites {
+    height: 45px;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0; }
+
+.additional-content .favorites-main-block {
+  display: block;
+  overflow: scroll;
+  height: fit-content;
+  width: 100%;
+  padding: 15px 30px 0 30px;
+  box-sizing: border-box; }
+  .additional-content .favorites-main-block .event-block {
+    height: calc((100vw - 60px) * 0.75);
+    width: 100%;
+    position: relative;
+    border: 1px solid #0b1138;
+    box-sizing: border-box;
+    margin-bottom: 15px; }
+    .additional-content .favorites-main-block .event-block .event-description {
+      position: absolute;
+      left: 0;
+      top: calc(50% - 30px);
+      width: 100%;
+      text-align: center; }
+    .additional-content .favorites-main-block .event-block .event-title {
+      font-family: American;
+      font-size: 24.5px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0 0 3px 0; }
+    .additional-content .favorites-main-block .event-block .event-live {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0; }
+    .additional-content .favorites-main-block .event-block .event-date {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0; }
+    .additional-content .favorites-main-block .event-block .event-time {
+      font-family: AmericanPatrius;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0; }
+    .additional-content .favorites-main-block .event-block .event-bg {
+      height: 100%;
+      width: 100%; }
+    .additional-content .favorites-main-block .event-block .to-favorite {
+      position: absolute;
+      top: 0;
+      right: 5px;
+      padding: 10px;
+      height: 50px; }
+    .additional-content .favorites-main-block .event-block .play {
+      position: absolute;
+      bottom: 0;
+      right: 5px;
+      padding: 10px;
+      height: 60px; }
+
 .auth-tel ion-content .main-block {
   height: 100vh;
   min-height: 568px;
@@ -10069,7 +10266,7 @@ a.button {
   text-align: center; }
   .auth-tel ion-content .man .logo {
     width: 78%;
-    margin: 0 0 32px 65px; }
+    margin: 84px 0 32px 65px; }
 
 .auth-tel ion-content .input-block {
   position: relative;
@@ -10077,12 +10274,12 @@ a.button {
   text-align: center;
   font-size: 22px;
   background-color: #fff;
-  color: black;
+  color: #0b1138;
   font-weight: 700;
   height: 48px;
   width: 95%;
   line-height: 46px;
-  border: 2px solid #000;
+  border: 2px solid #0b1138;
   border-radius: 5px;
   margin: 0 auto; }
 
@@ -10113,7 +10310,7 @@ a.button {
   text-transform: uppercase;
   text-align: center;
   font-size: 15px;
-  color: #000;
+  color: #0b1138;
   font-weight: 500;
   margin: 4px 0 31px; }
 
@@ -10126,7 +10323,7 @@ a.button {
   font-weight: 500;
   width: 95%;
   line-height: 46px;
-  border: 2px solid #000;
+  border: 2px solid #0b1138;
   border-radius: 5px;
   margin: 16px auto;
   background: url("../img/authorization/dots.png") center no-repeat;
@@ -10139,7 +10336,8 @@ a.button {
 .auth-tel ion-content .trouble-block {
   width: 100%;
   height: 132px;
-  display: flex; }
+  display: flex;
+  margin-bottom: -7px; }
 
 .auth-tel ion-content .trouble {
   width: 50%;
@@ -10166,6 +10364,7 @@ a.button {
   text-align: -webkit-center; }
 
 .auth-tel ion-content .input-phone {
+  color: #0b1138;
   font-size: 22px;
   font-weight: 600;
   width: 95%;
@@ -10182,7 +10381,8 @@ a.button {
   font-weight: 700;
   width: 95%;
   height: 49px;
-  border: 2px solid #000;
+  color: #0b1138;
+  border: 2px solid #0b1138;
   border-radius: 5px; }
 
 .auth-tel ion-content .notification {
@@ -10282,7 +10482,7 @@ a.button {
   height: fit-content;
   min-height: 100vh;
   width: 100vw;
-  background: url("../img/parent-main-page/parent-main-page-bg.png") no-repeat;
+  background: url("../img/parent-main-page/parent-main-page-bg.png") no-repeat center;
   background-size: cover;
   background-position: inherit;
   position: relative;
@@ -10351,13 +10551,13 @@ a.button {
 .parent-main-page .kid-warning {
   position: absolute;
   bottom: 14px;
-  left: 34px;
+  left: 10px;
   height: 45px; }
 
 .parent-main-page .kid-call-now {
   position: absolute;
   bottom: 14px;
-  left: 34px;
+  left: 10px;
   height: 45px; }
 
 .parent-main-page .kid-name {
@@ -10448,8 +10648,10 @@ a.button {
   .parent-main-page .event-block .event-description {
     position: absolute;
     top: 74px;
-    left: 75px;
-    text-align: center; }
+    left: 0;
+    text-align: center;
+    height: 100%;
+    width: 100%; }
   .parent-main-page .event-block .event-title {
     font-family: American;
     font-size: 24.5px;
@@ -10477,6 +10679,12 @@ a.button {
   .parent-main-page .event-block .event-bg {
     height: 195px;
     width: 259px; }
+  .parent-main-page .event-block .play {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    padding: 10px;
+    height: 50px; }
 
 .kid-chat-menu .menu-block {
   display: flex;
@@ -10566,8 +10774,10 @@ a.button {
   .kid-chat-menu .event-block .event-description {
     position: absolute;
     top: 74px;
-    left: 75px;
-    text-align: center; }
+    left: 0;
+    text-align: center;
+    height: 100%;
+    width: 100%; }
   .kid-chat-menu .event-block .event-title {
     font-family: American;
     font-size: 24.5px;
@@ -10595,6 +10805,12 @@ a.button {
   .kid-chat-menu .event-block .event-bg {
     height: 195px;
     width: 259px; }
+  .kid-chat-menu .event-block .play {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    padding: 10px;
+    height: 50px; }
 
 @media screen and (min-width: 1366px) {
   .kid-chat-menu .call-and-chat img {

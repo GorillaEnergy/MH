@@ -91,8 +91,10 @@
     .event-description {
       position: absolute;
       top: 74px;
-      left: 75px;
+      left: 0;
       text-align: center;
+      height: 100%;
+      width: 100%;
     }
     .event-title {
       font-family: American;
@@ -125,6 +127,13 @@
     .event-bg {
       height: 195px;
       width: 259px;
+    }
+    .play {
+      position: absolute;
+      bottom: 0;
+      right: 5px;
+      padding: 10px;
+      height: 50px;
     }
   }
 }

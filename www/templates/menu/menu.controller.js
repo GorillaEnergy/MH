@@ -20,10 +20,8 @@
     vm.aboutUs = aboutUs;
     vm.contactUs = contactUs;
 
-    // let user_role = userService.getUser().role_id;
+    let user_role = angular.copy(userService.getUser().role_id);
     function userType(type) {
-      if (userService.getUser()) {
-        let user_role = userService.getUser().role_id;
         if (type === 'parent' && user_role == '2') {
           return true;
         } else if (type === 'kid' && user_role == '1') {
@@ -31,8 +29,6 @@
         } else  {
           return false;
         }
-      }
-
     }
 
     function toMainPage() {

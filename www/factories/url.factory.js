@@ -31,6 +31,13 @@
                     },
                     consultants : {
                       consultantsList: baseUrl + 'api/list-consultants'
+                    },
+                    additional_content : {
+                      content_list: baseUrl + 'api/list-contents',
+                      favorites_list: baseUrl + 'api/favourites-list',
+                      search_content: baseUrl + 'api/search-content',
+                      add_to_favorite: baseUrl + 'api/add-to-favourites',
+                      remove_from_favorite: baseUrl + 'api/remove-from-favourites'
                     }
 
                 }

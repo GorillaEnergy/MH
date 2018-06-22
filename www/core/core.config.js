@@ -119,7 +119,7 @@
                   return $timeout(function() { securityService.onlyKid(); });
                 },
                 live_content: function (additionalContentService) {
-                  return additionalContentService.getContent();
+                  return additionalContentService.mainPageContent();
                 }
               }
             })
@@ -179,7 +179,7 @@
                   return userService.uploadKids();
                 },
                 live_content: function (additionalContentService) {
-                  return additionalContentService.getContent();
+                  return additionalContentService.mainPageContent();
                 }
               }
             })
@@ -243,6 +243,33 @@
               resolve: {
                 security: function ($timeout, securityService) {
                   return $timeout(function() { securityService.commonAccess(); });
+                }
+              }
+            })
+            .state('additional-content-favorites', {
+              cache: false,
+              url: '/additional-content-favorites',
+              templateUrl: 'templates/additional-content-favorites/additional-content-favorites.html',
+              controller: 'AdditionalContentFavoritesController',
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.commonAccess(); });
+                }
+              }
+            })
+            .state('additional-content-search', {
+              cache: false,
+              url: '/additional-content-search',
+              templateUrl: 'templates/additional-content-search/additional-content-search.html',
+              controller: 'AdditionalContentSearchController',
+              controllerAs: 'vm',
+              resolve: {
+                security: function ($timeout, securityService) {
+                  return $timeout(function() { securityService.commonAccess(); });
+                },
+                search_result: function (additionalContentService) {
+                  return additionalContentService.searchContent();
                 }
               }
             })
