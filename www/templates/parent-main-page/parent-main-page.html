@@ -8,6 +8,10 @@
              ng-click="vm.toMenu()">
       </div>
 
+      <div ng-if="vm.emptyKids()" class="empty-children">
+        <span>you have not added any children yet</span>
+      </div>
+
       <div class="kids-block">
         <div ng-repeat="(key, kid) in vm.kids" class="kid-block" ng-if="kid.register">
           <div class="kid">
@@ -39,9 +43,6 @@
         <div style="padding: 1px;"></div>
       </div>
 
-      <div ng-if="vm.emptyKids()" class="empty-children">
-        <span>you have not added any children yet</span>
-      </div>
 
     </div>
   </ion-content>

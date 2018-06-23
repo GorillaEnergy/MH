@@ -1,0 +1,115 @@
+.additional-content {
+
+    .main-block {
+      min-height: 100vh;
+      height: fit-content;
+      width: 100vw;
+      background: url('../img/menu/menu-background.png') no-repeat center;
+      background-size: cover;
+      text-align: center;
+    }
+
+    .header {
+      width: 100%;
+      height: 72px;
+      background-color: #fff;
+      position: relative;
+      border-bottom: 2px solid #0b1138;
+      text-align: center;
+      font-family: American;
+      font-size: 25px;
+      padding-top: 35px;
+      color: #0b1138;
+
+      .tool-bar-back {
+        height: 45px;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+      .tool-bar-favorites {
+        height: 45px;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+    }
+
+    .favorites-main-block {
+      display: block;
+      overflow: scroll;
+      height: fit-content;
+      width: 100%;
+      padding: 15px 30px 0 30px;
+      box-sizing: border-box;
+
+      .event-block {
+        height: calc((100vw - 60px) * 0.75);
+        width: 100%;
+        position: relative;
+        border: 1px solid #0b1138;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        //overflow: hidden;
+
+        .event-description {
+          position: absolute;
+          left: 0;
+          top: calc(50% - 30px);
+          width: 100%;
+          //height: 100%;
+          text-align: center;
+        }
+        .event-title {
+          font-family: American;
+          font-size: 24.5px;
+          text-transform: uppercase;
+          color: white;
+          margin: 0 0 3px 0;
+        }
+        .event-live {
+          font-family: AmericanPatrius;
+          font-size: 13px;
+          text-transform: uppercase;
+          color: white;
+          margin: 0;
+        }
+        .event-date {
+          font-family: AmericanPatrius;
+          font-size: 13px;
+          text-transform: uppercase;
+          color: white;
+          margin: 0;
+        }
+        .event-time {
+          font-family: AmericanPatrius;
+          font-size: 13px;
+          text-transform: uppercase;
+          color: white;
+          margin: 0;
+        }
+        .event-bg {
+          height: 100%;
+          width: 100%;
+        }
+        .to-favorite {
+          position: absolute;
+          top: 0;
+          right: 5px;
+          padding: 10px;
+          height: 50px;
+        }
+        .play {
+          position: absolute;
+          bottom: 0;
+          right: 5px;
+          padding: 10px;
+          height: 60px;
+        }
+      }
+    }
+
+
+}

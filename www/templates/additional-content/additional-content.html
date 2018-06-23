@@ -1,0 +1,68 @@
+<ion-view class="additional-content">
+  <ion-content>
+
+    <div class="main-block" id="ac-body">
+
+      <div class="header">
+        <img src="./img/additional-content/back-arrow.png" class="tool-bar-back" ng-click="vm.toMenu()">
+        <span>additional content</span>
+        <img src="./img/additional-content/heart.png" class="tool-bar-favorites" ng-click="vm.toFavorites()">
+      </div>
+
+      <div class="search-block" ng-show="vm.searchBar">
+        <img src="./img/additional-content/input-search.png" class="loupe">
+        <input class="search-input" placeholder="Search" ng-keypress="vm.keypress($event)"
+               ng-model="vm.search_content" id="search_input">
+        <img src="./img/additional-content/search-close.png" class="close" ng-click="vm.searchView(false)">
+      </div>
+
+      <div class="title-block">
+        <p class="live-now-upcoming-title">live now</p>
+      </div>
+      <div class="live-now-main-block">
+
+          <div ng-repeat="(key, live_event) in vm.liveNow" class="event-block">
+            <div class="event-description">
+              <p class="event-title">{{live_event.title}}</p>
+              <p class="event-live">{{live_event.status}}</p>
+            </div>
+            <img src="./img/additional-content/1.png" class="event-bg" ng-if="key === 0">
+            <img src="./img/additional-content/2.png" class="event-bg" ng-if="key > 0">
+            <img src="./img/additional-content/add-to-favorite.png" class="to-favorite"
+                 ng-if="!vm.followingStatus(live_event)" ng-click="vm.changeFollowingStatus(live_event, key, 'live')">
+            <img src="./img/additional-content/remove-from-favorite.png" class="to-favorite"
+                 ng-if="vm.followingStatus(live_event)" ng-click="vm.changeFollowingStatus(live_event, key, 'live')">
+            <img src="./img/additional-content/play.png" class="play">
+          </div>
+          <div style="padding: 1px;"></div>
+
+      </div>
+
+      <div class="title-block">
+        <p class="live-now-upcoming-title">upcoming</p>
+      </div>
+      <div class="upcoming-main-block">
+
+        <div ng-repeat="(key, live_event) in vm.coming" class="event-block">
+          <div class="event-description">
+            <p class="event-title">{{live_event.title}}</p>
+            <p class="event-date">{{live_event.date}}</p>
+            <p class="event-time">{{live_event.time}}</p>
+          </div>
+          <img src="./img/additional-content/1.png" class="event-bg" ng-if="key === 0">
+          <img src="./img/additional-content/2.png" class="event-bg" ng-if="key > 0">
+          <img src="./img/additional-content/add-to-favorite.png" class="to-favorite"
+               ng-if="!vm.followingStatus(live_event)" ng-click="vm.changeFollowingStatus(live_event, key, 'coming')">
+          <img src="./img/additional-content/remove-from-favorite.png" class="to-favorite"
+               ng-if="vm.followingStatus(live_event)" ng-click="vm.changeFollowingStatus(live_event, key, 'coming')">
+        </div>
+        <div style="padding: 1px;"></div>
+
+      </div>
+
+      <img src="./img/additional-content/search.png" class="search-button" ng-click="vm.searchView(true)">
+
+    </div>
+
+  </ion-content>
+</ion-view>

@@ -77,22 +77,10 @@
       });
     }
     function addToFavorite(data) {
-      return http.post(url.additional_content.add_to_favorite, data).then(function (res) {
-        if (res.status === 'success') {
-          return res.data;
-        } else {
-          return[]
-        }
-      });
+      return http.post(url.additional_content.add_to_favorite, data);
     }
     function removeFromFavorite(data) {
-      return http.post(url.additional_content.remove_from_favorite, data).then(function (res) {
-        if (res.status === 'success') {
-          return res.data;
-        } else {
-          return[]
-        }
-      });
+      return http.post(url.additional_content.remove_from_favorite, data);
     }
 
     function setKeyword(data) {

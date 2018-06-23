@@ -4,10 +4,10 @@
   angular.module('app')
     .controller('AuthorizationController', AuthorizationController);
 
-  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', '$localStorage', 'countries', 'userService', '$timeout'];
+  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', '$localStorage', 'countries', 'userService', '$timeout', 'fcm'];
 
 
-  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, $localStorage, countries, userService, $timeout) {
+  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, $localStorage, countries, userService, $timeout, fcm) {
     const vm = this;
 
     vm.checkPhone = checkPhone;
@@ -17,19 +17,20 @@
     vm.chosenCountry = chosenCountry;
 
     vm.countryCodes = countries;
-    // vm.countryCode = countries[108].code; //country be default Israel
-    // vm.phone = '';
+    vm.countryCode = countries[108].code; //country be default Israel
+    vm.phone = '';
 
-    vm.countryCode = countries[235].code; //country be default Ukraine
-    vm.phone = '674939948';
+    // vm.countryCode = countries[235].code; //country be default Ukraine
+    // vm.phone = '674939948';
 
     vm.phoneNumberFull = '';
     vm.approvalCode = '';
 
     vm.show = {phoneMenu: true, codeApproval: false};
-    // let token_device = '';
-    let token_device = 'c4_fDcbikt0:APA91bFy8KG6e-FVdP71DvCdMumtv_8GJyzHv5liRYZ7SELdy_C9zZqktI3vudxlc6-9ki47J7CbnGQZrrMdjW38K2J6p3RVJPp_RSWbR2XN_xz23878-LSGyd0z_F_TyfOP9XkDmSCN';
-
+    let token_device = '';
+    // console.log('token_device = ', token_device);
+    getDeviceToken();
+    fcm.subscribe();
 
     // vm.test = function () {
     //   console.log('on-focus');
@@ -38,9 +39,7 @@
     //   console.log('on-blur');
     // };
 
-    getDeviceToken();
     function getDeviceToken() {
-      // if (angular.isDefined(FCMPlugin)) {
       if ($localStorage.token_device) {
         token_device = $localStorage.token_device;
       } else {
@@ -82,6 +81,7 @@
 
     function checkCode() {
       console.log('checkCode()');
+      // console.log('token_device = ', token_device);
 
       if (String(vm.approvalCode).length === 4) {
         let verificationData = {

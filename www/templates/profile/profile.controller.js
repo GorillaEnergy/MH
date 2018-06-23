@@ -126,7 +126,8 @@
 
     showTutorial();
     function showTutorial() {
-      if (!angular.isDefined($localStorage.kids)) {
+      // if (!angular.isDefined($localStorage.kids)) {
+      if (!$localStorage.user.name) {
         $timeout(function () { $scope.tutorialModal.show(); }, 1000)
       }
     }

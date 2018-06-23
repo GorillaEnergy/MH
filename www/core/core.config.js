@@ -243,6 +243,9 @@
               resolve: {
                 security: function ($timeout, securityService) {
                   return $timeout(function() { securityService.commonAccess(); });
+                },
+                content: function (additionalContentService) {
+                  return additionalContentService.mainPageContent();
                 }
               }
             })
@@ -255,6 +258,9 @@
               resolve: {
                 security: function ($timeout, securityService) {
                   return $timeout(function() { securityService.commonAccess(); });
+                },
+                favorites: function (additionalContentService) {
+                  return additionalContentService.favoritesList();
                 }
               }
             })

@@ -52,7 +52,7 @@
     let fb = firebase.database();
     let kid_id = userService.getUser().id;
     let psy_id = 1; // psy module not ready, change when ready;
-    let number_of_posts = 50;
+    let number_of_posts = 1000;
     let download_more = 25;
     let accessToLoadMoreMessages = true;
 
@@ -260,11 +260,10 @@
 
     /////// событие при scrollTop === 0 //////
     angular.element(chat_body).bind('scroll', function(){
-      console.log(chat_body.scrollTop);
-      console.log(chat_body.scrollHeight);
+      // console.log(chat_body.scrollTop);
+      // console.log(chat_body.scrollHeight);
       if (chat_body.scrollTop === 0) {
-        console.log('chat position top');
-        // console.log(chat_body.scrollTop);
+        // console.log('chat position top');
         // bindScrollAndLoadMessages();
       }
     });

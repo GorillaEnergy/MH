@@ -10046,8 +10046,7 @@ a.button {
     font-family: Lazy;
     font-size: 16px;
     z-index: 5;
-    padding-left: 50px;
-    padding-top: 7px; }
+    padding: 7px 10px 0 50px; }
   .additional-content .search-block .close {
     padding: 10px;
     height: 47px;
@@ -10260,6 +10259,8 @@ a.button {
   height: 100%;
   display: table-cell;
   vertical-align: bottom; }
+  .auth-tel ion-content .code-block .post-zone {
+    margin-top: 109px; }
 
 .auth-tel ion-content .man {
   width: 100%;
@@ -10992,7 +10993,7 @@ a.button {
         width: 86%;
         border: solid 1px #64cae2;
         border-radius: 30px;
-        padding-left: 10px; }
+        padding: 0 10px; }
       .kid-chat-room .input-block .input-and-message ::-webkit-input-placeholder {
         font-size: 17px;
         font-family: Spring;
@@ -11729,6 +11730,7 @@ a.button {
 
 .kid .input-kid {
   padding-left: 75px;
+  padding-right: 10px;
   font-size: 22px;
   font-weight: 600;
   width: 100%;
