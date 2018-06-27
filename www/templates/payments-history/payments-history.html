@@ -1,25 +1,29 @@
 <ion-view class="parent-payments">
     <ion-content>
         <div class="menu-block" ng-click="vm.toMenu()">
-            <img src="../../img/kid-chat-room/back-arrow.png">
+            <img src="./img/kid-chat-room/back-arrow.png">
             <p>payments</p>
         </div>
         <div class="main-block">
+          <div class="common-block">
+
             <div class="info-block">
-                <div class="payment-block" ng-repeat="pay in vm.pay">
-                    <p class="price" ng-if="pay.price">{{pay.price}} $</p>
-                    <p class="kids" ng-if="pay.quantity">{{pay.quantity}} kids</p>
-                    <div class="date">
-                        <p ng-if="pay.date">{{pay.date}}</p>
-                        <p class="invoice">invoice <img src="../../img/kid-chat/arrow-to-chat.png" class="arrow"></p>
-                    </div>
+              <div class="payment-block" ng-repeat="pay in vm.pay">
+                <p class="price" ng-if="pay.price">{{pay.price}} $</p>
+                <p class="kids" ng-if="pay.quantity">{{pay.quantity}} kids</p>
+                <div class="date">
+                  <p ng-if="pay.date">{{pay.date}}</p>
+                  <p class="invoice">invoice <img src="./img/kid-chat/arrow-to-chat.png" class="arrow"></p>
                 </div>
+              </div>
 
             </div>
 
             <div class="creditcard-block">
-                <div class="change"><p>change creditcard</p></div>
+              <div class="change"><p>change creditcard</p></div>
             </div>
+
+          </div>
         </div>
     </ion-content>
 </ion-view>

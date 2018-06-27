@@ -1,21 +1,4 @@
-@font-face {
-  font-family: "American";
-  src: url("../../css/fonts/American Captain.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: "Patrius";
-  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: "Neue";
-  src: url("../../css/fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
+
 .terms-condition-block {
   .menu-block {
     display: flex;
@@ -38,11 +21,15 @@
   }
   .main-block {
     background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
-    min-height: calc(100vh - 72px);
+    height: calc(100vh - 87px);
+    width: 100%;
+    overflow-x: scroll;
+    margin: 15px 0 0;
     p{
       font-family: Neue;
       font-size: 19px;
-      padding: 15px;
+      padding: 0 15px 15px;
+      margin: 0;
       word-spacing: 4px;
       text-align: justify;
       line-height: 25px;

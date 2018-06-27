@@ -1,16 +1,3 @@
-@font-face {
-  font-family: "American";
-  src: url("../../css/fonts/American Captain.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: "Patrius";
-  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-
 .notifications {
   .menu-block {
     display: flex;
@@ -65,7 +52,7 @@
           width: 70%;
           max-width:unset;
           font-size:16px;
-          font-family: Patrius;
+          font-family: AmericanPatrius;
           span{
             font-size: 14px;
           }

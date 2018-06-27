@@ -10,6 +10,8 @@
 
       <div class="favorites-main-block">
 
+        <div class="favorites-list">
+
           <div ng-repeat="(key, live_event) in vm.favorites" class="event-block">
             <div class="event-description">
               <p class="event-title">{{live_event.title}}</p>
@@ -23,6 +25,8 @@
                  ng-if="vm.followingStatus(live_event)" ng-click="vm.changeFollowingStatus(live_event, key)">
             <img src="./img/additional-content/play.png" class="play" ng-if="vm.watchButton(live_event.status)">
           </div>
+
+        </div>
 
       </div>
 

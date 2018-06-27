@@ -43,10 +43,10 @@
       position: relative;
       text-transform: uppercase;
       text-align: center;
-      font-size: 22px;
+      font-size: 18px;
+      font-family: AmericanPatrius;
       background-color: #fff;
       color: #0b1138;
-      font-weight: 700;
       height: 48px;
       width: 95%;
       line-height: 46px;
@@ -67,14 +67,14 @@
       width: 100%;
       //width: fit-content;
       height: 100%;
-      font-size: 22px;
       display: flex;
       justify-content: center;
       //justify-content: space-between;
     }
 
     .country-select {
-      font-weight: 600;
+      font-size: 18px;
+      font-family: AmericanPatrius;
       height: 100%;
       width: calc(45% - 40px);
       //width: fit-content;
@@ -154,8 +154,8 @@
 
     .input-phone {
       color: #0b1138;
-      font-size: 22px;
-      font-weight: 600;
+      font-size: 18px;
+      font-family: AmericanPatrius;
       width: 65%;
       //width: 130px;
       height: 100%;
@@ -168,8 +168,8 @@
 
     .input-code {
       text-align: center;
-      font-size: 22px;
-      font-weight: 700;
+      font-size: 18px;
+      font-family: AmericanPatrius;
       width: 95%;
       height: 49px;
       color: #0b1138;

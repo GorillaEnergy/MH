@@ -41,7 +41,7 @@
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             // if (window.cordova && window.cordova.plugins.Keyboard) {
-            // //     // cordova.plugins.Keyboard.disableScroll(true);
+            //     // cordova.plugins.Keyboard.disableScroll(true);
             //     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
             // }
             if (window.StatusBar) {
@@ -50,16 +50,12 @@
                 StatusBar.styleDefault();
             }
 
-            // autoLogin();
-            //
-            // function autoLogin () {
-            //     let user = userService.getUser();
-            //     if (angular.isDefined(user)) {
-            //       $timeout(function() { $state.go('payment'); });
-            //     } else {
-            //       $timeout(function() { $state.go('authorization'); });
-            //     }
-            // }
+
+            // console.log('document.addEventListener("resume")');
+            document.addEventListener("resume", function () {
+              // fcm.subscribe();
+              console.log('resume');
+            }, false);
         })
     }
 })();

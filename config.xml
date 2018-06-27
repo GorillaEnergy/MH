@@ -3,7 +3,7 @@
     <name>MindHero</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.42.153:8100" />
+    <content original-src="index.html" src="http://192.168.42.58:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -20,6 +20,8 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="Orientation" value="portrait" />
+    <preference name="showmessageinnotification" value="true" />
+    <preference name="defaultnotificationmessage" value="New message has arrived!" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -108,6 +110,19 @@
     <allow-navigation href="http://192.168.42.5:8100" />
     <allow-navigation href="http://192.168.42.101:8100" />
     <allow-navigation href="http://192.168.42.153:8100" />
+    <allow-navigation href="http://192.168.1.102:8100" />
+    <allow-navigation href="http://192.168.42.48:8100" />
+    <allow-navigation href="http://192.168.42.35:8100" />
+    <allow-navigation href="http://192.168.42.3:8100" />
+    <allow-navigation href="http://169.254.31.3:8100" />
+    <allow-navigation href="http://192.168.42.123:8100" />
+    <allow-navigation href="http://192.168.42.176:8100" />
+    <allow-navigation href="http://192.168.42.224:8100" />
+    <allow-navigation href="http://192.168.42.139:8100" />
+    <allow-navigation href="http://169.254.0.98:8100" />
+    <allow-navigation href="http://192.168.42.85:8100" />
+    <allow-navigation href="http://192.168.42.185:8100" />
+    <allow-navigation href="http://192.168.42.58:8100" />
     <engine name="windows" spec="5.0.0" />
-    <engine name="android" spec="6.3.0" />
+    <engine name="android" spec="^6.3.0" />
 </widget>

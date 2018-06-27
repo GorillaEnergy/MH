@@ -4,7 +4,7 @@
     <div class="main-block" ng-class="vm.viewType.edit_registered_kid ? 'registered' : 'unregistered'">
 
       <div class="reg-header title" ng-if="vm.viewType.edit_registered_kid" ng-click="vm.toMainPage()">
-        <img src="../../img/kid/back_arrow.png" name="back_arrow" class="back_arrow">
+        <img src="../img/kid/back_arrow.png" name="back_arrow" class="back-arrow">
         <span>{{vm.name}}</span>
       </div>
 
@@ -188,14 +188,14 @@
       <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
       <div class="codes-block">
 
-        <div ng-repeat="country in vm.countryCodes" ng-if="vm.useCodeForKid">
+        <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter" ng-if="vm.useCodeForKid">
           <ion-radio ng-model="vm.countryCode" ng-value="country.code"
                      ng-click="vm.hideCountryModal()">
             {{country.name}}: {{country.code}}
           </ion-radio>
         </div>
 
-        <div ng-repeat="country in vm.countryCodes" ng-if="!vm.useCodeForKid">
+        <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter" ng-if="!vm.useCodeForKid">
           <ion-radio ng-model="vm.countryCodeFollower" ng-value="country.code"
                      ng-click="vm.hideCountryModal()">
             {{country.name}}: {{country.code}}
@@ -272,7 +272,7 @@
     <ion-content class="follower-main-block">
 
       <div class="title-f">
-        <span class="question-f">insert parent number</span>
+        <span class="question-f">insert follower number</span>
       </div>
 
       <div class="phone-block-f">

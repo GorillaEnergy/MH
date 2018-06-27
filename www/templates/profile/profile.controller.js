@@ -5,23 +5,23 @@
     .controller('ProfileController', ProfileController);
 
   ProfileController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal',
-                               '$localStorage', 'user', 'toastr'];
+                               '$localStorage', 'user', 'toastr', '$ionicSlideBoxDelegate'];
 
 
   function ProfileController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal,
-                             $localStorage, user, toastr) {
+                             $localStorage, user, toastr, $ionicSlideBoxDelegate) {
     const vm = this;
 
     vm.save = save;
     vm.closeTutorial = closeTutorial;
 
-    vm.newUser = !$localStorage.kids;
     vm.warning = {name: false, email: false, id: false};
 
     vm.name = user.name;
     vm.email = user.email;
     vm.id_number = user.id_number;
     console.log(user);
+    let newUser = !user.name;
 
     function save() {
       let permissionToSend = true;
@@ -46,7 +46,8 @@
         }
 
         if (!vm.email) {
-          toastr.error('Please enter the email');
+          console.log(vm.email);
+          toastr.error('Please enter correct email');
           vm.warning.email = true;
           permissionToSend = false;
           $timeout(function () {
@@ -72,6 +73,9 @@
       }
 
       function send() {
+        let toastrType = '';
+        if ($localStorage.user.name) { toastrType = 'update' } else { toastrType = 'new' }
+
         if (permissionToSend) {
           let status = true;
 
@@ -94,6 +98,13 @@
               status = true;
               userService.setUser(res.data);
               if (res.status ==="success") {
+
+                if (toastrType === 'new') {
+                  toastr.success('Successfully added');
+                } else {
+                  toastr.success('Successfully updated');
+                }
+
                 let toKidsPage = true;
                 if (angular.isDefined($localStorage.kids)) {
                   let kids = $localStorage.kids;
@@ -106,7 +117,11 @@
                   delete $localStorage.kid_index;
                   $state.go('kid')
                 } else {
-                  $state.go('settings')
+                  if (newUser) {
+                    $state.go('parent-main-page')
+                  } else {
+                    $state.go('settings')
+                  }
                 }
               }
             })
@@ -134,42 +149,5 @@
     function closeTutorial() {
       $scope.tutorialModal.hide();
     }
-
-
-
-    $scope.sliderData = {};
-    $scope.sliderData.bgColors = [];
-    $scope.sliderData.currentPage = 0;
-
-    for (let i = 0; i < 10; i++) {
-      $scope.sliderData.bgColors.push("bgColor_" + i);
-    }
-
-    let setupSlider = function() {
-      //some options to pass to our slider
-      $scope.sliderData.sliderOptions = {
-        initialSlide: 0,
-        direction: 'horizontal', //horizontal or vertical
-        speed: 300 //0.3s transition
-      };
-
-      //create delegate reference to link with slider
-      $scope.sliderData.sliderDelegate = null;
-
-      //watch our sliderDelegate reference, and use it when it becomes available
-      $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
-        if (newVal != null) {
-          $scope.sliderData.sliderDelegate.on('slideChangeEnd', function() {
-            $scope.sliderData.currentPage = $scope.sliderData.sliderDelegate.activeIndex;
-            //use $scope.$apply() to refresh any content external to the slider
-            $scope.$apply();
-          });
-        }
-      });
-    };
-
-    setupSlider();
-
-
   }
 })();

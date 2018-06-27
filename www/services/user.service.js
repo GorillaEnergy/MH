@@ -52,8 +52,13 @@
                 setPhone(phone);
 
                 if (!res.data.user.name) {
-                  $localStorage.kids = [];
-                  $state.go('profile');
+                  http.get(url.kid.uploadKids).then(function (res) {
+                    $localStorage.kids = [];
+                    if (res.status = 'success') {
+                      setKids(res.data);
+                      $state.go('profile');
+                    }
+                  });
                 } else if (res.data.user.role_id === 2) {
                   $state.go('parent-main-page');
                 } else if (res.data.user.role_id === 1) {

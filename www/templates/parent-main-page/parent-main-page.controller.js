@@ -4,12 +4,12 @@
   angular.module('app')
     .controller('ParentMainPageController', ParentMainPageController);
 
-  ParentMainPageController.$inject = ['$ionicPopup', '$state', '$scope', '$localStorage', '$stateParams', 'userService', '$timeout',
-                                      '$ionicModal', 'kids', 'live_content'];
+  ParentMainPageController.$inject = ['$ionicPopup', '$state', '$scope', '$localStorage', '$stateParams', 'userService',
+    '$timeout', '$ionicModal', 'kids', 'live_content'];
 
 
-  function ParentMainPageController($ionicPopup, $state, $scope, $localStorage, $stateParams, userService, $timeout,
-                                    $ionicModal, kids, live_content) {
+  function ParentMainPageController($ionicPopup, $state, $scope, $localStorage, $stateParams, userService,
+                                    $timeout, $ionicModal, kids, live_content) {
     const vm = this;
 
     vm.kidColor = kidColor;
@@ -26,6 +26,7 @@
     vm.kids = kidFilter();
     // console.log('All kids', kids);
     // console.log('Registered kids', vm.kids);
+    console.log(vm.live_content);
 
 
     // не несет смысловой нагрузки, нужно для создания вьюхи

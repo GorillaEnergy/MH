@@ -79,12 +79,12 @@
       border-radius: 5px;
 
       .edit {
-        margin: 8px 6px 5px 16.5%;
+        margin: 8px 6px 5px 10px;
         height: 27px;
       }
       .kid-name {
-        width: 40%;
-        padding-top: 12px;
+        width: calc(100% - (43px + 85px));
+        padding-top: 15px;
         letter-spacing: 1px;
         text-transform: uppercase;
         text-align: center;

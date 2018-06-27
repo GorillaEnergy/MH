@@ -9,6 +9,7 @@
         </div>
         <div class="main-block">
 
+          <!--<div ng-repeat="(key, log) in vm.logs.slice().reverse()">-->
           <div ng-repeat="(key, log) in vm.logs">
             <div ng-class="vm.logStatus(log)">
 
@@ -33,7 +34,6 @@
                 </div>
               </div>
 
-              <!--<div ng-if="false">-->
               <div ng-if="vm.fullEmergencyLog(key)" class="full-emergency-log">
                 <p>{{log.content}}</p>
               </div>

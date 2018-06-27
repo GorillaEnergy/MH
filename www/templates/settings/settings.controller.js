@@ -47,7 +47,6 @@
     }
     function toTutorial() {
       console.log('to tutorial');
-      // $state.go('tutorial');
       $scope.tutorialModal.show();
     }
     function closeTutorial() {
@@ -110,36 +109,6 @@
     }).then(function (modal) {
       $scope.tutorialModal = modal;
     });
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    $scope.sliderData = {};
-    $scope.sliderData.currentPage = 0;
-
-    let setupSlider = function() {
-      //some options to pass to our slider
-      $scope.sliderData.sliderOptions = {
-        initialSlide: 0,
-        direction: 'horizontal', //horizontal or vertical
-        speed: 300 //0.3s transition
-      };
-
-      //create delegate reference to link with slider
-      $scope.sliderData.sliderDelegate = null;
-
-      //watch our sliderDelegate reference, and use it when it becomes available
-      // $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
-      //   if (newVal != null) {
-      //     $scope.sliderData.sliderDelegate.on('slideChangeEnd', function() {
-      //       $scope.sliderData.currentPage = $scope.sliderData.sliderDelegate.activeIndex;
-      //       //use $scope.$apply() to refresh any content external to the slider
-      //       $scope.$apply();
-      //     });
-      //   }
-      // });
-    };
-
-    setupSlider();
 
   }
 

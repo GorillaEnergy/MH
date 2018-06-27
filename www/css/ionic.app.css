@@ -39,6 +39,12 @@ $dark:                            #444 !default;
   font-style: normal;
   font-weight: normal; }
 
+@font-face {
+  font-family: "Neue";
+  src: url("fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal; }
+
 .back-button {
   position: fixed;
   top: 0;
@@ -10055,8 +10061,7 @@ a.button {
     right: 0; }
 
 .additional-content .main-block {
-  min-height: 100vh;
-  height: fit-content;
+  height: 100vh;
   width: 100vw;
   background: url("../img/menu/menu-background.png") no-repeat center;
   background-size: cover;
@@ -10093,6 +10098,10 @@ a.button {
   width: 100%;
   padding: 15px 30px 0 30px;
   box-sizing: border-box; }
+  .additional-content .favorites-main-block .favorites-list {
+    height: calc(100vh - (72px + 15px));
+    width: 100%;
+    overflow: scroll; }
   .additional-content .favorites-main-block .event-block {
     height: calc((100vw - 60px) * 0.75);
     width: 100%;
@@ -10273,10 +10282,10 @@ a.button {
   position: relative;
   text-transform: uppercase;
   text-align: center;
-  font-size: 22px;
+  font-size: 18px;
+  font-family: AmericanPatrius;
   background-color: #fff;
   color: #0b1138;
-  font-weight: 700;
   height: 48px;
   width: 95%;
   line-height: 46px;
@@ -10294,12 +10303,12 @@ a.button {
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  font-size: 22px;
   display: flex;
   justify-content: center; }
 
 .auth-tel ion-content .country-select {
-  font-weight: 600;
+  font-size: 18px;
+  font-family: AmericanPatrius;
   height: 100%;
   width: calc(45% - 40px);
   margin-left: 40px;
@@ -10366,8 +10375,8 @@ a.button {
 
 .auth-tel ion-content .input-phone {
   color: #0b1138;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 18px;
+  font-family: AmericanPatrius;
   width: 65%;
   height: 100%;
   line-height: 0;
@@ -10378,8 +10387,8 @@ a.button {
 
 .auth-tel ion-content .input-code {
   text-align: center;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 18px;
+  font-family: AmericanPatrius;
   width: 95%;
   height: 49px;
   color: #0b1138;
@@ -11332,8 +11341,8 @@ a.button {
 
 .profile .input {
   padding-left: 70px;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 18px;
+  font-family: AmericanPatrius;
   width: calc(100% - 32px);
   height: 49px;
   border: 2px solid #0b1138;
@@ -11358,6 +11367,37 @@ a.button {
 .profile .warning {
   border: 2px solid red; }
 
+.tutorial-modal {
+  background: url("../img/tutorial/tutorial-bg.png") no-repeat center;
+  background-size: cover;
+  position: relative;
+  height: fit-content; }
+  .tutorial-modal .close-tutorial-modal {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    height: 55px; }
+  .tutorial-modal .slider-main-block {
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 40px 0; }
+  .tutorial-modal .tutorial-header {
+    font-family: American;
+    text-transform: uppercase;
+    font-size: 25px;
+    margin: 0; }
+  .tutorial-modal .tutorial-content {
+    font-family: Neue;
+    margin: 0; }
+  .tutorial-modal .tutorial-img {
+    width: calc(100% - 20px);
+    margin: 0 auto; }
+
 .test-modal {
   top: 0;
   bottom: 0;
@@ -11378,7 +11418,9 @@ a.button {
 .kid .registered {
   background: url("../img/kid/regisered-kid-background.png") no-repeat center top #64cae2;
   background-size: cover;
-  padding-bottom: 9px; }
+  padding-bottom: 9px;
+  height: 100vh;
+  overflow: scroll; }
 
 .kid .unregistered {
   background: url("../img/kid/unregisered-kid-background.png") no-repeat center top #64cae2;
@@ -11405,12 +11447,12 @@ a.button {
   border-bottom: 2px solid #0b1138;
   padding: 36px 0 15px;
   margin-bottom: -10px;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   width: 100%; }
 
-.kid .back_arrow {
-  margin: 37px 0 0 11px;
+.kid .back-arrow {
+  margin: 30px 0 0 11px;
   height: 23px;
   position: absolute;
   top: 0;
@@ -11420,10 +11462,7 @@ a.button {
   position: relative;
   width: 90%;
   margin: 0 auto;
-  text-transform: uppercase;
   text-align: center;
-  font-size: 23px;
-  font-family: sans-serif;
   color: #000;
   font-weight: 900; }
 
@@ -11627,10 +11666,10 @@ a.button {
     display: inline-block;
     text-transform: uppercase;
     text-align: left;
-    font-size: 22px;
+    font-size: 18px;
+    font-family: AmericanPatrius;
     background-color: #fff;
     color: #0b1138;
-    font-weight: 600;
     line-height: 46px;
     border: 2px solid #0b1138;
     border-radius: 5px;
@@ -11675,10 +11714,10 @@ a.button {
     position: relative;
     text-transform: uppercase;
     text-align: center;
-    font-size: 22px;
+    font-size: 18px;
+    font-family: AmericanPatrius;
     background-color: #fff;
     color: #0b1138;
-    font-weight: 600;
     height: 48px;
     width: 100%;
     line-height: 46px;
@@ -11709,8 +11748,8 @@ a.button {
   .kid .phone .input-phone {
     color: #0b1138;
     margin-left: 7px;
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 18px;
+    font-family: AmericanPatrius;
     height: 100%;
     width: 65%;
     text-align: left; }
@@ -11731,8 +11770,8 @@ a.button {
 .kid .input-kid {
   padding-left: 75px;
   padding-right: 10px;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 18px;
+  font-family: AmericanPatrius;
   width: 100%;
   height: 49px;
   border: 2px solid #0b1138;
@@ -11760,24 +11799,23 @@ a.button {
   background-size: 140%; }
 
 .kid .reg-followers {
-  margin-top: 64px;
   height: auto;
   width: 100%; }
   .kid .reg-followers .title {
+    margin-top: 64px;
     font-size: 31px;
     font-weight: 500; }
   .kid .reg-followers .followers {
     margin: 28px auto 0;
     padding: 14px 0 0 60px;
     position: relative;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 16px;
+    font-family: AmericanPatrius;
     width: 81%;
     height: 49px;
     background-color: #fff;
     border: 2px solid #0b1138;
     border-radius: 5px;
-    font-family: HelveticaNeueCyr;
     text-align: left; }
     .kid .reg-followers .followers .follower-img {
       position: absolute;
@@ -12057,7 +12095,9 @@ a.button {
         width: 30%;
         margin-left: 5px;
         margin-top: 1px;
-        text-align: right; }
+        text-align: right;
+        font-family: AmericanPatrius;
+        font-size: 18px; }
       .add-follower-modal .follower-main-block .phone-block-f .phone-f {
         height: 100%;
         width: 60%;
@@ -12065,9 +12105,8 @@ a.button {
         text-align: left; }
       .add-follower-modal .follower-main-block .phone-block-f .input-phone-f {
         margin-left: 7px;
-        font-size: 22px;
-        font-weight: 500;
-        font-family: HelveticaNeueCyr;
+        font-family: AmericanPatrius;
+        font-size: 18px;
         padding-top: 5px;
         height: 42px;
         width: 100%;
@@ -12449,11 +12488,11 @@ p {
     border: 2px solid #0b1138;
     border-radius: 5px; }
     .registration .kid .info .edit {
-      margin: 8px 6px 5px 16.5%;
+      margin: 8px 6px 5px 10px;
       height: 27px; }
     .registration .kid .info .kid-name {
-      width: 40%;
-      padding-top: 12px;
+      width: calc(100% - (43px + 85px));
+      padding-top: 15px;
       letter-spacing: 1px;
       text-transform: uppercase;
       text-align: center;
@@ -12679,18 +12718,6 @@ p {
       height: 42px;
       padding: 0 20px; }
 
-@font-face {
-  font-family: "American";
-  src: url("../../css/fonts/American Captain.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
-@font-face {
-  font-family: "Patrius";
-  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
 .parent-payments .menu-block {
   display: flex;
   align-items: center;
@@ -12710,8 +12737,12 @@ p {
 
 .parent-payments .main-block {
   background: url("../img/payments-history/bg.png") no-repeat center/cover;
-  min-height: 100vh;
-  padding: 30px 0 10px; }
+  height: calc(100vh - 72px);
+  overflow: scroll;
+  padding: 30px 10px 10px; }
+  .parent-payments .main-block .common-block {
+    width: 100%;
+    height: 100%; }
   .parent-payments .main-block .info-block {
     text-align: center;
     min-height: 75vh; }
@@ -12724,7 +12755,7 @@ p {
       border: solid 2px #0b1138;
       border-radius: 6px;
       background: url("../img/kid-chat/dots.png") no-repeat center/cover #fff;
-      width: 95%;
+      width: 100%;
       height: 85px; }
       .parent-payments .main-block .info-block .payment-block .price {
         font-family: American;
@@ -12738,7 +12769,7 @@ p {
       .parent-payments .main-block .info-block .payment-block .date {
         text-align: right; }
         .parent-payments .main-block .info-block .payment-block .date p {
-          font-family: Patrius;
+          font-family: AmericanPatrius;
           align-items: center;
           color: #0b1138;
           font-weight: 600; }
@@ -12750,12 +12781,12 @@ p {
           height: 44px; }
   .parent-payments .main-block .creditcard-block .change {
     text-align: center;
-    margin: auto;
-    width: 95%;
+    margin: 0 auto 10px;
+    width: 100%;
     line-height: 50px;
     border: solid 2px #0b1138;
     border-radius: 6px;
-    background: url("../../img/payments-history/dots.png") no-repeat center/cover #ff7300; }
+    background: url("../img/payments-history/dots.png") no-repeat center/cover #ff7300; }
     .parent-payments .main-block .creditcard-block .change p {
       color: #fff;
       font-family: Patrius;
@@ -12767,18 +12798,6 @@ p {
     font-size: 35px; }
   .parent-payments .main-block .info-block .payment-block .invoice img {
     height: 30px; } }
-
-@font-face {
-  font-family: "American";
-  src: url("../../css/fonts/American Captain.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
-@font-face {
-  font-family: "Patrius";
-  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
 
 .settings .menu-block {
   display: flex;
@@ -12824,7 +12843,7 @@ p {
   .settings .main-block p {
     color: #0b1138;
     text-transform: uppercase;
-    font-family: Patrius;
+    font-family: AmericanPatrius;
     font-size: 16px; }
   .settings .main-block .gears {
     position: absolute;
@@ -12845,18 +12864,6 @@ p {
   width: 100%;
   height: calc(100vh - 94px);
   overflow: scroll; }
-
-@font-face {
-  font-family: "American";
-  src: url("../../css/fonts/American Captain.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
-@font-face {
-  font-family: "Patrius";
-  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
 
 .notifications .menu-block {
   display: flex;
@@ -12906,7 +12913,7 @@ p {
         width: 70%;
         max-width: unset;
         font-size: 16px;
-        font-family: Patrius; }
+        font-family: AmericanPatrius; }
         .notifications .main-block .push-notifications .first-toggle .input-label span {
           font-size: 14px; }
       .notifications .main-block .push-notifications .first-toggle .item {
@@ -12951,24 +12958,6 @@ p {
     .parent-setting-notifications .main-block .settings {
       width: 300px; } }
 
-@font-face {
-  font-family: "American";
-  src: url("../../css/fonts/American Captain.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
-@font-face {
-  font-family: "Patrius";
-  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
-@font-face {
-  font-family: "Neue";
-  src: url("../../css/fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
 .about-block .menu-block {
   display: flex;
   align-items: center;
@@ -12988,32 +12977,18 @@ p {
 
 .about-block .main-block {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
-  min-height: calc(100vh - 72px); }
+  height: calc(100vh - 87px);
+  width: 100%;
+  overflow-x: scroll;
+  margin: 15px 0 0; }
   .about-block .main-block p {
     font-family: Neue;
     font-size: 19px;
-    padding: 15px;
+    padding: 0 15px 15px;
+    margin: 0;
     word-spacing: 4px;
     text-align: justify;
     line-height: 25px; }
-
-@font-face {
-  font-family: "American";
-  src: url("../../css/fonts/American Captain.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
-@font-face {
-  font-family: "Patrius";
-  src: url("../../css/fonts/American Captain Patrius.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
-
-@font-face {
-  font-family: "Neue";
-  src: url("../../css/fonts/HelveticaNeueCyr-Roman.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal; }
 
 .terms-condition-block .menu-block {
   display: flex;
@@ -13034,11 +13009,15 @@ p {
 
 .terms-condition-block .main-block {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
-  min-height: calc(100vh - 72px); }
+  height: calc(100vh - 87px);
+  width: 100%;
+  overflow-x: scroll;
+  margin: 15px 0 0; }
   .terms-condition-block .main-block p {
     font-family: Neue;
     font-size: 19px;
-    padding: 15px;
+    padding: 0 15px 15px;
+    margin: 0;
     word-spacing: 4px;
     text-align: justify;
     line-height: 25px; }
@@ -13218,33 +13197,38 @@ ul#ion-segment[dark] li {
 ul#ion-segment[dark] li:hover:not(.active) {
   background-color: rgba(68, 68, 68, 0.1); }
 
-.tutorial-modal {
+.tutorial-modal .main-block {
   background: url("../img/tutorial/tutorial-bg.png") no-repeat center;
   background-size: cover;
   position: relative;
   height: fit-content; }
-  .tutorial-modal .close-tutorial-modal {
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    height: 55px; }
-  .tutorial-modal .slider-main-block {
-    min-height: 100vh;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 30px 40px 0; }
-  .tutorial-modal .tutorial-header {
-    font-family: American;
-    text-transform: uppercase;
-    font-size: 25px;
-    margin: 0; }
-  .tutorial-modal .tutorial-content {
-    font-family: Neue;
-    margin: 0; }
-  .tutorial-modal .tutorial-img {
-    width: calc(100% - 20px);
-    margin: 0 auto; }
+
+.tutorial-modal .close-tutorial-modal {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  height: 55px; }
+
+.tutorial-modal .slider-main-block {
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 40px 0; }
+
+.tutorial-modal .tutorial-header {
+  font-family: American;
+  text-transform: uppercase;
+  font-size: 25px;
+  margin: 0; }
+
+.tutorial-modal .tutorial-content {
+  font-family: Neue;
+  margin: 0; }
+
+.tutorial-modal .tutorial-img {
+  width: calc(100% - 20px);
+  margin: 0 auto; }

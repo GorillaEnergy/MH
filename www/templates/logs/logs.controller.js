@@ -115,10 +115,14 @@
       vm.pushView[index] = !vm.pushView[index];
     }
     function fullEmergencyLog(index) {
-      if (vm.pushView[index] && vm.logs[index].status === 'emergency') { return true; }
+      if (vm.pushView[index] && vm.logs[index].status == 'emergency') {
+        return true;
+      } else {
+        return false
+      }
     }
     function showAllNormalStatus(index) {
-      if (vm.pushView[index] && vm.logs[index].status !== 'emergency') {
+      if (vm.pushView[index] && vm.logs[index].status != 'emergency') {
         return 'show-all-content-in-normal-status'
       }
     }
@@ -146,6 +150,8 @@
               res.push(snapshot.val()[key]);
               vm.pushView.push(false);
             });
+            res.reverse();
+            vm.pushView.reverse();
             // console.log(vm.pushView);
             return res;
           }
@@ -154,19 +160,5 @@
       });
     });
 
-    // getFBToken();
-    function getFBToken() {
-      // if (angular.isDefined(FCMPlugin)) {
-      if (typeof FCMPlugin !== 'undefined') {
-        FCMPlugin.getToken(
-          function (token) {
-            console.log('token = ', token);
-          },function (res) {
-            {
-              console.log(res);
-            }
-          })
-      }
-    }
   }
 })();

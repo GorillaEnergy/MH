@@ -1,9 +1,11 @@
 .tutorial-modal {
-  background: url("../img/tutorial/tutorial-bg.png") no-repeat center;
-  background-size: cover;
-  position: relative;
-  height: fit-content;
 
+  .main-block {
+    background: url("../img/tutorial/tutorial-bg.png") no-repeat center;
+    background-size: cover;
+    position: relative;
+    height: fit-content;
+  }
 
   .close-tutorial-modal {
     position: fixed;

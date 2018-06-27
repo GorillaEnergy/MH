@@ -44,13 +44,13 @@
 
 <script id="tutorial-modal" type="text/ng-template">
   <ion-modal-view class="tutorial-modal">
-    <ion-content>
+    <ion-content class="main-block">
 
       <img src="./img/tutorial/close.png" class="close-tutorial-modal"
            ng-click="vm.closeTutorial()">
 
-      <ion-slides options="sliderData.sliderOptions" slider="sliderData.sliderDelegate">
-        <ion-slide-page>
+      <ion-slide-box>
+        <ion-slide>
           <div class="slider-main-block">
             <div>
               <p class="tutorial-header">search</p>
@@ -65,9 +65,9 @@
             </div>
             <img src="./img/tutorial/phone.png" class="tutorial-img">
           </div>
-        </ion-slide-page>
+        </ion-slide>
 
-        <ion-slide-page>
+        <ion-slide>
           <div class="slider-main-block">
             <div>
               <p class="tutorial-header">slider 2</p>
@@ -82,9 +82,9 @@
             </div>
             <!--<img src="./img/tutorial/phone.png" class="tutorial-img">-->
           </div>
-        </ion-slide-page>
+        </ion-slide>
 
-        <ion-slide-page>
+        <ion-slide>
           <div class="slider-main-block">
             <div>
               <p class="tutorial-header">slider 3</p>
@@ -99,7 +99,8 @@
             </div>
             <!--<img src="./img/tutorial/phone.png" class="tutorial-img">-->
           </div>
-        </ion-slide-page>
+        </ion-slide>
+      </ion-slide-box>
 
     </ion-content>
   </ion-modal-view>

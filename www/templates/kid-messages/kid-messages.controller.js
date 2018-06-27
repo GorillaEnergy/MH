@@ -4,15 +4,16 @@
   angular.module('app')
     .controller('KidMessagesController', KidMessagesController);
 
-  KidMessagesController.$inject = ['$state'];
+  KidMessagesController.$inject = ['$state', 'consultants'];
 
 
-  function KidMessagesController($state) {
+  function KidMessagesController($state, consultants) {
     const vm = this;
 
     vm.toKidMainPage = toKidMainPage;
     vm.toChat = toChat;
 
+    console.log(consultants);
     vm.consultants = [
       {
         name: 'Mariya',

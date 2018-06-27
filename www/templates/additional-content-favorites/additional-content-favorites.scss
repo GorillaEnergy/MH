@@ -1,8 +1,9 @@
 .additional-content {
 
     .main-block {
-      min-height: 100vh;
-      height: fit-content;
+      //min-height: 100vh;
+      height: 100vh;
+      //height: fit-content;
       width: 100vw;
       background: url('../img/menu/menu-background.png') no-repeat center;
       background-size: cover;
@@ -44,6 +45,12 @@
       width: 100%;
       padding: 15px 30px 0 30px;
       box-sizing: border-box;
+
+      .favorites-list {
+        height: calc(100vh - (72px + 15px));
+        width: 100%;
+        overflow: scroll;
+      }
 
       .event-block {
         height: calc((100vw - 60px) * 0.75);

@@ -13,6 +13,7 @@
     model.getContent = getContent;
 
     model.mainPageContent = mainPageContent;
+    model.additionalPageContent = additionalPageContent;
     model.favoritesList = favoritesList;
     model.searchContent = searchContent;
     model.addToFavorite = addToFavorite;
@@ -24,32 +25,41 @@
 
     function getContent() {
       let data = [
-          {
-            title: 'Content title',
-            status: 'live now',
-            img_link: ''
-          },
-          {
-            title: 'Content title',
-            status: 'live now',
-            img_link: ''
-          },
-          {
-            title: 'Content title',
-            status: 'live now',
-            img_link: ''
-          },
-          {
-            title: 'Content title',
-            status: 'live now',
-            img_link: ''
-          }
-        ];
+        {
+          title: 'Content title',
+          status: 'live now',
+          img_link: ''
+        },
+        {
+          title: 'Content title',
+          status: 'live now',
+          img_link: ''
+        },
+        {
+          title: 'Content title',
+          status: 'live now',
+          img_link: ''
+        },
+        {
+          title: 'Content title',
+          status: 'live now',
+          img_link: ''
+        }
+      ];
       return data;
     }
 
     function mainPageContent() {
-      return http.get(url.additional_content.content_list).then(function(res){
+      return http.get(url.additional_content.main_page_content).then(function(res){
+        if (res.status === 'success') {
+          return res.data;
+        } else {
+          return[]
+        }
+      });
+    }
+    function additionalPageContent() {
+      return http.get(url.additional_content.additional_page_content).then(function(res){
         if (res.status === 'success') {
           return res.data;
         } else {

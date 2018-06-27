@@ -379,6 +379,7 @@
           userService.updateKid(data).then(function (res) {
             console.log(res);
             if (res.status === 'success') {
+              toastr.success('Successfully updated');
 
               let kidsList = $localStorage.kids;
               kidsList[$localStorage.kid_index] = res.data;
@@ -401,6 +402,7 @@
           userService.createKid(data).then(function (res) {
             console.log(res);
             if (res.status === 'success') {
+              toastr.success('Successfully added');
 
               let kidsList = $localStorage.kids;
               if (!kidsList) {
