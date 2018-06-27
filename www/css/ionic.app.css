@@ -10098,10 +10098,6 @@ a.button {
   width: 100%;
   padding: 15px 30px 0 30px;
   box-sizing: border-box; }
-  .additional-content .favorites-main-block .favorites-list {
-    height: calc(100vh - (72px + 15px));
-    width: 100%;
-    overflow: scroll; }
   .additional-content .favorites-main-block .event-block {
     height: calc((100vw - 60px) * 0.75);
     width: 100%;
@@ -10190,7 +10186,7 @@ a.button {
 .additional-content .favorites-main-block {
   display: block;
   overflow: scroll;
-  height: fit-content;
+  height: calc(100vh - 72px);
   width: 100%;
   padding: 15px 30px 0 30px;
   box-sizing: border-box; }
@@ -10577,7 +10573,7 @@ a.button {
 
 .parent-main-page .kid-name {
   font-family: American;
-  padding: 11px 90px 0 90px;
+  padding: 11px 90px 0 65px;
   margin: 0 auto;
   font-size: 24px;
   color: white;

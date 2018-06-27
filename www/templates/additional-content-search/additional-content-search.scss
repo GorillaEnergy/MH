@@ -40,9 +40,11 @@
     .favorites-main-block {
       display: block;
       overflow: scroll;
-      height: fit-content;
+      //height: fit-content;
+      height: calc(100vh - 72px);
       width: 100%;
       padding: 15px 30px 0 30px;
+      //padding: 0 30px;
       box-sizing: border-box;
 
       .event-block {
