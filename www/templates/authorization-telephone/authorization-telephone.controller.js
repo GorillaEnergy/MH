@@ -17,11 +17,11 @@
     vm.chosenCountry = chosenCountry;
 
     vm.countryCodes = countries;
-    // vm.countryCode = countries[108].code; //country be default Israel
-    // vm.phone = '';
+    vm.countryCode = countries[108].code; //country be default Israel
+    vm.phone = '';
 
-    vm.countryCode = countries[235].code; //country be default Ukraine
-    vm.phone = '674939948';
+    // vm.countryCode = countries[235].code; //country be default Ukraine
+    // vm.phone = '674939948';
 
     vm.phoneNumberFull = '';
     vm.approvalCode = '';
