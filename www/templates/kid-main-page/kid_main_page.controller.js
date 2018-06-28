@@ -27,7 +27,7 @@
         }
         function toCall() {
           console.log('to call');
-          // $state.go('kid-call');
+          $state.go('hero-selection');
         }
         function toMenu() {
           console.log('to menu');

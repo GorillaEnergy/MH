@@ -11276,6 +11276,57 @@ a.button {
         font-family: American;
         font-size: 19px; }
 
+.hero-selection .main-block {
+  min-height: 100vh;
+  height: fit-content;
+  width: 100vw;
+  background: url("../img/hero-selection/bg.png") no-repeat center top;
+  background-size: cover; }
+  .hero-selection .main-block .title {
+    text-align: center;
+    font-family: American;
+    font-size: 32px;
+    padding: 34px 0 29px; }
+    .hero-selection .main-block .title p {
+      margin: 0 0 8px; }
+  .hero-selection .main-block .body {
+    display: grid;
+    grid-template-columns: repeat(2, calc(50% - 5px));
+    grid-gap: 10px;
+    box-sizing: border-box;
+    padding: 10px; }
+  .hero-selection .main-block .hero-block {
+    width: 100%;
+    height: calc((100vw - 30px) / 2.23);
+    background-color: #fff;
+    border: 2px solid #0b1138;
+    border-radius: 7px;
+    overflow: hidden;
+    position: relative; }
+  .hero-selection .main-block .hero-bg {
+    width: 100%;
+    height: 100%; }
+  .hero-selection .main-block .hero-name-block {
+    position: absolute;
+    width: 100%;
+    height: 35%;
+    bottom: 0;
+    left: 0;
+    background: url("../img/hero-selection/dots.png") no-repeat center;
+    background-size: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    justify-content: space-around;
+    padding-top: 19px; }
+  .hero-selection .main-block .hero-name {
+    font-family: AmericanPatrius;
+    font-size: 16px;
+    margin-top: 5px; }
+  .hero-selection .main-block .arrow-next {
+    height: 36px;
+    margin-left: -10px; }
+
 .profile .main-block {
   height: 100vh;
   min-height: 568px;

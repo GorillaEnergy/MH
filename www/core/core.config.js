@@ -150,6 +150,21 @@
           }
         }
       })
+      .state('hero-selection', {
+        cache: false,
+        url: '/hero-selection',
+        templateUrl: 'templates/hero-selection/hero-selection.html',
+        controller: 'HeroSelectionController',
+        controllerAs: 'vm',
+        resolve: {
+          security: function ($timeout, securityService) {
+            return $timeout(function() { securityService.onlyKid(); });
+          },
+          consultants: function (consultantService) {
+            return consultantService.consultantList();
+          }
+        }
+      })
       .state('logs', {
         cache: false,
         url: '/logs',
