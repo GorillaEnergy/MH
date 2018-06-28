@@ -15,13 +15,21 @@
     vm.save = save;
     vm.closeTutorial = closeTutorial;
 
+    vm.backToSettingsAccess = backToSettingsAccess;
+    vm.backToSettings = backToSettings;
+
     vm.warning = {name: false, email: false, id: false};
 
     vm.name = user.name;
     vm.email = user.email;
     vm.id_number = user.id_number;
+
     console.log(user);
+
     let newUser = !user.name;
+    let outgoing_from_settings = angular.isDefined($localStorage.outgoing_from_settings);
+
+    showTutorial();
 
     function save() {
       let permissionToSend = true;
@@ -115,6 +123,7 @@
 
                 if (toKidsPage) {
                   delete $localStorage.kid_index;
+                  delete $localStorage.outgoing_from_settings;
                   $state.go('kid')
                 } else {
                   if (newUser) {
@@ -130,7 +139,20 @@
       }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function showTutorial() {
+      // if (!angular.isDefined($localStorage.kids)) {
+      if (!$localStorage.user.name) {
+        $timeout(function () { $scope.tutorialModal.show(); }, 1000)
+      }
+    }
+
+    function backToSettingsAccess() {
+      return outgoing_from_settings
+    }
+    function backToSettings() {
+      delete $localStorage.outgoing_from_settings;
+      $state.go('settings');
+    }
 
 
     $ionicModal.fromTemplateUrl('tutorial-modal', {
@@ -139,15 +161,9 @@
       $scope.tutorialModal = modal;
     });
 
-    showTutorial();
-    function showTutorial() {
-      // if (!angular.isDefined($localStorage.kids)) {
-      if (!$localStorage.user.name) {
-        $timeout(function () { $scope.tutorialModal.show(); }, 1000)
-      }
-    }
     function closeTutorial() {
       $scope.tutorialModal.hide();
     }
+
   }
 })();

@@ -11363,6 +11363,15 @@ a.button {
 .profile .warning {
   border: 2px solid red; }
 
+.profile .back-to-settings {
+  position: absolute;
+  z-index: 10;
+  top: 27px;
+  left: 0; }
+  .profile .back-to-settings img {
+    padding: 10px;
+    height: 45px; }
+
 .tutorial-modal {
   background: url("../img/tutorial/tutorial-bg.png") no-repeat center;
   background-size: cover;
@@ -11903,6 +11912,15 @@ a.button {
     margin-bottom: 15px; }
   .kid .input {
     padding-left: 8%; } }
+
+.kid .back-to-settings {
+  position: absolute;
+  z-index: 10;
+  top: 27px;
+  left: 0; }
+  .kid .back-to-settings img {
+    padding: 10px;
+    height: 45px; }
 
 .kid-backdrop {
   position: absolute;

@@ -51,11 +51,10 @@
             }
 
 
-            // console.log('document.addEventListener("resume")');
-            document.addEventListener("resume", function () {
-              // fcm.subscribe();
-              console.log('resume');
-            }, false);
+            // document.addEventListener("resume", function () {
+            //   // fcm.subscribe();
+            //   console.log('resume');
+            // }, false);
         })
     }
 })();

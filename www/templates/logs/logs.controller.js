@@ -56,6 +56,7 @@
       $localStorage.kid_index = angular.copy($localStorage.log_index);
 
       console.log('to kid page');
+      delete $localStorage.outgoing_from_settings;
       $state.go('kid');
     }
 

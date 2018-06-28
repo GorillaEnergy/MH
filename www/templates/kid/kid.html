@@ -8,13 +8,17 @@
         <span>{{vm.name}}</span>
       </div>
 
+      <div class="back-to-settings" ng-if="vm.backToSettingsAccess()" ng-click="vm.backToSettings()">
+        <img src="../img/kid/back_arrow.png">
+      </div>
+
       <div class="empty-header"
            ng-class="!vm.viewType.edit_registered_kid ? 'empty-header-small' : 'empty-header-big'"></div>
 
       <div class="animation-backdrop" ng-if="vm.animation" ng-click="vm.closeList()"></div>
 
-      <div class="kids-block" ng-if="vm.viewType.new_kid" ng-click="vm.openList()">
-        <div ng-repeat="(key, kid) in vm.kids" ng-if="!kid.register">
+      <div class="kids-block" ng-if="vm.viewType.new_kid">
+        <div ng-repeat="(key, kid) in vm.kids" ng-if="!kid.register" ng-click="vm.openList()">
 
           <div ng-class="vm.animation ? vm.kidPosition(key) : vm.kidPosition(key, true)" class="kid-main-pos">
 

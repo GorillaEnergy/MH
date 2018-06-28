@@ -3,6 +3,10 @@
 
     <div class="main-block">
 
+      <div class="back-to-settings" ng-if="vm.backToSettingsAccess()" ng-click="vm.backToSettings()">
+        <img src="../img/kid/back_arrow.png">
+      </div>
+
       <div class="title" ng-if="vm.newUser">
         <span>new user</span>
       </div>

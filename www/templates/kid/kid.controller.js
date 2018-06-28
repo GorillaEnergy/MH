@@ -39,7 +39,11 @@
     vm.accessing = accessing;
     vm.changeAccessRight = changeAccessRight;
 
+    vm.dateConverter = dateConverter;
+
     vm.toMainPage = toMainPage;
+    vm.backToSettingsAccess = backToSettingsAccess;
+    vm.backToSettings = backToSettings;
 
 
     vm.viewType = {new_kid: false, edit_registered_kid: false, edit_unregistered_kid: false};
@@ -55,6 +59,10 @@
     vm.phoneFollower = '';
     vm.useCodeForKid = true;
     vm.birth_date = new Date();
+
+    vm.animation = false;
+
+    let outgoing_from_settings = angular.isDefined($localStorage.outgoing_from_settings);
 
     console.log('vm.kids = ', vm.kids);
     console.log('vm.followers = ', vm.followers);
@@ -155,7 +163,6 @@
     }
 
 
-    vm.animation = false;
 
     function openList() {
       if (!vm.animation) {
@@ -533,9 +540,14 @@
       console.log('toMainPage');
       $state.go('parent-main-page')
     }
+    function backToSettingsAccess() {
+      return outgoing_from_settings
+    }
+    function backToSettings() {
+      delete $localStorage.outgoing_from_settings;
+      $state.go('settings');
+    }
 
-
-    vm.dateConverter = dateConverter;
     function dateConverter(date) {
       let timestamp = date * 1;
 

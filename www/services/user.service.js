@@ -56,6 +56,7 @@
                     $localStorage.kids = [];
                     if (res.status = 'success') {
                       setKids(res.data);
+                      delete $localStorage.outgoing_from_settings;
                       $state.go('profile');
                     }
                   });

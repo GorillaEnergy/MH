@@ -101,6 +101,18 @@
   .warning {
     border: 2px solid red;
   }
+
+  .back-to-settings {
+    position: absolute;
+    z-index: 10;
+    top: 27px;
+    left: 0;
+
+    img {
+      padding: 10px;
+      height: 45px;
+    }
+  }
 }
 
 .tutorial-modal {

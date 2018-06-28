@@ -55,6 +55,7 @@
       for (let i = 0; i < kids.length; i++) {
         if ( kid.id === kids[i].id ) {
           $localStorage.kid_index = i;
+          // delete $localStorage.outgoing_from_settings;
           $state.go('kid');
           break;
         }
@@ -63,6 +64,7 @@
 
     function addKid() {
       delete $localStorage.kid_index;
+      // delete $localStorage.outgoing_from_settings;
       $state.go('kid');
     }
 

@@ -56,11 +56,13 @@
     }
     function toProfile() {
       console.log('to profile');
+      $localStorage.outgoing_from_settings = true;
       $state.go('profile');
     }
     function toKid() {
       console.log('to kid');
       delete $localStorage.kid_index;
+      $localStorage.outgoing_from_settings = true;
       $state.go('kid');
     }
     function addParentModal() {
@@ -71,7 +73,6 @@
       console.log('to terms & conditions');
       $state.go('terms-conditions');
     }
-
 
     function addParent() {
       console.log('addFollower');
