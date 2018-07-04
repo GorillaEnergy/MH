@@ -379,9 +379,10 @@
     .continue-save-button {
       text-transform: uppercase;
       text-align: center;
-      font-size: 22px;
+      font-size: 18px;
       color: #fff;
-      font-weight: 700;
+      font-family: AmericanPatrius;
+      font-weight: 100;
       width: 95%;
       line-height: 46px;
       border: 2px solid #0b1138;
@@ -478,25 +479,30 @@
         }
 
         .block-tile {
-          color: white;
+          color: #fff;
           font-size: 18px;
-          line-height: 0;
+          /* line-height: 0; */
           text-transform: uppercase;
           font-family: AmericanPatrius;
           font-weight: 100;
-          display: grid;
+          /* display: flex; */
+          /* flex-direction: column; */
         }
 
         .block {
-          padding-top: 26px;
+          padding-top: 19px;
           width: 80%;
         }
         .grant {
-          padding-top: 26px;
+          padding-top: 21px;
           width: 80%;
+
+          p{
+            margin: 0;
+          }
         }
         .remove {
-          padding-top: 41px;
+          padding-top: 31px;
           width: 80%;
         }
 

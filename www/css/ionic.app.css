@@ -11286,7 +11286,8 @@ a.button {
     text-align: center;
     font-family: American;
     font-size: 32px;
-    padding: 34px 0 29px; }
+    padding: 34px 0 29px;
+    color: #0b1138; }
     .hero-selection .main-block .title p {
       margin: 0 0 8px; }
   .hero-selection .main-block .body {
@@ -11325,7 +11326,8 @@ a.button {
     margin-top: 5px; }
   .hero-selection .main-block .arrow-next {
     height: 36px;
-    margin-left: -10px; }
+    margin-left: -10px;
+    margin-top: -5px; }
 
 .profile .main-block {
   height: 100vh;
@@ -11837,9 +11839,10 @@ a.button {
 .kid .continue-save-button {
   text-transform: uppercase;
   text-align: center;
-  font-size: 22px;
+  font-size: 18px;
   color: #fff;
-  font-weight: 700;
+  font-family: AmericanPatrius;
+  font-weight: 100;
   width: 95%;
   line-height: 46px;
   border: 2px solid #0b1138;
@@ -11911,21 +11914,24 @@ a.button {
         height: 54px;
         margin: 10px 0 0 26px; }
     .kid .reg-followers .access-panel .block-tile {
-      color: white;
+      color: #fff;
       font-size: 18px;
-      line-height: 0;
+      /* line-height: 0; */
       text-transform: uppercase;
       font-family: AmericanPatrius;
       font-weight: 100;
-      display: grid; }
+      /* display: flex; */
+      /* flex-direction: column; */ }
     .kid .reg-followers .access-panel .block {
-      padding-top: 26px;
+      padding-top: 19px;
       width: 80%; }
     .kid .reg-followers .access-panel .grant {
-      padding-top: 26px;
+      padding-top: 21px;
       width: 80%; }
+      .kid .reg-followers .access-panel .grant p {
+        margin: 0; }
     .kid .reg-followers .access-panel .remove {
-      padding-top: 41px;
+      padding-top: 31px;
       width: 80%; }
     .kid .reg-followers .access-panel .access-remove {
       width: 100%;

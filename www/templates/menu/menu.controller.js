@@ -55,9 +55,7 @@
       console.log('logout');
       userService.logout();
 
-      // $localStorage.$reset();
-      // $sessionStorage.$reset();
-      // $state.go('authorization')
+      // ionic.Platform.exitApp();
     }
     function aboutUs() {
       console.log('about-us');

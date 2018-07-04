@@ -383,6 +383,7 @@
         if (angular.isDefined($localStorage.kid_index)) {
           data.kid_id = kid.id;
           data.phone = {phone: vm.phone, code: vm.countryCode};
+
           userService.updateKid(data).then(function (res) {
             console.log(res);
             if (res.status === 'success') {
@@ -401,6 +402,8 @@
                 $localStorage.log_index = angular.copy($localStorage.kid_index);
                 $state.go('logs');
               }
+            } else if (res.message) {
+              toastr.error(res.message)
             }
           })
         } else {
@@ -425,6 +428,8 @@
                 console.log('$state.go(\'payment\');');
                 $state.go('payment');
               }
+            } else if (res.message) {
+              toastr.error(res.message)
             }
           })
         }

@@ -20,12 +20,9 @@
     vm.getConsultName = getConsultName;
     vm.dateConverter = dateConverter;
     vm.timeConverter = timeConverter;
-
     vm.showAllInfo = showAllInfo;
     vm.fullEmergencyLog = fullEmergencyLog;
-
     vm.showAllNormalStatus = showAllNormalStatus;
-
     vm.arrowAnimation = arrowAnimation;
 
     let kids = $localStorage.kids;
@@ -111,7 +108,6 @@
 
       return hours + ':' + minutes;
     }
-
     function showAllInfo(index) {
       vm.pushView[index] = !vm.pushView[index];
     }
@@ -127,7 +123,6 @@
         return 'show-all-content-in-normal-status'
       }
     }
-
     function arrowAnimation(index) {
       if (vm.pushView[index]) { return 'arrow-clockwise' } else { return 'arrow-counterclockwise' }
     }
@@ -160,6 +155,15 @@
         })
       });
     });
+
+    // $timeout(function () {
+    //   // console.log('1530532130');
+    //   fb.ref('/logs/' + kid_id).orderByChild("id").endAt(40).limitToLast(2).on('child_added', (snapshot) => {
+    //   // fb.ref('/logs/' + kid_id).orderByChild("id").startAt(40).limitToLast(2).on('child_added', (snapshot) => {
+    //     console.log(snapshot.val());
+    //   })
+    //   // console.log(fb.ref('/logs/' + kid_id).orderByChild("id").startAt(40));
+    // }, 2000)
 
   }
 })();

@@ -172,10 +172,10 @@
         controller: 'LogsController',
         controllerAs: 'vm',
         resolve: {
-          security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyParent(); });
+          security: function (securityService) {
+            return securityService.onlyParent();
           },
-          consultants: function ($timeout, consultantService) {
+          consultants: function (consultantService) {
             return  consultantService.consultantList();
           },
           rights_to_kid: function (userService) {

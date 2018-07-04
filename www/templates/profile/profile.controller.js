@@ -54,7 +54,7 @@
         }
 
         if (!vm.email) {
-          console.log(vm.email);
+          // console.log(vm.email);
           toastr.error('Please enter correct email');
           vm.warning.email = true;
           permissionToSend = false;

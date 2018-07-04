@@ -4,7 +4,7 @@
     <div class="main-block">
 
       <div class="back-to-settings" ng-if="vm.backToSettingsAccess()" ng-click="vm.backToSettings()">
-        <img src="../img/kid/back_arrow.png">
+        <img src="./img/kid/back_arrow.png">
       </div>
 
       <div class="title" ng-if="vm.newUser">
@@ -24,7 +24,8 @@
 
       <div class="email">
         <input class="input" type="email" ng-model="vm.email"
-               ng-class="{'warning': vm.warning.email}">
+               ng-class="{'warning': vm.warning.email}"
+               ng-pattern="/^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/">
         <img src="./img/registration/email.png" class="email-img">
         <p class="tooltip">email address</p>
       </div>

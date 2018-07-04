@@ -27,11 +27,12 @@
     vm.approvalCode = '';
 
     vm.show = {phoneMenu: true, codeApproval: false};
-    // let token_device = '';
-    let token_device = '1111119384gh278hg92rhf982r9f829fj98rjf982h98fh298rfh892hrf89h2r98fh289rhf982hr98hr89h89rh89';
-    // console.log('token_device = ', token_device);
-    // getDeviceToken();
+    let token_device = '';
+    getDeviceToken();
     fcm.subscribe();
+
+    // let token_device = '1111119384gh278hg92rhf982r9f829fj98rjf982h98fh298rfh892hrf89h2r98fh289rhf982hr98hr89h89rh89';
+    // console.log('token_device = ', token_device);
 
     // vm.test = function () {
     //   console.log('on-focus');

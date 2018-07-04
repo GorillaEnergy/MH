@@ -85,7 +85,6 @@
     <plugin name="cordova-plugin-ionic-webview" spec="1.1.19" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="2.0.5" />
     <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
-    <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
     <allow-navigation href="http://192.168.1.108:8100" />
     <allow-navigation href="http://192.168.42.106:8100" />
     <allow-navigation href="http://192.168.42.84:8100" />
@@ -130,4 +129,8 @@
     <allow-navigation href="http://192.168.42.28:8100" />
     <engine name="windows" spec="5.0.0" />
     <engine name="android" spec="^6.3.0" />
+    <allow-navigation href="http://192.168.42.33:8100" />
+    <allow-navigation href="http://192.168.42.25:8100" />
+    <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
+    <allow-navigation href="http://192.168.42.128:8100" />
 </widget>

@@ -51,10 +51,18 @@
             }
 
 
-            // document.addEventListener("resume", function () {
-            //   // fcm.subscribe();
-            //   console.log('resume');
-            // }, false);
+            document.addEventListener("pause", function () {
+              console.log('pause');
+            }, false);
+
+            document.addEventListener("resume", function () {
+              // fcm.subscribe();
+              console.log('resume');
+            }, false);
+
+            // setInterval(function () {
+            //   console.log('Online = ', navigator.onLine);
+            // }, 5000)
         })
     }
 })();

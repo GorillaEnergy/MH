@@ -4,12 +4,12 @@
     <div class="main-block" ng-class="vm.viewType.edit_registered_kid ? 'registered' : 'unregistered'">
 
       <div class="reg-header title" ng-if="vm.viewType.edit_registered_kid" ng-click="vm.toMainPage()">
-        <img src="../img/kid/back_arrow.png" name="back_arrow" class="back-arrow">
+        <img src="./img/kid/back_arrow.png" name="back_arrow" class="back-arrow">
         <span>{{vm.name}}</span>
       </div>
 
       <div class="back-to-settings" ng-if="vm.backToSettingsAccess()" ng-click="vm.backToSettings()">
-        <img src="../img/kid/back_arrow.png">
+        <img src="./img/kid/back_arrow.png">
       </div>
 
       <div class="empty-header"
@@ -157,8 +157,8 @@
             <div class="grant-access" ng-click="vm.changeAccessRight(true)">
               <img src="./img/kid/grant_access.png" class="grant-access-img">
               <div class="block-tile grant">
-                <span>grant</span>
-                <span>access</span>
+                <p>grant</p>
+                <p>access</p>
               </div>
             </div>
 
