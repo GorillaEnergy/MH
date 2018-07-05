@@ -5,10 +5,11 @@
     .controller('LogsController', LogsController);
 
   LogsController.$inject = ['$ionicModal', '$state', '$scope', '$timeout', '$localStorage', 'userService', 'consultants',
-                            'rights_to_kid'];
+                            'rights_to_kid', '$ionicLoading'];
 
 
-  function LogsController($ionicModal, $state, $scope, $timeout, $localStorage, userService, consultants, rights_to_kid) {
+  function LogsController($ionicModal, $state, $scope, $timeout, $localStorage, userService, consultants,
+                          rights_to_kid, $ionicLoading) {
     const vm = this;
 
     vm.toMainPage = toMainPage;
@@ -30,9 +31,29 @@
     vm.kidName = getKidName();
     vm.pushView = [];
     vm.editRights = rights_to_kid;
+    vm.logs = [];
 
-    console.log('consultants', consultants);
-    console.log('rights to edit kid', rights_to_kid);
+    let fb = firebase.database();
+    let kid_id = kid.id;
+    let number_of_logs = 30;
+    let download_more = 30;
+
+    let logs_body = document.getElementById("logs");
+    let visible_parts_of_logs_block = logs_body.scrollHeight;
+    let log_is_last = false;
+
+
+    initializeFB();
+    function initializeFB() {
+      downloadLogs();
+      addLogsEvent();
+      removeLogsEvent();
+      changeLogsEvent();
+    }
+
+    // console.log('visible_parts_of_logs_block = ', visible_parts_of_logs_block);
+    // console.log('consultants', consultants);
+    // console.log('rights to edit kid', rights_to_kid);
 
     function getKidName() {
       let full_name = kid.name;
@@ -127,43 +148,124 @@
       if (vm.pushView[index]) { return 'arrow-clockwise' } else { return 'arrow-counterclockwise' }
     }
 
-
-    let fb = firebase.database();
-    let kid_id = kid.id;
-    let number_of_logs = 50;
-    let download_more = 25;
-
-    vm.logs = [];
-    fb.ref('/logs/' + kid_id).on('value', (snapshot) => {
-      $timeout(function () {
-        $timeout(function () {
-          // snapshot.val() ? vm.logs = snapshot.val() : vm.logs = [];
-          snapshot.val() ? vm.logs = convertToArray() : vm.logs = [];
-          function convertToArray() {
-            let res = [];
-            let arrOfKeys = Object.keys(snapshot.val());
-            angular.forEach(arrOfKeys ,function (key) {
-              res.push(snapshot.val()[key]);
-              vm.pushView.push(false);
-            });
-            res.reverse();
-            vm.pushView.reverse();
-            // console.log(vm.pushView);
-            return res;
-          }
-          console.log(vm.logs);
-        })
+    function convertToArray(data, type) {
+      // console.log(type);
+      let res = [];
+      let pushView = [];
+      let arrOfKeys = Object.keys(data);
+      angular.forEach(arrOfKeys ,function (key) {
+        res.push(data[key]);
+        pushView.push(false);
       });
-    });
+
+      res.reverse();
+      pushView.reverse();
+
+
+      // console.log(vm.pushView);
+      if (res.length < number_of_logs) { log_is_last = true }
+      console.log('log_is_last', log_is_last);
+
+      if (!log_is_last) {
+        addScrollEvent()
+      } else {
+        destroyScrollEvent()
+      }
+
+      if (type === 'primary_loading') {
+        vm.pushView = pushView;
+        return res;
+      } else {
+        vm.pushView = vm.pushView.concat(pushView);
+        res.splice(0, 1);
+        res = vm.logs.concat(res);
+        return res;
+      }
+    }
+
+
+
+    function downloadLogs() {
+      fb.ref('/logs/' + kid_id).limitToLast(number_of_logs).once('value', (snapshot) => {
+        snapshot.val() ? vm.logs = convertToArray(snapshot.val(), 'primary_loading') : vm.logs = [];
+        console.log(vm.logs);
+      });
+    }
+
+    function downloadMoreLogs() {
+      $ionicLoading.show({ template: 'Loading...' });
+      let last = vm.logs[vm.logs.length - 1].id;
+      console.log(last);
+      fb.ref('/logs/' + kid_id).orderByChild("id").endAt(last).limitToLast(download_more + 1).once('value', (snapshot) => {
+        if (snapshot.val()) { vm.logs = convertToArray(snapshot.val(), 'secondary_loading') }
+        $ionicLoading.hide();
+      })
+    }
+    function addLogsEvent() {
+      let access = false;
+      console.log('addLogsEvent');
+      fb.ref('/logs/' + kid_id).limitToLast(1).on('child_added', (snapshot) => {
+        $timeout(function () {
+          if (access) {
+            console.log(snapshot.val());
+            vm.logs.unshift(snapshot.val());
+            vm.pushView.unshift(false);
+          } else {
+            access = true;
+          }
+        })
+      })
+    }
+    function removeLogsEvent() {
+      console.log('removeLogsEvent');
+      fb.ref('/logs/' + kid_id).on('child_removed', (snapshot) => {
+        $timeout(function () {
+          let changed_log = snapshot.val();
+          for (let i = 0; i < vm.logs.length; i++) {
+            if (vm.logs[i].id === changed_log.id) {
+              vm.logs.splice(i, 1);
+              vm.pushView.splice(i, 1);
+              break;
+            }
+          }
+        })
+      })
+    }
+    function changeLogsEvent() {
+      console.log('changeLogsEvent');
+      fb.ref('/logs/' + kid_id).on('child_changed', (snapshot) => {
+        $timeout(function () {
+          let changed_log = snapshot.val();
+          for (let i = 0; i < vm.logs.length; i++) {
+            if (vm.logs[i].id === changed_log.id) {
+              vm.logs[i] = changed_log;
+              break;
+            }
+          }
+        })
+      })
+    }
+
+    function addScrollEvent() {
+      console.log('addScrollEvent');
+      angular.element(logs_body).bind('scroll', function(){
+        if (logs_body.scrollTop === logs_body.scrollHeight - visible_parts_of_logs_block) {
+          console.log('logs position bottom');
+          downloadMoreLogs();
+        }
+      });
+    }
+    function destroyScrollEvent() {
+      console.log('destroyScrollEvent');
+      angular.element(logs_body).unbind('scroll');
+    }
+
+
 
     // $timeout(function () {
-    //   // console.log('1530532130');
-    //   fb.ref('/logs/' + kid_id).orderByChild("id").endAt(40).limitToLast(2).on('child_added', (snapshot) => {
-    //   // fb.ref('/logs/' + kid_id).orderByChild("id").startAt(40).limitToLast(2).on('child_added', (snapshot) => {
-    //     console.log(snapshot.val());
-    //   })
-    //   // console.log(fb.ref('/logs/' + kid_id).orderByChild("id").startAt(40));
-    // }, 2000)
+    //   console.log('downloadMoreLogs');
+    //   downloadMoreLogs();
+    // }, 3000)
 
   }
 })();

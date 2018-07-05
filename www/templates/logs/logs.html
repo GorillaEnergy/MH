@@ -7,7 +7,7 @@
             <img src="./img/logs/settings.png" class="icon-menu" ng-click="vm.toKid()" ng-if="vm.editRights">
             <div class="empty-block" ng-if="!vm.editRights"></div>
         </div>
-        <div class="main-block">
+        <div class="main-block" id="logs">
 
           <!--<div ng-repeat="(key, log) in vm.logs.slice().reverse()">-->
           <div ng-repeat="(key, log) in vm.logs">

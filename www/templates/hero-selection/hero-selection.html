@@ -1,0 +1,23 @@
+<ion-view class="hero-selection">
+  <ion-content>
+
+      <div class="main-block">
+        <div class="title">
+          <p>choose</p>
+          <p>your hero</p>
+        </div>
+
+        <div class="body">
+          <div class="hero-block" ng-repeat="(key, hero) in vm.heroes">
+            <img ng-src="./img/hero-selection/hero{{vm.heroBG(key)}}.png" class="hero-bg">
+            <div class="hero-name-block">
+              <span class="hero-name">hero name</span>
+              <img src="./img/hero-selection/arrow-next.png" class="arrow-next">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+  </ion-content>
+</ion-view>
