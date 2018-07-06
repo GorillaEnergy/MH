@@ -132,7 +132,16 @@
                     popUpMessage.showMessage('Server error: ' + err.data);
                 }
                 else if (err.status === -1) {
-                    popUpMessage.showMessage('Server is not available');
+                    if (!navigator.onLine) {
+                      // popUpMessage.showMessage('No internet connection');
+                      $ionicLoading.hide();
+                      $ionicLoading.show({ template: 'No internet connection' });
+                      $timeout(function () {  $ionicLoading.hide(); }, 2000)
+                    } else {
+                      popUpMessage.showMessage('Server is not available');
+                    }
+                    // $ionicLoading.hide();
+                    return [];
                 }
                 else if (err.status === 0) {
                     popUpMessage.showMessage('There is no Internet connection');

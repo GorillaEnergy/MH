@@ -105,7 +105,7 @@
             userService.userUpdate(data).then(function (res) {
               status = true;
               userService.setUser(res.data);
-              if (res.status ==="success") {
+              if (res.status === "success") {
 
                 if (toastrType === 'new') {
                   toastr.success('Successfully added');
@@ -132,6 +132,9 @@
                     $state.go('settings')
                   }
                 }
+              } else {
+                // toastr.error(res.data.message);
+                toastr.error(res.message);
               }
             })
           }

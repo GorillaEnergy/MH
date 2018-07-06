@@ -11471,14 +11471,15 @@ a.button {
   min-height: 100vh;
   width: 100vw;
   position: relative;
-  padding-bottom: 10px; }
+  padding-bottom: 10px;
+  overflow-x: hidden; }
 
 .kid .registered {
   background: url("../img/kid/regisered-kid-background.png") no-repeat center top #64cae2;
   background-size: cover;
   padding-bottom: 9px;
   height: 100vh;
-  overflow: scroll; }
+  overflow-y: scroll; }
 
 .kid .unregistered {
   background: url("../img/kid/unregisered-kid-background.png") no-repeat center top #64cae2;
