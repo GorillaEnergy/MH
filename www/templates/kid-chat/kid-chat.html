@@ -18,7 +18,7 @@
         <span>Loading</span>
       </div>
 
-      <div ng-repeat="(key, message) in vm.messages" id="anchor{{key}}">
+      <div ng-repeat="(key, message) in vm.messages track by $index">
         <div class="day" ng-if="vm.dateHeader($index)">
           <p>{{vm.dateConverter(message.date)}}</p>
           <!--<p>{{vm.date | date : "dd MMMM yyyy"}}</p>-->
@@ -36,7 +36,10 @@
 
     <div class="input-block" ng-if="vm.blocked">
       <div class="input-and-message">
-        <input type="text" placeholder="Message" ng-model="vm.message_input">
+        <input type="text" placeholder="Message" ng-model="vm.message_input"
+               ng-focus="vm.focusedInput()"
+               ng-blur="vm.unfocusedInput()"
+        >
         <img src="./img/kid-chat-room/enter-message.png" ng-click="vm.sendMessage()">
       </div>
     </div>

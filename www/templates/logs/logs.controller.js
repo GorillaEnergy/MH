@@ -259,13 +259,5 @@
       console.log('destroyScrollEvent');
       angular.element(logs_body).unbind('scroll');
     }
-
-
-
-    // $timeout(function () {
-    //   console.log('downloadMoreLogs');
-    //   downloadMoreLogs();
-    // }, 3000)
-
   }
 })();

@@ -109,8 +109,12 @@
         }
         function uploadKids() {
           return http.get(url.kid.uploadKids).then(function (res) {
-            setKids(res.data);
-            return res.data;
+            if (res.status == 'success') {
+              setKids(res.data);
+              return res.data;
+            } else {
+              return []
+            }
           });
         }
         function deleteKid(data) {
@@ -124,7 +128,7 @@
         }
         function rightsToKid() {
           let data = { kid_id: getKids()[$localStorage.log_index].id };
-          console.log(data);
+          // console.log(data);
           return http.post(url.kid.rights_to_kid, data).then(function (res) {
             if (res.status === 'success') { return true } else { return false }
           });

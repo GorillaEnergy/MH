@@ -16,7 +16,11 @@
 
     function list() {
       return http.get(url.countries.list).then(function (res) {
-        return res.data;
+        if (res.status == 'success') {
+          return res.data;
+        } else {
+          return []
+        }
       })
     }
   }
