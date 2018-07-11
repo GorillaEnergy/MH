@@ -4,9 +4,9 @@
   angular.module('service.fcm', [])
     .service('fcm', fcm);
 
-  fcm.$inject = ['$state', '$localStorage', 'notificationService', 'toastr', 'userService', '$timeout'];
+  fcm.$inject = ['$state', '$localStorage', 'notificationService', 'toastr'];
 
-  function fcm($state, $localStorage, notificationService, toastr, userService, $timeout) {
+  function fcm($state, $localStorage, notificationService, toastr) {
     let model = {};
 
     model.subscribe = subscribe;
@@ -20,47 +20,23 @@
 
         FCMPlugin.onNotification(function (data) {
             console.log(data);
+            if (data.type == 'log' && data.status == 'emergency') {
 
-            // if (data.wasTapped) {
-              // console.log(JSON.stringify(data.message));
-              if (data.type == 'log' && data.status == 'emergency') {
-
-                let kids = angular.copy(userService.getKids());
-                for (let i = 0; i < kids.length; i++) {
-                  if (kids[i].id == data.kid_id) {
-                    $localStorage.log_index = i;
-                    console.log('message for kid', kids[i]);
-                    break;
-                  }
+              let kids = angular.copy($localStorage.kids);
+              for (let i = 0; i < kids.length; i++) {
+                if (kids[i].id == data.kid_id) {
+                  $localStorage.log_index = i;
+                  console.log('message for kid', kids[i]);
+                  break;
                 }
-                toastr.error(JSON.stringify(data.message));     //red
-                console.log('to logs -->');
-                $state.go('logs')
-
-              } else if (data.type == 'log' && data.status == 'normal') {
-                toastr.success(JSON.stringify(data.message));   //green
               }
-            // } else {
-            //
-            //   if (data.type == 'log' && data.status == 'emergency') {
-            //
-            //     let kids = angular.copy(userService.getKids());
-            //     for (let i = 0; i < kids.length; i++) {
-            //       if (kids[i].id == data.kid_id) {
-            //         $localStorage.log_index = i;
-            //         console.log('message for kid', kids[i]);
-            //         break;
-            //       }
-            //     }
-            //     toastr.error(JSON.stringify(data.message));     //red
-            //     console.log('to logs -->');
-            //     $state.go('logs')
-            //
-            //   } else if (data.type == 'log' && data.status == 'normal') {
-            //     toastr.success(JSON.stringify(data.message));   //green
-            //   }
-            //
-            // }
+              toastr.error(JSON.stringify(data.message));     //red
+              console.log('to logs -->');
+              $state.go('logs')
+
+            } else if (data.type == 'log' && data.status == 'normal') {
+              toastr.success(JSON.stringify(data.message));   //green
+            }
 
           },
           function (msg) {

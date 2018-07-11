@@ -4,10 +4,10 @@
     angular.module('service.userService', [])
         .service('userService', userService);
 
-    userService.$inject = ['http', 'url', '$localStorage', '$sessionStorage', '$state', '$timeout'];
+    userService.$inject = ['http', 'url', '$localStorage', '$sessionStorage', '$state', '$timeout', 'fcm', 'toastr'];
 
 
-    function userService(http, url, $localStorage, $sessionStorage, $state, $timeout) {
+    function userService(http, url, $localStorage, $sessionStorage, $state, $timeout, fcm, toastr) {
         let model = {};
         model.checkPhone = checkPhone;
         model.login = login;
@@ -50,6 +50,7 @@
                 setUser(res.data.user);
                 setToken(res.data.token);
                 setPhone(phone);
+                fcm.subscribe();
 
                 if (!res.data.user.name) {
                   http.get(url.kid.uploadKids).then(function (res) {
@@ -66,7 +67,8 @@
                   $state.go('kid-main-page');
                 }
               } else {
-                console.log('authorization error');
+                console.log('Authorization error');
+                toastr.error('Authorization error');
               }
 
             });

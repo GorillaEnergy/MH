@@ -135,6 +135,10 @@
     <allow-navigation href="http://192.168.42.181:8100" />
     <allow-navigation href="http://192.168.42.72:8100" />
     <allow-navigation href="http://192.168.42.130:8100" />
+    <allow-navigation href="http://192.168.0.109:8100" />
+    <allow-navigation href="http://192.168.42.240:8100" />
+    <allow-navigation href="http://192.168.42.70:8100" />
+    <allow-navigation href="http://192.168.42.113:8100" />
     <engine name="windows" spec="5.0.0" />
     <engine name="android" spec="^6.3.0" />
 </widget>

@@ -24,8 +24,9 @@
 
     .body {
       display: grid;
-      grid-template-columns: repeat(2,calc(50% - 5px));
       grid-gap: 10px;
+      //grid-template-columns: repeat(2,calc(50% - 5px));
+      grid-template-columns: calc(50% - 5px) calc(50% - 5px);
       box-sizing: border-box;
       padding: 10px;
     }

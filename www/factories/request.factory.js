@@ -124,6 +124,7 @@
          * @returns {promise}
          */
         function requestFailed(err) {
+            $ionicLoading.hide();
             console.info('error', err.config.url, err);
             // debugger;
 
@@ -133,14 +134,13 @@
                 }
                 else if (err.status === -1) {
                     if (!navigator.onLine) {
-                      // popUpMessage.showMessage('No internet connection');
-                      $ionicLoading.hide();
-                      $ionicLoading.show({ template: 'No internet connection' });
+                      // $ionicLoading.hide();
+                      $ionicLoading.show({ template: 'There is no Internet connection' });
                       $timeout(function () {  $ionicLoading.hide(); }, 2000)
                     } else {
+                      // $ionicLoading.hide();
                       popUpMessage.showMessage('Server is not available');
                     }
-                    // $ionicLoading.hide();
                     return [];
                 }
                 else if (err.status === 0) {
@@ -151,6 +151,11 @@
                 }
                 else if (err.status === 401) {
                     // $state.go('authorization');
+                }
+                else if (err.status === 429) {
+                  // $ionicLoading.hide();
+                  popUpMessage.showMessage(err.data.message);
+                  return []
                 }
                 else if (err.status === 500) {
                     popUpMessage.showMessage('Server error: ' + err.status + ' ' + err.data.message);
@@ -163,7 +168,7 @@
                 popUpMessage.showMessage(err.data.error);
             }
 
-            $ionicLoading.hide();
+            // $ionicLoading.hide();
             return $q.reject(err.data.error);
         }
 
