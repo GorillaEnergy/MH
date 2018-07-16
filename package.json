@@ -21,7 +21,7 @@
     "chart": "^0.1.2",
     "cordova": "^7.1.0",
     "cordova-android": "^6.3.0",
-    "cordova-ios": "^4.5.4",
+    "cordova-ios": "4.5.4",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-fcm": "^2.1.2",
@@ -56,7 +56,8 @@
     },
     "platforms": [
       "windows",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

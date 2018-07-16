@@ -5,28 +5,22 @@
     .controller('PaymentController', PaymentController);
 
   PaymentController.$inject = ['$localStorage', '$state', '$scope', 'userService', '$timeout', '$ionicModal',
-                                'kids'];
+                                'kids', 'purchaseService'];
 
 
   function PaymentController($localStorage, $state, $scope, userService, $timeout, $ionicModal,
-                             kids) {
+                             kids, purchaseService) {
     const vm = this;
 
     vm.toMenu = toMenu;
+    vm.pay = pay;
 
     vm.editKid = editKid;
     vm.kidColor = kidColor;
     vm.addKid = addKid;
 
-    let  date = new Date();
-    console.log("Time: ", date.getHours() + ' : ' + date.getMinutes());
-    // console.log(date.toISOString());
-    // console.log(date.toISOString().split('.')[0].split('T').join(' '));
-
-    // vm.kids = kids;
     vm.kids = kidFilter();
     vm.totalPrice = totalPriceCalc(vm.kids.length);
-
 
     function kidFilter() {
       let maximum_kid = 6;
@@ -36,7 +30,6 @@
       });
       return data;
     }
-
     function toMenu() {
       angular.forEach(vm.kids, function (kid) {
         let data = {
@@ -50,7 +43,6 @@
       console.log('to menu');
       $timeout(function () { $state.go('menu'); }, 1500)
     }
-
     function editKid(kid) {
       for (let i = 0; i < kids.length; i++) {
         if ( kid.id === kids[i].id ) {
@@ -61,13 +53,10 @@
         }
       }
     }
-
     function addKid() {
       delete $localStorage.kid_index;
-      // delete $localStorage.outgoing_from_settings;
       $state.go('kid');
     }
-
     function kidColor(index) {
       let name;
       index < 6 ? name = 'kid-color-' + index : name = 'kid-color-overflow';
@@ -85,6 +74,15 @@
         return 0;
       }
     }
+
+    function pay() {
+      purchaseService.buyProduct('com.mind.hero.month_test')
+      // purchaseService.buyProduct('com.mind.hero.month.test2')
+    }
+    $timeout(function () {
+      purchaseService.getProducts(['com.mind.hero.month_test']);
+      // purchaseService.getProducts(['com.mind.hero.month_test', 'com.mind.hero.month.test2']);
+    }, 1000);
 
     $ionicModal.fromTemplateUrl('payment-modal', {
       scope: $scope

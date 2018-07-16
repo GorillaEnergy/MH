@@ -8,5 +8,5 @@
     "sizes": "512x512",
     "type": "image/png"
   }],
-  "play_store_key": "<Base64-encoded public key from the Google Play Store>"
+  "play_store_key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2af/f7Ta6DxeS1PlAUg3vX4JZ7Op9BRQ5TPvKce7ExTYYX+jtLJnMJ7ol4vIQ7TtmQQ6C3PKFtvhJkNSlxykUog8wJTOfBBKezrE2whxPeat3/RhherhFaQQ+GcM39JSJSRa2sx+ojCo0pOIHTWdAygxlx8rktaBmUXQxG07M1YhO9AXmFjODQYHvEWZ0+4VqbqPtzINfBOVafmTfhaGiIRhq/iexspPFSIw5iUk7x/P5WV9vnt/co9MQmXbiQKovAN2Ab8EFYCkJ/vgzgrFNlX6/kfYxP1egjv4mMmEmyAEtqg9y23zabMPi29vGPhphRaL/M+TVdXILk8jvTsXtwIDAQAB"
 }

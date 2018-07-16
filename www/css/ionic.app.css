@@ -10243,38 +10243,38 @@ a.button {
       padding: 10px;
       height: 60px; }
 
-.auth-tel ion-content .main-block {
+.auth-tel .main-block {
   height: 100vh;
   min-height: 568px;
   width: 100vw;
   background: url("../img/authorization/main-backgroun.png") no-repeat #64cae2;
   background-size: cover; }
 
-.auth-tel ion-content .form-block {
+.auth-tel .form-block {
   height: 68.3%;
   width: 100vw;
   display: table; }
 
-.auth-tel ion-content .tel-block {
+.auth-tel .tel-block {
   display: table-cell;
   vertical-align: bottom; }
 
-.auth-tel ion-content .code-block {
+.auth-tel .code-block {
   width: 100%;
   height: 100%;
   display: table-cell;
   vertical-align: bottom; }
-  .auth-tel ion-content .code-block .post-zone {
+  .auth-tel .code-block .post-zone {
     margin-top: 109px; }
 
-.auth-tel ion-content .man {
+.auth-tel .man {
   width: 100%;
   text-align: center; }
-  .auth-tel ion-content .man .logo {
+  .auth-tel .man .logo {
     width: 78%;
     margin: 84px 0 32px 65px; }
 
-.auth-tel ion-content .input-block {
+.auth-tel .input-block {
   position: relative;
   text-transform: uppercase;
   text-align: center;
@@ -10289,20 +10289,20 @@ a.button {
   border-radius: 5px;
   margin: 0 auto; }
 
-.auth-tel ion-content .phone-ico {
+.auth-tel .phone-ico {
   height: 1.1em;
   position: absolute;
   left: 10px;
   top: 10px; }
 
-.auth-tel ion-content .country-and-phone {
+.auth-tel .country-and-phone {
   margin: 0 auto;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center; }
 
-.auth-tel ion-content .country-select {
+.auth-tel .country-select {
   font-size: 18px;
   font-family: AmericanPatrius;
   height: 100%;
@@ -10310,7 +10310,7 @@ a.button {
   margin-left: 40px;
   text-align: right; }
 
-.auth-tel ion-content .tooltip {
+.auth-tel .tooltip {
   font-family: "AmericanPatrius";
   letter-spacing: -1px;
   text-transform: uppercase;
@@ -10320,7 +10320,7 @@ a.button {
   font-weight: 500;
   margin: 4px 0 31px; }
 
-.auth-tel ion-content .login-button {
+.auth-tel .login-button {
   font-family: AmericanPatrius;
   text-transform: uppercase;
   text-align: center;
@@ -10336,40 +10336,40 @@ a.button {
   background-size: 140%;
   box-sizing: border-box; }
 
-.auth-tel ion-content .button-title {
+.auth-tel .button-title {
   padding-top: 5px; }
 
-.auth-tel ion-content .trouble-block {
+.auth-tel .trouble-block {
   width: 100%;
   height: 132px;
   display: flex;
   margin-bottom: -7px; }
 
-.auth-tel ion-content .trouble {
+.auth-tel .trouble {
   width: 50%;
   height: 100%;
   position: relative; }
 
-.auth-tel ion-content .send-again-img {
+.auth-tel .send-again-img {
   position: absolute;
   height: 72px;
   top: 38%;
   right: 6%; }
 
-.auth-tel ion-content .change-number-img {
+.auth-tel .change-number-img {
   position: absolute;
   height: 72px;
   top: 5%;
   left: 8%; }
 
-.auth-tel ion-content .receive-code {
+.auth-tel .receive-code {
   margin: 3px 0; }
 
-.auth-tel ion-content .approval-input {
+.auth-tel .approval-input {
   margin: 14px auto 12px;
   text-align: -webkit-center; }
 
-.auth-tel ion-content .input-phone {
+.auth-tel .input-phone {
   color: #0b1138;
   font-size: 18px;
   font-family: AmericanPatrius;
@@ -10381,7 +10381,7 @@ a.button {
   box-sizing: border-box;
   margin-left: 10px; }
 
-.auth-tel ion-content .input-code {
+.auth-tel .input-code {
   text-align: center;
   font-size: 18px;
   font-family: AmericanPatrius;
@@ -10391,9 +10391,9 @@ a.button {
   border: 2px solid #0b1138;
   border-radius: 5px; }
 
-.auth-tel ion-content .notification {
+.auth-tel .notification {
   margin: 0 auto; }
-  .auth-tel ion-content .notification p {
+  .auth-tel .notification p {
     margin: 8px 0; }
 
 @media (max-height: 640px) {
@@ -10406,10 +10406,6 @@ a.button {
   .auth-tel ion-content .man .logo {
     width: 65%;
     margin: 0 0 10px 65px; } }
-
-#country-modal .animated.modal.slideInDown.ng-leave {
-  -webkit-animation-name: slideOutUp;
-  animation-name: slideOutUp; }
 
 .country-modal .country-filter {
   height: 40px;
@@ -11281,7 +11277,8 @@ a.button {
   height: fit-content;
   width: 100vw;
   background: url("../img/hero-selection/bg.png") no-repeat center top;
-  background-size: cover; }
+  background-size: cover;
+  position: relative; }
   .hero-selection .main-block .title {
     text-align: center;
     font-family: American;
@@ -11290,12 +11287,17 @@ a.button {
     color: #0b1138; }
     .hero-selection .main-block .title p {
       margin: 0 0 8px; }
+  .hero-selection .main-block .back-arrow {
+    position: absolute;
+    padding: 10px;
+    height: 45px;
+    top: 30px;
+    left: 11px; }
   .hero-selection .main-block .body {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: calc(50% - 5px) calc(50% - 5px);
-    box-sizing: border-box;
-    padding: 10px; }
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0; }
   .hero-selection .main-block .hero-block {
     width: 100%;
     height: calc((100vw - 30px) / 2.23);
@@ -11303,7 +11305,10 @@ a.button {
     border: 2px solid #0b1138;
     border-radius: 7px;
     overflow: hidden;
-    position: relative; }
+    position: relative;
+    padding: 0;
+    margin: 0 5px 10px 5px;
+    max-width: calc(50% - 10px); }
   .hero-selection .main-block .hero-bg {
     width: 100%;
     height: 100%; }
@@ -11315,6 +11320,7 @@ a.button {
     left: 0;
     background: url("../img/hero-selection/dots.png") no-repeat center;
     background-size: 100%;
+    margin-bottom: -1px;
     display: flex;
     flex-direction: row;
     overflow: hidden;

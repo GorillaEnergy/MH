@@ -206,9 +206,11 @@
       $timeout(function () {
         if (newMsg) {
           // тут добавить какоето условие для более корректной работы функции(возможно скролл и ненужно опускать)
-          chat_body.scrollTo(0, chat_body.scrollHeight);
+          // chat_body.scrollTo(0, chat_body.scrollHeight);
+          chat_body.scrollTop = angular.copy(chat_body.scrollHeight);
         } else {
-          chat_body.scrollTo(0, chat_body.scrollHeight);
+          // chat_body.scrollTo(0, chat_body.scrollHeight);
+          chat_body.scrollTop = angular.copy(chat_body.scrollHeight);
         }
       });
     }
@@ -319,7 +321,7 @@
         if (chatHeightNew) {
           chatHeightOld = angular.copy(chatHeightNew);
         } else {
-          chatHeightOld = angular.element("#chat")[0].scrollHeight;
+          chatHeightOld = angular.copy(angular.element("#chat")[0].scrollHeight);
         }
         // console.log('chatHeightOld = ', chatHeightOld);
 
@@ -327,7 +329,7 @@
 
         $timeout(function () {
 
-          chatHeightNew = angular.element("#chat")[0].scrollHeight;
+          chatHeightNew = angular.copy(angular.element("#chat")[0].scrollHeight);
           // console.log('chatHeightNew = ', chatHeightNew);
 
           chat_body.scrollTop = angular.copy(chatHeightNew - chatHeightOld);

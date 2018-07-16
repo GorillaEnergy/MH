@@ -1,5 +1,4 @@
 .auth-tel {
-  ion-content {
 
     .main-block {
       height: 100vh;
@@ -183,7 +182,6 @@
         margin: 8px 0;
       }
     }
-  }
 }
 
 @media (max-height: 640px) {
@@ -201,13 +199,13 @@
   }
 }
 
-#country-modal {
-
-  .animated.modal.slideInDown.ng-leave {
-    -webkit-animation-name:slideOutUp;
-    animation-name:slideOutUp;
-  }
-}
+//#country-modal {
+//
+//  .animated.modal.slideInDown.ng-leave {
+//    -webkit-animation-name:slideOutUp;
+//    animation-name:slideOutUp;
+//  }
+//}
 
 .country-modal {
   .country-filter {

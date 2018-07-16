@@ -6,9 +6,7 @@
     width: 100vw;
     background: url('../img/hero-selection/bg.png') no-repeat center top;
     background-size: cover;
-    //display: flex;
-    //flex-direction: column;
-    //justify-content: space-between;
+    position: relative;
 
     .title {
       text-align: center;
@@ -21,14 +19,19 @@
         margin: 0 0 8px;
       }
     }
+    .back-arrow {
+      position: absolute;
+      padding: 10px;
+      height: 45px;
+      top: 30px;
+      left: 11px;
+    }
 
     .body {
-      display: grid;
-      grid-gap: 10px;
-      //grid-template-columns: repeat(2,calc(50% - 5px));
-      grid-template-columns: calc(50% - 5px) calc(50% - 5px);
-      box-sizing: border-box;
       padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0;
     }
     .hero-block {
       width: 100%;
@@ -38,6 +41,9 @@
       border-radius: 7px;
       overflow: hidden;
       position: relative;
+      padding: 0;
+      margin: 0 5px 10px 5px;
+      max-width: calc(50% - 10px);
     }
 
     .hero-bg {
@@ -52,6 +58,7 @@
       left: 0;
       background: url('../img/hero-selection/dots.png') no-repeat center;
       background-size: 100%;
+      margin-bottom: -1px;
       //-webkit-clip-path: polygon(0 0,100% 0,81% 72%,0 100%);
       //shape-margin: 20px;
 
@@ -73,19 +80,4 @@
     }
 
   }
-
-
 }
-//@media screen and (min-width: 1366px) {
-//  .kid-chat-menu {
-//    .call-and-chat img {
-//      width: 500px;
-//    }
-//    .call{
-//      right: 100px;
-//    }
-//    .chat{
-//      margin-left: 100px;
-//    }
-//  }
-//}

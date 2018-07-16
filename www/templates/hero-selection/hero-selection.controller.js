@@ -11,6 +11,7 @@
         const vm = this;
 
         vm.heroBG = heroBG;
+        vm.toMain = toMain;
 
         vm.heroes = [0,1,2,3,4,5,6,7];
 
@@ -20,6 +21,11 @@
           } else {
             return 7
           }
+        }
+
+        function toMain() {
+          console.log('to kid-main-page');
+          $state.go('kid-main-page')
         }
     }
 

@@ -8,6 +8,7 @@
         'service.securityService',
         'service.popUpMessage',
         'service.notification',
-        'service.fcm'
+        'service.fcm',
+        'service.purchaseService'
     ]);
 })();

@@ -2,10 +2,13 @@
   <ion-content>
 
       <div class="main-block">
+
         <div class="title">
           <p>choose</p>
           <p>your hero</p>
         </div>
+
+        <img src="./img/kid/back_arrow.png" class="back-arrow" ng-click="vm.toMain()">
 
         <div class="body">
           <div class="hero-block" ng-repeat="(key, hero) in vm.heroes">
@@ -15,8 +18,8 @@
               <img src="./img/hero-selection/arrow-next.png" class="arrow-next">
             </div>
           </div>
-
         </div>
+
       </div>
 
   </ion-content>
