@@ -105,6 +105,9 @@
         resolve: {
           security: function ($timeout, securityService) {
             return $timeout(function() { securityService.onlyParent(); });
+          },
+          payments: function (purchaseService) {
+            return purchaseService.paymentsList();
           }
         }
       })

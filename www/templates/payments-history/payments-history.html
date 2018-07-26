@@ -9,10 +9,10 @@
 
             <div class="info-block">
               <div class="payment-block" ng-repeat="pay in vm.pay">
-                <p class="price" ng-if="pay.price">{{pay.price}} $</p>
-                <p class="kids" ng-if="pay.quantity">{{pay.quantity}} kids</p>
+                <p class="price">{{pay.price_as_decimal}} {{pay.currency}}</p>
+                <p class="kids">{{pay.number_kids}} kids</p>
                 <div class="date">
-                  <p ng-if="pay.date">{{pay.date}}</p>
+                  <p class="pay-date">{{vm.dateConverter(pay.created_at)}}</p>
                   <p class="invoice">invoice <img src="./img/kid-chat/arrow-to-chat.png" class="arrow"></p>
                 </div>
               </div>
@@ -20,7 +20,10 @@
             </div>
 
             <div class="creditcard-block">
-              <div class="change"><p>change creditcard</p></div>
+              <div class="change" ng-click="vm.receipt()"><p>get receipt</p></div>
+            </div>
+            <div class="creditcard-block">
+              <div class="change" ng-click="vm.purchase()"><p>get purchase</p></div>
             </div>
 
           </div>

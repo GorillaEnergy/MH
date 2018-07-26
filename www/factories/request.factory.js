@@ -4,13 +4,15 @@
         .module('factory.request', [])
         .factory('http', http);
 
-    http.$inject = ['$http', '$sessionStorage', '$q', '$timeout', '$localStorage', '$ionicLoading', 'popUpMessage', '$state'];
+    http.$inject = ['$http', '$sessionStorage', '$q', '$timeout', '$localStorage', '$ionicLoading', 'popUpMessage',
+      '$state', '$rootScope'];
 
     /**
      * Wrapper over the standard http function
      */
 
-    function http($http, $sessionStorage, $q, $timeout, $localStorage, $ionicLoading, popUpMessage, $state) {
+    function http($http, $sessionStorage, $q, $timeout, $localStorage, $ionicLoading, popUpMessage,
+                  $state, $rootScope) {
         console.log('create request service');
 
         return {
@@ -185,6 +187,10 @@
             });
             // console.info('response complete', response.config.url, response);
             console.info(response);
+
+            if (response.status === 200 && response.data.status === 'error' && response.data.message === 'payment error') {
+              $rootScope.$broadcast('overdue-subscription', true);
+            }
 
             if (!response.data.error) {
                 promise.resolve(response.data);

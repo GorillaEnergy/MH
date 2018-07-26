@@ -346,7 +346,8 @@
   width: 91%!important;
   max-width: 360px;
   margin: auto;
-  height: fit-content;
+  //height: fit-content;
+  height: min-content;
   min-height: 5px!important;
   //background-color: #fff;
   border: 2px solid #0b1138;
@@ -371,7 +372,8 @@
     .reason-block {
       padding: 15px 0 10px;
       margin: 0 auto;
-      width: fit-content;
+      //width: fit-content;
+      width: min-content;
     }
 
     .title-report {
@@ -399,12 +401,13 @@
     }
     .send-report {
       padding: 12px 21px 4px;
-      margin: 0px auto 0;
+      margin: 0 auto 0;
       border: 2px solid #0b1138;
       border-radius: 21px;
       font-family: American;
       font-size: 21px;
-      width: fit-content;
+      //width: fit-content;
+      width: min-content;
       background-color: white;
     }
 

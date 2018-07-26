@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mind.hero" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mind.hero" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MindHero</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.42.23:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -147,6 +147,14 @@
     <allow-navigation href="http://169.254.60.64:8100" />
     <allow-navigation href="http://169.254.248.82:8100" />
     <allow-navigation href="http://192.168.42.23:8100" />
+    <allow-navigation href="http://192.168.42.87:8100" />
+    <allow-navigation href="http://192.168.42.164:8100" />
+    <allow-navigation href="http://192.168.42.150:8100" />
+    <allow-navigation href="http://192.168.42.20:8100" />
+    <allow-navigation href="http://192.168.1.103:8100" />
+    <allow-navigation href="http://192.168.42.183:8100" />
+    <allow-navigation href="http://169.254.211.32:8100" />
+    <allow-navigation href="http://192.168.42.121:8100" />
     <engine name="windows" spec="5.0.0" />
     <engine name="android" spec="^6.3.0" />
     <engine name="ios" spec="4.5.4" />

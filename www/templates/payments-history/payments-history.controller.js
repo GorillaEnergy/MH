@@ -4,52 +4,44 @@
     angular.module('app')
         .controller('PaymentsHistoryController', PaymentsHistoryController);
 
-    PaymentsHistoryController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal'];
+    PaymentsHistoryController.$inject = ['$ionicPopup', '$state', '$rootScope', 'payments', 'purchaseService'];
 
 
-    function PaymentsHistoryController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal) {
+    function PaymentsHistoryController($ionicPopup, $state, $rootScope, payments, purchaseService) {
         const vm = this;
 
         vm.toMenu = toMenu;
+        vm.receipt = receipt;
+        vm.purchase = purchase;
+        vm.dateConverter = dateConverter;
+
+        vm.pay = payments;
 
         function toMenu() {
           console.log('to menu');
           $state.go('menu')
         }
+        function receipt() {
+          purchaseService.getReceipt();
+          // $rootScope.$broadcast('overdue-subscription', true)
+        }
+        function purchase() {
+          purchaseService.getPurchases();
+        }
 
+        function dateConverter(date) {
+          let timestamp = date * 1;
 
-        vm.pay = [
-            {
-                price: 400,
-                quantity: 7,
-                date:'17/06/18',
-            },
-            {
-                price: 400,
-                quantity: 7,
-                date:'17/05/18',
-            },
-            {
-                price: 350,
-                quantity: 6,
-                date:'17/04/18',
-            },
-            {
-                price: 300,
-                quantity: 5,
-                date:'17/03/18',
-            },
-            {
-                price: 200,
-                quantity: 3,
-                date:'17/02/18',
-            },
-            {
-                price: 200,
-                quantity: 3,
-                date:'17/01/18',
-            }
-        ];
+          let day = new Date(timestamp).getDate();
+          let month = new Date(timestamp).getMonth() + 1;
+          let year = new Date(timestamp).getFullYear();
+
+          if (day < 10) { day = '0' + String(day); }
+          if (month < 10) { month = '0' + String(month); }
+
+          return day + '/' + month + '/' + year;
+        }
+
     }
 
 })();

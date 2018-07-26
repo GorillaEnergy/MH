@@ -29,7 +29,7 @@
 
     vm.show = {phoneMenu: true, codeApproval: false};
     let token_device = '';
-    getDeviceToken();
+    $timeout(function () { getDeviceToken(); }, 2000);
 
     // let token_device = '1111119384gh278hg92rhf982r9f829fj98rjf982h98fh298rfh892hrf89h2r98fh289rhf982hr98hr89h89rh89';
     // console.log('token_device = ', token_device);
@@ -42,21 +42,17 @@
     // };
 
     function getDeviceToken() {
-      if ($localStorage.token_device) {
-        token_device = $localStorage.token_device;
-      } else {
-        if (typeof FCMPlugin !== 'undefined') {
-          FCMPlugin.getToken(
-            function (token) {
-              console.log('token = ', token);
-              token_device = token;
-              $localStorage.token_device = token;
-            },function (res) {
-              {
-                console.log(res);
-              }
-            })
-        }
+      if (typeof FCMPlugin !== 'undefined') {
+        FCMPlugin.getToken(
+          function (token) {
+            console.log('token = ', token);
+            token_device = token;
+            $localStorage.token_device = token;
+          },function (res) {
+            {
+              console.log(res);
+            }
+          })
       }
     }
 
@@ -82,7 +78,6 @@
 
     function checkCode() {
       console.log('checkCode()');
-      // console.log('token_device = ', token_device);
 
       if (String(vm.approvalCode).length === 4) {
         let verificationData = {
@@ -106,7 +101,7 @@
         if (res.status == 'success') {
           console.log(res);
           vm.approvalCode = res.data;
-        } else {
+        } else if (res.status === 'error' && res.message === 'Access denied'){
           console.log('access denied');
           $scope.accessDeniedModal.show();
         }

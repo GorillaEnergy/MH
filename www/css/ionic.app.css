@@ -11117,7 +11117,7 @@ a.button {
   width: 91% !important;
   max-width: 360px;
   margin: auto;
-  height: fit-content;
+  height: min-content;
   min-height: 5px !important;
   border: 2px solid #0b1138;
   z-index: 2;
@@ -11136,7 +11136,7 @@ a.button {
     .report-modal .main-block-report .reason-block {
       padding: 15px 0 10px;
       margin: 0 auto;
-      width: fit-content; }
+      width: min-content; }
     .report-modal .main-block-report .title-report {
       font-family: American;
       font-size: 25px;
@@ -11155,12 +11155,12 @@ a.button {
         font-size: 13px; }
     .report-modal .main-block-report .send-report {
       padding: 12px 21px 4px;
-      margin: 0px auto 0;
+      margin: 0 auto 0;
       border: 2px solid #0b1138;
       border-radius: 21px;
       font-family: American;
       font-size: 21px;
-      width: fit-content;
+      width: min-content;
       background-color: white; }
     .report-modal .main-block-report .report-textarea-block {
       width: 100%;
@@ -12635,170 +12635,6 @@ p {
   .registration .price-block .count {
     font-size: 38px; }
 
-.pm-backdrop {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  background-color: black;
-  opacity: 0.6; }
-
-.payment-modal {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 91% !important;
-  margin: auto;
-  height: 97.5%;
-  min-height: 50px !important;
-  padding: 5px;
-  background-color: #fff;
-  z-index: 2; }
-  .payment-modal .pm-main-block {
-    width: 100%;
-    height: 100%;
-    border: 2px solid #d7d7d7;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px; }
-    .payment-modal .pm-main-block .pm-header {
-      background-color: #edf2f4;
-      border-bottom: 2px solid #d7d7d7;
-      color: #42626e;
-      font-size: 35px;
-      text-align: center;
-      line-height: 95px; }
-    .payment-modal .pm-main-block .pm-body {
-      background-color: white; }
-    .payment-modal .pm-main-block .pm-align {
-      width: 80%;
-      margin: 0 auto; }
-    .payment-modal .pm-main-block .pm-cards-block {
-      text-align: center; }
-      .payment-modal .pm-main-block .pm-cards-block .pm-cards {
-        margin: 33px  auto 20px;
-        display: flex;
-        width: fit-content; }
-        .payment-modal .pm-main-block .pm-cards-block .pm-cards .pm-visa {
-          height: 37px;
-          width: 62px;
-          margin: 0 5px;
-          background: url("../img/payment/visa.png") no-repeat center;
-          background-size: 45px;
-          border: 1px solid #bcbcbc;
-          border-radius: 3px; }
-        .payment-modal .pm-main-block .pm-cards-block .pm-cards .pm-master {
-          height: 37px;
-          width: 62px;
-          margin: 0 5px;
-          background: url("../img/payment/mastercard.png") no-repeat center;
-          background-size: 45px;
-          border: 1px solid #bcbcbc;
-          border-radius: 3px; }
-        .payment-modal .pm-main-block .pm-cards-block .pm-cards .pm-amex {
-          height: 37px;
-          width: 62px;
-          margin: 0 5px;
-          background: url("../img/payment/american-express.png") no-repeat center;
-          background-size: 65px;
-          border: 1px solid #bcbcbc;
-          border-radius: 3px; }
-        .payment-modal .pm-main-block .pm-cards-block .pm-cards .pm-discover {
-          height: 37px;
-          width: 62px;
-          margin: 0 5px;
-          background: url("../img/payment/discover.png") no-repeat center;
-          background-size: 65px;
-          border: 1px solid #bcbcbc;
-          border-radius: 3px; }
-    .payment-modal .pm-main-block .pm-price {
-      display: flex; }
-      .payment-modal .pm-main-block .pm-price .pm-amount {
-        width: 75.3%; }
-      .payment-modal .pm-main-block .pm-price .pm-edit {
-        margin: 29px 0 11px;
-        width: 23.5%;
-        line-height: 42px;
-        text-align: center;
-        font-size: 16px;
-        border: 1px solid #bcbcbc;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px; }
-    .payment-modal .pm-main-block .pm-number {
-      margin-top: 14px; }
-    .payment-modal .pm-main-block .pm-date {
-      margin-top: 13px;
-      width: 100%;
-      box-sizing: border-box; }
-      .payment-modal .pm-main-block .pm-date .pm-date-header {
-        width: 100%;
-        display: flex; }
-      .payment-modal .pm-main-block .pm-date .pm-date-first {
-        width: 50%; }
-      .payment-modal .pm-main-block .pm-date .pm-date-second {
-        width: 50%; }
-      .payment-modal .pm-main-block .pm-date .pm-multi-input {
-        width: 50%;
-        display: flex;
-        justify-content: space-between;
-        height: 42px;
-        border-right: 1px solid #bcbcbc; }
-        .payment-modal .pm-main-block .pm-date .pm-multi-input .pm-month {
-          width: 40%;
-          text-align: center;
-          height: 42px;
-          padding: 0 !important;
-          margin-left: 5px; }
-        .payment-modal .pm-main-block .pm-date .pm-multi-input .pm-separator {
-          line-height: 42px; }
-        .payment-modal .pm-main-block .pm-date .pm-multi-input .pm-years {
-          width: 40%;
-          text-align: center;
-          height: 42px;
-          padding: 0 !important; }
-      .payment-modal .pm-main-block .pm-date .pm-date-input-block {
-        width: 100%;
-        border: 1px solid #bcbcbc;
-        border-radius: 5px;
-        height: 44px;
-        margin-top: 4px;
-        display: flex; }
-    .payment-modal .pm-main-block .pm-post {
-      margin-top: 21px; }
-    .payment-modal .pm-main-block .pm-pay-button {
-      background-color: #00c8c4;
-      border-radius: 5px;
-      margin: 24px 0 0 0;
-      color: white;
-      text-align: center;
-      font-size: 27px;
-      line-height: 48px; }
-    .payment-modal .pm-main-block .topic {
-      color: #42626e;
-      font-size: 19px;
-      margin: 4px 0 0 2px;
-      font-weight: 400; }
-    .payment-modal .pm-main-block .topic-value {
-      color: #42626e;
-      font-size: 30px;
-      margin: 16px 0 0 2px;
-      font-weight: 400; }
-    .payment-modal .pm-main-block .pm-input {
-      margin-top: 5px;
-      width: 100%;
-      height: 44px;
-      border: 1px solid #bcbcbc;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      padding: 0 20px; }
-    .payment-modal .pm-main-block .pm-input-security-code {
-      width: 95%;
-      height: 42px;
-      padding: 0 20px; }
-
 .parent-payments .menu-block {
   display: flex;
   align-items: center;
@@ -12820,7 +12656,7 @@ p {
   background: url("../img/payments-history/bg.png") no-repeat center/cover;
   height: calc(100vh - 72px);
   overflow: scroll;
-  padding: 30px 10px 10px; }
+  padding: 10px 10px 10px; }
   .parent-payments .main-block .common-block {
     width: 100%;
     height: 100%; }
@@ -12842,18 +12678,24 @@ p {
         font-family: American;
         font-size: 30px;
         color: #2fbc09;
-        transform: rotate(-20deg); }
+        transform: rotate(-20deg);
+        margin: 10px 0 10px; }
       .parent-payments .main-block .info-block .payment-block .kids {
         font-family: American;
         font-size: 60px;
-        color: #0b1138; }
+        color: #0b1138;
+        margin: 5px 0 0; }
       .parent-payments .main-block .info-block .payment-block .date {
         text-align: right; }
         .parent-payments .main-block .info-block .payment-block .date p {
           font-family: AmericanPatrius;
           align-items: center;
           color: #0b1138;
-          font-weight: 600; }
+          font-weight: 600;
+          margin: 6px 0 0 0; }
+        .parent-payments .main-block .info-block .payment-block .date .pay-date {
+          font-size: 12px;
+          margin: -3px 5px 5px 0; }
       .parent-payments .main-block .info-block .payment-block .invoice {
         margin-top: 7px;
         display: inline-flex; }
@@ -12871,6 +12713,7 @@ p {
     .parent-payments .main-block .creditcard-block .change p {
       color: #fff;
       font-family: Patrius;
+      text-transform: uppercase;
       font-size: 18px;
       margin: 0; }
 
@@ -13313,3 +13156,48 @@ ul#ion-segment[dark] li:hover:not(.active) {
 .tutorial-modal .tutorial-img {
   width: calc(100% - 20px);
   margin: 0 auto; }
+
+.payment-warning .popup {
+  width: 300px !important;
+  height: 206px;
+  border-radius: 5px !important; }
+
+.payment-warning .popup-head {
+  display: none; }
+
+.payment-warning .popup-body {
+  padding: 0; }
+
+.payment-warning .main-block {
+  background: url("../img/kid/modal/dots.png") center no-repeat;
+  background-size: 140%;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin: 0 !important;
+  border: 2px solid #0a184c;
+  border-radius: 5px; }
+  .payment-warning .main-block .data-block {
+    width: 100%;
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 27px; }
+    .payment-warning .main-block .data-block .warning-line {
+      display: flex;
+      width: fit-content;
+      margin: 0 auto; }
+      .payment-warning .main-block .data-block .warning-line .warning-ico {
+        height: 24px;
+        margin-right: 10px;
+        margin-top: -6px; }
+  .payment-warning .main-block .title-km {
+    display: block;
+    text-align: center;
+    font-size: 17px;
+    line-height: 18px;
+    text-transform: uppercase;
+    margin-top: 0.7px;
+    font-family: AmericanPatrius; }
+  .payment-warning .main-block .close {
+    height: 80px;
+    margin: 0 auto; }

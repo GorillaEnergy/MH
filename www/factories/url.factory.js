@@ -39,6 +39,11 @@
             search_content: baseUrl + 'api/search-content',
             add_to_favorite: baseUrl + 'api/add-to-favourites',
             remove_from_favorite: baseUrl + 'api/remove-from-favourites'
+          },
+          purchase : {
+            get_plan: baseUrl + 'api/list-tariff',
+            confirm: baseUrl + 'api/create-payment',
+            payments_archive: baseUrl + 'api/list-payment'
           }
 
         }
