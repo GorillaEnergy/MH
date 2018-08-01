@@ -4,17 +4,31 @@
   angular.module('service.purchaseService', [])
     .service('purchaseService', purchaseService);
 
-  purchaseService.$inject = ['http', 'url', '$ionicLoading', '$ionicPopup', '$rootScope'];
+  purchaseService.$inject = ['http', 'url', '$ionicLoading', '$ionicPopup', '$rootScope', '$state'];
 
-  function purchaseService(http, url, $ionicLoading, $ionicPopup, $rootScope) {
+  function purchaseService(http, url, $ionicLoading, $ionicPopup, $rootScope, $state) {
 
     var popupInstance = undefined;
 
     var model = {};
-    model.buyProduct = buyProduct;
+    model.buy = buy;
     model.paymentsList = paymentsList;
     model.getReceipt = getReceipt;
     model.getPurchases = getPurchases;
+    model.productInfo = productInfo;
+
+    function productInfo(tariff) {
+      console.log('products', tariff);
+      window.inAppPurchase
+        .getProducts(tariff)
+        .then(function (tariff_info) {
+          console.log(tariff_info);
+        })
+        .catch(function (err) {
+          console.log(err);
+          errorPopup();
+        });
+    }
 
 
     $rootScope.$on('overdue-subscription', function (event, data) {
@@ -27,7 +41,7 @@
       return http.post(url.purchase.get_plan, data)
     }
 
-    function buyProduct(kids) {
+    function buy(kids) {
       let tariff;
       let tariff_id;
       let number_kids = kids.length;
@@ -40,8 +54,8 @@
           if (res.data.length) {
             tariff = res.data[0].productId;
             tariff_id = res.data[0].id;
-            // getProductInfo([tariff], id);
-            getProductInfo(['com.mind.hero.month_test']);
+            getProductInfo([tariff], tariff_id);
+            // getProductInfo(['managed.product.test2'], tariff_id);
           } else {
             errorPopup()
           }
@@ -50,13 +64,13 @@
         }
       });
 
-      function getProductInfo(tariff) {
+      function getProductInfo(tariff, tariff_id) {
         console.log('products', tariff);
         window.inAppPurchase
           .getProducts(tariff)
           .then(function (tariff_info) {
-            console.log(tariff_info);
-            subscribe(tariff[0], tariff_info)
+            console.log(tariff[0], tariff_info, tariff_id);
+            buyProduct(tariff[0], tariff_info, tariff_id)
           })
           .catch(function (err) {
             console.log(err);
@@ -64,28 +78,14 @@
           });
       }
 
-      function subscribe(product, product_info) {
-
-        if (window.ionic.Platform.isWebView() && angular.isDefined(window.inAppPurchase) && product) {
-          window.inAppPurchase.subscribe(product)
+      function buyProduct(product_name, product_info, tariff_id) {
+        if (window.ionic.Platform.isWebView() && angular.isDefined(window.inAppPurchase) && product_name) {
+          window.inAppPurchase.buy(product_name)
             .then(function (data) {
-              console.log(JSON.stringify(data));
-              let product_id = data.productId;
-              let receipt = JSON.parse(data.receipt);
-              let date = receipt.purchaseTime;
-              let state = receipt.purchaseState;
-              $ionicPopup.alert({
-                title: 'Success 1',
-                template: product_id + ' // ' + date + ' // ' + state
-              });
-              // return window.inAppPurchase.consume(data.type, data.receipt, data.signature);
+              savePaymentInHistory(data, product_info, tariff_id);
+              return window.inAppPurchase.consume(data.type, data.receipt, data.signature);
             }).then(function (data) {
             console.log('processSuccessBuy');
-            $ionicPopup.alert({
-              title: 'Success 2',
-              template: JSON.stringify(data)
-            });
-            savePaymentInHistory(product_info, kids);
           }).catch(function (err) {
             $ionicLoading.hide();
             console.log(err);
@@ -94,23 +94,23 @@
         }
       }
 
-      function savePaymentInHistory(product_info, kids) {
-        console.log(product_info);
-        console.log(kids);
-        let data = {
-          currency: product_info[0].currency,
-          description: product_info[0].description,
-          price: product_info[0].price,
-          price_as_decimal: product_info[0].priceAsDecimal,
-          tariff_id: tariff_id,
-          title: product_info[0].title,
-          // product_id: product_info[0].productId,
-          // number_kids: kids.length,
-          // kids_id: kids
-        };
-        console.log('data = ', data);
+      function savePaymentInHistory(data, product_info, tariff_id) {
+        let receipt = JSON.parse(data.receipt);
 
-        return http.post(url.purchase.confirm, data).then(function (res) {
+        let data_for_send = {
+            currency: product_info[0].currency,
+            description: product_info[0].description,
+            price: product_info[0].price,
+            priceAsDecimal: product_info[0].priceAsDecimal,
+            tariff_id: tariff_id,
+            title: product_info[0].title,
+            kid_id: kids,
+            // date: receipt.date,
+            // product_id: product_info[0].productId,
+
+        };
+
+        return http.post(url.purchase.confirm, data_for_send).then(function (res) {
           console.log(res);
           if (res.status == 'success') {
             $state.go('parent-main-page')

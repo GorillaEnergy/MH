@@ -87,7 +87,7 @@
       console.log(kids_id);
 
       if (kids_id.length) {
-        purchaseService.buyProduct(kids_id)
+        purchaseService.buy(kids_id)
       }
     }
 

@@ -11,8 +11,6 @@
         const vm = this;
 
         vm.toMenu = toMenu;
-        vm.receipt = receipt;
-        vm.purchase = purchase;
         vm.dateConverter = dateConverter;
 
         vm.pay = payments;
@@ -20,13 +18,6 @@
         function toMenu() {
           console.log('to menu');
           $state.go('menu')
-        }
-        function receipt() {
-          purchaseService.getReceipt();
-          // $rootScope.$broadcast('overdue-subscription', true)
-        }
-        function purchase() {
-          purchaseService.getPurchases();
         }
 
         function dateConverter(date) {
