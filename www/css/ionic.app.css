@@ -12936,13 +12936,29 @@ p {
   height: calc(100vh - 87px);
   width: 100%;
   overflow-x: scroll;
-  margin: 15px 0 0; }
+  margin: 15px 0 0;
+  padding: 0 15px; }
+  .terms-condition-block .main-block h3 {
+    margin-top: 5px;
+    margin-bottom: 5px; }
   .terms-condition-block .main-block p {
     font-family: Neue;
     font-size: 19px;
-    padding: 0 15px 15px;
+    padding-bottom: 15px;
     margin: 0;
-    word-spacing: 4px;
+    text-align: justify;
+    line-height: 25px;
+    text-indent: 20px; }
+  .terms-condition-block .main-block ul {
+    display: block;
+    list-style-type: disc;
+    margin: 1em 0;
+    padding-left: 25px; }
+  .terms-condition-block .main-block li {
+    font-family: Neue;
+    font-size: 19px;
+    padding-bottom: 10px;
+    /* margin: 0; */
     text-align: justify;
     line-height: 25px; }
 

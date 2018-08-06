@@ -25,14 +25,36 @@
     width: 100%;
     overflow-x: scroll;
     margin: 15px 0 0;
+    padding: 0 15px;
+
+    h3 {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
     p{
       font-family: Neue;
       font-size: 19px;
-      padding: 0 15px 15px;
+      padding-bottom: 15px;
       margin: 0;
-      word-spacing: 4px;
+      //word-spacing: 4px;
+      text-align: justify;
+      line-height: 25px;
+      text-indent: 20px;
+    }
+    ul {
+      display: block;
+      list-style-type: disc;
+      margin: 1em 0;
+      padding-left: 25px;
+    }
+    li {
+      font-family: Neue;
+      font-size: 19px;
+      padding-bottom: 10px;
+      /* margin: 0; */
       text-align: justify;
       line-height: 25px;
     }
+
   }
 }
