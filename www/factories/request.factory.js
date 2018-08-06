@@ -147,12 +147,15 @@
                 }
                 else if (err.status === 0) {
                     popUpMessage.showMessage('There is no Internet connection');
+                  return [];
                 }
                 else if (err.status === 400) {
                     popUpMessage.showMessage(err.data.message);
+                  return [];
                 }
                 else if (err.status === 401) {
                     // $state.go('authorization');
+                  return [];
                 }
                 else if (err.status === 429) {
                   // $ionicLoading.hide();
@@ -161,10 +164,13 @@
                 }
                 else if (err.status === 500) {
                     popUpMessage.showMessage('Server error: ' + err.status + ' ' + err.data.message);
+                  return [];
                 }
                 else {
                     popUpMessage.showMessage('Server error: ' + err.status + ' ' + err.statusText);
+                  return [];
                 }
+                return []
                 // console.log('XHR Failed: ' + err.status);
             } else {
                 popUpMessage.showMessage(err.data.error);
@@ -223,6 +229,6 @@
             return $http.post(urlStr, data, config)
                 .then(requestComplete)
                 .catch(requestFailed);
-        };
+        }
     }
 })();

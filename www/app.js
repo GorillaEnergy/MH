@@ -12,10 +12,10 @@
         .run(run);
 
     run.$inject = ['$ionicPlatform', '$timeout', '$state', 'toastr', 'fcm', 'userService', '$ionicSideMenuDelegate',
-                   'purchaseService'];
+                   'purchaseService', 'notificationService'];
 
     function run($ionicPlatform, $timeout, $state, toastr, fcm, userService, $ionicSideMenuDelegate,
-                 purchaseService) {
+                 purchaseService, notificationService) {
 
         // Array.prototype.sum = function () {
         //     return this.reduce(function (a, b) {
@@ -65,6 +65,8 @@
             // setInterval(function () {
             //   console.log('Online = ', navigator.onLine);
             // }, 5000)
+
+            notificationService.token()
         })
     }
 })();
