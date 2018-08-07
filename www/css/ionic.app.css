@@ -12508,7 +12508,8 @@ p {
   min-height: 568px;
   width: 100vw;
   background: url("../img/registration/registration.png") no-repeat center;
-  background-size: cover; }
+  background-size: cover;
+  position: relative; }
 
 .registration .title {
   text-transform: uppercase;
@@ -12518,6 +12519,15 @@ p {
   color: #0b1138;
   font-weight: 900;
   padding: 43px 0 35px 0; }
+
+.registration .back-to-kids {
+  position: absolute;
+  z-index: 10;
+  top: 27px;
+  left: 0; }
+  .registration .back-to-kids img {
+    padding: 10px;
+    height: 45px; }
 
 .registration .data-block {
   width: 100%;
@@ -12935,7 +12945,6 @@ p {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 87px);
   width: 100%;
-  overflow: scroll;
   margin: 15px 0 0;
   padding: 0 15px; }
   .terms-condition-block .main-block h3 {

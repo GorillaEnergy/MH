@@ -8,6 +8,10 @@
           <span>payment</span>
         </div>
 
+        <div class="back-to-kids" ng-click="vm.backToKids()">
+          <img src="./img/kid/back_arrow.png">
+        </div>
+
         <div class="kids-block" ng-repeat="(key, kid) in vm.kids" ng-if="!kid.register">
           <div class="kid">
             <!--<img ng-src="./img/payment/kid{{key}}.png" class="kid-img" ng-if="key <= 2">-->

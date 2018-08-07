@@ -76,16 +76,17 @@
     }
 
     function kidFilter() {
+      console.log(kids);
       let data = [];
       angular.forEach(kids, function (kid) {
-        if (kid.register) { data.push(kid) }
+        if (kid.payment) { data.push(kid) }
       });
       return data;
     }
     function emptyKids() {
       let status = true;
       for (let i = 0; i<vm.kids.length; i++) {
-        if (vm.kids[i].register) {
+        if (vm.kids[i].payment) {
           status = false;
           break;
         }

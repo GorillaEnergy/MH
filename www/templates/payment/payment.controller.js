@@ -18,6 +18,10 @@
     vm.editKid = editKid;
     vm.kidColor = kidColor;
     vm.addKid = addKid;
+    vm.backToKids = backToKids;
+
+
+    console.log($state.current.url);
 
     vm.kids = kidFilter();
     vm.totalPrice = totalPriceCalc(vm.kids.length);
@@ -26,7 +30,7 @@
       let maximum_kid = 6;
       let data = [];
       angular.forEach(kids, function (kid, index) {
-        if (!kid.register && index <= maximum_kid ) { data.push(kid) }
+        if (!kid.payment && index <= maximum_kid ) { data.push(kid) }
       });
       return data;
     }
@@ -57,6 +61,10 @@
       delete $localStorage.kid_index;
       $state.go('kid');
     }
+    function backToKids() {
+      $state.go('kid');
+    }
+
     function kidColor(index) {
       let name;
       index < 6 ? name = 'kid-color-' + index : name = 'kid-color-overflow';

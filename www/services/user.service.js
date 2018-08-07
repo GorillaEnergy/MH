@@ -52,20 +52,43 @@
                 setPhone(phone);
                 fcm.subscribe();
 
-                if (!res.data.user.name) {
+                let user = angular.copy(res.data.user);
+                console.log(user);
+
+                if (user.role_id === 2) {
                   http.get(url.kid.uploadKids).then(function (res) {
                     $localStorage.kids = [];
                     if (res.status = 'success') {
-                      setKids(res.data);
-                      delete $localStorage.outgoing_from_settings;
-                      $state.go('profile');
+                      let kids = angular.copy(res.data);
+                      setKids(kids);
+
+                      if (!user.name) {
+                        $state.go('profile');
+                      } else {
+                        console.log('kids', kids);
+                        let route_to_main_page = false;
+
+                        for (let i = 0; i < kids.length; i++) {
+                          console.log(kids[i].payment);
+                          if (kids[i].payment == '1') {
+                            // $state.go('parent-main-page');
+                            route_to_main_page = true;
+                            break;
+                          }
+                        }
+
+                        if (route_to_main_page) {
+                          $state.go('parent-main-page');
+                        } else {
+                          $state.go('payment');
+                        }
+                      }
                     }
                   });
-                } else if (res.data.user.role_id === 2) {
-                  $state.go('parent-main-page');
                 } else if (res.data.user.role_id === 1) {
                   $state.go('kid-main-page');
                 }
+
               } else {
                 console.log('Authorization error');
                 toastr.error('Authorization error');

@@ -73,7 +73,7 @@
       let data = [];
 
       if (angular.isDefined(userService.getKidIndex())) {
-        if (kids[userService.getKidIndex()].register) {
+        if (kids[userService.getKidIndex()].payment) {
           getRegisteredKid()
         } else {
           getUnregisteredKid()
@@ -91,7 +91,7 @@
         console.log('getUnregisteredKid');
         let maximum_kid = 6;
         angular.forEach(kids, function (kid, index) {
-          if (!kid.register && index <= maximum_kid ) { data.push(kid) }
+          if (!kid.payment && index <= maximum_kid ) { data.push(kid) }
         });
       }
       return data;
@@ -115,7 +115,7 @@
         //проверка на коректность данных
         if (kids.length) {
           //проверка оплаты
-          console.log(kids[kid_index].register);
+          console.log(kids[kid_index].payment);
           if (kids[kid_index].register == '1') {
             vm.viewType.new_kid = false;
             vm.viewType.edit_registered_kid = true;
