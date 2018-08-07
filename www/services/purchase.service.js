@@ -95,7 +95,7 @@
       }
 
       function savePaymentInHistory(data, product_info, tariff_id) {
-        let receipt = JSON.parse(data.receipt);
+        // let receipt = JSON.parse(data.receipt);
 
         let data_for_send = {
             currency: product_info[0].currency,

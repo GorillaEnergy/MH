@@ -12935,7 +12935,7 @@ p {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 87px);
   width: 100%;
-  overflow-x: scroll;
+  overflow: scroll;
   margin: 15px 0 0;
   padding: 0 15px; }
   .terms-condition-block .main-block h3 {
