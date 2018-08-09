@@ -24,7 +24,7 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.authorization(); });
+            return securityService.authorization();
           },
           countries: function (countryCodes) {
             return countryCodes.list();

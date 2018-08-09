@@ -30,7 +30,7 @@
         console.log(user);
 
         if (user.role_id === 2) {
-          http.get(url.kid.uploadKids).then(function (res) {
+          return http.get(url.kid.uploadKids).then(function (res) {
             $localStorage.kids = [];
             if (res.status = 'success') {
               let kids = angular.copy(res.data);

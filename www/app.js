@@ -15,13 +15,11 @@
                    'purchaseService', 'notificationService'];
 
     function run($ionicPlatform, $timeout, $state, toastr, fcm, userService, $ionicSideMenuDelegate,
-                 purchaseService, notificationService) {
+                 purchaseService, notificationService, $ionicConfigProvider) {
 
-        // Array.prototype.sum = function () {
-        //     return this.reduce(function (a, b) {
-        //         return a + b;
-        //     });
-        // };
+        // if (ionic.Platform.platform() == 'ios') {
+        //   $ionicConfigProvider.views.swipeBackEnabled(false);
+        // }
 
         // Initialize Firebase
         let config = {
@@ -38,7 +36,7 @@
 
         $ionicPlatform.ready(function () {
             setTimeout(function() {
-                // navigator.splashscreen.hide();
+                navigator.splashscreen.hide();
             }, 2000);
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -61,6 +59,17 @@
               // fcm.subscribe();
               console.log('resume');
             }, false);
+
+            // document.addEventListener("backbutton", function (e) {
+            //   e.preventDefault();
+            //   // return false;
+            //   console.log("hello");
+            // }, false);
+
+            // $ionicPlatform.registerBackButtonAction(function () {
+            //   e.preventDefault();
+            // });
+
 
             // setInterval(function () {
             //   console.log('Online = ', navigator.onLine);
