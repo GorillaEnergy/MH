@@ -40,7 +40,7 @@
 
 <script id="tutorial-modal" type="text/ng-template">
   <ion-modal-view class="tutorial-modal">
-    <ion-content class="main-block">
+    <ion-pane class="main-block">
 
       <img src="./img/tutorial/close.png" class="close-tutorial-modal"
           ng-click="vm.closeTutorial()">
@@ -99,7 +99,7 @@
         </ion-slide>
       </ion-slide-box>
 
-    </ion-content>
+    </ion-pane>
   </ion-modal-view>
 </script>
 
@@ -107,7 +107,7 @@
   <div class="kid-backdrop" ng-click="parentModal.hide()"></div>
   <ion-modal-view class="add-follower-modal">
 
-    <ion-content class="follower-main-block">
+    <ion-pane class="follower-main-block">
 
       <div class="title-f">
         <span class="question-f">insert parent number</span>
@@ -143,7 +143,7 @@
           <img src="./img/kid/modal/invite.png" class="invite-f" ng-click="vm.addParent()">
         </div>
       </div>
-    </ion-content>
+    </ion-pane>
 
   </ion-modal-view>
 </script>
@@ -151,7 +151,7 @@
 <script id="country-codes-modal" type="text/ng-template">
   <ion-modal-view class="country-modal">
 
-    <ion-header-bar class="bar bar-header bar-calm" ng-click="modalCountry.hide()">
+    <ion-header-bar class="bar bar-header bar-calm" ng-click="countryModal.hide()">
       <a class="button icon-left ion-chevron-left button-clear button-dark"></a>
     </ion-header-bar>
 

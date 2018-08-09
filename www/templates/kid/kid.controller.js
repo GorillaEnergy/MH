@@ -116,7 +116,7 @@
         if (kids.length) {
           //проверка оплаты
           console.log(kids[kid_index].payment);
-          if (kids[kid_index].register == '1') {
+          if (kids[kid_index].payment == '1') {
             vm.viewType.new_kid = false;
             vm.viewType.edit_registered_kid = true;
             vm.viewType.edit_unregistered_kid = false;

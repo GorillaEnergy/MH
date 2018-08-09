@@ -11495,7 +11495,7 @@ a.button {
   height: 63px; }
 
 .kid .empty-header-small {
-  height: 43px; }
+  height: 36px; }
 
 .kid .animation-backdrop {
   position: absolute;
@@ -11983,7 +11983,7 @@ a.button {
 .kid .back-to-settings {
   position: absolute;
   z-index: 10;
-  top: 27px;
+  top: 20px;
   left: 0; }
   .kid .back-to-settings img {
     padding: 10px;
@@ -12913,7 +12913,6 @@ p {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 87px);
   width: 100%;
-  overflow-x: scroll;
   margin: 15px 0 0; }
   .about-block .main-block p {
     font-family: Neue;
@@ -13226,3 +13225,9 @@ ul#ion-segment[dark] li:hover:not(.active) {
   .payment-warning .main-block .close {
     height: 80px;
     margin: 0 auto; }
+
+.terms-condition-block .main-block {
+  overflow: scroll; }
+
+.about-block .main-block {
+  overflow: scroll; }

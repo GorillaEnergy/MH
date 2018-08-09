@@ -76,20 +76,26 @@
 
     function addParent() {
       console.log('addFollower');
-      let data = {
-        phone: vm.phone,
-        code: vm.countryCode,
-        type: "owner"
-      };
-      console.log(data);
-      userService.addFollower(data).then(function (res) {
-        if (res.status === 'success') {
-          toastr.success('Parent added');
-          $scope.parentModal.hide()
-        } else {
-          $scope.parentModal.hide()
-        }
-      })
+
+      if (vm.phone.length >= 7) {
+        let data = {
+          phone: vm.phone,
+          code: vm.countryCode,
+          type: "owner"
+        };
+        console.log(data);
+
+        userService.addFollower(data).then(function (res) {
+          if (res.status === 'success') {
+            toastr.success('Parent added');
+            $scope.parentModal.hide()
+          } else {
+            $scope.parentModal.hide()
+          }
+        })
+      } else {
+        console.log('err!');
+      }
     }
 
 

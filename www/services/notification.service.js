@@ -34,7 +34,7 @@
             let fcmCheck = setInterval(() => {
               if (typeof FCMPlugin != 'undefined') {
                 FCMPlugin.onTokenRefresh(function (token) {
-                  alert(token);
+                  // alert(token);
                   console.log(token);
                   $localStorage.token_device = token;
                   //change token device on backend here

@@ -31,24 +31,36 @@
 
     // не несет смысловой нагрузки, нужно для создания вьюхи
     vm.kidsStatus = [
-      {
-        callRightNow: true,
-        lastCall: '12:25',
-        warning: false,
-        clouds: true,
-      },
+      // {
+      //   callRightNow: true,
+      //   lastCall: '12:25',
+      //   warning: false,
+      //   clouds: true,
+      // },
+      // {
+      //   callRightNow: false,
+      //   lastCall: '12:25',
+      //   warning: true,
+      //   clouds: true,
+      // },
       {
         callRightNow: false,
-        lastCall: '12:25',
-        warning: true,
-        clouds: true,
+        lastCall: '15:43',
+        warning: false,
+        clouds: false,
       },
       {
         callRightNow: false,
         lastCall: '15:43',
         warning: false,
         clouds: false,
-      }
+      },
+      {
+        callRightNow: false,
+        lastCall: '15:43',
+        warning: false,
+        clouds: false,
+      },
     ];
     ////////////////////////////////////////////////////////
 
