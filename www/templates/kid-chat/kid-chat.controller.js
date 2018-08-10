@@ -38,7 +38,7 @@
     vm.consultantName = 'Mariya';
     vm.date = new Date();
     vm.messages = [];
-    vm.blocked = false;
+    vm.blocked = null;
 
 
     vm.reportReasonList = ['reason 1', 'reason 2', 'reason 3',];
@@ -74,7 +74,11 @@
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/access').on('value', (snapshot) => {
         $timeout(function () {
           $timeout(function () {
-            snapshot.val() ? vm.blocked = snapshot.val() : vm.blocked = false;
+            snapshot.val() === null ? create_room() : vm.blocked = snapshot.val();
+
+            function create_room() {
+              fb.ref('/chats/' + kid_id + '/' + psy_id + '/access').set(true);
+            }
             console.log('access psy chat = ', snapshot.val());
           })
         });
@@ -258,17 +262,17 @@
       })
     }
     function addMessagesEvent() {
-      let access = false;
+      // let access = false;
       console.log('addMessagesEvent');
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').limitToLast(1).on('child_added', (snapshot) => {
         $timeout(function () {
-          if (access) {
-            console.log(snapshot.val());
+          // if (access || !vm.messages.length) {
+          //   console.log(snapshot.val());
             vm.messages.push(snapshot.val());
             scrollToBottom(true)
-          } else {
-            access = true;
-          }
+          // } else {
+          //   access = true;
+          // }
         })
       })
     }
@@ -372,6 +376,8 @@
       $scope.reportModal = modal;
     });
 
+    let messages = [];
+    fb.ref('/chats/' + kid_id + '/' + psy_id).push(messages);
   }
 
 })();

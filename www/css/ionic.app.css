@@ -11136,7 +11136,7 @@ a.button {
     .report-modal .main-block-report .reason-block {
       padding: 15px 0 10px;
       margin: 0 auto;
-      width: min-content; }
+      width: 190px; }
     .report-modal .main-block-report .title-report {
       font-family: American;
       font-size: 25px;
@@ -12912,6 +12912,7 @@ p {
 .about-block .main-block {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 87px);
+  overflow: scroll;
   width: 100%;
   margin: 15px 0 0; }
   .about-block .main-block p {

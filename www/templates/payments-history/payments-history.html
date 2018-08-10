@@ -9,7 +9,7 @@
 
             <div class="info-block">
               <div class="payment-block" ng-repeat="pay in vm.pay">
-                <p class="price">{{pay.price_as_decimal}} {{pay.currency}}</p>
+                <p class="price">{{pay.priceAsDecimal}} {{pay.currency}}</p>
                 <p class="kids">{{pay.number_kids}} kids</p>
                 <div class="date">
                   <p class="pay-date">{{vm.dateConverter(pay.created_at)}}</p>

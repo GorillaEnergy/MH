@@ -12,10 +12,10 @@
         .run(run);
 
     run.$inject = ['$ionicPlatform', '$timeout', '$state', 'toastr', 'fcm', 'userService', '$ionicSideMenuDelegate',
-                   'purchaseService', 'notificationService'];
+                   'purchaseService', 'notificationService', '$location', '$window'];
 
     function run($ionicPlatform, $timeout, $state, toastr, fcm, userService, $ionicSideMenuDelegate,
-                 purchaseService, notificationService, $ionicConfigProvider) {
+                 purchaseService, notificationService, $location, $window) {
 
         // if (ionic.Platform.platform() == 'ios') {
         //   $ionicConfigProvider.views.swipeBackEnabled(false);
@@ -60,15 +60,14 @@
               console.log('resume');
             }, false);
 
-            // document.addEventListener("backbutton", function (e) {
-            //   e.preventDefault();
-            //   // return false;
-            //   console.log("hello");
-            // }, false);
+            // $ionicPlatform.registerBackButtonAction(function (event) {
+            //   // console.log($state.current.name);
+            //   // console.log($location.path());
+            //   // event.preventDefault();
+            //   console.log("registerBackButtonAction");
+            // }, 1000);
 
-            // $ionicPlatform.registerBackButtonAction(function () {
-            //   e.preventDefault();
-            // });
+            // console.log(history);
 
 
             // setInterval(function () {

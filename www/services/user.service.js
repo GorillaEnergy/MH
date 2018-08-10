@@ -4,10 +4,10 @@
     angular.module('service.userService', [])
         .service('userService', userService);
 
-    userService.$inject = ['http', 'url', '$localStorage', '$sessionStorage', '$state', '$timeout', 'fcm', 'toastr'];
+    userService.$inject = ['http', 'url', '$localStorage', '$sessionStorage', '$state', '$location', '$timeout', 'fcm', 'toastr'];
 
 
-    function userService(http, url, $localStorage, $sessionStorage, $state, $timeout, fcm, toastr) {
+    function userService(http, url, $localStorage, $sessionStorage, $state, $location, $timeout, fcm, toastr) {
         let model = {};
         model.checkPhone = checkPhone;
         model.login = login;
@@ -47,6 +47,8 @@
         function login(data, phone) {
             return http.post(url.auth.login, data).then(function (res) {
               if (res.status === 'success') {
+                // $location.replace();
+                console.log(history);
                 setUser(res.data.user);
                 setToken(res.data.token);
                 setPhone(phone);

@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="input-block" ng-if="vm.blocked">
+    <div class="input-block" ng-if="vm.blocked === true">
       <div class="input-and-message">
         <input type="text" placeholder="Message" ng-model="vm.message_input"
                ng-focus="vm.focusedInput()"
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <div class="locked-block" ng-if="!vm.blocked">
+    <div class="locked-block" ng-if="vm.blocked === false && vm.blocked !== null">
       <div class="locked-user">
         <img src="./img/kid-chat/locker.png">
         <span>user is blocked</span>

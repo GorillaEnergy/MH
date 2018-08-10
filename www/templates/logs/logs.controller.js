@@ -104,7 +104,7 @@
       return name;
     }
     function dateConverter(log) {
-      let timestamp = log.created_at;
+      let timestamp = log.created_at *1000;
 
       let day = new Date(timestamp).getDate();
       let month = new Date(timestamp).getMonth() + 1;

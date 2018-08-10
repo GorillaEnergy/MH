@@ -21,6 +21,7 @@
   .main-block {
     background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
     height: calc(100vh - 87px);
+    //overflow: scroll;
     width: 100%;
     margin: 15px 0 0;
     padding: 0 15px;

@@ -21,7 +21,7 @@
         }
 
         function dateConverter(date) {
-          let timestamp = date * 1;
+          let timestamp = date * 1000;
 
           let day = new Date(timestamp).getDate();
           let month = new Date(timestamp).getMonth() + 1;
@@ -32,7 +32,6 @@
 
           return day + '/' + month + '/' + year;
         }
-
     }
 
 })();
