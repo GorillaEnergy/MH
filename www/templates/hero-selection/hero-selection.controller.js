@@ -12,6 +12,7 @@
 
         vm.heroBG = heroBG;
         vm.toMain = toMain;
+        vm.toCall = toCall;
 
         vm.heroes = [0,1,2,3,4,5,6,7];
 
@@ -26,6 +27,10 @@
         function toMain() {
           console.log('to kid-main-page');
           $state.go('kid-main-page')
+        }
+        function toCall() {
+          console.log('to call');
+          // $state.go('test');
         }
     }
 

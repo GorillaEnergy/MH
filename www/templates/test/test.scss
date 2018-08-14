@@ -1,24 +1,25 @@
 .test {
-  .parent {
-    position: relative;
-    height: auto;
-    min-height: 100vh;
-    width: 100vw;
-    background-color: #0b1138;
+  font-family: AmericanPatrius;
+  color: #0b1138;
+  //position: relative;
+
+  .button-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px auto;
   }
-  .content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    width: 100vw;
-    color: white;
+
+  .video-container {
+    text-align: center;
   }
-  .img {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-    height: 100px;
+
+  video {
+    width: 320px;
+    height: 240px;
+    border: 1px solid #02458b;
+    margin: 1px;
+    background-color: black;
   }
+
 }

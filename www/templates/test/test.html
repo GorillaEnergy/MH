@@ -1,26 +1,19 @@
 <ion-view class="test">
-    <ion-content>
-      <div class="parent" id="parent">
-        <div class="content" id="content">
-          <p>1</p>
-          <p>2</p>
-          <p>3</p>
-          <p>4</p>
-          <p>5</p>
-          <p>6</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-        </div>
-        <img src="./img/notifications/bottom-picture.png" class="img">
+    <ion-pane>
+
+      <h4>Realtime communication with WebRTC</h4>
+
+      <div class="button-block">
+        <button class="md-primary md-raised" id="startButton">start</button>
+        <button class="md-primary md-raised" id="callButton">call</button>
+        <button class="md-primary md-raised" id="hangupButton">hang up</button>
+        <button class="md-primary md-raised" id="stopButton">stop</button>
       </div>
-    </ion-content>
+
+      <div class="video-container">
+        <video id="localVideo" autoplay playsinline></video>
+        <video id="remoteVideo" autoplay playsinline></video>
+      </div>
+
+    </ion-pane>
 </ion-view>

@@ -14,6 +14,9 @@
         vm.toCall = toCall;
         vm.toMenu = toMenu;
 
+
+        // $state.go('test');
+
         vm.missedCalls = 0;
         vm.missedMessages = 0;
         vm.live_content = live_content;

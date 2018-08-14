@@ -11,7 +11,7 @@
         <img src="./img/kid/back_arrow.png" class="back-arrow" ng-click="vm.toMain()">
 
         <div class="body">
-          <div class="hero-block" ng-repeat="(key, hero) in vm.heroes">
+          <div class="hero-block" ng-repeat="(key, hero) in vm.heroes" ng-click="vm.toCall()">
             <img ng-src="./img/hero-selection/hero{{vm.heroBG(key)}}.png" class="hero-bg">
             <div class="hero-name-block">
               <span class="hero-name">hero name</span>

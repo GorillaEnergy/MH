@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:19872374786:android:a8242dc414bb546e",
+        "mobilesdk_app_id": "1:19872374786:android:148e6d84dd15978c",
         "android_client_info": {
-          "package_name": "com.mind.hero"
+          "package_name": "com.mind.hero2"
         }
       },
       "oauth_client": [
