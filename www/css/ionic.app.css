@@ -10280,14 +10280,15 @@ a.button {
   text-align: center;
   font-size: 18px;
   font-family: AmericanPatrius;
-  background-color: #fff;
   color: #0b1138;
   height: 48px;
   width: 95%;
-  line-height: 46px;
-  border: 2px solid #0b1138;
-  border-radius: 5px;
-  margin: 0 auto; }
+  margin: 0 auto 40px auto;
+  display: flex;
+  justify-content: space-between; }
+  .auth-tel .input-block span {
+    font-size: 12px;
+    font-weight: bold; }
 
 .auth-tel .phone-ico {
   height: 1.1em;
@@ -10295,20 +10296,43 @@ a.button {
   left: 10px;
   top: 10px; }
 
-.auth-tel .country-and-phone {
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center; }
-
 .auth-tel .country-select {
-  font-size: 18px;
-  font-family: AmericanPatrius;
-  height: 100%;
-  width: calc(45% - 40px);
-  margin-left: 40px;
-  text-align: right; }
+  text-align: right;
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  border: 2px solid #0b1138;
+  border-radius: 5px;
+  line-height: 44px; }
+
+.auth-tel .country {
+  width: 34%; }
+
+.auth-tel .phone {
+  width: 63%; }
+
+.auth-tel .privacy-policy {
+  font-size: 16px;
+  font-weight: 500;
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center; }
+  .auth-tel .privacy-policy a {
+    color: #4d51ff;
+    text-decoration: underline; }
+  .auth-tel .privacy-policy .input-privacy {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff; }
+  .auth-tel .privacy-policy input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+    margin: 0 10px 0 -30px; }
+  .auth-tel .privacy-policy .checked {
+    background: #0b1138; }
 
 .auth-tel .tooltip {
   font-family: "AmericanPatrius";
@@ -10372,14 +10396,17 @@ a.button {
 .auth-tel .input-phone {
   color: #0b1138;
   font-size: 18px;
+  text-align: center;
   font-family: AmericanPatrius;
-  width: 65%;
+  width: 100%;
   height: 100%;
   line-height: 0;
   padding-bottom: 0;
   padding-top: 0;
   box-sizing: border-box;
-  margin-left: 10px; }
+  background: #fff;
+  border: 2px solid #0b1138;
+  border-radius: 5px; }
 
 .auth-tel .input-code {
   text-align: center;

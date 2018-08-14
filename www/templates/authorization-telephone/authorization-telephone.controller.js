@@ -18,7 +18,7 @@
 
     vm.countryCodes = countries;
     if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
-    vm.phone = '';
+    vm.phone = userService.getPhone() || '';
 
 
     // if (countries.length) { vm.countryCode = countries[235].code; } //country be default Ukraine
@@ -41,6 +41,10 @@
     // vm.test2 = function () {
     //   console.log('on-blur');
     // };
+
+      vm.setPhone = ()=> {
+        userService.setPhone(vm.phone);
+      };
 
     function getDeviceToken() {
       if (typeof FCMPlugin !== 'undefined') {

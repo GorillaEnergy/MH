@@ -44,14 +44,16 @@
       text-align: center;
       font-size: 18px;
       font-family: AmericanPatrius;
-      background-color: #fff;
       color: #0b1138;
       height: 48px;
       width: 95%;
-      line-height: 46px;
-      border: 2px solid #0b1138;
-      border-radius: 5px;
-      margin: 0 auto;
+      margin: 0 auto 40px auto;
+      display: flex;
+      justify-content: space-between;
+      span{
+        font-size: 12px;
+        font-weight: bold;
+      }
     }
 
     .phone-ico {
@@ -61,24 +63,50 @@
       top: 10px;
     }
 
-    .country-and-phone {
-      margin: 0 auto;
-      width: 100%;
-      //width: fit-content;
-      height: 100%;
+    .country-select {
+      text-align: right;
       display: flex;
       justify-content: center;
-      //justify-content: space-between;
+      background: #fff;
+      border: 2px solid #0b1138;
+      border-radius: 5px;
+      line-height: 44px;
     }
 
-    .country-select {
-      font-size: 18px;
-      font-family: AmericanPatrius;
-      height: 100%;
-      width: calc(45% - 40px);
-      //width: fit-content;
-      margin-left: 40px;
-      text-align: right;
+    .country{
+      width: 34%;
+    }
+
+    .phone{
+      width: 63%;
+    }
+
+    .privacy-policy {
+      font-size: 16px;
+      font-weight: 500;
+      width: 95%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      a {
+        color: #4d51ff;
+        text-decoration: underline;
+      }
+      .input-privacy {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #fff;
+      };
+      input[type="checkbox"]{
+        width: 30px;
+        height: 30px;
+        opacity:0;
+        margin: 0 10px 0 -30px;
+      }
+      .checked{
+        background: #0b1138;
+      }
     }
 
     .tooltip {
@@ -154,15 +182,18 @@
     .input-phone {
       color: #0b1138;
       font-size: 18px;
+      text-align: center;
       font-family: AmericanPatrius;
-      width: 65%;
+      width: 100%;
       //width: 130px;
       height: 100%;
       line-height: 0;
       padding-bottom: 0;
       padding-top: 0;
       box-sizing: border-box;
-      margin-left: 10px;
+      background: #fff;
+      border: 2px solid #0b1138;
+      border-radius: 5px;
     }
 
     .input-code {

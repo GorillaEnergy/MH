@@ -250,9 +250,9 @@
         controller: 'TermsConditionsController',
         controllerAs: 'vm',
         resolve: {
-          security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.commonAccess(); });
-          }
+          // security: function ($timeout, securityService) {
+          //   return $timeout(function() { securityService.commonAccess(); });
+          // }
         }
       })
       .state('additional-content', {

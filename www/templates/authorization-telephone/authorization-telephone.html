@@ -12,28 +12,36 @@
 
           <div class="post-zone">
             <div class="input-block">
-              <img src="./img/authorization/phone.png" class="phone-ico">
+              <!--<img src="./img/authorization/phone.png" class="phone-ico">-->
 
-              <div class="country-and-phone">
-                <div class="country-select" ng-click="modalCountry.show()">
-                  {{vm.countryCode}}
+                <div class="country">
+                  <div class="country-select" ng-click="modalCountry.show()">
+                    {{vm.countryCode}}
+                  </div>
+                    <span>Country code</span>
                 </div>
 
-                <input class="input-phone"
-                       type="tel"
-                       ng-model="vm.phone"
-                       maxlength="10"
-                       ng-focus="vm.test()"
-                       ng-blur="vm.test2()"
-                       oninput="this.value = this.value.replace(/\D/, '')">
-              </div>
+                <div class="phone">
+                  <input class="input-phone"
+                         type="tel"
+                         ng-model="vm.phone"
+                         maxlength="10"
+                         ng-focus="vm.test()"
+                         ng-blur="vm.test2()"
+                         oninput="this.value = this.value.replace(/\D/, '')">
+                  <span>insert your number</span>
+                </div>
             </div>
 
-            <div class="tooltip">
-              <span>insert your number</span>
+            <div class="privacy-policy">
+                <div class="input-privacy">
+                  <img ng-if="isAgreePrivacy" src="./img/authorization/checked.svg">
+                </div>
+                  <input type="checkbox" ng-model="isAgreePrivacy" ng-checked="isAgreePrivacy">
+              <span>I agree to the <a ui-sref="terms-conditions" ng-click="vm.setPhone()">Terms of Use and Privacy Policy</a></span>
             </div>
 
-            <div class="login-button" ng-click="vm.checkPhone()">
+            <div class="login-button" ng-click=" isAgreePrivacy && vm.checkPhone()">
               <span>login</span>
             </div>
           </div>
