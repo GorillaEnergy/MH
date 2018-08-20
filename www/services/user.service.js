@@ -88,6 +88,7 @@
                     }
                   });
                 } else if (res.data.user.role_id === 1) {
+                  firebase.database().ref('/WebRTC/users/' + res.data.user.id + '/online').set(true);
                   $state.go('kid-main-page');
                 }
 
@@ -99,6 +100,7 @@
             });
         }
         function logout() {
+          firebase.database().ref('/WebRTC/users/' + getUser().id + '/online').set(false);
           $localStorage.$reset();
           $sessionStorage.$reset();
           $state.go('authorization')

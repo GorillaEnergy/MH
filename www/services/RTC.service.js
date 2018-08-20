@@ -19,6 +19,16 @@
 
     document.addEventListener("deviceready", function () {
       console.log('deviceready');
+
+
+      document.addEventListener("pause", function () {
+        firebase.database().ref('/WebRTC/users/' + $localStorage.user.id + '/online').set(false);
+      }, false);
+
+      document.addEventListener("resume", function () {
+        firebase.database().ref('/WebRTC/users/' + $localStorage.user.id + '/online').set(true);
+      }, false);
+
       initFB();
     }, false);
 
