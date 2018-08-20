@@ -22,7 +22,7 @@
 
 
     // if (countries.length) { vm.countryCode = countries[235].code; } //country be default Ukraine
-    // vm.phone = '3311225544';
+    vm.phone = '3311225544';
 
     // if (countries.length) { vm.countryCode = countries[235].code; } //country be default Ukraine
     // vm.phone = '674939948';

@@ -12,10 +12,10 @@
         .run(run);
 
     run.$inject = ['$ionicPlatform', '$timeout', '$state', 'toastr', 'fcm', 'userService', '$ionicSideMenuDelegate',
-                   'purchaseService', 'notificationService', '$location', '$window'];
+                   'purchaseService', 'notificationService', 'RTCService', '$location', '$window'];
 
     function run($ionicPlatform, $timeout, $state, toastr, fcm, userService, $ionicSideMenuDelegate,
-                 purchaseService, notificationService, $location, $window) {
+                 purchaseService, notificationService, RTCService, $location, $window) {
 
         // if (ionic.Platform.platform() == 'ios') {
         //   $ionicConfigProvider.views.swipeBackEnabled(false);
@@ -59,6 +59,10 @@
               // fcm.subscribe();
               console.log('resume');
             }, false);
+
+            // document.addEventListener("deviceready", function () {
+              // console.log(device.cordova);
+            // }, false);
 
             // $ionicPlatform.registerBackButtonAction(function (event) {
             //   // console.log($state.current.name);

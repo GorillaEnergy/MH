@@ -23,7 +23,7 @@
                 let credentials = {
                   token_device: token
                 };
-                console.log(token);
+                // console.log(token);
                 // subscribe(credentials)
               } else {
                 return false;

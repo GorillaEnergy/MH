@@ -1,19 +1,11 @@
 <ion-view class="test">
     <ion-pane>
 
-      <h4>Realtime communication with WebRTC</h4>
-
-      <div class="button-block">
-        <button class="md-primary md-raised" id="startButton">start</button>
-        <button class="md-primary md-raised" id="callButton">call</button>
-        <button class="md-primary md-raised" id="hangupButton">hang up</button>
-        <button class="md-primary md-raised" id="stopButton">stop</button>
+      <div style="display: flex; flex-direction: row">
+        <button ng-click="vm.playPause()">play/pause</button>
+        <button ng-click="vm.getVideoInfo()">info</button>
       </div>
-
-      <div class="video-container">
-        <video id="localVideo" autoplay playsinline></video>
-        <video id="remoteVideo" autoplay playsinline></video>
-      </div>
+      <video id="localVideo" autoplay playsinline muted></video>
 
     </ion-pane>
 </ion-view>

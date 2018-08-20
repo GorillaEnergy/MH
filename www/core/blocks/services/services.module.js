@@ -9,6 +9,7 @@
         'service.popUpMessage',
         'service.notification',
         'service.fcm',
-        'service.purchaseService'
+        'service.purchaseService',
+        'service.RTCService'
     ]);
 })();

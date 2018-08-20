@@ -11,8 +11,7 @@
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/authorization');
-    // $urlRouterProvider.otherwise('/kid');
-    // $urlRouterProvider.otherwise('/kid-messages');
+    // $urlRouterProvider.otherwise('/test');
 
     $stateProvider
 

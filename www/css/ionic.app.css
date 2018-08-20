@@ -13222,8 +13222,33 @@ ul#ion-segment[dark] li:hover:not(.active) {
     height: 80px;
     margin: 0 auto; }
 
-.terms-condition-block .main-block {
-  overflow: scroll; }
+.incoming-call {
+  padding: 10px 15px; }
+  .incoming-call .button-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; }
 
-.about-block .main-block {
-  overflow: scroll; }
+.conversation {
+  background-color: #4d4d4d; }
+  .conversation .popup {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important; }
+  .conversation .bodyDiv {
+    width: 100%;
+    height: 70%;
+    position: relative; }
+    .conversation .bodyDiv .video1 {
+      width: 100%; }
+      .conversation .bodyDiv .video1 video {
+        width: 100% !important; }
+    .conversation .bodyDiv .video2 {
+      position: absolute;
+      z-index: 99;
+      bottom: 0;
+      right: 0;
+      width: 150px; }
+      .conversation .bodyDiv .video2 video {
+        width: 100% !important; }

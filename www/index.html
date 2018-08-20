@@ -2,33 +2,18 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width,viewport-fit=cover">
     <title></title>
 
     <link rel="manifest" href="manifest.json">
 
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
     <link rel="stylesheet" href="lib/angular-ui-select/dist/select.min.css">
     <link rel="stylesheet" href="lib/angular-toastr/dist/angular-toastr.min.css">
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="lib/jr-crop/dist/jr-crop.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
     <link href="css/style.min.css" rel="stylesheet">
-
-    <!-- modal animate -->
-    <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css" rel="stylesheet">
-
-    <!--<script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>-->
-
-    <!--<link rel="stylesheet" href="components/ionic-segment/dist/ionic.segment.css">-->
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -80,8 +65,14 @@
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
 
-<!--WebRTC adapter-->
-<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<!--WebRTC-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+<script src="http://kevingleason.me/SimpleRTC/js/webrtc.js"></script>
+<script src="WebRTC/js/modernizr.custom.js"></script>
+<script src="WebRTC/js/webrtc.js"></script>
+<script src="WebRTC/js/rtc-controller.js"></script>
+
 
 <!--core-->
 <script src="core/core.module.js"></script>
@@ -115,6 +106,7 @@
 <script src="templates/terms-conditions/terms-conditions.controller.js"></script>
 
 <script src="templates/test/test.controller.js"></script>
+<script src="templates/test/test-popup.controller.js"></script>
 
 <!--services-->
 <script src="services/additionalContent.service.js"></script>
@@ -125,6 +117,7 @@
 <script src="services/notification.service.js"></script>
 <script src="services/fcm.service.js"></script>
 <script src="services/purchase.service.js"></script>
+<script src="services/RTC.service.js"></script>
 
 <!--factories-->
 <script src="factories/request.factory.js"></script>
