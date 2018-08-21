@@ -12951,13 +12951,18 @@ p {
     text-align: justify;
     line-height: 25px; }
 
+.terms-condition-block .scroll {
+  transform: translate3d(0px, 0px, 0px) scale(1) !important; }
+
 .terms-condition-block .menu-block {
   display: flex;
   align-items: center;
   width: 100%;
   height: 72px;
   background-color: #fff;
-  border-bottom: solid 2px #0b1138; }
+  border-bottom: solid 2px #0b1138;
+  position: absolute;
+  z-index: 1; }
   .terms-condition-block .menu-block img {
     width: 15px;
     margin-left: 9px; }
@@ -12972,7 +12977,7 @@ p {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 87px);
   width: 100%;
-  margin: 15px 0 0;
+  margin: 87px 0 0 0;
   padding: 0 15px; }
   .terms-condition-block .main-block h3 {
     margin-top: 5px;

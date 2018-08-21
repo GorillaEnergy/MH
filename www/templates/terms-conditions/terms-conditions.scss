@@ -1,4 +1,9 @@
 .terms-condition-block {
+
+  .scroll {
+    transform: translate3d(0px, 0px, 0px) scale(1) !important;
+  }
+
   .menu-block {
     display: flex;
     align-items: center;
@@ -6,6 +11,8 @@
     height: 72px;
     background-color: #fff;
     border-bottom: solid 2px #0b1138;
+    position: absolute;
+    z-index:1;
     img {
       width: 15px;
       margin-left: 9px;
@@ -23,7 +30,7 @@
     height: calc(100vh - 87px);
     //overflow: scroll;
     width: 100%;
-    margin: 15px 0 0;
+    margin: 87px 0 0 0;
     padding: 0 15px;
 
     h3 {
