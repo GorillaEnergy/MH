@@ -18,11 +18,9 @@
 
     vm.countryCodes = countries;
     if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
-    vm.phone = '';
+    // vm.phone = userService.getPhone() || '';
+    vm.phone = userService.getPhone() || '3311225544';
 
-
-    // if (countries.length) { vm.countryCode = countries[235].code; } //country be default Ukraine
-    vm.phone = '3311225544';
 
     // if (countries.length) { vm.countryCode = countries[235].code; } //country be default Ukraine
     // vm.phone = '674939948';
@@ -44,6 +42,12 @@
     // vm.test2 = function () {
     //   console.log('on-blur');
     // };
+
+    vm.setPhone = ()=> {
+      userService.setPhone(vm.phone);
+      console.log('asd');
+      $scope.termsConditions.show();
+    };
 
     function getDeviceToken() {
       if (typeof FCMPlugin !== 'undefined') {
@@ -125,6 +129,11 @@
       scope: $scope,
     }).then(function (modal) {
       $scope.accessDeniedModal = modal;
+    });
+    $ionicModal.fromTemplateUrl('terms-conditions', {
+      scope: $scope,
+    }).then(function (modal) {
+      $scope.termsConditions = modal;
     });
   }
 })();

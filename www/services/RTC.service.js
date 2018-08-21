@@ -9,7 +9,21 @@
   function RTCService($ionicPopup, $localStorage, $timeout, $rootScope) {
     console.log('RTCService start');
 
-    let user = $localStorage.user;
+    let user;
+    userFnc();
+    function userFnc() {
+      let userTimer = setInterval(timer, 1000);
+      function timer() {
+        if ($localStorage.user) {
+          user = $localStorage.user;
+          onlineChanger();
+          myStopFunction()
+        }
+      }
+      function myStopFunction() {
+        clearInterval(userTimer);
+      }
+    }
     // let user = {};  //tmp!
     // user.id = 11;   //tmp!
 
@@ -19,8 +33,13 @@
 
     document.addEventListener("deviceready", function () {
       console.log('deviceready');
+      if (user) {
+        onlineChanger()
+      }
+    }, false);
 
-
+    function onlineChanger() {
+      console.log('onlineChanger()');
       document.addEventListener("pause", function () {
         firebase.database().ref('/WebRTC/users/' + $localStorage.user.id + '/online').set(false);
       }, false);
@@ -30,7 +49,7 @@
       }, false);
 
       initFB();
-    }, false);
+    }
 
     function initFB() {
       watchInvites()

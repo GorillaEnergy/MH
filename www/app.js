@@ -53,13 +53,13 @@
 
             document.addEventListener("pause", function () {
               console.log('pause');
-              firebase.database().ref('/WebRTC/users/' + userService.getUser().id + '/online').set(false);
+              // firebase.database().ref('/WebRTC/users/' + userService.getUser().id + '/online').set(false);
             }, false);
 
             document.addEventListener("resume", function () {
               // fcm.subscribe();
               console.log('resume');
-              firebase.database().ref('/WebRTC/users/' + userService.getUser().id + '/online').set(true);
+              // firebase.database().ref('/WebRTC/users/' + userService.getUser().id + '/online').set(true);
             }, false);
 
             // document.addEventListener("deviceready", function () {

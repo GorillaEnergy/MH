@@ -12,28 +12,34 @@
 
           <div class="post-zone">
             <div class="input-block">
-              <img src="./img/authorization/phone.png" class="phone-ico">
+              <!--<img src="./img/authorization/phone.png" class="phone-ico">-->
 
-              <div class="country-and-phone">
+              <div class="country">
                 <div class="country-select" ng-click="modalCountry.show()">
                   {{vm.countryCode}}
                 </div>
+                <span>Country code</span>
+              </div>
 
+              <div class="phone">
                 <input class="input-phone"
                        type="tel"
                        ng-model="vm.phone"
                        maxlength="10"
-                       ng-focus="vm.test()"
-                       ng-blur="vm.test2()"
                        oninput="this.value = this.value.replace(/\D/, '')">
+                <span>insert your number</span>
               </div>
             </div>
 
-            <div class="tooltip">
-              <span>insert your number</span>
+            <div class="privacy-policy">
+              <div class="input-privacy">
+                <img ng-if="isAgreePrivacy" src="./img/authorization/checked.svg">
+              </div>
+              <input type="checkbox" ng-model="isAgreePrivacy" ng-checked="isAgreePrivacy">
+              <span>I agree to the <a ui-sref="terms-conditions" ng-click="vm.setPhone()">Terms of Use and Privacy Policy</a></span>
             </div>
 
-            <div class="login-button" ng-click="vm.checkPhone()">
+            <div class="login-button" ng-click=" isAgreePrivacy && vm.checkPhone()">
               <span>login</span>
             </div>
           </div>
@@ -123,6 +129,156 @@
 
       <img src="./img/authorization/close.png" class="close" ng-click="accessDeniedModal.hide()">
     </ion-content>
+
+  </ion-modal-view>
+</script>
+
+<script id="terms-conditions" type="text/ng-template">
+  <ion-modal-view class="terms-condition-block tc-modal">
+    <ion-pane>
+
+        <div class="menu-block" ng-click="termsConditions.hide()">
+          <img src="./img/kid-chat-room/back-arrow.png">
+          <p>terms & conditions</p>
+        </div>
+
+        <div class="main-block">
+          <p>Do not you use this service in any case of medical emergency! If you feel that taking an action or refraining from taking an action by to you or others, may harm or danger you or others call emergency services and contact relevant authorities immediately. This service is not connected to any emergency service or center and should not be used in case of emergency.</p>
+          <p>MindHero provides psychological service (“service”) for kids between the ages 8 to 18 (“user” or “users”). Subscription to the services allow users to directly contact qualified therapists at all times. The service is provided to minors, the users, strictly and only under explicit consent and awareness of a parent or legal guardian (together: “the parent”).</p>
+          <p>The terms of use and privacy policy are, for purposes of convenience, formulated in masculine form only, but refer to both genders alike.</p>
+
+          <h3>Introduction</h3>
+          <ul>
+            <li>Using the services, including via internet website or mobile application (together: “The Website”) constitutes your approval to these terms of use and privacy policy.</li>
+            <li>The Terms of use and privacy policy shall be construed as a binding agreement between the user and Mindhero in any case of litigation. Minors must use the services only under consent of a legally competent parent who is fully aware and approves such use by the minor under his or her responsibility.</li>
+            <li>These terms of use and privacy policy will bind the user and its parents, representatives, successors and all other authorized representatives.</li>
+            <li>These terms of use and privacy policy will be effective upon posting on Mindhero website.
+              The use of the service
+            </li>
+            <li>The services are for personal use only. Any commercial use or any other use of the services is strictly forbidden without prior written consent of Mindhero.</li>
+            <li>The user and its parent do not acquire any rights to the any content or any other intellectual property right or any inherent rights except for the right to privately use the services, as set forth in these terms and conditions.</li>
+            <li>Any action that cause (or might cause) any damage or impairment to the services, or to their availability or functionality is strictly forbidden.</li>
+            <li>To remove any doubt, Mindhero prohibits the use of any malicious computer application or any other tool, including crawlers, robots and the like, in order to search, scan, copy or automatically retrieve or collect content from the website. The creation of any database or similar collection of information containing any contents of the Website is prohibited. Without derogating from the foregoing, users are prohibited from using any applications or systems that are aimed to harvest e-mail addresses from the Website or to collect any other information with respect to any other person. Hacking this Website constitutes a criminal offense. The foregoing prohibition does not relate to search engines which are directly linked to the Website.</li>
+            <li>In any case of a concern or suspicion that any person or an entity is misusing your personal information or impersonating another person, you must immediately inform Mindhero.</li>
+            <li>Mindhero may prevent user’s use of the Website at its sole discretion. Mindhero may also terminate user’s use of the Website in any case where the user misused the services of the Website, acted in a manner that caused damage or might cause damage or injury to the Website, to the user or to other users, acted unlawfully or did not follow the provisions of the Website’s terms of use and privacy policy.</li>
+            <li>Mindhero does not warrant that the use of the Website will be totally secured, accurate, complete, uninterrupted, fault-free or free from viruses, worms, other malware or other limitations to its functioning.</li>
+            <li>The user undertakes to inform Mindhero of any offensive, misleading, or inappropriate advertising he may encounter while using the Website.</li>
+            <li>Access to certain sections or feature in the Website (“paid features”) may not be free of charge. Access to the website services can be purchased by the user’s parent using valid credit cards or PayPal.</li>
+          </ul>
+
+          <h3>Change and Update of Terms of Use and Privacy policy</h3>
+          <ul>
+            <li>Changes to the terms of use and privacy policy might be done periodically. An updated and applicable version of ‘Terms of use’ and ‘Privacy policy’ will be available on the Website.</li>
+            <li>The user and the parent are responsible to periodically check the changes to terms of use and privacy policy.</li>
+            <li>User or parent shall have no claim or demand against Mindhero regarding the implementation of such changes, errors or faults deriving from such changes.</li>
+            <li>Mindhero shall make its utmost effort to have the Website available at all times. However, due to unexpected errors and faults, we cannot commit to continuous availability without any fault. Mindhero shall endeavor to restore the operation of the Website as soon as possible. Mindhero shall not be liable for any direct or indirect damage caused by malfunction of the Website and the user shall not gain any compensation deriving hereto.</li>
+          </ul>
+
+          <h3>Intellectual Property</h3>
+          <ul>
+            <li>Mindhero owns all intellectual property rights, as well as for the content appearing on the Website, including Website design, the layout and presentation of the information, images, graphic files, music, video clips, audio clip applications, computer code, text, or any other material belonging to this Website or to a third party allowed this Website to be used.</li>
+            <li>The use of this Website does not grant the user or parent any ownership to the intellectual property of this Website. Any infringement of intellectual property, as specified above, shall be grounds for shutting down the user account without notice. The user and parent shall bear all the expenses incurred in the management of this Website and any third party without derogating from any other right.</li>
+            <li>It is forbidden to partially copy or fully, publicly display, distribute, publicly perform, transmit to the public, modify, adapt, or make derivative works from, sell or lease any of the content above, by any means, without the written prior consent from Mindhero. The user and parent are prohibited to use the above content and trademarks appearing on the Website or logo of this Website without the express prior written authorization from Mindhero.</li>
+            <li>Prejudicial copyright and/or intellectual property, as specified above, shall be grounds for closing the user's account without prior notice, and the user will bear all the expenses incurred in the management of this Website and/or any third party without derogating from any other relief that comes to the Website. This is according to the agreement and in accordance with the law.</li>
+          </ul>
+
+          <h3>Advertisement</h3>
+          <ul>
+            <li>By signing up or by using the Website, you agree to include your contact information in the database of Mindhero. You also authorize us to send you periodical updates regarding the Websites services and other promotional content via e-mail or any other means.</li>
+            <li>By using this Website, you hereby consent to delivery of publications, including marketing content, including via direct mail, according to the Israeli communications law. Marketing content may be sent in a variety of ways, including via e-mail, mobile phone text messages (SMS), fax, direct mail, automated telephone dialing etc.</li>
+            <li>If you wish to unsubscribe, you are welcome to send us an e-mail and we will make sure your information will be deleted.</li>
+            <li>Mindhero shall not be liable for any updates received within this time and you will be restricted from raising any argument/demand or lawsuit against Mindhero or any other third party related to any marketing content delivery in the said time.</li>
+          </ul>
+
+          <h3>Breach of Terms of Use</h3>
+          <ul>
+            <li>The user and parent undertake to indemnify Mindhero for any damage, loss of profits or expenses incurred due to the breach of these terms of use and privacy policy including legal costs. The indemnification shall not derogate from any remedy that the management of this Website, its owners or their representatives.</li>
+            <li>The user and parent shall compensate and indemnify Mindhero for any claim, action, demand, loss, loss of profit, charge, expense, costs and liabilities, including interest payments and attorneys and court costs in cases whereby the user shall violate the provisions of law any and / or as a result of breach of the terms of use and privacy policy.</li>
+            <li>By using the Website, the user and parent hereby undertakes to be bound to indemnify Mindhero whether it is a party in litigation or not.</li>
+            <li>Without limiting the foregoing, user and parent shall pay the amount of the damage arising from responsibility, as stated above, immediately upon first demand of the management of this Website. Demand for payment shall serve as definitive proof for the user and parent’s obligation to indemnify Mindhero.</li>
+            <li>The user shall be precluded from raising any contention and /or demand against Mindhero regarding the liability of the user and parent for any damage.</li>
+          </ul>
+
+          <h3>Choice of Law</h3>
+          <ul>
+            <li>The laws applicable to these terms of use and privacy policy are the laws of the State of Israel. The exclusive jurisdiction over any disputes arising in these terms of use or use of the Website would be the competent courts in Tel Aviv.</li>
+            <li>You are welcome to contact us for any queries about the Website and the terms of use and privacy policy. You are welcome to contact us by email *****************. we would do our utmost effort to reply promptly.</li>
+          </ul>
+
+          <h3>Privacy Policy - Mindhero</h3>
+          <ul>
+            <li>Mindhero respects the privacy of its users. We do our best to comply with the European union General Data Protection Regulation (GDPR). In particular we make all efforts to protect the privacy and safety of children under the age of 13 who use our service and comply with the federal US Children’s Online Privacy Protection Act (COPPA).</li>
+            <li>Our policy regarding data collection, data use and data protection are detailed hereby. Using the website or its services is an indication that the user and parent have read, understood and fully accepted all provisions and terms of the privacy Policy. If you do not agree to the terms in the policy, please refrain from doing any use of the website.</li>
+          </ul>
+
+          <h3>Why we collect data?</h3>
+          <ul>
+            <li>Collection of data is meant to improve the service we give users of our services. Moreover, we collection of data enables us to improver user’s experience while using the website.</li>
+            <li>We collect data to comply with laws and regulations and to protect the rights and safety of our users.</li>
+          </ul>
+
+          <h3>Children personal information</h3>
+          <ul>
+            <li>Mindhero provides psychological service for your kid. We ask you the parent to provide us information about your child mental condition, background and other relevant information relevant to your child condition you willing to share with us. Naturally, psychological services are highly intimate and private. Nevertheless, in order to maintain continuity of care our therapists take notes in order to document and analyze the content of privet conversations or group therapy your kid takes part at.</li>
+            <li>We collect and document such notes that capture the therapist impressions about your child and important details from the therapeutic session. We are unable to provide our service without your consent for collecting and documenting therapy notes and mental health records regarding your child. Do not allow your kid allow your child to use our service if you disagree to our data collection and documentation policy.</li>
+            <li>A parent has a right to revoke his or hers consent to collection of personal information regarding their child at any time. In such case, Mindhero will no longer be able to provide its service to your child and it will be terminated.</li>
+            <li>A parent may also ask to delete his or her child personal information held by Mindhero as long as such request complies with applicable federal or state law and regulation. We emphasis that such erasure of data will substantially interfere with our ability to maintain continuity of care to your child.</li>
+            <li>As a parent you have the right to receive a copy of your child mental health information (including information about diagnosis, symptoms, treatment plans, etc.) any time as long as your child is using our service. Nevertheless, therapy notes will be disclosed to a parent or to a user under the sole discretion of Mindhero and according to prohibitions or conditions in any applicable State law.</li>
+          </ul>
+
+          <h3>What king of information do we collect?</h3>
+          <ul>
+            <li>Information you give us or give us permission to receive and collect (including therapy notes and mental health information).</li>
+            <li>During use of the website, the user and parent will be requested to provide certain information. This might include user or parent name, gender, email address, phone number, date of birth etc. We collect parent payment information (such as credit card number, expiration date, payment, delivery and billing address). Under parent approval, the users may choose to share with us their photo and their location data.</li>
+          </ul>
+
+          <h3>Technical information we collect</h3>
+          <ul>
+            <li>While using the website, some information is automatically created and collected. This includes log data which is recorded on our servers. Log data might include Internet Protocol (IP) addresses used, information automatically sent from your browser, your activities in our website, searches, crash data, your device, browser type and settings (including type of operating system, cookies data and date and time of your activities.</li>
+            <li>In addition, we use cookies, small pieces of information (or files) sent by a website to your hard disk, and other technologies to capture log data. Cookies and other technologies to capture log data enable us to better suit your needs and preferences while using Mindhero sites. For example, cookies are used to store your language and currency preferences for your next visits in our sites.</li>
+            <li>Some of the cookies will expire when the browser is closed while some will be stored on the hard drive of the computer. The information in Cookies is encrypted and necessary steps and precaution are taken by Mindhero to ensure that only Mindhero will be able to read and understand the information stored in them. If you don't want to receive cookies you can avoid this by modifying the settings in your browser. However, disabling cookies may affect your ability to enjoy the full services and features on the website. In addition, you can delete the cookies at any time.</li>
+          </ul>
+
+          <h3>How we use the information we collect?</h3>
+          <ul>
+            <li>Any information regarding children mental health, condition and therapy is strictly confidential. We will not disclose this information with anyone (outside Mindhero) unless ordered to so by competent court.</li>
+            <li>Other kind of information (which do not concern children mental health, condition and therapy) is collected and used in order to provide better service to you and
+              to present personalized, relevant and interesting content. For example, we might use your location to send you information about activities we organize and take place near your area. Cookies might be used to identify you when you log on from different browsers or present you adds which might be of more interest to you. The information we collect may be used in the following ways: send promotional materials or other communications, subject to prior acceptance, create and manage your online account, processing payment forms, providing online user care, market research and improving our services (offer new services, internal auditing, etc.).</li>
+            <li>Part of the information collected contains statistical details which do not identify the parent or the user individually and is not saved along with any identifiable details. We may share statistic details with third-party data analysis providers in order to assess and improve our service and learn about the way users and parents use the website.</li>
+          </ul>
+
+          <h3>Data retention and deletion</h3>
+          <ul>
+            <li>We will keep your dada only as long as necessary to the purposes in was collected. More specifically we will keep your personal data as long as your account is active. Personal data will be deleted with the deletion of your account. Alternatively, we will retain your data as required by any relevant law or regulation.</li>
+            <li>Personal information involving child metal therapy (e.g. therapy notes and mental health information) will be kept a period of 2 (two) year after the last therapy session the child took part at using Mindhero service. However, we will keep any such data for a shorter or longer period to comply with any federal or state law and regulation.</li>
+          </ul>
+
+          <h3>Data protection</h3>
+          <ul>
+            <li>We are committed to protecting users and parent’s privacy and use advanced security measures to keep your data secure. Nevertheless, and despite these efforts, we cannot warrant that the data will not be exposed to third parties in the event of hacking the website or any other unauthorized access in the user's data. You acknowledge that the Mindhero will bear no liability whatsoever and waives any claim against it in any such event.</li>
+          </ul>
+
+          <h3>Sharing information</h3>
+          <ul>
+            <li>We may use third parties which will provide statistical analysis about the site usage. We may collect and analyze data which is statistical by nature and is intended for analysis, research and monitoring the activity of the user in the website as well as other sites. In addition, we reserve the right to transfer users and parent’s information in the event of a sale or transfer of business or assets. If sale or transfer will be made, we will inform all our users and parents. However, Transfer of information regarding mental health, condition and therapy will be done only under prior explicit consent of the parent.</li>
+            <li>We may disclose personal data (excluding  data regarding mental health, condition and therapy) without user’s or parent permission in case we and the user or parent become opposing parties in legal proceedings or when the Mindhero will be required to do so by law or legal process or to enforce law enforcement or other government officials, when exposure is necessary or required to prevent physical harm or financial loss or in connection with the investigation of suspicious or fraudulent in fact or illegal activity. Generally, personal information (excluding data regarding mental health, condition and therapy) might be reveled when we believe it is legally required.</li>
+          </ul>
+
+          <h3>Consent and right to erasure</h3>
+          <ul>
+            <li>In cases where your consent is required by law, Mindhero will operate under this consent regarding any distribution of marketing communications or advertisements.</li>
+            <li>Mindhero enables users and parents to unsubscribe from mailing lists at any time. Moreover, we recognize your right to have your stored personal data erased. We will comply with such request for erasure as long as we have no legal obligation or right to keep the data.</li>
+            <li>A parent may also ask to delete his or her child personal information held by Mindhero. Such request will interfere with our ability to maintain continuity of care to your child.</li>
+          </ul>
+
+          <h3>Updates and further information</h3>
+          <ul>
+            <li>This privacy policy may be updated periodically and without prior notice. Mindhero may post a message on the website to update the users and parents about material changes in its privacy policy.</li>
+            <li>All terms and provisions as details above are in addition to the provisions and conditions of set forth in the Terms of Service as advertised on Mindhero website.</li>
+          </ul>
+
+        </div>
+    </ion-pane>
 
   </ion-modal-view>
 </script>
