@@ -35,7 +35,6 @@ $jrCrop.crop({
 });
 ```
 
-##### Changing the title
 Additionally you can add a title in the footer.
 ```
 $jrCrop.crop({
@@ -46,7 +45,6 @@ $jrCrop.crop({
 });
 ```
 
-##### Circle mask
 Add circle:true to the options to overlay the image with a circle. Note: it won't actually crop the image with a circle, just the visual representation.
 ```
 $jrCrop.crop({
@@ -55,15 +53,6 @@ $jrCrop.crop({
 });
 ```
 
-##### Changing default options.
-Overwriting default options can be done as well.  
-`$jrCrop.defaultOptions.template = '<div>...</div>';`  
-`$jrCrop.defaultOptions.width = 300;`  
-`$jrCrop.defaultOptions.circle = true;`
-
-#### Templates
-
-##### Custom templates
 The template can be overwritten by passing your custom HTML in the options.
 ```
 $jrCrop.crop({
@@ -74,13 +63,10 @@ $jrCrop.crop({
 });
 ```
 
-##### Interpolation Markup
-If you configured the expressions of interpolated strings, you can apply this to the template by replacing the markup with your custom markup.
-```
-$jrCrop.defaultOptions.template = $jrCrop.defaultOptions.template
-    .replace(/{{/g, '<%')
-    .replace(/}}/g, '%>');
-```
+Overwriting default options can be done as well.  
+`$jrCrop.defaultOptions.template = '<div>...</div>';`  
+`$jrCrop.defaultOptions.width = 300;`  
+`$jrCrop.defaultOptions.circle = true;`
 
 ## Examples please!!
 I got ya. Run `bower install && npm install && npm test` and visit `localhost:8181`. Great, now you can visit this from your phone too. It works best when packaged in cordova, as how you should use ionic anyway.

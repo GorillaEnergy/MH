@@ -40,5 +40,6 @@
   },
   "_source": "https://github.com/Foxandxss/angular-toastr.git",
   "_target": "^2.1.1",
-  "_originalSource": "angular-toastr"
+  "_originalSource": "angular-toastr",
+  "_direct": true
 }

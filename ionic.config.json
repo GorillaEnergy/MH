@@ -1,11 +1,10 @@
 {
   "name": "MindHero",
-  "app_id": "",
-  "type": "ionic1",
   "integrations": {
     "gulp": {},
     "cordova": {}
   },
+  "type": "ionic1",
   "watchPatterns": [
     "scss/**/*",
     "www/**/*",
