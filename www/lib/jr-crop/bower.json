@@ -1,7 +1,7 @@
 {
   "name": "jr-crop",
-  "version": "1.1.6",
-  "homepage": "https://github.com/joaquinheianna/jr-crop",
+  "version": "1.1.2",
+  "homepage": "https://github.com/JrSchild/jr-crop",
   "authors": [
     "Joram Ruitenschild"
   ],
@@ -18,7 +18,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "ionic": "1.1.1",
-    "blueimp-canvas-to-blob": "~2.2.0"
+    "ionic": "1.1.1"
   }
 }

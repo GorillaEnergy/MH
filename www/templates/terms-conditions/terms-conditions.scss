@@ -1,4 +1,9 @@
 .terms-condition-block {
+
+  .scroll-content{
+    margin-top: 87px;
+  }
+
   .menu-block {
     display: flex;
     align-items: center;
@@ -6,6 +11,8 @@
     height: 72px;
     background-color: #fff;
     border-bottom: solid 2px #0b1138;
+    position: absolute;
+    z-index:1;
     img {
       width: 15px;
       margin-left: 9px;
@@ -21,9 +28,7 @@
   .main-block {
     background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
     height: calc(100vh - 87px);
-    overflow: scroll!important;
     width: 100%;
-    margin: 15px 0 0;
     padding: 0 15px;
 
     h3 {

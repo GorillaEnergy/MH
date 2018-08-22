@@ -4,10 +4,10 @@
   angular.module('app')
     .controller('AuthorizationController', AuthorizationController);
 
-  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', '$localStorage', 'countries', 'userService', '$timeout', 'fcm'];
+  AuthorizationController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', '$localStorage', 'countries', 'userService', '$timeout', 'fcm', 'toastr'];
 
 
-  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, $localStorage, countries, userService, $timeout, fcm) {
+  function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, $localStorage, countries, userService, $timeout, fcm, toastr) {
     const vm = this;
 
     vm.checkPhone = checkPhone;
@@ -27,6 +27,7 @@
 
     vm.phoneNumberFull = '';
     vm.approvalCode = '';
+    vm.isAgreePrivacy = false;
 
     vm.show = {phoneMenu: true, codeApproval: false};
     // let token_device = '';
@@ -44,9 +45,9 @@
     // };
 
     vm.setPhone = ()=> {
-      userService.setPhone(vm.phone);
-      console.log('asd');
-      $scope.termsConditions.show();
+        userService.setPhone(vm.phone);
+        console.log('asd');
+        $scope.termsConditions.show();
     };
 
     function getDeviceToken() {
@@ -63,14 +64,18 @@
     }
 
     function checkPhone() {
-      if (vm.phone.length >= 7) {
-        vm.phoneNumberFull = vm.countryCode + vm.phone;
-        vm.show.phoneMenu = false;
-        vm.show.codeApproval = true;
-        sendPhone();
-      } else {
-        console.log('err!');
-      }
+        if(vm.isAgreePrivacy){
+          if (vm.phone.length >= 7) {
+            vm.phoneNumberFull = vm.countryCode + vm.phone;
+            vm.show.phoneMenu = false;
+            vm.show.codeApproval = true;
+            sendPhone();
+          } else {
+            console.log('err!');
+          }
+        } else {
+            toastr.error('Check privacy policy')
+        }
     }
 
     function sendAgain() {

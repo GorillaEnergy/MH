@@ -10309,7 +10309,8 @@ a.button {
   width: 34%; }
 
 .auth-tel .phone {
-  width: 63%; }
+  width: 63%;
+  height: 100%; }
 
 .auth-tel .privacy-policy {
   font-size: 16px;
@@ -10325,7 +10326,8 @@ a.button {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: #fff; }
+    background: #fff;
+    flex-shrink: 0; }
   .auth-tel .privacy-policy img {
     margin-top: 1px; }
   .auth-tel .privacy-policy input[type="checkbox"] {
@@ -10436,18 +10438,20 @@ a.button {
     width: 65%;
     margin: 0 0 10px 65px; } }
 
+.country-modal .has-header {
+  top: 20vh !important; }
+
 .country-modal .country-filter {
   height: 40px;
-  width: 100%;
+  width: 95%;
   border: 1px solid #0b1138;
   font-size: 18px;
   padding: 0 14px;
-  margin-bottom: 10px; }
+  margin: 12vh 10px 10px 10px; }
 
 .country-modal .codes-block {
   width: 100%;
-  height: calc(100vh - 94px);
-  overflow: scroll; }
+  height: calc(100vh - 20vh); }
 
 .access-denied-modal {
   top: 0;
@@ -10952,7 +10956,6 @@ a.button {
   .kid-chat-room .main-block {
     background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
     height: calc(100vh - 172px);
-    overflow: scroll;
     position: relative; }
     .kid-chat-room .main-block .load {
       margin-top: 10px;
@@ -12028,16 +12031,15 @@ a.button {
 
 .country-modal .country-filter {
   height: 40px;
-  width: 100%;
+  width: 95%;
   border: 1px solid #0b1138;
   font-size: 18px;
   padding: 0 14px;
-  margin-bottom: 10px; }
+  margin: 12vh 10px 10px 10px; }
 
 .country-modal .codes-block {
   width: 100%;
-  height: calc(100vh - 94px);
-  overflow: scroll; }
+  height: calc(100vh - 20vh); }
 
 .kids-exist-modal {
   top: 0;
@@ -12817,16 +12819,15 @@ p {
 
 .country-modal .country-filter {
   height: 40px;
-  width: 100%;
+  width: 95%;
   border: 1px solid #0b1138;
   font-size: 18px;
   padding: 0 14px;
-  margin-bottom: 10px; }
+  margin: 12vh 10px 10px 10px; }
 
 .country-modal .codes-block {
   width: 100%;
-  height: calc(100vh - 94px);
-  overflow: scroll; }
+  height: calc(100vh - 20vh); }
 
 .notifications .menu-block {
   display: flex;
@@ -12953,13 +12954,18 @@ p {
     text-align: justify;
     line-height: 25px; }
 
+.terms-condition-block .scroll-content {
+  margin-top: 87px; }
+
 .terms-condition-block .menu-block {
   display: flex;
   align-items: center;
   width: 100%;
   height: 72px;
   background-color: #fff;
-  border-bottom: solid 2px #0b1138; }
+  border-bottom: solid 2px #0b1138;
+  position: absolute;
+  z-index: 1; }
   .terms-condition-block .menu-block img {
     width: 15px;
     margin-left: 9px; }
@@ -12973,9 +12979,7 @@ p {
 .terms-condition-block .main-block {
   background: url("../img/kid-chat-room/background.png") no-repeat center/cover;
   height: calc(100vh - 87px);
-  overflow: scroll !important;
   width: 100%;
-  margin: 15px 0 0;
   padding: 0 15px; }
   .terms-condition-block .main-block h3 {
     margin-top: 5px;
