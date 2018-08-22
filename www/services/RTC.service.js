@@ -10,8 +10,8 @@
     console.log('RTCService start');
 
     let user;
-    userFnc();
-    function userFnc() {
+    UserChecker();
+    function UserChecker() {
       let userTimer = setInterval(timer, 1000);
       function timer() {
         if ($localStorage.user) {
@@ -115,7 +115,7 @@
               fb.ref('/WebRTC/users/' + user.id + '/invite').remove();
               fb.ref('/WebRTC/users/' + user.id + '/invite_from').remove();
               fb.ref('/WebRTC/users/' + user.id + '/answer').remove();
-            }, 1500);
+            }, 3000);
 
 
           } else if (counter > 1) {

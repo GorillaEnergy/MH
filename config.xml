@@ -189,9 +189,11 @@
     <allow-navigation href="http://192.168.42.252:8100" />
     <allow-navigation href="http://192.168.1.101:8100" />
     <allow-navigation href="http://192.168.42.194:8100" />
+    <allow-navigation href="http://192.168.42.38:8100" />
+    <allow-navigation href="http://192.168.42.90:8100" />
+    <allow-navigation href="http://192.168.42.98:8100" />
     <engine name="windows" spec="5.0.0" />
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="^6.3.0" />
-    <allow-navigation href="http://192.168.42.38:8100" />
-    <allow-navigation href="http://192.168.42.90:8100" />
+    <allow-navigation href="http://192.168.42.171:8100" />
 </widget>
