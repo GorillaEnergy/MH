@@ -1,0 +1,20 @@
+<ion-view class="consultant-list">
+  <ion-content>
+
+    <div class="user-panel">
+      <div class="title" ng-click="vm.reload()">consultant list</div>
+      <div ng-repeat="consultant in vm.consultants track by $index" class="user-block">
+        <div style="display: flex; flex-direction: row;">
+          <img src="./img/consultant-list/profile-ico.png" class="man-ico">
+          <div class="offline-status" ng-class="vm.userOnlineStatus($index)"></div>
+          <div class="name">{{consultant.name}}</div>
+        </div>
+        <div>
+          <img src="./img/consultant-list/calls-ico.png" class="phone-ico" ng-click="vm.call(consultant)"
+               ng-if="vm.accesToCall($index)">
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

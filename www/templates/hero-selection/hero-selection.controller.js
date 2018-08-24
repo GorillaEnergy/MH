@@ -30,7 +30,7 @@
         }
         function toCall() {
           console.log('to call');
-          // $state.go('test');
+          $state.go('consultant-list');
         }
     }
 

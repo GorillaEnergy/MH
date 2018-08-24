@@ -10,6 +10,8 @@
         'service.notification',
         'service.fcm',
         'service.purchaseService',
-        'service.RTCService'
+        'service.RTCService',
+        'service.webrtc',
+        'service.rtcController',
     ]);
 })();

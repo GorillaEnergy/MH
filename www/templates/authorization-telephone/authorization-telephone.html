@@ -36,7 +36,7 @@
                 <img ng-if="vm.isAgreePrivacy" src="./img/authorization/checked.svg">
               </div>
               <input type="checkbox" ng-model="vm.isAgreePrivacy" ng-checked="vm.isAgreePrivacy">
-              <span>I agree to the <a ui-sref="terms-conditions" ng-click="vm.setPhone()">Terms of Use and Privacy Policy</a></span>
+              <span>I agree to the <a ng-click="vm.setPhone()">Terms of Use and Privacy Policy</a></span>
             </div>
 
             <div class="login-button" ng-click="vm.checkPhone()">

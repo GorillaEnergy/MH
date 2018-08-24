@@ -12,10 +12,10 @@
         .run(run);
 
     run.$inject = ['$ionicPlatform', '$timeout', '$state', 'toastr', 'fcm', 'userService', '$ionicSideMenuDelegate',
-                   'purchaseService', 'notificationService', 'RTCService', '$location', '$window'];
+                   'purchaseService', 'notificationService', 'webrtc', 'rtcController', 'RTCService'];
 
     function run($ionicPlatform, $timeout, $state, toastr, fcm, userService, $ionicSideMenuDelegate,
-                 purchaseService, notificationService, RTCService, $location, $window) {
+                 purchaseService, notificationService, webrtc, rtcController, RTCService) {
 
         // if (ionic.Platform.platform() == 'ios') {
         //   $ionicConfigProvider.views.swipeBackEnabled(false);

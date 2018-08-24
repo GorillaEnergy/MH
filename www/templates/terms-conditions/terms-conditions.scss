@@ -2,6 +2,7 @@
 
   .scroll-content{
     margin-top: 87px;
+    background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
   }
 
   .menu-block {
@@ -26,7 +27,7 @@
     }
   }
   .main-block {
-    background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
+    //background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
     height: calc(100vh - 87px);
     width: 100%;
     padding: 0 15px;

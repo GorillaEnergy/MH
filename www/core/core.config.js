@@ -38,7 +38,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyParent(); });
+            return $timeout(function () {
+              securityService.onlyParent();
+            });
           },
           user: function (userService) {
             return userService.getUser();
@@ -53,7 +55,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyParent(); });
+            return $timeout(function () {
+              securityService.onlyParent();
+            });
           },
           kids: function (userService) {
             userService.uploadKids();
@@ -75,7 +79,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.commonAccess(); });
+            return $timeout(function () {
+              securityService.commonAccess();
+            });
           }
         }
       })
@@ -87,7 +93,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyParent(); });
+            return $timeout(function () {
+              securityService.onlyParent();
+            });
           },
           kids: function (userService) {
             userService.uploadKids();
@@ -103,7 +111,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyParent(); });
+            return $timeout(function () {
+              securityService.onlyParent();
+            });
           },
           payments: function (purchaseService) {
             return purchaseService.paymentsList();
@@ -118,7 +128,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyKid(); });
+            return $timeout(function () {
+              securityService.onlyKid();
+            });
           },
           live_content: function (additionalContentService) {
             return additionalContentService.mainPageContent();
@@ -133,7 +145,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyKid(); });
+            return $timeout(function () {
+              securityService.onlyKid();
+            });
           }
         }
       })
@@ -145,7 +159,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyKid(); });
+            return $timeout(function () {
+              securityService.onlyKid();
+            });
           },
           consultants: function (consultantService) {
             return consultantService.consultantList();
@@ -160,7 +176,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyKid(); });
+            return $timeout(function () {
+              securityService.onlyKid();
+            });
           },
           consultants: function (consultantService) {
             return consultantService.consultantList();
@@ -178,7 +196,7 @@
             return securityService.onlyParent();
           },
           consultants: function (consultantService) {
-            return  consultantService.consultantList();
+            return consultantService.consultantList();
           },
           rights_to_kid: function (userService) {
             return userService.rightsToKid();
@@ -193,7 +211,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyParent(); });
+            return $timeout(function () {
+              securityService.onlyParent();
+            });
           },
           kids: function (userService) {
             return userService.uploadKids();
@@ -211,7 +231,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.commonAccess(); });
+            return $timeout(function () {
+              securityService.commonAccess();
+            });
           },
           countries: function (countryCodes) {
             return countryCodes.list();
@@ -226,7 +248,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.onlyParent(); });
+            return $timeout(function () {
+              securityService.onlyParent();
+            });
           }
         }
       })
@@ -250,7 +274,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.commonAccess(); });
+            return $timeout(function () {
+              securityService.commonAccess();
+            });
           }
         }
       })
@@ -262,7 +288,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.commonAccess(); });
+            return $timeout(function () {
+              securityService.commonAccess();
+            });
           },
           content: function (additionalContentService) {
             return additionalContentService.additionalPageContent();
@@ -277,7 +305,9 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.commonAccess(); });
+            return $timeout(function () {
+              securityService.commonAccess();
+            });
           },
           favorites: function (additionalContentService) {
             return additionalContentService.favoritesList();
@@ -292,10 +322,23 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return $timeout(function() { securityService.commonAccess(); });
+            return $timeout(function () {
+              securityService.commonAccess();
+            });
           },
           search_result: function (additionalContentService) {
             return additionalContentService.searchContent();
+          }
+        }
+      })
+      .state('consultant-list', {
+        url: '/consultant-list',
+        templateUrl: 'templates/consultant-list/consultant-list.html',
+        controller: 'ConsultantListController',
+        controllerAs: 'vm',
+        resolve: {
+          consultants: function (consultantService) {
+            return consultantService.consultantList();
           }
         }
       })

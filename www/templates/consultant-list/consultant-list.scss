@@ -1,0 +1,49 @@
+.consultant-list {
+
+  .user-panel {
+    font-size: 25px;
+    font-family: AmericanPatrius;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    border-left: 1px solid #0b1138;
+
+    .title {
+      box-sizing: border-box;
+      font-size: 100%;
+      padding: 10px 0;
+      text-align: center;
+    }
+    .user-block {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .name {
+      font-size: 50%;
+      padding-top: 24px;
+      margin-left: 8px;
+    }
+    .man-ico {
+      height: 40px;
+
+    }
+    .phone-ico {
+      height: 40px;
+      outline: none;
+
+    }
+    .offline-status {
+      border: 1px solid #282828;
+      width: 7px;
+      height: 7px;
+      background-color: grey;
+      margin-top: 33px;
+      margin-left: 9px;
+    }
+    .online-status {
+      background-color: red;
+    }
+  }
+}

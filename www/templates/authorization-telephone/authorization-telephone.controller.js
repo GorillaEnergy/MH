@@ -18,8 +18,8 @@
 
     vm.countryCodes = countries;
     if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
-    // vm.phone = userService.getPhone() || '';
-    vm.phone = userService.getPhone() || '3311225544';
+    // vm.phone = userService.getPhone().phone || '';
+    vm.phone = userService.getPhone().phone || '3311225544';
 
 
     // if (countries.length) { vm.countryCode = countries[235].code; } //country be default Ukraine
@@ -46,7 +46,6 @@
 
     vm.setPhone = ()=> {
         userService.setPhone(vm.phone);
-        console.log('asd');
         $scope.termsConditions.show();
     };
 

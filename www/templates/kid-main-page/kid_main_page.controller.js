@@ -29,7 +29,7 @@
           $state.go('kid-messages');
         }
         function toCall() {
-          console.log('to call');
+          console.log('to hero-selection');
           $state.go('hero-selection');
         }
         function toMenu() {
