@@ -98,7 +98,7 @@
 
     <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
 
-    <ion-content class="padding">
+    <ion-content>
       <div class="codes-block">
         <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter">
           <ion-radio ng-model="vm.countryCode" ng-value="country.code"
@@ -107,7 +107,6 @@
           </ion-radio>
         </div>
       </div>
-
     </ion-content>
 
   </ion-modal-view>

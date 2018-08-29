@@ -188,8 +188,9 @@
       <a class="button icon-left ion-chevron-left button-clear button-dark"></a>
     </ion-header-bar>
 
-    <ion-content class="padding">
-      <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
+    <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
+
+    <ion-content>
       <div class="codes-block">
 
         <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter" ng-if="vm.useCodeForKid">
@@ -251,8 +252,8 @@
     <ion-content class="remove-main-block">
 
       <div class="title-kr">
-        <span class="question-kr">are you sure?</span>
-        <span class="description-kr">this kid will be removed permanently.</span>
+        <p class="question-kr">are you sure?</p>
+        <p class="description-kr">this kid will be removed permanently.</p>
       </div>
 
       <div class="button-block-kr">

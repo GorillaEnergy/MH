@@ -74,6 +74,7 @@
   .main-block{
     background: url('../img/kid-chat-room/background.png') no-repeat center / cover;
     height: calc(100vh - 172px);
+    overflow: auto;
     position: relative;
     .load {
       margin-top: 10px;

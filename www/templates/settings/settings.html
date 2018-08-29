@@ -155,8 +155,9 @@
       <a class="button icon-left ion-chevron-left button-clear button-dark"></a>
     </ion-header-bar>
 
-    <ion-content class="padding">
-      <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
+    <input ng-model="vm.countryFilter" class="country-filter" placeholder="Enter country">
+
+    <ion-content>
       <div class="codes-block">
         <div ng-repeat="country in vm.countryCodes | filter: vm.countryFilter">
           <ion-radio ng-model="vm.countryCode" ng-value="country.code"
@@ -165,6 +166,7 @@
           </ion-radio>
         </div>
       </div>
+
 
     </ion-content>
 

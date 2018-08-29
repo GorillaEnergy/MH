@@ -90,7 +90,8 @@
             toastr.success('Parent added');
             $scope.parentModal.hide()
           } else {
-            $scope.parentModal.hide()
+            toastr.error(res.message);
+            // $scope.parentModal.hide()
           }
         })
       } else {

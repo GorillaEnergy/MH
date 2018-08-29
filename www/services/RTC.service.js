@@ -155,10 +155,11 @@
             offAnswerWatcher(opponent_id);
           } else if (snapshot.val() === 'add') {
             offAnswerWatcher(opponent_id);
+            console.log(vidCount, remoteStream);
             if (!vidCount || remoteStream) {
-              end();
               dialing('joinRTC', call_from_user, call_to_user, opponent_name)
             } else {
+              softEnd();
               dialing('joinRTC', call_from_user, call_to_user, opponent_name)
             }
           }
@@ -289,30 +290,31 @@
       });
 
       function activityCalc(name, join) {
+        console.log(name, join);
         let index;
+
         search(name);
         function search(name) {
           for (let i=0; i < userActivityArr.length; i++) {
-            if (userActivityArr[i].name === name) {
+            if (userActivityArr[i].name == name) {
               index = i;
+              console.log('index = ' + i);
               break
             }
           }
           change(name);
         }
         function change(name) {
-          if (index && !join) {
-            userActivityArr[index].status = false;
-          } else if (!index && join) {
-            userActivityArr.push({ name: name, status: true })
+          if (join) {
+            userActivityArr.push({ user: name })
+          } else {
+            userActivityArr.splice(index, 1)
           }
+
           vidCalc(name)
         }
         function vidCalc(name) {
-          vidCount = 0;
-          angular.forEach(userActivityArr, function(value) {
-            if (value.status) { vidCount++; }
-          });
+          vidCount = userActivityArr.length;
 
           console.log('User arr', userActivityArr);
           console.log('User count', vidCount);
@@ -364,6 +366,10 @@
     function end(){
       // $("vid-box").empty();
       $window.location.reload();
+      ctrl.hangup();
+    }
+    function softEnd(){
+      // $("vid-box").empty();
       ctrl.hangup();
     }
 

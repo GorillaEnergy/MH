@@ -104,8 +104,8 @@
             status = false;
             userService.userUpdate(data).then(function (res) {
               status = true;
-              userService.setUser(res.data);
               if (res.status === "success") {
+                userService.setUser(res.data);
 
                 if (toastrType === 'new') {
                   toastr.success('Successfully added');

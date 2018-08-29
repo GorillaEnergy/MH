@@ -253,7 +253,7 @@
 
     function removeKidModal() {
       console.log('removeKidModal');
-      let data = { kid_id: vm.kids[userService.getKidIndex()].id };
+      let data = { kid_id: vm.kids[0].id };
       userService.deleteKid(data).then(function (res) {
         console.log(res);
         if (res.status == "success") {
@@ -263,10 +263,11 @@
           kids.splice($localStorage.kid_index, 1);
           $localStorage.kids = angular.copy(kids);
           delete $localStorage.kid_index;
+          hideKidRemoveModal();
 
           $state.go('parent-main-page')
         } else {
-          console.log('remove err');
+          toastr.error(res.message);
         }
       })
     }
@@ -482,8 +483,10 @@
       console.log('removeFollower');
       console.log(follower);
       let data = {
-        phone: follower.phone.phone,
-        code: follower.phone.code,
+        // phone: follower.phone.phone,
+        // code: follower.phone.code,
+        // kid_id: vm.kids[0].id,
+        follower_id: follower.id,
         kid_id: $localStorage.kids[$localStorage.kid_index].id,
         type: "follower"
       };
@@ -528,7 +531,7 @@
 
     function changeAccessRight(access) {
       let data = {};
-      data.kid_id = vm.kids[userService.getKidIndex()].id;
+      data.kid_id = vm.kids[0].id;
       data.access = access ? 1 : 0;
 
       userService.updateKid(data).then(function (res) {

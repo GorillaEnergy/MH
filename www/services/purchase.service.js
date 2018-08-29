@@ -26,7 +26,7 @@
         })
         .catch(function (err) {
           console.log(err);
-          errorPopup();
+          errorPopup(1);
         });
     }
 
@@ -57,10 +57,10 @@
             getProductInfo([tariff], tariff_id);
             // getProductInfo(['managed.product.test2'], tariff_id);
           } else {
-            errorPopup()
+            errorPopup(2)
           }
         } else {
-          errorPopup()
+          errorPopup(3)
         }
       });
 
@@ -74,7 +74,7 @@
           })
           .catch(function (err) {
             console.log(err);
-            errorPopup();
+            errorPopup(4, err);
           });
       }
 
@@ -83,14 +83,14 @@
           window.inAppPurchase.buy(product_name)
             .then(function (data) {
               savePaymentInHistory(data, product_info, tariff_id);
-              return window.inAppPurchase.consume(data.type, data.receipt, data.signature);
-            }).then(function (data) {
-            console.log('processSuccessBuy');
-          }).catch(function (err) {
-            $ionicLoading.hide();
-            console.log(err);
-            errorPopup();
-          });
+              return window.inAppPurchase.consume(data.productType, data.receipt, data.signature);
+            })
+            .then(function (data) {
+              console.log('processSuccessBuy');
+            }).catch(function (err) {
+              // $ionicLoading.hide();
+              errorPopup(5, err);
+            });
         }
       }
 
@@ -170,12 +170,18 @@
     }
 
 
-    function errorPopup() {
+    function errorPopup(number, err) {
       $ionicPopup.alert({
-        title: 'Something went wrong',
-        template: 'Buy error'
+        title: 'Something went wrong ' + number,
+        template: 'Buy error' + err
       })
     }
+    // function errorPopup() {
+    //   $ionicPopup.alert({
+    //     title: 'Something went wrong',
+    //     template: 'Buy error'
+    //   })
+    // }
 
     function showWarning() {
       var scope = $rootScope.$new(true);
