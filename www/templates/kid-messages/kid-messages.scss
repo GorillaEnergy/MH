@@ -29,6 +29,8 @@
     height: calc(100vh - 72px);
     width: 100%;
     background: url('../img/kid-chat/background.png') no-repeat center / cover;
+    overflow-y: auto;
+
     .consulter{
       margin-bottom: 10px;
       display: flex;
@@ -102,6 +104,8 @@
         padding-left: 6px;
         p{
           color: #0b1138;
+          max-height: 40px;
+          text-wrap: none;
         }
         .consult-name{
           font-family: American;

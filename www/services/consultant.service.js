@@ -22,7 +22,7 @@
       // }
       return http.get(url.consultants.consultantsList).then(function (res) {
         if(res.status === 'success'){
-          model.cache = res.data;
+          // model.cache = res.data;
           return res.data;
         } else {
           return []

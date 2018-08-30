@@ -37,7 +37,7 @@
         $ionicPlatform.ready(function () {
             $timeout(function() {
                 navigator.splashscreen.hide();
-            }, 1000);
+            }, 2000);
             // console.log(cordova.plugins.diagnostic);
             if (window.StatusBar) {
             //     // Set the statusbar to use the default style, tweak this to

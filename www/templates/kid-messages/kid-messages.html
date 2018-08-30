@@ -7,7 +7,7 @@
     <div class="main-block">
       <div ng-repeat="(key,consultant) in vm.consultants" class="consulter">
         <div class="chat-block" ng-click="vm.toChat(key, consultant)">
-          <div class="status" ng-if="consultant.status"></div>
+          <div class="status" ng-if="consultant.online"></div>
           <span ng-if="consultant.missed_messages">{{consultant.missed_messages}}</span>
           <div class="photo-consult">
           </div>
@@ -16,7 +16,7 @@
 
             <div class="info-consult">
               <p class="consult-name" ng-if="consultant.name">{{consultant.name}}</p>
-              <p ng-if="consultant.description">{{consultant.description}}</p>
+              <p ng-if="consultant.message">{{consultant.message}}</p>
             </div>
 
             <div class="date-and-icon">

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mind.hero2" version="0.3.8" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mind.hero2" version="0.3.9" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MindHero</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.42.91:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -198,6 +198,7 @@
     <allow-navigation href="http://192.168.42.212:8100" />
     <allow-navigation href="http://192.168.42.140:8100" />
     <allow-navigation href="http://192.168.42.46:8100" />
+    <allow-navigation href="http://192.168.42.91:8100" />
     <engine name="windows" spec="^6.0.0" />
     <engine name="ios" spec="^4.5.5" />
     <engine name="android" spec="^7.1.1" />

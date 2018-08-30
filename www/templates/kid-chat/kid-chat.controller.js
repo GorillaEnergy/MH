@@ -5,7 +5,7 @@
     .controller('KidChatController', KidChatController);
 
   KidChatController.$inject = ['$state', '$timeout', '$anchorScroll', '$location', '$ionicModal', '$scope', 'userService',
-                               'toastr', '$ionicLoading'];
+    'toastr', '$ionicLoading'];
 
 
   function KidChatController($state, $timeout, $anchorScroll, $location, $ionicModal, $scope, userService,
@@ -27,7 +27,7 @@
     vm.sendMessage = sendMessage;
     vm.sendReport = sendReport;
 
-    vm.selectedReason =  selectedReason;
+    vm.selectedReason = selectedReason;
     vm.checked = checked;
     vm.reportTextField = reportTextField;
     vm.focusedInput = focusedInput;
@@ -62,6 +62,7 @@
     let chatHeightNew = null;
 
     initializeFB();
+
     function initializeFB() {
       psychologistAccess();
       downloadMessages();
@@ -79,6 +80,7 @@
             function create_room() {
               fb.ref('/chats/' + kid_id + '/' + psy_id + '/access').set(true);
             }
+
             console.log('access psy chat = ', snapshot.val());
           })
         });
@@ -101,6 +103,7 @@
         return true;
       }
     }
+
     function timeHeader(index) {
       if (index) {
         let userPre = vm.messages[index - 1].create_by_user_id;
@@ -132,6 +135,7 @@
 
       return day + ' ' + monthList[month] + ' ' + year;
     }
+
     function timeConverter(timestamp) {
       let hours = new Date(timestamp).getHours();
       let minutes = new Date(timestamp).getMinutes();
@@ -152,6 +156,7 @@
         return false
       }
     }
+
     function toMessages() {
       console.log('to messages');
       $state.go('kid-messages');
@@ -165,11 +170,13 @@
         }
       }, 3000)
     }
+
     function report() {
       vm.reportMenu = false;
       vm.checkedReason = 0;
       $scope.reportModal.show()
     }
+
     function sendReport() {
       if (vm.checkedReason === 'other') {
         console.log('other reason');
@@ -183,10 +190,12 @@
         $scope.reportModal.hide();
       }, 200)
     }
+
     function block() {
       vm.reportMenu = false;
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/access').set(false);
     }
+
     function unblock() {
       vm.reportMenu = false;
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/access').set(true);
@@ -222,11 +231,13 @@
     function convertToArray(data, type) {
       let res = [];
       let arrOfKeys = Object.keys(data);
-      angular.forEach(arrOfKeys ,function (key) {
+      angular.forEach(arrOfKeys, function (key) {
         res.push(data[key]);
       });
 
-      if (res.length < number_of_posts) { post_is_last = true }
+      if (res.length < number_of_posts) {
+        post_is_last = true
+      }
       console.log('post_is_last', post_is_last);
 
       if (!post_is_last) {
@@ -254,28 +265,34 @@
     }
 
     function downloadMoreMessages() {
-      $ionicLoading.show({ template: 'Loading...' });
+      $ionicLoading.show({template: 'Loading...'});
       let last = vm.messages[0].date;
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').orderByChild("date").endAt(last).limitToLast(download_more + 1).once('value', (snapshot) => {
         anchorScroll(snapshot.val());
         $ionicLoading.hide();
       })
     }
+
     function addMessagesEvent() {
-      // let access = false;
       console.log('addMessagesEvent');
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').limitToLast(1).on('child_added', (snapshot) => {
         $timeout(function () {
-          // if (access || !vm.messages.length) {
-          //   console.log(snapshot.val());
+          let push_status = true;
+          let added_message = snapshot.val();
+          for (let i = 0; i < vm.messages.length; i++) {
+            if (vm.messages[i].date === added_message.date) {
+              push_status = false;
+              break;
+            }
+          }
+          if (push_status) {
             vm.messages.push(snapshot.val());
             scrollToBottom(true)
-          // } else {
-          //   access = true;
-          // }
+          }
         })
       })
     }
+
     function removeMessagesEvent() {
       console.log('removeMessagesEvent');
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').on('child_removed', (snapshot) => {
@@ -290,6 +307,7 @@
         })
       })
     }
+
     function changeMessagesEvent() {
       console.log('changeMessagesEvent');
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').on('child_changed', (snapshot) => {
@@ -307,17 +325,19 @@
 
     function addScrollEvent() {
       console.log('addScrollEvent');
-      angular.element(chat_body).bind('scroll', function(){
+      angular.element(chat_body).bind('scroll', function () {
         if (chat_body.scrollTop === 0) {
           console.log('scroll position top');
           downloadMoreMessages();
         }
       });
     }
+
     function destroyScrollEvent() {
       console.log('destroyScrollEvent');
       angular.element(chat_body).unbind('scroll');
     }
+
     function anchorScroll(data) {
       console.log('anchorScroll');
       $timeout(function () {
@@ -329,7 +349,9 @@
         }
         // console.log('chatHeightOld = ', chatHeightOld);
 
-        if (data) { vm.messages = convertToArray(data, 'secondary_loading') }
+        if (data) {
+          vm.messages = convertToArray(data, 'secondary_loading')
+        }
 
         $timeout(function () {
 
@@ -351,6 +373,7 @@
         chat_body.scrollTop = chat_body.scrollTop + (visible_parts_of_logs_block - chat_body.clientHeight);
       }, 300)
     }
+
     function unfocusedInput() {
       console.log('unfocusedInput');
       $timeout(function () {
@@ -363,11 +386,21 @@
     function selectedReason(index) {
       vm.checkedReason = index;
     }
+
     function checked(index) {
-      if (index === vm.checkedReason) { return true; } else { return false; }
+      if (index === vm.checkedReason) {
+        return true;
+      } else {
+        return false;
+      }
     }
+
     function reportTextField() {
-      if (vm.checkedReason === 'other') { return true } else { return false }
+      if (vm.checkedReason === 'other') {
+        return true
+      } else {
+        return false
+      }
     }
 
     $ionicModal.fromTemplateUrl('report-modal', {
