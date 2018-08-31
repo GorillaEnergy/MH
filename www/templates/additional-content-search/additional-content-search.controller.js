@@ -4,10 +4,12 @@
   angular.module('app')
     .controller('AdditionalContentSearchController', AdditionalContentSearchController);
 
-  AdditionalContentSearchController.$inject = ['$state', '$localStorage', 'search_result', 'additionalContentService'];
+  AdditionalContentSearchController.$inject = ['$state', '$localStorage', 'search_result', 'additionalContentService',
+                                               'toastr'];
 
 
-  function AdditionalContentSearchController($state, $localStorage, search_result, additionalContentService) {
+  function AdditionalContentSearchController($state, $localStorage, search_result, additionalContentService,
+                                             toastr) {
     const vm = this;
 
     vm.toAdditionalContent = toAdditionalContent;
@@ -20,6 +22,9 @@
 
     vm.serch_result = search_result;
 
+    if (!search_result.length) {
+      toastr.info('No results found')
+    }
 
     function toAdditionalContent() {
       console.log('menu');

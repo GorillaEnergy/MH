@@ -615,6 +615,8 @@
   min-height: 50px !important;
   z-index: 2;
   background-color: #00000000 !important;
+  font-family: AmericanPatrius;
+  color: #0b1138;
 
   .match-main-block {
     background: url('../img/kid/modal/dots.png') center no-repeat;
@@ -626,6 +628,10 @@
     border: 2px solid #0a184c;
     border-radius: 5px;
 
+    a {
+      text-decoration: none;
+    }
+
     .warning-ico {
       height: 26px;
       margin-top: 8px;
@@ -633,8 +639,8 @@
     .title-km {
       display: block;
       text-align: center;
-      font-size: 25px;
-      line-height: 13px;
+      font-size: 18px;
+      line-height: 18px;
       text-transform: uppercase;
       margin-top: 8px;
     }
@@ -642,20 +648,26 @@
       margin: 23px auto 0;
       width: 93%;
       height: 48px;
-      border: 1px solid #000;
+      border: 1px solid #0b1138;
       border-radius: 5px;
       display: flex;
       justify-content: space-between;
       padding: 12px 11px;
       background-color: white;
+      color: #0b1138;
+      text-decoration: none;
 
       .mail-km {
         height: 23px;
       }
       .mail-title-km {
-        font-size: 17px;
+        font-size: 15px;
         text-transform: uppercase;
         margin-right: 23px;
+        margin-top: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     .cancel-km {

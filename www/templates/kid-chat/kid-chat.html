@@ -69,7 +69,7 @@
                class="reason-report">
             <img src="./img/kid-chat/checked.png" ng-if="vm.checked(key)">
             <img src="./img/kid-chat/unchecked.png" ng-if="!vm.checked(key)">
-            <p>{{reason}}</p>
+            <p>{{reason.name}}</p>
           </div>
 
           <div ng-click="vm.selectedReason('other')" class="reason-report">

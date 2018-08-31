@@ -25,6 +25,7 @@
 
         model.createKid = createKid;
         model.updateKid = updateKid;
+        model.changeAccess = changeAccess;
         model.uploadKids = uploadKids;
         model.deleteKid = deleteKid;
         model.setKids = setKids;
@@ -37,6 +38,9 @@
 
         model.setKidIndex = setKidIndex;
         model.getKidIndex = getKidIndex;
+
+      model.reasonList = reasonList;
+        model.report = report;
 
 
         return model;
@@ -100,10 +104,15 @@
             });
         }
         function logout() {
-          firebase.database().ref('/WebRTC/users/' + getUser().id + '/online').set(false);
-          $localStorage.$reset();
-          $sessionStorage.$reset();
-          $state.go('authorization')
+          http.get(url.auth.logout).then(function (res) {
+            if (res.status === 'success') {
+              toastr.success(res.message);
+              firebase.database().ref('/WebRTC/users/' + getUser().id + '/online').set(false);
+              $localStorage.$reset();
+              $sessionStorage.$reset();
+              $state.go('authorization')
+            }
+          });
         }
 
         function setToken(token) {
@@ -135,6 +144,9 @@
         }
         function updateKid(data) {
           return http.post(url.kid.updateKid, data);
+        }
+        function changeAccess(data) {
+          return http.post(url.kid.access, data);
         }
         function uploadKids() {
           return http.get(url.kid.uploadKids).then(function (res) {
@@ -186,6 +198,19 @@
         }
         function getKidIndex() {
           return $localStorage.kid_index;
+        }
+
+        function reasonList() {
+          return http.get(url.report.reason).then(function (res) {
+            if (res) {
+              return res
+            } else {
+              return []
+            }
+          });
+        }
+        function report(data) {
+          return http.post(url.report.send, data);
         }
     }
 })

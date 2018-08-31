@@ -170,18 +170,18 @@
     }
 
 
-    function errorPopup(number, err) {
-      $ionicPopup.alert({
-        title: 'Something went wrong ' + number,
-        template: 'Buy error' + err
-      })
-    }
-    // function errorPopup() {
+    // function errorPopup(number, err) {
     //   $ionicPopup.alert({
-    //     title: 'Something went wrong',
-    //     template: 'Buy error'
+    //     title: 'Something went wrong ' + number,
+    //     template: 'Buy error' + err
     //   })
     // }
+    function errorPopup() {
+      $ionicPopup.alert({
+        title: 'Something went wrong',
+        template: 'Buy error'
+      })
+    }
 
     function showWarning() {
       var scope = $rootScope.$new(true);

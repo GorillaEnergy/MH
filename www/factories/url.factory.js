@@ -24,7 +24,8 @@
             add_follower: baseUrl + 'api/add-another-parent',
             remove_follower: baseUrl + 'api/delete-another-parent',
             followers_list: baseUrl + 'api/list-followers',
-            rights_to_kid: baseUrl + 'api/check-status-parent'
+            rights_to_kid: baseUrl + 'api/check-status-parent',
+            access: baseUrl + 'api/access-kid'
           },
           countries: {
             list: baseUrl + 'api/list-codes'
@@ -44,7 +45,12 @@
             get_plan: baseUrl + 'api/list-tariff',
             confirm: baseUrl + 'api/create-payment',
             payments_archive: baseUrl + 'api/list-payment'
+          },
+          report : {
+            reason: baseUrl + 'api/reasons',
+            send: baseUrl + 'api/report/send'
           }
+
 
         }
       }]);

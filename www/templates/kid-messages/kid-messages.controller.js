@@ -104,8 +104,8 @@
       $state.go('kid-main-page')
     }
 
-    function toChat(index) {
-      $localStorage.psy_index = index;
+    function toChat(consultant) {
+      $localStorage.consultant = consultant;
       console.log('to kid chat');
       $state.go('kid-chat')
     }

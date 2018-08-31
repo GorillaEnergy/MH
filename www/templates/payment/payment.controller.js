@@ -30,7 +30,7 @@
       let maximum_kid = 6;
       let data = [];
       angular.forEach(kids, function (kid, index) {
-        if (!kid.payment && index <= maximum_kid ) { data.push(kid) }
+        if (!kid.payment && index < maximum_kid ) { data.push(kid) }
       });
       return data;
     }

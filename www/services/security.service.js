@@ -60,6 +60,9 @@
             }
           });
         }
+        else if (user.role_id === 1) {
+          $state.go('kid-main-page')
+        }
       }
     }
     function onlyKid() {

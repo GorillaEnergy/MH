@@ -23,7 +23,10 @@
         controllerAs: 'vm',
         resolve: {
           security: function ($timeout, securityService) {
-            return securityService.authorization();
+            // return securityService.authorization();
+            return $timeout(function () {
+              securityService.authorization();
+            });
           },
           countries: function (countryCodes) {
             return countryCodes.list();
@@ -134,6 +137,9 @@
           },
           live_content: function (additionalContentService) {
             return additionalContentService.mainPageContent();
+          },
+          consultants: function (consultantService) {
+            return consultantService.consultantList();
           }
         }
       })
@@ -148,6 +154,9 @@
             return $timeout(function () {
               securityService.onlyKid();
             });
+          },
+          reasonList: function (userService) {
+            return userService.reasonList();
           }
         }
       })

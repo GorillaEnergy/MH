@@ -107,6 +107,13 @@
           max-height: 40px;
           text-wrap: none;
         }
+        p:last-child {
+          max-height: 40px;
+          //text-overflow: ellipsis;
+          //white-space: nowrap;
+          overflow: hidden;
+          box-sizing: content-box;
+        }
         .consult-name{
           font-family: American;
           font-size:19px;

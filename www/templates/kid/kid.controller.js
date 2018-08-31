@@ -163,12 +163,15 @@
     }
 
 
-
     function openList() {
       if (!vm.animation) {
         vm.animation = true;
       }
     }
+
+    $timeout(function () {
+      showKidMatchModal();
+    }, 5000);
 
     function closeList() {
       console.log('closeList');
@@ -404,7 +407,7 @@
                 $state.go('logs');
               }
             } else if (res.message) {
-              toastr.error(res.message)
+              toastr.error(res.message);
             }
           })
         } else {
@@ -430,7 +433,8 @@
                 $state.go('payment');
               }
             } else if (res.message) {
-              toastr.error(res.message)
+              toastr.error(res.message);
+              showKidMatchModal();
             }
           })
         }
@@ -530,11 +534,12 @@
     }
 
     function changeAccessRight(access) {
+      console.log('changeAccessRight');
       let data = {};
       data.kid_id = vm.kids[0].id;
       data.access = access ? 1 : 0;
 
-      userService.updateKid(data).then(function (res) {
+      userService.changeAccess(data).then(function (res) {
         console.log(res.data.access);
         if (res.status === 'success') {
           vm.access = res.data.access;

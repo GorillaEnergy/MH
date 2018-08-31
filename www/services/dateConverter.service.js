@@ -16,7 +16,7 @@
     return model;
 
     function date(timestamp, minimize) {
-      if (!timestamp) { return '' }
+      if (!timestamp) { return '--.--.--' }
       timestamp = Number(timestamp);
       // if (minimize) {timestamp = timestamp * 1000}
 
@@ -32,7 +32,7 @@
 
         if (day < 10) { day = '0' + day }
         if (month < 10) { month = '0' + month }
-        year = year.toString().substr(-2)
+        year = year.toString().substr(-2);
 
         return day + '.' + month + '.' + year;
 
@@ -40,7 +40,7 @@
     }
 
     function time(timestamp) {
-      if (!timestamp) { return '' }
+      if (!timestamp) { return '--:--' }
       let hours = new Date(timestamp).getHours();
       let minutes = new Date(timestamp).getMinutes();
       if (hours < 10) {

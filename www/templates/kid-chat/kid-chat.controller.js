@@ -5,11 +5,11 @@
     .controller('KidChatController', KidChatController);
 
   KidChatController.$inject = ['$state', '$timeout', '$anchorScroll', '$location', '$ionicModal', '$scope', 'userService',
-    'toastr', '$ionicLoading'];
+    'toastr', '$ionicLoading', '$localStorage', 'reasonList'];
 
 
   function KidChatController($state, $timeout, $anchorScroll, $location, $ionicModal, $scope, userService,
-                             toastr, $ionicLoading) {
+                             toastr, $ionicLoading, $localStorage, reasonList) {
     const vm = this;
 
     vm.toMessages = toMessages;
@@ -35,22 +35,31 @@
 
     vm.reportMenu = false;
 
-    vm.consultantName = 'Mariya';
     vm.date = new Date();
     vm.messages = [];
     vm.blocked = null;
 
 
-    vm.reportReasonList = ['reason 1', 'reason 2', 'reason 3',];
+    vm.reportReasonList = reasonList;
+    // vm.reportReasonList = ['reason 1', 'reason 2', 'reason 3',];
     vm.reportReason = vm.reportReasonList[0];
     vm.checkedReason = 0;
+
+    let consultant = $localStorage.consultant;
+    vm.consultantName = consultant.name;
 
 
     let fb = firebase.database();
     let kid_id = userService.getUser().id;
-    let psy_id = 1; // psy module not ready, change when ready;
+    let psy_id = consultant.id;
     let number_of_posts = 30;
     let download_more = 30;
+
+    let missed_messages = 0;
+    let missed_messages_psy = 0;
+    let msgKeys = [];
+    let local_unread = 0;
+    let unreadMsgsKeysArr = [];
 
     let chat_body = document.getElementById("chat");
     let visible_parts_of_logs_block = chat_body.clientHeight;
@@ -64,6 +73,7 @@
     initializeFB();
 
     function initializeFB() {
+      checkMissedNumber();
       psychologistAccess();
       downloadMessages();
       addMessagesEvent();
@@ -178,17 +188,22 @@
     }
 
     function sendReport() {
+      let data = {};
+      data.consultant_id = psy_id;
+
       if (vm.checkedReason === 'other') {
-        console.log('other reason');
-        console.log(vm.reportTextValue);
+        data.own_reason = vm.reportTextValue;
       } else {
-        console.log(vm.reportReasonList[vm.checkedReason]);
+        data.reason_id = vm.reportReasonList[vm.checkedReason].id;
       }
-      $timeout(function () {
-        console.log('hide modal');
-        toastr.success('Report sent');
+
+      userService.report(data).then(function (res) {
+        console.log(res);
+        vm.reportTextValue = '';
+        toastr.success(res.message);
         $scope.reportModal.hide();
-      }, 200)
+      });
+
     }
 
     function block() {
@@ -210,6 +225,7 @@
       data.read = false;
 
       if (vm.message_input) {
+        fb.ref('/chats/' + kid_id + '/' + psy_id + '/total_unread_psy').set(missed_messages_psy + 1);
         fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').push(data);
         vm.message_input = '';
       }
@@ -218,9 +234,14 @@
     function scrollToBottom(newMsg) {
       $timeout(function () {
         if (newMsg) {
+
+          $timeout(function () {
+            chat_body.scrollTop = angular.copy(chat_body.scrollHeight);
+          }, 500)
+
           // тут добавить какоето условие для более корректной работы функции(возможно скролл и ненужно опускать)
           // chat_body.scrollTo(0, chat_body.scrollHeight);
-          chat_body.scrollTop = angular.copy(chat_body.scrollHeight);
+          // chat_body.scrollTop = angular.copy(chat_body.scrollHeight);
         } else {
           // chat_body.scrollTo(0, chat_body.scrollHeight);
           chat_body.scrollTop = angular.copy(chat_body.scrollHeight);
@@ -235,6 +256,8 @@
         res.push(data[key]);
       });
 
+      msgKeys = msgKeys.concat(arrOfKeys);
+
       if (res.length < number_of_posts) {
         post_is_last = true
       }
@@ -246,6 +269,8 @@
         destroyScrollEvent()
       }
 
+      unreadCalc(res, msgKeys);
+
       if (type === 'primary_loading') {
         return res;
       } else {
@@ -254,6 +279,44 @@
         return res;
       }
     }
+
+
+
+    function unreadCalc(arr, keysArr, soloKey, obj) {
+      if (!soloKey) {
+        angular.forEach(arr, function (msg, index) {
+          if (msg.create_by_user_id === psy_id && !msg.read) {
+            local_unread++;
+            unreadMsgsKeysArr.push(keysArr[index])
+          }
+        });
+      } else {
+        if (obj.create_by_user_id === psy_id && !obj.read) {
+          local_unread++;
+        }
+      }
+
+      if (missed_messages) {
+        !soloKey ? markAsRead(unreadMsgsKeysArr) : markAsRead([soloKey]);
+
+        $timeout(function () {
+          console.log(missed_messages);
+          console.log(local_unread);
+          fb.ref('/chats/' + kid_id + '/' + psy_id + '/total_unread_kid').set(missed_messages - local_unread);
+
+          local_unread = 0;
+          unreadMsgsKeysArr = [];
+        }, 200);
+      }
+    }
+
+    function markAsRead(keys) {
+      angular.forEach(keys, function (key) {
+        fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages/'+ key + '/read').set(true);
+      })
+    }
+
+
 
     function downloadMessages() {
       fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').limitToLast(number_of_posts).once('value', (snapshot) => {
@@ -286,6 +349,7 @@
             }
           }
           if (push_status) {
+            unreadCalc(null, null, snapshot.key, snapshot.val());
             vm.messages.push(snapshot.val());
             scrollToBottom(true)
           }
@@ -319,6 +383,19 @@
               break;
             }
           }
+        })
+      })
+    }
+    function checkMissedNumber() {
+      console.log('checkMissedNumber');
+      fb.ref('/chats/' + kid_id + '/' + psy_id + '/total_unread_kid').on('value', (snapshot) => {
+        $timeout(function () {
+          snapshot.val() ? missed_messages = Number(snapshot.val()) : missed_messages = 0;
+        })
+      });
+      fb.ref('/chats/' + kid_id + '/' + psy_id + '/total_unread_psy').on('value', (snapshot) => {
+        $timeout(function () {
+          snapshot.val() ? missed_messages_psy = Number(snapshot.val()) : missed_messages_psy = 0;
         })
       })
     }

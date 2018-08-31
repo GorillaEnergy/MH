@@ -4,10 +4,10 @@
     angular.module('app')
         .controller('KidMainPageController', KidMainPageController);
 
-    KidMainPageController.$inject = ['$state', '$timeout', 'userService', 'live_content'];
+    KidMainPageController.$inject = ['$state', '$timeout', 'userService', 'live_content', 'consultants'];
 
 
-    function KidMainPageController($state, $timeout, userService, live_content) {
+    function KidMainPageController($state, $timeout, userService, live_content, consultants) {
         const vm = this;
 
         vm.toChat = toChat;
@@ -37,10 +37,24 @@
           $state.go('menu');
         }
 
-        fb.ref('/chats/' + kid_id + '/total_kid_unread').on('value', (snapshot) => {
-          $timeout(function () { vm.missedMessages = snapshot.val(); });
-          console.log(snapshot.val());
-        });
+        totalUnreadMessages();
+        function totalUnreadMessages() {
+          angular.forEach(consultants, function (consultant) {
+            fb.ref('/chats/' + kid_id + '/' + consultant.id + '/total_unread_kid').once('value', (snapshot) => {
+              console.log(snapshot.val());
+              if (snapshot.val()) {
+                $timeout(function () { vm.missedMessages = vm.missedMessages + snapshot.val(); });
+              }
+
+            });
+          })
+        }
+        // fb.ref('/chats/' + kid_id + '/total_kid_unread').on('value', (snapshot) => {
+        //   $timeout(function () { vm.missedMessages = snapshot.val(); });
+        //   console.log(snapshot.val());
+        // });
+
+
 
       /////////////////////////////////////////////////////////////////////////
       // firebase.database().ref().child('test').child ('first').set('first');
