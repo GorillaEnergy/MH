@@ -67,8 +67,8 @@
       var stream_name = "";
 
 
-      CONTROLLER.streamPresence = function(cb){ streamprescb    = cb; }
-      CONTROLLER.streamReceive  = function(cb){ streamreceivecb = cb; }
+      CONTROLLER.streamPresence = function(cb){ streamprescb    = cb; };
+      CONTROLLER.streamReceive  = function(cb){ streamreceivecb = cb; };
 
       function broadcast(vid){
         var video = document.createElement('video');

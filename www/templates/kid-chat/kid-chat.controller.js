@@ -46,6 +46,7 @@
     vm.checkedReason = 0;
 
     let consultant = $localStorage.consultant;
+    console.log(consultant);
     vm.consultantName = consultant.name;
 
 

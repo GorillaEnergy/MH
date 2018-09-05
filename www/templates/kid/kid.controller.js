@@ -169,9 +169,9 @@
       }
     }
 
-    $timeout(function () {
-      showKidMatchModal();
-    }, 5000);
+    // $timeout(function () {
+      // showKidMatchModal();
+    // }, 5000);
 
     function closeList() {
       console.log('closeList');

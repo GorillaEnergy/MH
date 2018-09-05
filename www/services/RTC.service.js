@@ -4,9 +4,9 @@
   angular.module('service.RTCService', [])
     .service('RTCService', RTCService);
 
-  RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window'];
+  RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state'];
 
-  function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window) {
+  function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state) {
     console.log('RTCService start');
 
     let user;
@@ -121,7 +121,7 @@
               console.log('initRTC');
               dialing(connection_type, user.id + 'mhuser', null, opponent_name);
             } else {
-              console.log('joinRTC');
+              console.log('sendInvite');
               sendInvite(opponent_name, opponent_id)
             }
 
@@ -140,14 +140,14 @@
       let call_from_user = user.id + 'mhuser';
       let call_to_user = opponent_id + 'mhuser';
 
-      console.log('звонит: ' + call_from_user + ',пользователю: ' + call_to_user);
+      // console.log('звонит: ' + call_from_user + ',пользователю: ' + call_to_user);
 
       fb.ref('/WebRTC/users/' + opponent_id + '/metadata/invite').set(call_from_user);
       fb.ref('/WebRTC/users/' + opponent_id + '/metadata/invite_from').set(user.name);
+      fb.ref('/WebRTC/users/' + opponent_id + '/metadata/number').set(user.id);
       fb.ref('/WebRTC/users/' + opponent_id + '/metadata/answer').on('value', (snapshot) => {
         // console.log(snapshot.val());
         $timeout(function () {
-          console.log('answer', snapshot.val());
           if (snapshot.val() === true) {
             offAnswerWatcher(opponent_id);
             dialing('joinRTC', call_from_user, call_to_user, opponent_name)
@@ -162,6 +162,11 @@
               softEnd();
               dialing('joinRTC', call_from_user, call_to_user, opponent_name)
             }
+          } else if (snapshot.val() === 'chat') {
+            console.log('to kid chat');
+            offAnswerWatcher(opponent_id);
+            $localStorage.consultant = {id: opponent_id};
+            $state.go('kid-chat')
           }
         })
       });
