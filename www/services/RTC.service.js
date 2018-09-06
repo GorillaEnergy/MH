@@ -16,6 +16,8 @@
     let reconnectAccess = true;
     let reconnect;
     let popup;
+    console.log(navigator);
+    console.log(ionic.Platform.platform());
 
     UserChecker();
     function UserChecker() {
@@ -80,16 +82,32 @@
         cameraPermission();
 
         function cameraPermission() {
-          cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
-            audioPermission();
 
-            if (status.CAMERA === 'GRANTED') {
-              camera = true;
-            }
-            accessToStartStream();
-          }, function (error) {
-            console.error(error);
-          }, cordova.plugins.diagnostic.permission.CAMERA);
+          if (ionic.Platform.platform() === 'android') {
+
+            cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
+              audioPermission();
+
+              if (status.CAMERA === 'GRANTED') {
+                camera = true;
+              }
+              accessToStartStream();
+            }, function (error) {
+              console.error(error);
+            }, cordova.plugins.diagnostic.permission.CAMERA);
+
+          } else {
+
+            cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
+              console.log(status);
+              if (status.CAMERA === "GRANTED") {
+                camera = true;
+              }
+              audioPermission();
+            }, function (error) {
+              console.error(error);
+            });
+          }
         }
 
         function audioPermission() {

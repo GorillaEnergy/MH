@@ -41,7 +41,7 @@
         function totalUnreadMessages() {
           angular.forEach(consultants, function (consultant) {
             fb.ref('/chats/' + kid_id + '/' + consultant.id + '/total_unread_kid').once('value', (snapshot) => {
-              console.log(snapshot.val());
+              // console.log(snapshot.val());
               if (snapshot.val()) {
                 $timeout(function () { vm.missedMessages = vm.missedMessages + snapshot.val(); });
               }
