@@ -16,8 +16,6 @@
     let reconnectAccess = true;
     let reconnect;
     let popup;
-    console.log(navigator);
-    console.log(ionic.Platform.platform());
 
     UserChecker();
     function UserChecker() {
