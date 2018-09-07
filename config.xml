@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mind.hero2" version="0.3.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="mind.hero" version="0.3.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MindHero</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -184,7 +184,6 @@
     </plugin>
     <plugin name="cordova-opentok-android-permissions" spec="^1.0.1" />
     <allow-navigation href="http://169.254.180.173:8100" />
-    <plugin name="cordova.plugins.diagnostic" spec="^4.0.8" />
     <allow-navigation href="http://192.168.42.124:8100" />
     <allow-navigation href="http://192.168.42.252:8100" />
     <allow-navigation href="http://192.168.1.101:8100" />
@@ -194,6 +193,7 @@
     <allow-navigation href="http://192.168.42.98:8100" />
     <allow-navigation href="http://192.168.42.171:8100" />
     <allow-navigation href="http://192.168.42.212:8100" />
+    <plugin name="cordova.plugins.diagnostic" spec="^4.0.8" />
     <engine name="windows" spec="^6.0.0" />
     <engine name="ios" spec="^4.5.5" />
     <engine name="android" spec="^7.1.1" />

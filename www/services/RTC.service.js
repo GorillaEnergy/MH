@@ -88,8 +88,8 @@
             }
             accessToStartStream();
           }, function (error) {
-            console.error(error);
-          }, cordova.plugins.diagnostic.permission.CAMERA);
+              console.error(error);
+          })
         }
 
         function audioPermission() {
