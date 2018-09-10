@@ -15,6 +15,7 @@
     "@ionic/pro": "1.0.20",
     "android-versions": "^1.2.1",
     "cordova": "^8.0.0",
+    "cordova-android": "6.3.0",
     "cordova-android-support-gradle-release": "^1.4.4",
     "cordova-opentok-android-permissions": "^1.0.1",
     "cordova-plugin-android-permissions": "^1.0.0",
@@ -34,8 +35,7 @@
     "node-sass": "^4.8.2",
     "resize-base64": "^1.0.12",
     "sass": "^1.13.0",
-    "socket.io": "^2.0.4",
-    "cordova-android": "6.3.0"
+    "socket.io": "^2.0.4"
   },
   "cordova": {
     "plugins": {
@@ -62,7 +62,8 @@
       "cordova.plugins.diagnostic": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "windows"
     ]
   }
 }

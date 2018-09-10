@@ -206,4 +206,5 @@
     <plugin name="cordova-opentok-android-permissions" spec="^1.0.1" />
     <plugin name="cordova.plugins.diagnostic" spec="^4.0.10" />
     <engine name="android" spec="6.3.0" />
+    <engine name="windows" spec="~6.0.0" />
 </widget>

@@ -81,12 +81,14 @@
 
         function cameraPermission() {
 
+          console.log(ionic.Platform.platform());
           if (ionic.Platform.platform() === 'android') {
 
             cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
               audioPermission();
+              console.log(status);
 
-              if (status.CAMERA === 'GRANTED') {
+              if (status === 'GRANTED') {
                 camera = true;
               }
               accessToStartStream();
@@ -98,7 +100,7 @@
 
             cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
               console.log(status);
-              if (status.CAMERA === "GRANTED") {
+              if (status === "authorized") {
                 camera = true;
               }
               audioPermission();
@@ -110,9 +112,19 @@
 
         function audioPermission() {
           cordova.plugins.diagnostic.requestMicrophoneAuthorization(function (status) {
-            if (status.RECORD_AUDIO === "GRANTED") {
-              micro = true;
+            console.log(status);
+
+            if (ionic.Platform.platform() === 'android') {
+              if (status === "GRANTED") {
+                micro = true;
+              }
+
+            } else {
+              if (status === "authorized") {
+                micro = true;
+              }
             }
+
             accessToStartStream()
           }, function (error) {
             console.error(error);
@@ -120,6 +132,7 @@
         }
 
         function accessToStartStream() {
+          console.log(camera, micro);
           counter++;
           if (camera && micro) {
             console.log('access granted');
@@ -146,7 +159,6 @@
           } else if (counter > 1) {
             console.log('access denied, insufficient rights');
             alert('access denied, insufficient rights');
-            // console.log('if calling you, close room and dialog!!!');
           }
         }
       }
@@ -285,8 +297,18 @@
       });
 
       ctrl.receive(function(session){
-        // session.connected(function(session){ video_out.appendChild(session.video); addLog(session.number + " has joined."); vidCount++; });
-        // session.ended(function(session) { ctrl.getVideoElement(session.number).remove(); addLog(session.number + " has left.");    vidCount--;});
+        // session.connected(function(session){
+        // video_out.appendChild(session.video);
+        // addLog(session.number + " has joined.");
+        // vidCount++;
+        // });
+
+        // session.ended(function(session) {
+        // ctrl.getVideoElement(session.number).remove();
+        // addLog(session.number + " has left.");
+        // vidCount--;
+        // });
+
         session.connected(function(session){
           video_out.appendChild(session.video);
           addLog(session.number + " has joined.");
