@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v6.1.0 (2018-04-13)
+ * @license  Highcharts JS v6.1.2 (2018-08-31)
  *
  * (c) 2010-2017 Highsoft AS
  * Author: Sebastian Domas
@@ -10,6 +10,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -30,7 +34,7 @@
 		   * Chaikin Money Flow indicator (cmf).
 		   *
 		   * @type {Object}
-		   * @extends {plotOptions.sma}
+		   * @extends plotOptions.sma
 		   * @product highstock
 		   * @sample {highstock} stock/indicators/cmf/
 		   *                     Chaikin Money Flow indicator
@@ -124,7 +128,7 @@
 		         * @returns {Values} object containing computed money flow data
 		        **/
 		        getMoneyFlow: function (xData, seriesYData, volumeSeriesYData, period) {
-		            var    len = seriesYData.length,
+		            var len = seriesYData.length,
 		                moneyFlowVolume = [],
 		                sumVolume = 0,
 		                sumMoneyFlowVolume = 0,
@@ -248,4 +252,8 @@
 		 */
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

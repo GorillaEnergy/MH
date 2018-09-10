@@ -10452,8 +10452,7 @@ a.button {
 .country-modal .codes-block {
   width: 100%;
   height: calc(100vh - 110px);
-  padding: 0 10px;
-  overflow: scroll; }
+  padding: 0 10px; }
 
 .access-denied-modal {
   top: 0;

@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  *
  * (c) 2009-2017 Torstein Honsi
  *
@@ -9,6 +9,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -52,7 +56,7 @@
 		         * classes.
 		         *
 		         * For supported color formats, see the
-		         * [docs article about colors](http://www.highcharts.com/docs/chart-design-and-style/colors).
+		         * [docs article about colors](https://www.highcharts.com/docs/chart-design-and-style/colors).
 		         *
 		         * A scalar color axis is represented by a gradient. The colors either
 		         * range between the [minColor](#colorAxis.minColor) and the
@@ -70,8 +74,10 @@
 		         * a true category. However, when your data is categorized, it may be as
 		         * convenient to add each category to a separate series.
 		         *
-		         * See [the Axis object](#Axis) for programmatic access to the axis.
-		         * @extends {xAxis}
+		         * See [the Axis object](/class-reference/Highcharts.Axis) for
+		         * programmatic access to the axis.
+		         *
+		         * @extends xAxis
 		         * @excluding allowDecimals,alternateGridColor,breaks,categories,
 		         *            crosshair,dateTimeLabelFormats,lineWidth,linkedTo,maxZoom,
 		         *            minRange,minTickInterval,offset,opposite,plotBands,
@@ -300,7 +306,7 @@
 		                 * Animation for the marker as it moves between values. Set to
 		                 * `false` to disable animation. Defaults to `{ duration: 50 }`.
 		                 *
-		                 * @type {Object|Boolean}
+		                 * @type {AnimationOptions|Boolean}
 		                 * @product highcharts highmaps
 		                 */
 		                animation: {
@@ -775,6 +781,7 @@
 		            this.dataMin = Infinity;
 		            this.dataMax = -Infinity;
 		            while (i--) {
+		                series[i].getExtremes();
 		                if (series[i].valueMin !== undefined) {
 		                    this.dataMin = Math.min(this.dataMin, series[i].valueMin);
 		                    this.dataMax = Math.max(this.dataMax, series[i].valueMax);
@@ -833,7 +840,7 @@
 		                        pos + 4, this.top - 6,
 		                        pos, this.top,
 		                        'Z'
-		                    ] :    [
+		                    ] : [
 		                        'M',
 		                        this.left, pos,
 		                        'L',
@@ -989,7 +996,8 @@
 		     */
 		    addEvent(Legend, 'afterGetAllItems', function (e) {
 		        var colorAxisItems = [],
-		            colorAxis = this.chart.colorAxis[0];
+		            colorAxis = this.chart.colorAxis[0],
+		            i;
 
 		        if (colorAxis && colorAxis.options) {
 		            if (colorAxis.options.showInLegend) {
@@ -1001,16 +1009,17 @@
 		                    // Add this axis on top
 		                    colorAxisItems.push(colorAxis);
 		                }
-		            }
 
-		            // Don't add the color axis' series
-		            each(colorAxis.series, function (series) {
-		                H.erase(e.allItems, series);
-		            });
+		                // Don't add the color axis' series
+		                each(colorAxis.series, function (series) {
+		                    H.erase(e.allItems, series);
+		                });
+		            }
 		        }
 
-		        while (colorAxisItems.length) {
-		            e.allItems.unshift(colorAxisItems.pop());
+		        i = colorAxisItems.length;
+		        while (i--) {
+		            e.allItems.unshift(colorAxisItems[i]);
 		        }
 		    });
 
@@ -1515,4 +1524,8 @@
 
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

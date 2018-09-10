@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v6.1.0 (2018-04-13)
+ * @license  Highcharts JS v6.1.2 (2018-08-31)
  *
  * Indicator series type for Highstock
  *
@@ -11,6 +11,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -74,7 +78,7 @@
 		     *
 		     * This series requires `linkedTo` option to be set.
 		     *
-		     * @extends {plotOptions.sma}
+		     * @extends plotOptions.sma
 		     * @product highstock
 		     * @sample {highstock} stock/indicators/roc
 		     *                     Rate of change indicator
@@ -82,7 +86,6 @@
 		     * @optionparent plotOptions.roc
 		     */
 		    {
-		        name: 'Rate of Change (9)',
 		        params: {
 		            index: 3,
 		            period: 9
@@ -159,4 +162,8 @@
 		 */
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

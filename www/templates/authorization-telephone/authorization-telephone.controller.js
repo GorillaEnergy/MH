@@ -17,13 +17,13 @@
     vm.chosenCountry = chosenCountry;
 
     vm.countryCodes = countries;
-    if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
-    // vm.phone = '';
-    vm.phone = '3311225544';
+     if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
+     vm.phone = '';
+   //  vm.phone = '3311225544';
 
 
-    // if (countries.length) { vm.countryCode = countries[235].code; } //country be default Ukraine
-    // vm.phone = '674939948';
+    // if (countries.length) { vm.countryCode = countries[235].code,vm.phone='' } //country be default Ukraine
+
 
     vm.phoneNumberFull = '';
     vm.approvalCode = '';

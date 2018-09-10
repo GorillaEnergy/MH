@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v6.1.0 (2018-04-13)
+ * @license  Highcharts JS v6.1.2 (2018-08-31)
  *
  * Pareto series type for Highcharts
  *
@@ -11,6 +11,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -181,7 +185,7 @@
 		 * where individual values are represented in descending order by bars,
 		 * and the cumulative total is represented by the line.
 		 *
-		 * @extends {plotOptions.line}
+		 * @extends plotOptions.line
 		 * @product highcharts
 		 * @sample {highcharts} highcharts/demo/pareto/
 		 *         Pareto diagram
@@ -286,4 +290,8 @@
 		 */
 
 	}(Highcharts, derivedSeriesMixin));
+	return (function () {
+
+
+	}());
 }));

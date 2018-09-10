@@ -106,6 +106,14 @@ Highcharts.Point.prototype = {
 
         // copy options directly to point
         extend(point, options);
+
+        /**
+         * The point's options as applied in the initial configuration, or
+         * extended through `Point.update`.
+         * @name options
+         * @memberof Highcharts.Point
+         * @type {Object}
+         */
         point.options = point.options ?
             extend(point.options, options) :
             options;
@@ -472,7 +480,7 @@ Highcharts.Point.prototype = {
      * be shown or hidden.
      *
      * @name visible
-     * @memberOf Highcharts.Point
+     * @memberof Highcharts.Point
      * @type {Boolean}
      */
     visible: true
@@ -483,7 +491,7 @@ Highcharts.Point.prototype = {
  * point. For other axes it holds the X value.
  *
  * @name category
- * @memberOf Highcharts.Point
+ * @memberof Highcharts.Point
  * @type {String|Number}
  */
 
@@ -508,7 +516,7 @@ Highcharts.Point.prototype = {
  * }]
  *
  * @name name
- * @memberOf Highcharts.Point
+ * @memberof Highcharts.Point
  * @type {String}
  */
 
@@ -517,7 +525,7 @@ Highcharts.Point.prototype = {
  * The percentage for points in a stacked series or pies.
  *
  * @name percentage
- * @memberOf Highcharts.Point
+ * @memberof Highcharts.Point
  * @type {Number}
  */
 
@@ -526,7 +534,7 @@ Highcharts.Point.prototype = {
  * series.
  *
  * @name total
- * @memberOf Highcharts.Point
+ * @memberof Highcharts.Point
  * @type {Number}
  */
 
@@ -534,7 +542,7 @@ Highcharts.Point.prototype = {
  * The x value of the point.
  *
  * @name x
- * @memberOf Highcharts.Point
+ * @memberof Highcharts.Point
  * @type {Number}
  */
 
@@ -542,6 +550,6 @@ Highcharts.Point.prototype = {
  * The y value of the point.
  *
  * @name y
- * @memberOf Highcharts.Point
+ * @memberof Highcharts.Point
  * @type {Number}
  */

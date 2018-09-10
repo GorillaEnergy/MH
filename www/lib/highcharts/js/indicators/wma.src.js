@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v6.1.0 (2018-04-13)
+ * @license  Highcharts JS v6.1.2 (2018-08-31)
  *
  * Indicator series type for Highstock
  *
@@ -11,6 +11,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -24,6 +28,7 @@
 
 
 		var isArray = H.isArray,
+		    reduce = H.reduce,
 		    seriesType = H.seriesType;
 
 		// Utils:
@@ -41,7 +46,7 @@
 		    var denominator = (pLen + 1) / 2 * pLen;
 
 		    // reduce VS loop => reduce
-		    return array.reduce(function (prev, cur, i) {
+		    return reduce(array, function (prev, cur, i) {
 		        return [null, prev[1] + cur[1] * (i + 1)];
 		    })[1] / denominator;
 		}
@@ -67,7 +72,7 @@
 		     * Weighted moving average indicator (WMA). This series requires `linkedTo`
 		     * option to be set.
 		     *
-		     * @extends {plotOptions.sma}
+		     * @extends plotOptions.sma
 		     * @product highstock
 		     * @sample {highstock} stock/indicators/wma
 		     *                     Weighted moving average indicator
@@ -154,4 +159,8 @@
 		 */
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

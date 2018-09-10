@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  *
  * (c) 2009-2017 Highsoft AS
  *
@@ -9,6 +9,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -50,4 +54,8 @@
 		Highcharts.setOptions(Highcharts.theme);
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

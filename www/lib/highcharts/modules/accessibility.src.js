@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  * Accessibility module
  *
  * (c) 2010-2017 Highsoft AS
@@ -11,6 +11,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -603,7 +607,7 @@
 		         * Defaults to the same format as in tooltip.
 		         *
 		         * For an overview of the replacement codes, see
-		         * [dateFormat](#Highcharts.dateFormat).
+		         * [dateFormat](/class-reference/Highcharts#dateFormat).
 		         *
 		         * @type {String}
 		         * @see [pointDateFormatter](#accessibility.pointDateFormatter)
@@ -616,7 +620,7 @@
 		         * points on datetime axes when describing them to screen reader users.
 		         * Receives one argument, `point`, referring to the point to describe.
 		         * Should return a date format string compatible with
-		         * [dateFormat](#Highcharts.dateFormat).
+		         * [dateFormat](/class-reference/Highcharts#dateFormat).
 		         *
 		         * @type {Function}
 		         * @see [pointDateFormat](#accessibility.pointDateFormat)
@@ -707,7 +711,7 @@
 		                            )
 		                    ) +
 		                    (
-		                        options.subtitle &&    options.subtitle.text ?
+		                        options.subtitle && options.subtitle.text ?
 		                            '. ' + htmlencode(options.subtitle.text) :
 		                            ''
 		                    ) +
@@ -725,7 +729,7 @@
 		                    (
 		                        options.chart.typeDescription ||
 		                        chart.getTypeDescription()
-		                    ) +    '</div>' +
+		                    ) + '</div>' +
 		                    (axesDesc.xAxis ? (
 		                        '<div>' + axesDesc.xAxis + '</div>'
 		                    ) : '') +
@@ -883,7 +887,7 @@
 		            series: this
 		        },
 		        combination = chart.types.length === 1 ? '' : 'Combination',
-		        summary =  chart.langFormat(
+		        summary = chart.langFormat(
 		            'accessibility.series.summary.' + this.type + combination,
 		            summaryContext
 		        ) || chart.langFormat(
@@ -1100,7 +1104,7 @@
 
 
 		// Set a11y attribs on exporting menu
-		H.Chart.prototype.addAccessibleContextMenuAttribs =    function () {
+		H.Chart.prototype.addAccessibleContextMenuAttribs = function () {
 		    var exportList = this.exportDivElements;
 		    if (exportList) {
 		        // Set tabindex on the menu items to allow focusing by script
@@ -1127,7 +1131,7 @@
 		// tableId is the HTML id of the table to focus when clicking the table anchor
 		// in the screen reader region.
 		H.Chart.prototype.addScreenReaderRegion = function (id, tableId) {
-		    var    chart = this,
+		    var chart = this,
 		        hiddenSection = chart.screenReaderRegion = doc.createElement('div'),
 		        tableShortcut = doc.createElement('h4'),
 		        tableShortcutAnchor = doc.createElement('a'),
@@ -1185,11 +1189,7 @@
 		        return;
 		    }
 
-		    var    titleElement,
-		        exportGroupElement = doc.createElementNS(
-		            'http://www.w3.org/2000/svg',
-		            'g'
-		        ),
+		    var titleElement,
 		        descElement = chart.container.getElementsByTagName('desc')[0],
 		        textElements = chart.container.getElementsByTagName('text'),
 		        titleId = 'highcharts-title-' + chart.index,
@@ -1233,9 +1233,10 @@
 		        chart.exportSVGElements[0] &&
 		        chart.exportSVGElements[0].element
 		    ) {
-		        var oldExportCallback = chart.exportSVGElements[0].element.onclick,
-		            parent = chart.exportSVGElements[0].element.parentNode;
-		        chart.exportSVGElements[0].element.onclick = function () {
+		        // Set event handler on button
+		        var button = chart.exportSVGElements[0].element,
+		            oldExportCallback = button.onclick;
+		        button.onclick = function () {
 		            oldExportCallback.apply(
 		                this,
 		                Array.prototype.slice.call(arguments)
@@ -1243,19 +1244,23 @@
 		            chart.addAccessibleContextMenuAttribs();
 		            chart.highlightExportItem(0);
 		        };
-		        chart.exportSVGElements[0].element.setAttribute('role', 'button');
-		        chart.exportSVGElements[0].element.setAttribute(
+
+		        // Set props on button
+		        button.setAttribute('role', 'button');
+		        button.setAttribute(
 		            'aria-label',
 		            chart.langFormat(
 		                'accessibility.exporting.menuButtonLabel', { chart: chart }
 		            )
 		        );
-		        exportGroupElement.appendChild(chart.exportSVGElements[0].element);
-		        exportGroupElement.setAttribute('role', 'region');
-		        exportGroupElement.setAttribute('aria-label', chart.langFormat(
-		            'accessibility.exporting.exportRegionLabel', { chart: chart }
-		        ));
-		        parent.appendChild(exportGroupElement);
+
+		        // Set props on group
+		        chart.exportingGroup.element.setAttribute('role', 'region');
+		        chart.exportingGroup.element.setAttribute('aria-label',
+		            chart.langFormat(
+		                'accessibility.exporting.exportRegionLabel', { chart: chart }
+		            )
+		        );
 		    }
 
 		    // Set screen reader properties on input boxes for range selector. We need
@@ -1503,6 +1508,7 @@
 		             * navigation behavior with/without screen readers enabled.
 		             *
 		             * @type      {String}
+		             * @validvalue ["normal", "serialize"]
 		             * @default   normal
 		             * @since     6.0.4
 		             * @apioption accessibility.keyboardNavigation.mode
@@ -2413,10 +2419,12 @@
 		            }],
 		            // Enter/Spacebar
 		            [[13, 32], function () {
-		                fakeClickEvent(
-		                    chart.legend.allItems[
+		                var legendElement = chart.legend.allItems[
 		                        chart.highlightedLegendItemIx
-		                    ].legendItem.element.parentNode
+		                    ].legendItem.element;
+		                fakeClickEvent(
+		                     !chart.legend.options.useHTML ? // #8561
+		                        legendElement.parentNode : legendElement
 		                );
 		            }]
 		        ], {
@@ -2627,4 +2635,8 @@
 		});
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

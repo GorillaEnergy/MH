@@ -321,7 +321,13 @@ Series.prototype.drawDataLabels = function () {
                 if (!dataLabel) {
                     dataLabel = point.dataLabel = rotation ?
 
-                        renderer.text(str, 0, -9999) // labels don't rotate
+                        renderer
+                            .text( // labels don't rotate
+                                str,
+                                0,
+                                -9999,
+                                options.useHTML
+                            )
                             .addClass('highcharts-data-label') :
 
                         renderer.label(
@@ -339,7 +345,7 @@ Series.prototype.drawDataLabels = function () {
                     dataLabel.addClass(
                         ' highcharts-data-label-color-' + point.colorIndex +
                         ' ' + (options.className || '') +
-                        (options.useHTML ? 'highcharts-tracker' : '') // #3398
+                        (options.useHTML ? ' highcharts-tracker' : '') // #3398
                     );
                 } else {
                     attr.text = str;
@@ -463,7 +469,7 @@ Series.prototype.alignDataLabel = function (
         }
 
         // Handle justify or crop
-        if (justify) {
+        if (justify && alignTo.height >= 0) { // #8830
             point.isLabelJustified = this.justifyDataLabel(
                 dataLabel,
                 options,
@@ -633,25 +639,30 @@ if (seriesTypes.pie) {
         Series.prototype.drawDataLabels.apply(series);
 
         each(data, function (point) {
-            if (point.dataLabel && point.visible) { // #407, #2510
+            if (point.dataLabel) {
 
-                // Arrange points for detection collision
-                halves[point.half].push(point);
+                if (point.visible) { // #407, #2510
 
-                // Reset positions (#4905)
-                point.dataLabel._pos = null;
+                    // Arrange points for detection collision
+                    halves[point.half].push(point);
 
-                // Avoid long labels squeezing the pie size too far down
-                
-                    if (point.dataLabel.getBBox().width > maxWidth) {
-                        point.dataLabel.css({
-                            // Use a fraction of the maxWidth to avoid wrapping
-                            // close to the end of the string.
-                            width: maxWidth * 0.7
-                        });
-                        point.dataLabel.shortened = true;
-                    }
-                
+                    // Reset positions (#4905)
+                    point.dataLabel._pos = null;
+
+                    // Avoid long labels squeezing the pie size too far down
+                    
+                        if (point.dataLabel.getBBox().width > maxWidth) {
+                            point.dataLabel.css({
+                                // Use a fraction of the maxWidth to avoid
+                                // wrapping close to the end of the string.
+                                width: maxWidth * 0.7
+                            });
+                            point.dataLabel.shortened = true;
+                        }
+                    
+                } else {
+                    point.dataLabel = point.dataLabel.destroy();
+                }
             }
         });
 
@@ -666,7 +677,6 @@ if (seriesTypes.pie) {
                 positions = [],
                 naturalY,
                 sideOverflow,
-                positionsIndex, // Point index in positions array.
                 size,
                 distributionLength;
 
@@ -705,11 +715,12 @@ if (seriesTypes.pie) {
                         // point.positionsIndex is needed for getting index of
                         // parameter related to specific point inside positions
                         // array - not every point is in positions array.
-                        point.positionsIndex = positions.push({
+                        point.distributeBox = {
                             target: point.labelPos[1] - point.top + size / 2,
                             size: size,
                             rank: point.y
-                        }) - 1;
+                        };
+                        positions.push(point.distributeBox);
                     }
                 });
                 distributionLength = bottom + size - top;
@@ -724,19 +735,18 @@ if (seriesTypes.pie) {
             for (j = 0; j < length; j++) {
 
                 point = points[j];
-                positionsIndex = point.positionsIndex;
                 labelPos = point.labelPos;
                 dataLabel = point.dataLabel;
                 visibility = point.visible === false ? 'hidden' : 'inherit';
                 naturalY = labelPos[1];
                 y = naturalY;
 
-                if (positions && defined(positions[positionsIndex])) {
-                    if (positions[positionsIndex].pos === undefined) {
+                if (positions && defined(point.distributeBox)) {
+                    if (point.distributeBox.pos === undefined) {
                         visibility = 'hidden';
                     } else {
-                        labelHeight = positions[positionsIndex].size;
-                        y = point.top + positions[positionsIndex].pos;
+                        labelHeight = point.distributeBox.size;
+                        y = point.top + point.distributeBox.pos;
                     }
                 }
 
@@ -933,7 +943,8 @@ if (seriesTypes.pie) {
                         dataLabel.css({
                             width: dataLabel._attr.width + 'px',
                             textOverflow: (
-                                this.options.dataLabels.style.textOverflow ||
+                                (this.options.dataLabels.style || {})
+                                    .textOverflow ||
                                 'ellipsis'
                             )
                         });
@@ -950,7 +961,7 @@ if (seriesTypes.pie) {
         }, this);
     };
 
-    seriesTypes.pie.prototype.alignDataLabel =  noop;
+    seriesTypes.pie.prototype.alignDataLabel = noop;
 
     /**
      * Verify whether the data labels are allowed to draw, or we should run more

@@ -79,45 +79,53 @@
         let counter = 0;
         cameraPermission();
 
-        function cameraPermission() {
+          function cameraPermission() {
 
-          if (ionic.Platform.platform() === 'android') {
+              if (ionic.Platform.platform() === 'android') {
 
-            cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
-              audioPermission();
+                  cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
+                      audioPermission();
 
-              if (status.CAMERA === 'GRANTED') {
-                camera = true;
+                      if (status.CAMERA === 'GRANTED') {
+                          camera = true;
+                      }
+                      accessToStartStream();
+                  }, function (error) {
+                      console.error(error);
+                  }, cordova.plugins.diagnostic.permission.CAMERA);
+
+              } else {
+
+                  cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
+                      if (status === "authorized") {
+                          camera = true;
+                      }
+                      audioPermission();
+                  }, function (error) {
+                      console.error(error);
+                  });
               }
-              accessToStartStream();
-            }, function (error) {
-              console.error(error);
-            }, cordova.plugins.diagnostic.permission.CAMERA);
-
-          } else {
-
-            cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
-              console.log(status);
-              if (status.CAMERA === "GRANTED") {
-                camera = true;
-              }
-              audioPermission();
-            }, function (error) {
-              console.error(error);
-            });
           }
-        }
 
-        function audioPermission() {
-          cordova.plugins.diagnostic.requestMicrophoneAuthorization(function (status) {
-            if (status.RECORD_AUDIO === "GRANTED") {
-              micro = true;
-            }
-            accessToStartStream()
-          }, function (error) {
-            console.error(error);
-          });
-        }
+          function audioPermission() {
+              cordova.plugins.diagnostic.requestMicrophoneAuthorization(function (status) {
+
+                  if (ionic.Platform.platform() === 'android') {
+                      if (status.RECORD_AUDIO === "GRANTED") {
+                          micro = true;
+                      }
+
+                  } else {
+                      if (status === "authorized") {
+                          micro = true;
+                      }
+                  }
+
+                  accessToStartStream()
+              }, function (error) {
+                  console.error(error);
+              });
+          }
 
         function accessToStartStream() {
           counter++;

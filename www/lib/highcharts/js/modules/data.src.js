@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  * Data module
  *
  * (c) 2012-2017 Torstein Honsi
@@ -10,6 +10,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -135,7 +139,7 @@
 		/**
 		 * The Data module provides a simplified interface for adding data to
 		 * a chart from sources like CVS, HTML tables or grid views. See also
-		 * the [tutorial article on the Data module](http://www.highcharts.com/docs/working-
+		 * the [tutorial article on the Data module](https://www.highcharts.com/docs/working-
 		 * with-data/data-module).
 		 *
 		 * It requires the `modules/data.js` file to be loaded.
@@ -197,7 +201,7 @@
 		 *
 		 * The built-in CSV parser doesn't support all flavours of CSV, so in
 		 * some cases it may be necessary to use an external CSV parser. See
-		 * [this example](http://jsfiddle.net/highcharts/u59176h4/) of parsing
+		 * [this example](https://jsfiddle.net/highcharts/u59176h4/) of parsing
 		 * CSV through the MIT licensed [Papa Parse](http://papaparse.com/)
 		 * library.
 		 *
@@ -397,7 +401,7 @@
 		 */
 
 		/**
-		 * A HTML table or the id of such to be parsed as input data. Related
+		 * An HTML table or the id of such to be parsed as input data. Related
 		 * options are `startRow`, `endRow`, `startColumn` and `endColumn` to
 		 * delimit what part of the table is used.
 		 *
@@ -471,7 +475,7 @@
 		 * @sample highcharts/data/livedata-columns
 		 *           Categorized bar chart with CSV and live polling
 		 *
-		 * @type {Bool}
+		 * @type {Boolean}
 		 * @default false
 		 * @apioption data.enablePolling
 		 */
@@ -587,6 +591,20 @@
 		            individualCounts = [],
 		            seriesBuilders = [],
 		            seriesIndex = 0,
+
+		            // If no series mapping is defined, check if the series array is
+		            // defined with types.
+		            seriesMapping = (
+		                (options && options.seriesMapping) ||
+		                (
+		                    chartOptions &&
+		                    chartOptions.series &&
+		                    Highcharts.map(chartOptions.series, function () {
+		                        return { x: 0 };
+		                    })
+		                ) ||
+		                []
+		            ),
 		            i;
 
 		        each((chartOptions && chartOptions.series) || [], function (series) {
@@ -594,7 +612,7 @@
 		        });
 
 		        // Collect the x-column indexes from seriesMapping
-		        each((options && options.seriesMapping) || [], function (mapping) {
+		        each(seriesMapping, function (mapping) {
 		            xColumns.push(mapping.x || 0);
 		        });
 
@@ -606,7 +624,7 @@
 
 		        // Loop all seriesMappings and constructs SeriesBuilders from
 		        // the mapping options.
-		        each((options && options.seriesMapping) || [], function (mapping) {
+		        each(seriesMapping, function (mapping) {
 		            var builder = new SeriesBuilder(),
 		                numberOfValueColumnsNeeded = individualCounts[seriesIndex] ||
 		                    getValueCount(globalType),
@@ -658,7 +676,6 @@
 		     * input, continue with other operations.
 		     */
 		    dataFound: function () {
-
 		        if (this.options.switchRowsAndColumns) {
 		            this.columns = this.rowsToColumns(this.columns);
 		        }
@@ -1339,7 +1356,8 @@
 		     * Parse a Google spreadsheet.
 		     */
 		    parseGoogleSpreadsheet: function () {
-		        var options = this.options,
+		        var data = this,
+		            options = this.options,
 		            googleSpreadsheetKey = options.googleSpreadsheetKey,
 		            chart = this.chart,
 		            // use sheet 1 as the default rather than od6
@@ -1474,6 +1492,9 @@
 		                            columns: columns
 		                        }
 		                    });
+		                } else { // #8245
+		                    data.columns = columns;
+		                    data.dataFound();
 		                }
 		            });
 		        }
@@ -2159,7 +2180,9 @@
 		            columnIndexes.shift();
 
 		            // Sort the remaining
-		            columnIndexes.sort();
+		            columnIndexes.sort(function (a, b) {
+		                return a - b;
+		            });
 
 		            // Now use the lowest index as name column
 		            this.name = columns[columnIndexes.shift()].name;
@@ -2226,4 +2249,8 @@
 		};
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

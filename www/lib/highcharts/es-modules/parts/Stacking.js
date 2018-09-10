@@ -102,6 +102,9 @@ H.StackItem.prototype = {
                     })
                     .add(group); // add to the labels-group
         }
+
+        // Rank it higher than data labels (#8742)
+        this.label.labelrank = chart.plotHeight;
     },
 
     /**
@@ -121,9 +124,9 @@ H.StackItem.prototype = {
                 1
             ),
             yZero = axis.translate(0), // stack origin
-            h = Math.abs(y - yZero), // stack height
+            h = defined(y) && Math.abs(y - yZero), // stack height
             x = chart.xAxis[0].translate(stackItem.x) + xOffset, // x position
-            stackBox = stackItem.getStackBox(
+            stackBox = defined(y) && stackItem.getStackBox(
                 chart,
                 stackItem,
                 x,
@@ -135,7 +138,7 @@ H.StackItem.prototype = {
             label = stackItem.label,
             alignAttr;
 
-        if (label) {
+        if (label && stackBox) {
             // Align the label to the box
             label.align(stackItem.alignOptions, null, stackBox);
 
@@ -151,7 +154,8 @@ H.StackItem.prototype = {
     getStackBox: function (chart, stackItem, x, y, xWidth, h, axis) {
         var reversed = stackItem.axis.reversed,
             inverted = chart.inverted,
-            axisPos = axis.height + axis.pos - chart.plotTop,
+            axisPos = axis.height + axis.pos - (inverted ? chart.plotLeft :
+                chart.plotTop),
             neg = (stackItem.isNegative && !reversed) ||
                 (!stackItem.isNegative && reversed); // #4056
 
@@ -195,6 +199,8 @@ Chart.prototype.getStacks = function () {
 
 /**
  * Build the stacks from top down
+ *
+ * @ignore
  */
 Axis.prototype.buildStacks = function () {
     var axisSeries = this.series,
@@ -247,6 +253,8 @@ Axis.prototype.renderStackTotals = function () {
 
 /**
  * Set all the stacks to initial states and destroy unused ones.
+ *
+ * @ignore
  */
 Axis.prototype.resetStacks = function () {
     var axis = this,
