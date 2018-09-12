@@ -14,5 +14,6 @@
         'service.webrtc',
         'service.rtcController',
         'service.dateConverter',
+        'service.volumeService',
     ]);
 })();

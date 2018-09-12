@@ -12,10 +12,10 @@
         .run(run);
 
     run.$inject = ['$ionicPlatform', '$timeout', '$state', 'toastr', 'fcm', 'userService', '$ionicSideMenuDelegate',
-                   'purchaseService', 'notificationService', 'webrtc', 'rtcController', 'RTCService'];
+                   'purchaseService', 'notificationService', 'webrtc', 'rtcController', 'RTCService', 'volumeService'];
 
     function run($ionicPlatform, $timeout, $state, toastr, fcm, userService, $ionicSideMenuDelegate,
-                 purchaseService, notificationService, webrtc, rtcController, RTCService) {
+                 purchaseService, notificationService, webrtc, rtcController, RTCService, volumeService) {
 
         // if (ionic.Platform.platform() == 'ios') {
         //   $ionicConfigProvider.views.swipeBackEnabled(false);
@@ -32,44 +32,26 @@
         };
         firebase.initializeApp(config);
 
-
-
         $ionicPlatform.ready(function () {
             $timeout(function() {
                 navigator.splashscreen.hide();
             }, 2000);
-            // console.log(cordova.plugins.diagnostic);
+
             if (window.StatusBar) {
             //     // Set the statusbar to use the default style, tweak this to
             //     // remove the status bar on iOS or change it to use white instead of dark colors.
                 StatusBar.styleDefault();
             }
 
+            volumeService.init();
 
             document.addEventListener("pause", function () {
               console.log('pause');
-              // firebase.database().ref('/WebRTC/users/' + userService.getUser().id + '/online').set(false);
             }, false);
 
             document.addEventListener("resume", function () {
-              // fcm.subscribe();
               console.log('resume');
-              // firebase.database().ref('/WebRTC/users/' + userService.getUser().id + '/online').set(true);
             }, false);
-
-            // document.addEventListener("deviceready", function () {
-              // console.log(device.cordova);
-            // }, false);
-
-            // $ionicPlatform.registerBackButtonAction(function (event) {
-            //   // console.log($state.current.name);
-            //   // console.log($location.path());
-            //   // event.preventDefault();
-            //   console.log("registerBackButtonAction");
-            // }, 1000);
-
-            // console.log(history);
-
 
             // setInterval(function () {
             //   console.log('Online = ', navigator.onLine);

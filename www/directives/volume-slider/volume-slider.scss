@@ -1,0 +1,14 @@
+.volume-slider-direct {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  //padding: 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  .volume-slider {
+    width: 100%;
+  }
+}
