@@ -15,7 +15,7 @@
     "@ionic/pro": "1.0.20",
     "android-versions": "^1.2.1",
     "cordova": "^8.0.0",
-    "cordova-android": "6.3.0",
+    "cordova-android": "^6.3.0",
     "cordova-android-support-gradle-release": "^1.4.4",
     "cordova-opentok-android-permissions": "^1.0.1",
     "cordova-plugin-android-permissions": "^1.0.0",

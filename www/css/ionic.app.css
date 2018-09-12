@@ -10797,22 +10797,21 @@ a.button {
     text-align: center; }
 
 .kid-chat-menu .live-now-main-block {
-  display: flex;
-  overflow-y: hidden;
-  overflow-x: auto;
-  width: auto;
-  padding-left: 10px;
+  height: 200px;
+  padding: 0 10px;
   box-sizing: border-box;
   margin-top: 10px;
   margin-bottom: 10px; }
+
+.kid-chat-menu .swiper-pagination {
+  display: none; }
 
 .kid-chat-menu .event-block:last-child {
   margin-right: 10px; }
 
 .kid-chat-menu .event-block {
-  margin-right: 6px;
   height: 196px;
-  width: 261px;
+  width: 100%;
   position: relative;
   border: 1px solid #0b1138;
   box-sizing: border-box; }
@@ -10848,7 +10847,7 @@ a.button {
     margin: 0; }
   .kid-chat-menu .event-block .event-bg {
     height: 195px;
-    width: 259px; }
+    width: 100%; }
   .kid-chat-menu .event-block .play {
     position: absolute;
     bottom: 0;
