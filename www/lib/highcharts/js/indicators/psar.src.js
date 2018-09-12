@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v6.1.0 (2018-04-13)
+ * @license  Highcharts JS v6.1.2 (2018-08-31)
  *
  * Parabolic SAR Indicator for Highstock
  *
@@ -11,6 +11,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -114,7 +118,7 @@
 		     * option to be set and should be loaded
 		     * after `stock/indicators/indicators.js` file.
 		     *
-		     * @extends {plotOptions.sma}
+		     * @extends plotOptions.sma
 		     * @product highstock
 		     * @sample {highstock} stock/indicators/psar
 		     *                     Parabolic SAR Indicator
@@ -133,7 +137,6 @@
 		            }
 		        },
 		        /**
-		         * @excluding index
 		         * @excluding period
 		         */
 		        params: {
@@ -215,6 +218,10 @@
 		                prevPrevHigh,
 		                newExtremePoint,
 		                high, low, ind;
+
+		            if (index >= yVal.length) {
+		                return false;
+		            }
 
 		            for (ind = 0; ind < index; ind++) {
 		                extremePoint = Math.max(yVal[ind][1], extremePoint);
@@ -334,4 +341,8 @@
 		 */
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

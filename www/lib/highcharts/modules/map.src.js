@@ -1,5 +1,5 @@
 /**
- * @license Highmaps JS v6.1.0 (2018-04-13)
+ * @license Highmaps JS v6.1.2 (2018-08-31)
  * Highmaps as a plugin for Highcharts or Highstock.
  *
  * (c) 2011-2017 Torstein Honsi
@@ -10,6 +10,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -180,7 +184,7 @@
 		         * classes.
 		         *
 		         * For supported color formats, see the
-		         * [docs article about colors](http://www.highcharts.com/docs/chart-design-and-style/colors).
+		         * [docs article about colors](https://www.highcharts.com/docs/chart-design-and-style/colors).
 		         *
 		         * A scalar color axis is represented by a gradient. The colors either
 		         * range between the [minColor](#colorAxis.minColor) and the
@@ -198,8 +202,10 @@
 		         * a true category. However, when your data is categorized, it may be as
 		         * convenient to add each category to a separate series.
 		         *
-		         * See [the Axis object](#Axis) for programmatic access to the axis.
-		         * @extends {xAxis}
+		         * See [the Axis object](/class-reference/Highcharts.Axis) for
+		         * programmatic access to the axis.
+		         *
+		         * @extends xAxis
 		         * @excluding allowDecimals,alternateGridColor,breaks,categories,
 		         *            crosshair,dateTimeLabelFormats,lineWidth,linkedTo,maxZoom,
 		         *            minRange,minTickInterval,offset,opposite,plotBands,
@@ -428,7 +434,7 @@
 		                 * Animation for the marker as it moves between values. Set to
 		                 * `false` to disable animation. Defaults to `{ duration: 50 }`.
 		                 *
-		                 * @type {Object|Boolean}
+		                 * @type {AnimationOptions|Boolean}
 		                 * @product highcharts highmaps
 		                 */
 		                animation: {
@@ -903,6 +909,7 @@
 		            this.dataMin = Infinity;
 		            this.dataMax = -Infinity;
 		            while (i--) {
+		                series[i].getExtremes();
 		                if (series[i].valueMin !== undefined) {
 		                    this.dataMin = Math.min(this.dataMin, series[i].valueMin);
 		                    this.dataMax = Math.max(this.dataMax, series[i].valueMax);
@@ -961,7 +968,7 @@
 		                        pos + 4, this.top - 6,
 		                        pos, this.top,
 		                        'Z'
-		                    ] :    [
+		                    ] : [
 		                        'M',
 		                        this.left, pos,
 		                        'L',
@@ -1117,7 +1124,8 @@
 		     */
 		    addEvent(Legend, 'afterGetAllItems', function (e) {
 		        var colorAxisItems = [],
-		            colorAxis = this.chart.colorAxis[0];
+		            colorAxis = this.chart.colorAxis[0],
+		            i;
 
 		        if (colorAxis && colorAxis.options) {
 		            if (colorAxis.options.showInLegend) {
@@ -1129,16 +1137,17 @@
 		                    // Add this axis on top
 		                    colorAxisItems.push(colorAxis);
 		                }
-		            }
 
-		            // Don't add the color axis' series
-		            each(colorAxis.series, function (series) {
-		                H.erase(e.allItems, series);
-		            });
+		                // Don't add the color axis' series
+		                each(colorAxis.series, function (series) {
+		                    H.erase(e.allItems, series);
+		                });
+		            }
 		        }
 
-		        while (colorAxisItems.length) {
-		            e.allItems.unshift(colorAxisItems.pop());
+		        i = colorAxisItems.length;
+		        while (i--) {
+		            e.allItems.unshift(colorAxisItems[i]);
 		        }
 		    });
 
@@ -1295,7 +1304,11 @@
 		/**
 		 * The MapNavigation handles buttons for navigation in addition to mousewheel
 		 * and doubleclick handlers for chart zooming.
-		 * @param {Chart} chart The Chart instance.
+		 *
+		 * @class Highcharts.MapNavigation
+		 *
+		 * @param {Highcharts.Chart} chart
+		 *        The Chart instance.
 		 */
 		function MapNavigation(chart) {
 		    this.init(chart);
@@ -1303,7 +1316,13 @@
 
 		/**
 		 * Initiator function.
-		 * @param  {Chart} chart The Chart instance.
+		 *
+		 * @function Highcharts.MapNavigation#init
+		 *
+		 * @param  {Highcharts.Chart} chart
+		 *         The Chart instance.
+		 *
+		 * @return {void}
 		 */
 		MapNavigation.prototype.init = function (chart) {
 		    this.chart = chart;
@@ -1313,7 +1332,13 @@
 		/**
 		 * Update the map navigation with new options. Calling this is the same as
 		 * calling `chart.update({ mapNavigation: {} })`.
-		 * @param  {Object} options New options for the map navigation.
+		 *
+		 * @function Highcharts.MapNavigation#update
+		 *
+		 * @param  {Highcharts.MapNavigationOptions} options
+		 *         New options for the map navigation.
+		 *
+		 * @return {void}
 		 */
 		MapNavigation.prototype.update = function (options) {
 		    var chart = this.chart,
@@ -1401,14 +1426,20 @@
 		/**
 		 * Update events, called internally from the update function. Add new event
 		 * handlers, or unbinds events if disabled.
-		 * @param  {Object} options Options for map navigation.
+		 *
+		 * @function Highcharts.MapNavigation#updateEvents
+		 *
+		 * @param  {Highcharts.MapNavigationOptions} options
+		 *         Options for map navigation.
+		 *
+		 * @return {void}
 		 */
 		MapNavigation.prototype.updateEvents = function (options) {
 		    var chart = this.chart;
 
 		    // Add the double click event
 		    if (
-		        pick(options.enableDoubleClickZoom,    options.enabled) ||
+		        pick(options.enableDoubleClickZoom, options.enabled) ||
 		        options.enableDoubleClickZoomTo
 		    ) {
 		        this.unbindDblClick = this.unbindDblClick || addEvent(
@@ -1452,7 +1483,15 @@
 		     * within the outer. This is a pattern that occurs more places in
 		     * Highcharts, perhaps it should be elevated to a common utility function.
 		     *
-		     * @private
+		     * @ignore
+		     * @function Highcharts.Chart#fitToBox
+		     *
+		     * @param  {Highcharts.BBoxObject} inner
+		     *
+		     * @param  {Highcharts.BBoxObject} outer
+		     *
+		     * @return {Highcharts.BBoxObject}
+		     *         The inner box
 		     */
 		    fitToBox: function (inner, outer) {
 		        each([['x', 'width'], ['y', 'height']], function (dim) {
@@ -1485,20 +1524,28 @@
 		     * See {@link Chart#fromLatLonToPoint} for how to get the `centerX` and
 		     * `centerY` parameters for a geographic location.
 		     *
-		     * @param  {Number} [howMuch]
+		     * @function Highcharts.Chart#mapZoom
+		     *
+		     * @param  {number|undefined} [howMuch]
 		     *         How much to zoom the map. Values less than 1 zooms in. 0.5 zooms
 		     *         in to half the current view. 2 zooms to twice the current view.
 		     *         If omitted, the zoom is reset.
-		     * @param  {Number} [centerX]
+		     *
+		     * @param  {number|undefined} [centerX]
 		     *         The X axis position to center around if available space.
-		     * @param  {Number} [centerY]
+		     *
+		     * @param  {number|undefined} [centerY]
 		     *         The Y axis position to center around if available space.
-		     * @param  {Number} [mouseX]
+		     *
+		     * @param  {number|undefined} [mouseX]
 		     *         Fix the zoom to this position if possible. This is used for
 		     *         example in mousewheel events, where the area under the mouse
 		     *         should be fixed as we zoom in.
-		     * @param  {Number} [mouseY]
+		     *
+		     * @param  {number|undefined} [mouseY]
 		     *         Fix the zoom to this position if possible.
+		     *
+		     * @return {void}
 		     */
 		    mapZoom: function (howMuch, centerXArg, centerYArg, mouseX, mouseY) {
 		        var chart = this,
@@ -1574,7 +1621,7 @@
 		    }
 		});
 
-		/**
+		/*
 		 * Extend the Chart.render method to add zooming and panning
 		 */
 		addEvent(Chart, 'beforeRender', function () {
@@ -1724,7 +1771,6 @@
 		 */
 		var colorPointMixin = H.colorPointMixin,
 		    colorSeriesMixin = H.colorSeriesMixin,
-		    doc = H.doc,
 		    each = H.each,
 		    extend = H.extend,
 		    isNumber = H.isNumber,
@@ -1740,17 +1786,12 @@
 		    seriesTypes = H.seriesTypes,
 		    splat = H.splat;
 
-		// The vector-effect attribute is not supported in IE <= 11 (at least), so we
-		// need diffent logic (#3218)
-		var supportsVectorEffect = doc.documentElement.style.vectorEffect !== undefined;
-
-
 		/**
 		 * The map series is used for basic choropleth maps, where each map area has a
 		 * color based on its value.
 		 *
 		 * @sample maps/demo/base/ Choropleth map
-		 * @extends {plotOptions.scatter}
+		 * @extends plotOptions.scatter
 		 * @excluding marker
 		 * @product highmaps
 		 * @optionparent plotOptions.map
@@ -1804,7 +1845,7 @@
 		     * @type {Color}
 		     * @sample {highmaps} maps/plotoptions/series-border/ Borders demo
 		     * @default #cccccc
-		     * @product highmaps
+		     * @product highmaps highcharts
 		     * @apioption plotOptions.series.borderColor
 		     */
 		    borderColor: '#cccccc',
@@ -1816,7 +1857,7 @@
 		     * `.highcharts-point` class.
 		     *
 		     * @sample    {highmaps} maps/plotoptions/series-border/ Borders demo
-		     * @product   highmaps
+		     * @product   highmaps highcharts
 		     * @apioption plotOptions.series.borderWidth
 		     */
 		    borderWidth: 1,
@@ -1994,9 +2035,9 @@
 		    getBox: function (paths) {
 		        var MAX_VALUE = Number.MAX_VALUE,
 		            maxX = -MAX_VALUE,
-		            minX =  MAX_VALUE,
+		            minX = MAX_VALUE,
 		            maxY = -MAX_VALUE,
-		            minY =  MAX_VALUE,
+		            minY = MAX_VALUE,
 		            minRange = MAX_VALUE,
 		            xAxis = this.xAxis,
 		            yAxis = this.yAxis,
@@ -2014,9 +2055,9 @@
 		                    i = path.length,
 		                    even = false, // while loop reads from the end
 		                    pointMaxX = -MAX_VALUE,
-		                    pointMinX =  MAX_VALUE,
+		                    pointMinX = MAX_VALUE,
 		                    pointMaxY = -MAX_VALUE,
-		                    pointMinY =  MAX_VALUE,
+		                    pointMinY = MAX_VALUE,
 		                    properties = point.properties;
 
 		                // The first time a map point is used, analyze its box
@@ -2035,7 +2076,7 @@
 		                    }
 		                    // Cache point bounding box for use to position data labels,
 		                    // bubbles etc
-		                    point._midX = pointMinX + (pointMaxX - pointMinX) *    pick(
+		                    point._midX = pointMinX + (pointMaxX - pointMinX) * pick(
 		                        point.middleX,
 		                        properties && properties['hc-middle-x'],
 		                        0.5
@@ -2384,15 +2425,18 @@
 		        );
         
 
-		        // If vector-effect is not supported, we set the stroke-width on the
-		        // group element and let all point graphics inherit. That way we don't
-		        // have to iterate over all points to update the stroke-width on
-		        // zooming.
-		        if (supportsVectorEffect) {
-		            attr['vector-effect'] = 'non-scaling-stroke';
-		        } else {
-		            attr['stroke-width'] = 'inherit';
-		        }
+		        // Set the stroke-width on the group element and let all point graphics
+		        // inherit. That way we don't have to iterate over all points to update
+		        // the stroke-width on zooming.
+		        attr['stroke-width'] = pick(
+		            point.options[
+		                (
+		                    this.pointAttrToOptions &&
+		                    this.pointAttrToOptions['stroke-width']
+		                ) || 'borderWidth'
+		            ],
+		            'inherit'
+		        );
 
 		        return attr;
 		    },
@@ -2568,17 +2612,18 @@
 		        // Set the stroke-width directly on the group element so the children
 		        // inherit it. We need to use setAttribute directly, because the
 		        // stroke-widthSetter method expects a stroke color also to be set.
-		        if (!supportsVectorEffect) {
-		            series.group.element.setAttribute(
-		                'stroke-width',
+		        group.element.setAttribute(
+		            'stroke-width',
+		            (
 		                series.options[
 		                    (
 		                        series.pointAttrToOptions &&
 		                        series.pointAttrToOptions['stroke-width']
 		                    ) || 'borderWidth'
-		                ] / (scaleX || 1)
-		            );
-		        }
+		                ] ||
+		                1 // Styled mode
+		            ) / (scaleX || 1)
+		        );
 
 		        this.drawMapDataLabels();
 
@@ -2772,7 +2817,7 @@
 		     * Highmaps only. Zoom in on the point using the global animation.
 		     *
 		     * @function #zoomTo
-		     * @memberOf Point
+		     * @memberof Point
 		     * @sample maps/members/point-zoomto/
 		     *         Zoom to points from butons
 		     */
@@ -2993,7 +3038,7 @@
 		 * freeform drawing, like dividers, in the map.
 		 *
 		 * @sample maps/demo/mapline-mappoint/ Mapline and map-point chart
-		 * @extends {plotOptions.map}
+		 * @extends plotOptions.map
 		 * @product highmaps
 		 * @optionparent plotOptions.mapline
 		 */
@@ -3582,7 +3627,7 @@
 		                zMin = 0;
 		            }
 
-		            if (value === null) {
+		            if (!isNumber(value)) {
 		                radius = null;
 		            // Issue #4419 - if value is less than zMin, push a radius that's
 		            // always smaller than the minimum size
@@ -3756,7 +3801,7 @@
 		                series.maxPxSize = Math.max(extremes.maxSize, extremes.minSize);
 
 		                // Find the min and max Z
-		                zData = series.zData;
+		                zData = H.grep(series.zData, H.isNumber);
 		                if (zData.length) { // #1735
 		                    zMin = pick(seriesOptions.zMin, Math.min(
 		                        zMin,
@@ -3927,7 +3972,7 @@
 		     *
 		     * @sample maps/demo/map-bubble/ Map bubble chart
 		     *
-		     * @extends {plotOptions.bubble}
+		     * @extends plotOptions.bubble
 		     * @product highmaps
 		     * @optionparent plotOptions.mapbubble
 		     */
@@ -4590,7 +4635,7 @@
 		 * transform definition.
 		 *
 		 * @function transformFromLatLon
-		 * @memberOf Chart.prototype
+		 * @memberof Chart.prototype
 		 *
 		 * @param  {Object} latLon
 		 *         A latitude/longitude object.
@@ -4646,7 +4691,7 @@
 		 * The method returns an object with the numeric properties `lat` and `lon`.
 		 *
 		 * @function transformToLatLon
-		 * @memberOf Chart.prototype
+		 * @memberof Chart.prototype
 		 *
 		 * @param  {Point|Object} point
 		 *         A `Point` instance, or or any object containing the properties `x`
@@ -4703,7 +4748,7 @@
 		 * object with the numeric properties `lat` and `lon`.
 		 *
 		 * @function fromPointToLatLon
-		 * @memberOf Chart.prototype
+		 * @memberof Chart.prototype
 		 *
 		 * @param  {Point|Object} point
 		 *         A `Point` instance or anything containing `x` and `y` properties
@@ -4747,7 +4792,7 @@
 		 * object with x and y values corresponding to the `xAxis` and `yAxis`.
 		 *
 		 * @function fromLatLonToPoint
-		 * @memberOf Chart.prototype
+		 * @memberof Chart.prototype
 		 *
 		 * @param  {Object} latLon
 		 *         Coordinates.
@@ -4806,7 +4851,7 @@
 		 * {@link Point.properties} in Highmaps.
 		 *
 		 * @function #geojson
-		 * @memberOf Highcharts
+		 * @memberof Highcharts
 		 *
 		 * @param  {Object} geojson
 		 *         The GeoJSON structure to parse, represented as a JavaScript object
@@ -4897,7 +4942,7 @@
 		                 * item's properies are copied over here.
 		                 *
 		                 * @name #properties
-		                 * @memberOf Point
+		                 * @memberof Point
 		                 * @type {Object}
 		                 */
 		                properties: properties
@@ -4983,10 +5028,12 @@
 		     * can be given from the [mapNavigation.buttons](#mapNavigation.buttons)
 		     * option set.
 		     *
-		     * @type {Object}
 		     * @sample {highmaps} maps/mapnavigation/button-theme/
 		     *         Theming the navigation buttons
-		     * @product highmaps
+		     *
+		     * @type       {*}
+		     * @product    highmaps
+		     * @apioption  mapNavigation.buttonOptions
 		     */
 		    buttonOptions: {
 
@@ -4994,20 +5041,22 @@
 		         * What box to align the buttons to. Possible values are `plotBox`
 		         * and `spacingBox`.
 		         *
+		         * @type       {string}
+		         * @default    plotBox
+		         * @product    highmaps
 		         * @validvalue ["plotBox", "spacingBox"]
-		         * @type {String}
-		         * @default plotBox
-		         * @product highmaps
+		         * @apioption  mapNavigation.buttonOptions.alignTo
 		         */
 		        alignTo: 'plotBox',
 
 		        /**
 		         * The alignment of the navigation buttons.
 		         *
+		         * @type       {string}
+		         * @default    left
+		         * @product    highmaps
 		         * @validvalue ["left", "center", "right"]
-		         * @type {String}
-		         * @default left
-		         * @product highmaps
+		         * @apioption  mapNavigation.buttonOptions.align
 		         */
 		        align: 'left',
 
@@ -5015,49 +5064,55 @@
 		         * The vertical alignment of the buttons. Individual alignment can
 		         * be adjusted by each button's `y` offset.
 		         *
+		         * @type       {string}
+		         * @default    bottom
+		         * @product    highmaps
 		         * @validvalue ["top", "middle", "bottom"]
-		         * @type {String}
-		         * @default bottom
-		         * @product highmaps
+		         * @apioption  mapNavigation.buttonOptions.verticalAlign
 		         */
 		        verticalAlign: 'top',
 
 		        /**
 		         * The X offset of the buttons relative to its `align` setting.
 		         *
-		         * @type {Number}
-		         * @default 0
-		         * @product highmaps
+		         * @type       {number}
+		         * @default    0
+		         * @product    highmaps
+		         * @apioption  mapNavigation.buttonOptions.x
 		         */
 		        x: 0,
 
 		        /**
 		         * The width of the map navigation buttons.
 		         *
-		         * @type {Number}
-		         * @default 18
-		         * @product highmaps
+		         * @type       {number}
+		         * @default    18
+		         * @product    highmaps
+		         * @apioption  mapNavigation.buttonOptions.width
 		         */
 		        width: 18,
 
 		        /**
 		         * The pixel height of the map navigation buttons.
 		         *
-		         * @type {Number}
-		         * @default 18
-		         * @product highmaps
+		         * @type       {number}
+		         * @default    18
+		         * @product    highmaps
+		         * @apioption  mapNavigation.buttonOptions.height
 		         */
 		        height: 18,
 
 		        /**
 		         * Padding for the navigation buttons.
 		         *
-		         * @type {Number}
-		         * @default 5
-		         * @since 5.0.0
-		         * @product highmaps
+		         * @type       {number}
+		         * @default    5
+		         * @since      5.0.0
+		         * @product    highmaps
+		         * @apioption  mapNavigation.buttonOptions.padding
 		         */
 		        padding: 5,
+
         
 
 		        /**
@@ -5069,8 +5124,9 @@
 		         *     textAlign: 'center'
 		         * }</pre>
 		         *
-		         * @type {CSSObject}
-		         * @product highmaps
+		         * @type       {Highcharts.CSSObject}
+		         * @product    highmaps
+		         * @apioption  mapNavigation.buttonOptions.style
 		         */
 		        style: {
 		            fontSize: '15px',
@@ -5083,15 +5139,18 @@
 		         * button styles are supported by the `states.hover` and `states.select`
 		         * objects.
 		         *
-		         * @type {Object}
 		         * @sample {highmaps} maps/mapnavigation/button-theme/
 		         *         Themed navigation buttons
-		         * @product highmaps
+		         *
+		         * @type       {*}
+		         * @product    highmaps
+		         * @apioption  mapNavigation.buttonOptions.theme
 		         */
 		        theme: {
 		            'stroke-width': 1,
 		            'text-align': 'center'
 		        }
+
         
 		    },
 
@@ -5103,8 +5162,9 @@
 		     * individual options can be overridden. But default, the `onclick`, `text`
 		     * and `y` options are individual.
 		     *
-		     * @type {Object}
-		     * @product highmaps
+		     * @type        {*}
+		     * @product     highmaps
+		     * @apioptions  mapNavigation.buttons
 		     */
 		    buttons: {
 
@@ -5115,9 +5175,10 @@
 		         * individual options can be overridden. By default, the `onclick`,
 		         * `text` and `y` options are individual.
 		         *
-		         * @type {Object}
-		         * @extends mapNavigation.buttonOptions
-		         * @product highmaps
+		         * @type        {*}
+		         * @extends     mapNavigation.buttonOptions
+		         * @product     highmaps
+		         * @apioptions  mapNavigation.buttons.zoomIn
 		         */
 		        zoomIn: {
 
@@ -5163,9 +5224,10 @@
 		         * individual options can be overridden. By default, the `onclick`,
 		         * `text` and `y` options are individual.
 		         *
-		         * @type {Object}
-		         * @extends mapNavigation.buttonOptions
-		         * @product highmaps
+		         * @type        {*}
+		         * @extends     mapNavigation.buttonOptions
+		         * @product     highmaps
+		         * @apioptions  mapNavigation.buttons.zoomOut
 		         */
 		        zoomOut: {
 
@@ -5206,13 +5268,82 @@
 		    },
 
 		    /**
-		     * Sensitivity of mouse wheel or trackpad scrolling. 1 is no sensitivity,
-		     *  while with 2, one mousewheel delta will zoom in 50%.
+		     * Whether to enable navigation buttons. By default it inherits the
+		     * [enabled](#mapNavigation.enabled) setting.
 		     *
-		     * @type {Number}
-		     * @default 1.1
-		     * @since 4.2.4
-		     * @product highmaps
+		     * @type       {boolean}
+		     * @product    highmaps
+		     * @apioption  mapNavigation.enableButtons
+		     */
+
+		    /**
+		     * Whether to enable map navigation. The default is not to enable
+		     * navigation, as many choropleth maps are simple and don't need it.
+		     * Additionally, when touch zoom and mousewheel zoom is enabled, it breaks
+		     * the default behaviour of these interactions in the website, and the
+		     * implementer should be aware of this.
+		     *
+		     * Individual interactions can be enabled separately, namely buttons,
+		     * multitouch zoom, double click zoom, double click zoom to element and
+		     * mousewheel zoom.
+		     *
+		     * @type       {boolean}
+		     * @default    false
+		     * @product    highmaps
+		     * @apioption  mapNavigation.enabled
+		     */
+
+		    /**
+		     * Enables zooming in on an area on double clicking in the map. By default
+		     * it inherits the [enabled](#mapNavigation.enabled) setting.
+		     *
+		     * @type       {boolean}
+		     * @product    highmaps
+		     * @apioption  mapNavigation.enableDoubleClickZoom
+		     */
+
+		    /**
+		     * Whether to zoom in on an area when that area is double clicked.
+		     *
+		     * @sample {highmaps} maps/mapnavigation/doubleclickzoomto/
+		     *         Enable double click zoom to
+		     *
+		     * @type       {boolean}
+		     * @default    false
+		     * @product    highmaps
+		     * @apioption  mapNavigation.enableDoubleClickZoomTo
+		     */
+
+		    /**
+		     * Enables zooming by mouse wheel. By default it inherits the [enabled](
+		     * #mapNavigation.enabled) setting.
+		     *
+		     * @type       {boolean}
+		     * @product    highmaps
+		     * @apioption  mapNavigation.enableMouseWheelZoom
+		     */
+
+		    /**
+		     * Whether to enable multitouch zooming. Note that if the chart covers the
+		     * viewport, this prevents the user from using multitouch and touchdrag on
+		     * the web page, so you should make sure the user is not trapped inside the
+		     * chart. By default it inherits the [enabled](#mapNavigation.enabled)
+		     * setting.
+		     *
+		     * @type       {boolean}
+		     * @product    highmaps
+		     * @apioption  mapNavigation.enableTouchZoom
+		     */
+
+		    /**
+		     * Sensitivity of mouse wheel or trackpad scrolling. 1 is no sensitivity,
+		     * while with 2, one mousewheel delta will zoom in 50%.
+		     *
+		     * @type       {number}
+		     * @default    1.1
+		     * @since      4.2.4
+		     * @product    highmaps
+		     * @apioption  mapNavigation.mouseWheelSensitivity
 		     */
 		    mouseWheelSensitivity: 1.1
 		    // enabled: false,
@@ -5225,6 +5356,12 @@
 
 		/**
 		 * Utility for reading SVG paths directly.
+		 *
+		 * @function Highcharts.splitPath
+		 *
+		 * @param  {string} path
+		 *
+		 * @return {Array<number|string>}
 		 */
 		H.splitPath = function (path) {
 		    var i;
@@ -5311,17 +5448,18 @@
 
 
 		/**
-		 * The factory function for creating new map charts. Creates a new {@link
-		 * Chart|Chart} object with different default options than the basic Chart.
+		 * The factory function for creating new map charts. Creates a new {@link Chart|
+		 * Chart} object with different default options than the basic Chart.
 		 *
-		 * @function #mapChart
-		 * @memberOf Highcharts
+		 * @function Highcharts.mapChart
 		 *
-		 * @param  {String|HTMLDOMElement} renderTo
+		 * @param  {string|Highcharts.HTMLDOMElement} [renderTo]
 		 *         The DOM element to render to, or its id.
-		 * @param  {Options} options
+		 *
+		 * @param  {Highcharts.Options} options
 		 *         The chart options structure as described in the {@link
 		 *         https://api.highcharts.com/highstock|options reference}.
+		 *
 		 * @param  {Function} callback
 		 *         A function to execute when the chart object is finished loading and
 		 *         rendering. In most cases the chart is built in one thread, but in
@@ -5330,10 +5468,10 @@
 		 *         chart object will not be finished synchronously. As a consequence,
 		 *         code that relies on the newly built Chart object should always run in
 		 *         the callback. Defining a
-		 *         {@link https://api.highcharts.com/highstock/chart.events.load|chart.event.load}
-		 *         handler is equivalent.
+		 *         {@link https://api.highcharts.com/highstock/chart.events.load|
+		 *         chart.event.load} handler is equivalent.
 		 *
-		 * @return {Chart}
+		 * @return {Highcharts.Chart}
 		 *         The chart object.
 		 */
 		H.Map = H.mapChart = function (a, b, c) {
@@ -5402,4 +5540,8 @@
 		};
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

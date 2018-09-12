@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  * Old IE (v6, v7, v8) module for Highcharts v6+.
  *
  * (c) 2010-2017 Highsoft AS
@@ -11,6 +11,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -68,7 +72,7 @@
 		 * @since 2.3.0
 		 */
 		H.getOptions().global.VMLRadialGradientURL =
-		    'http://code.highcharts.com/6.1.0/gfx/vml-radial-gradient.png';
+		    'http://code.highcharts.com/6.1.2/gfx/vml-radial-gradient.png';
 
 
 		// Utilites
@@ -154,15 +158,16 @@
 		}
 
 		if (!Array.prototype.some) {
-		    H.some = function (fn, ctx) { // legacy
+		    H.somePolyfill = function (fn, ctx) { // legacy
 		        var i = 0,
 		            len = this.length;
 
 		        for (; i < len; i++) {
 		            if (fn.call(ctx, this[i], i, this) === true) {
-		                return;
+		                return true;
 		            }
 		        }
+		        return false;
 		    };
 		}
 
@@ -184,9 +189,10 @@
 		if (!Array.prototype.reduce) {
 		    H.reducePolyfill = function (func, initialValue) {
 		        var context = this,
-		            accumulator = initialValue || {},
+		            i = arguments.length > 1 ? 0 : 1,
+		            accumulator = arguments.length > 1 ? initialValue : this[0],
 		            len = this.length;
-		        for (var i = 0; i < len; ++i) {
+		        for (; i < len; ++i) {
 		            accumulator = func.call(context, accumulator, this[i], i, this);
 		        }
 		        return accumulator;
@@ -343,7 +349,7 @@
 		         */
 		        init: function (renderer, nodeName) {
 		            var wrapper = this,
-		                markup =  ['<', nodeName, ' filled="f" stroked="f"'],
+		                markup = ['<', nodeName, ' filled="f" stroked="f"'],
 		                style = ['position: ', 'absolute', ';'],
 		                isDiv = nodeName === 'div';
 
@@ -358,7 +364,7 @@
 		            // create element with default attributes and style
 		            if (nodeName) {
 		                markup = isDiv || nodeName === 'span' || nodeName === 'img' ?
-		                    markup.join('')    :
+		                    markup.join('') :
 		                    renderer.prepVML(markup);
 		                wrapper.element = createElement(markup);
 		            }
@@ -428,7 +434,7 @@
 		            // Firefox 3.5+ on user request. FF3.5+ has support for CSS3
 		            // transform. The getBBox method also needs to be updated to
 		            // compensate for the rotation, like it currently does for SVG.
-		            // Test case: http://jsfiddle.net/highcharts/Ybt44/
+		            // Test case: https://jsfiddle.net/highcharts/Ybt44/
 
 		            var rotation = this.rotation,
 		                costheta = Math.cos(rotation * deg2rad),
@@ -1140,7 +1146,7 @@
 		                        y1 = gradient.y1 || gradient[1] || 0;
 		                        x2 = gradient.x2 || gradient[2] || 0;
 		                        y2 = gradient.y2 || gradient[3] || 0;
-		                        fillAttr = 'angle="' + (90  - Math.atan(
+		                        fillAttr = 'angle="' + (90 - Math.atan(
 		                            (y2 - y1) / // y vector
 		                            (x2 - x1) // x vector
 		                            ) * 180 / Math.PI) + '"';
@@ -1530,4 +1536,8 @@
 
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

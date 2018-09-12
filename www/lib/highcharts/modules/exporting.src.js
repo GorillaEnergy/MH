@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  * Exporting module
  *
  * (c) 2010-2017 Torstein Honsi
@@ -10,6 +10,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -399,7 +403,7 @@
 
 		/**
 		 * Options for the exporting module. For an overview on the matter, see
-		 * [the docs](http://www.highcharts.com/docs/export-module/export-module-overview).
+		 * [the docs](https://www.highcharts.com/docs/export-module/export-module-overview).
 		 * @type {Object}
 		 * @optionparent exporting
 		 */
@@ -455,7 +459,8 @@
 		     * Function to call if the offline-exporting module fails to export
 		     * a chart on the client side, and [fallbackToExportServer](
 		     * #exporting.fallbackToExportServer) is disabled. If left undefined, an
-		     * exception is thrown instead.
+		     * exception is thrown instead. Receives two parameters, the exporting
+		     * options, and the error from the module.
 		     *
 		     * @type {Function}
 		     * @see [fallbackToExportServer](#exporting.fallbackToExportServer)
@@ -466,7 +471,14 @@
 
 		    /**
 		     * Whether or not to fall back to the export server if the offline-exporting
-		     * module is unable to export the chart on the client side.
+		     * module is unable to export the chart on the client side. This happens for
+		     * certain browsers, and certain features (e.g.
+		     * [allowHTML](#exporting.allowHTML)), depending on the image type exporting
+		     * to. For very complex charts, it is possible that export can fail in
+		     * browsers that don't support Blob objects, due to data URL length limits.
+		     * It is recommended to define the [exporting.error](#exporting.error)
+		     * handler if disabling fallback, in order to notify users in case export
+		     * fails.
 		     *
 		     * @type {Boolean}
 		     * @default true
@@ -661,7 +673,7 @@
 		             * the `Highcharts.Renderer.symbols` collection. The default
 		             * `exportIcon` function is part of the exporting module.
 		             *
-		             * @validvalue ["circle", "square", "diamond", "triangle", "triangle-down", "menu"]
+		             * @validvalue ["exportIcon", "circle", "square", "diamond", "triangle", "triangle-down", "menu"]
 		             * @type {String}
 		             * @sample highcharts/exporting/buttons-contextbutton-symbol/
 		             *         Use a circle for symbol
@@ -919,7 +931,7 @@
 
 		            // Replace HTML entities, issue #347
 		            .replace(/&nbsp;/g, '\u00A0') // no-break space
-		            .replace(/&shy;/g,  '\u00AD'); // soft hyphen
+		            .replace(/&shy;/g, '\u00AD'); // soft hyphen
 
         
 		        // Further sanitize for oldIE
@@ -1051,13 +1063,20 @@
 		                userMin = extremes.userMin,
 		                userMax = extremes.userMax;
 
-		            if (axisCopy && (userMin !== undefined || userMax !== undefined)) {
+		            if (
+		                axisCopy &&
+		                (
+		                    (userMin !== undefined && userMin !== axisCopy.min) ||
+		                    (userMax !== undefined && userMax !== axisCopy.max)
+		                )
+		            ) {
 		                axisCopy.setExtremes(userMin, userMax, true, false);
 		            }
 		        });
 
 		        // Get the SVG from the container's innerHTML
 		        svg = chartCopy.getChartHTML();
+		        fireEvent(this, 'getSVG', { chartCopy: chartCopy });
 
 		        svg = chart.sanitizeSVG(svg, options);
 
@@ -1190,33 +1209,37 @@
 		        // pull out the chart
 		        body.appendChild(container);
 
-		        // print
-		        win.focus(); // #1510
-		        win.print();
-
-		        // allow the browser to prepare before reverting
+		        // Give the browser time to draw WebGL content, an issue that randomly
+		        // appears (at least) in Chrome ~67 on the Mac (#8708).
 		        setTimeout(function () {
 
-		            // put the chart back in
-		            origParent.appendChild(container);
+		            win.focus(); // #1510
+		            win.print();
 
-		            // restore all body content
-		            each(childNodes, function (node, i) {
-		                if (node.nodeType === 1) {
-		                    node.style.display = origDisplay[i];
+		            // allow the browser to prepare before reverting
+		            setTimeout(function () {
+
+		                // put the chart back in
+		                origParent.appendChild(container);
+
+		                // restore all body content
+		                each(childNodes, function (node, i) {
+		                    if (node.nodeType === 1) {
+		                        node.style.display = origDisplay[i];
+		                    }
+		                });
+
+		                chart.isPrinting = false;
+
+		                // Reset printMaxWidth
+		                if (handleMaxWidth) {
+		                    chart.setSize.apply(chart, resetParams);
 		                }
-		            });
 
-		            chart.isPrinting = false;
+		                fireEvent(chart, 'afterPrint');
 
-		            // Reset printMaxWidth
-		            if (handleMaxWidth) {
-		                chart.setSize.apply(chart, resetParams);
-		            }
-
-		            fireEvent(chart, 'afterPrint');
-
-		        }, 1000);
+		            }, 1000);
+		        }, 1);
 
 		    },
 
@@ -1253,8 +1276,9 @@
 		            }, {
 		                position: 'absolute',
 		                zIndex: 1000,
-		                padding: menuPadding + 'px'
-		            }, chart.container);
+		                padding: menuPadding + 'px',
+		                pointerEvents: 'auto'
+		            }, chart.fixedDiv || chart.container);
 
 		            innerMenu = createElement(
 		                'div',
@@ -1294,6 +1318,12 @@
 		                // #2335, #2407)
 		                addEvent(doc, 'mouseup', function (e) {
 		                    if (!chart.pointer.inClass(e.target, className)) {
+		                        hide();
+		                    }
+		                }),
+
+		                addEvent(menu, 'click', function () {
+		                    if (chart.openMenu) {
 		                        hide();
 		                    }
 		                })
@@ -1369,7 +1399,7 @@
 		            y + height + chart.exportMenuHeight > chartHeight &&
 		            button.alignOptions.verticalAlign !== 'top'
 		        ) {
-		            menuStyle.bottom = (chartHeight - y - menuPadding)  + 'px';
+		            menuStyle.bottom = (chartHeight - y - menuPadding) + 'px';
 		        } else {
 		            menuStyle.top = (y + height - menuPadding) + 'px';
 		        }
@@ -1455,8 +1485,7 @@
                 
 		                'stroke-linecap': 'round',
                 
-		                title: pick(chart.options.lang[btnOptions._titleKey], ''),
-		                zIndex: 3 // #4955
+		                title: pick(chart.options.lang[btnOptions._titleKey], '')
 		            });
 		        button.menuClassName = (
 		            options.menuClassName ||
@@ -1490,7 +1519,7 @@
             
 		        }
 
-		        button.add()
+		        button.add(chart.exportingGroup)
 		            .align(extend(btnOptions, {
 		                width: button.width,
 		                x: pick(btnOptions.x, chart.buttonOffset) // #1654
@@ -1534,6 +1563,12 @@
 		                }
 		            });
 		            exportSVGElements.length = 0;
+		        }
+
+		        // Destroy the exporting group
+		        if (chart.exportingGroup) {
+		            chart.exportingGroup.destroy();
+		            delete chart.exportingGroup;
 		        }
 
 		        // Destroy the divs for the menu
@@ -1596,6 +1631,11 @@
 		    if (isDirty && exportingOptions.enabled !== false) {
 		        chart.exportEvents = [];
 
+		        chart.exportingGroup = chart.exportingGroup ||
+		            chart.renderer.g('exporting-group').attr({
+		                zIndex: 3 // #4955, // #8392
+		            }).add();
+
 		        objectEach(buttons, function (button) {
 		            chart.addButton(button);
 		        });
@@ -1607,23 +1647,19 @@
 		    addEvent(chart, 'destroy', chart.destroyExport);
 		};
 
-		Chart.prototype.callbacks.push(function (chart) {
-
+		// Add update methods to handle chart.update and chart.exporting.update and
+		// chart.navigation.update. These must be added to the chart instance rather
+		// than the Chart prototype in order to use the chart instance inside the update
+		// function.
+		addEvent(Chart, 'init', function () {
+		    var chart = this;
 		    function update(prop, options, redraw) {
 		        chart.isDirtyExporting = true;
 		        merge(true, chart.options[prop], options);
 		        if (pick(redraw, true)) {
 		            chart.redraw();
 		        }
-
 		    }
-
-		    chart.renderExporting();
-
-		    addEvent(chart, 'redraw', chart.renderExporting);
-
-		    // Add update methods to handle chart.update and chart.exporting.update
-		    // and chart.navigation.update.
 		    each(['exporting', 'navigation'], function (prop) {
 		        chart[prop] = {
 		            update: function (options, redraw) {
@@ -1631,37 +1667,54 @@
 		            }
 		        };
 		    });
+		});
+
+		Chart.prototype.callbacks.push(function (chart) {
+
+		    chart.renderExporting();
+
+		    addEvent(chart, 'redraw', chart.renderExporting);
+
 
 		    // Uncomment this to see a button directly below the chart, for quick
 		    // testing of export
 		    /*
+		    var button, viewImage, viewSource;
 		    if (!chart.renderer.forExport) {
-		        var button;
-
-		        // View SVG Image
-		        button = doc.createElement('button');
-		        button.innerHTML = 'View SVG Image';
-		        chart.renderTo.parentNode.appendChild(button);
-		        button.onclick = function () {
+		        viewImage = function () {
 		            var div = doc.createElement('div');
 		            div.innerHTML = chart.getSVGForExport();
 		            chart.renderTo.parentNode.appendChild(div);
 		        };
 
-		        // View SVG Source
-		        button = doc.createElement('button');
-		        button.innerHTML = 'View SVG Source';
-		        chart.renderTo.parentNode.appendChild(button);
-		        button.onclick = function () {
+		        viewSource = function () {
 		            var pre = doc.createElement('pre');
 		            pre.innerHTML = chart.getSVGForExport()
 		                .replace(/</g, '\n&lt;')
 		                .replace(/>/g, '&gt;');
 		            chart.renderTo.parentNode.appendChild(pre);
 		        };
+
+		        viewImage();
+
+		        // View SVG Image
+		        button = doc.createElement('button');
+		        button.innerHTML = 'View SVG Image';
+		        chart.renderTo.parentNode.appendChild(button);
+		        button.onclick = viewImage;
+
+		        // View SVG Source
+		        button = doc.createElement('button');
+		        button.innerHTML = 'View SVG Source';
+		        chart.renderTo.parentNode.appendChild(button);
+		        button.onclick = viewSource;
 		    }
 		    //*/
 		});
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

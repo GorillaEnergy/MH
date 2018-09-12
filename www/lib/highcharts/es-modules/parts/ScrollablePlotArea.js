@@ -52,7 +52,7 @@ addEvent(Chart, 'afterSetChartSize', function (e) {
             scrollablePlotArea && scrollablePlotArea.minWidth,
         scrollablePixels;
 
-    if (scrollableMinWidth) {
+    if (scrollableMinWidth && !this.renderer.forExport) {
 
         // The amount of pixels to scroll, the difference between chart
         // width and scrollable width
@@ -129,10 +129,11 @@ Chart.prototype.setUpScrolling = function () {
 Chart.prototype.applyFixed = function () {
     var container = this.container,
         fixedRenderer,
-        scrollableWidth;
+        scrollableWidth,
+        firstTime = !this.fixedDiv;
 
     // First render
-    if (!this.fixedDiv) {
+    if (firstTime) {
 
         this.fixedDiv = H.createElement(
             'div',
@@ -170,6 +171,8 @@ Chart.prototype.applyFixed = function () {
             .addClass('highcharts-scrollable-mask')
             .add();
 
+        // These elements are moved over to the fixed renderer and stay fixed
+        // when the user scrolls the chart.
         H.each([
             this.inverted ?
                 '.highcharts-xaxis' :
@@ -181,33 +184,44 @@ Chart.prototype.applyFixed = function () {
             '.highcharts-credits',
             '.highcharts-legend',
             '.highcharts-subtitle',
-            '.highcharts-title'
+            '.highcharts-title',
+            '.highcharts-legend-checkbox'
         ], function (className) {
             H.each(container.querySelectorAll(className), function (elem) {
-                fixedRenderer.box.appendChild(elem);
+                (
+                    elem.namespaceURI === fixedRenderer.SVG_NS ?
+                        fixedRenderer.box :
+                        fixedRenderer.box.parentNode
+                ).appendChild(elem);
                 elem.style.pointerEvents = 'auto';
             });
         });
     }
 
+    // Set the size of the fixed renderer to the visible width
     this.fixedRenderer.setSize(
         this.chartWidth,
         this.chartHeight
     );
 
+    // Increase the size of the scrollable renderer and background
     scrollableWidth = this.chartWidth + this.scrollablePixels;
+    H.stop(this.container);
     this.container.style.width = scrollableWidth + 'px';
     this.renderer.boxWrapper.attr({
         width: scrollableWidth,
         height: this.chartHeight,
         viewBox: [0, 0, scrollableWidth, this.chartHeight].join(' ')
     });
+    this.chartBackground.attr({ width: scrollableWidth });
 
     // Set scroll position
-    var options = this.options.chart.scrollablePlotArea;
-    if (options.scrollPositionX) {
-        this.scrollingContainer.scrollLeft =
-            this.scrollablePixels * options.scrollPositionX;
+    if (firstTime) {
+        var options = this.options.chart.scrollablePlotArea;
+        if (options.scrollPositionX) {
+            this.scrollingContainer.scrollLeft =
+                this.scrollablePixels * options.scrollPositionX;
+        }
     }
 
     // Mask behind the left and right side

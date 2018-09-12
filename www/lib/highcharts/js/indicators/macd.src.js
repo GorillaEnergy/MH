@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v6.1.0 (2018-04-13)
+ * @license  Highcharts JS v6.1.2 (2018-08-31)
  *
  * Indicator series type for Highstock
  *
@@ -11,6 +11,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -59,7 +63,7 @@
 		     * Exponential moving average indicator (EMA). This series requires the
 		     * `linkedTo` option to be set.
 		     *
-		     * @extends {plotOptions.sma}
+		     * @extends plotOptions.sma
 		     * @product highstock
 		     * @sample {highstock} stock/indicators/ema
 		     *                        Exponential moving average indicator
@@ -193,7 +197,7 @@
 		     * Moving Average Convergence Divergence (MACD). This series requires
 		     * `linkedTo` option to be set.
 		     *
-		     * @extends {plotOptions.sma}
+		     * @extends plotOptions.sma
 		     * @product highstock
 		     * @sample {highstock} stock/indicators/macd MACD indicator
 		     * @since 6.0.0
@@ -483,6 +487,10 @@
 		                longEMA,
 		                i;
 
+		            if (series.xData.length < params.longPeriod) {
+		                return false;
+		            }
+
 		            // Calculating the short and long EMA used when calculating the MACD
 		            shortEMA = EMA.prototype.getValues(series,
 		                {
@@ -503,7 +511,12 @@
 		            // Subtract each Y value from the EMA's and create the new dataset
 		            // (MACD)
 		            for (i = 1; i <= shortEMA.length; i++) {
-		                if (defined(longEMA[i - 1]) && defined(longEMA[i - 1][1])) {
+		                if (
+		                    defined(longEMA[i - 1]) &&
+		                    defined(longEMA[i - 1][1]) &&
+		                    defined(shortEMA[i + params.shortPeriod + 1]) &&
+		                    defined(shortEMA[i + params.shortPeriod + 1][0])
+		                    ) {
 		                    MACD.push([
 		                        shortEMA[i + params.shortPeriod + 1][0],
 		                        0,
@@ -541,7 +554,7 @@
 		                if (MACD[i][0] >= signalLine[0][0]) { // detect the first point
 
 		                    MACD[i][2] = signalLine[j][1];
-		                    yMACD[i] = [0, signalLine[j][1],  MACD[i][3]];
+		                    yMACD[i] = [0, signalLine[j][1], MACD[i][3]];
 
 		                    if (MACD[i][3] === null) {
 		                        MACD[i][1] = 0;
@@ -584,4 +597,8 @@
 		 */
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  * Module for adding patterns and images as point fills.
  *
  * (c) 2010-2018 Highsoft AS
@@ -11,6 +11,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -27,7 +31,8 @@
 
 		var wrap = H.wrap,
 		    each = H.each,
-		    merge = H.merge;
+		    merge = H.merge,
+		    pick = H.pick;
 
 
 		/**
@@ -212,6 +217,7 @@
 		H.SVGRenderer.prototype.addPattern = function (options, animation) {
 		    var pattern,
 		        animate = H.pick(animation, true),
+		        animationOptions = H.animObject(animate),
 		        path,
 		        defaultSize = 32,
 		        width = options.width || options._width || defaultSize,
@@ -278,7 +284,9 @@
 		            this.image(
 		                options.image, 0, 0, width, height, function () {
 		                    // Onload
-		                    this.animate({ opacity: 1 }, animate);
+		                    this.animate({
+		                        opacity: pick(options.opacity, 1)
+		                    }, animationOptions);
 		                    H.removeEvent(this.element, 'load');
 		                }
 		            ).attr({ opacity: 0 }).add(pattern);
@@ -287,7 +295,8 @@
 		        }
 		    }
 
-		    if (options.opacity !== undefined) {
+		    // For non-animated patterns, set opacity now
+		    if (!(options.image && animate) && options.opacity !== undefined) {
 		        each(pattern.element.childNodes, function (child) {
 		            child.setAttribute('opacity', options.opacity);
 		        });
@@ -435,11 +444,11 @@
 
 		        // Add it. This function does nothing if an element with this ID
 		        // already exists.
-		        this.addPattern(pattern, !this.forExport && H.animObject(H.pick(
+		        this.addPattern(pattern, !this.forExport && H.pick(
 		            pattern.animation,
 		            this.globalAnimation,
 		            { duration: 100 }
-		        )));
+		        ));
 
 		        value = 'url(' + this.url + '#' + pattern.id + ')';
 
@@ -562,4 +571,8 @@
 		});
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

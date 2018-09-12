@@ -34,6 +34,8 @@ var addEvent = H.addEvent,
 
 /**
  * TrackerMixin for points and graphs.
+ *
+ * @ignore
  */
 TrackerMixin = H.TrackerMixin = {
 
@@ -296,6 +298,7 @@ extend(Legend.prototype, {
 
         item.checkbox = createElement('input', {
             type: 'checkbox',
+            className: 'highcharts-legend-checkbox',
             checked: item.selected,
             defaultChecked: item.selected // required by IE7
         }, legend.options.itemCheckboxStyle, legend.chart.container);
@@ -367,9 +370,8 @@ extend(Chart.prototype, /** @lends Chart.prototype */ {
     },
 
     /**
-     * Zoom out to 1:1.
-     *
-     * @private
+     * Zoom the chart out after a user has zoomed in. See also
+     * [Axis.setExtremes](/class-reference/Highcharts.Axis#setExtremes).
      */
     zoomOut: function () {
         fireEvent(this, 'selection', { resetSelection: true }, this.zoom);
@@ -821,15 +823,15 @@ extend(Point.prototype, /** @lends Highcharts.Point.prototype */ {
             halo.attr({
                 'class': 'highcharts-halo highcharts-color-' +
                     pick(point.colorIndex, series.colorIndex) +
-                    (point.className ? ' ' + point.className : '')
+                    (point.className ? ' ' + point.className : ''),
+                'zIndex': -1 // #4929, #8276
             });
             halo.point = point; // #6055
 
             
             halo.attr(extend({
                 'fill': point.color || series.color,
-                'fill-opacity': haloOptions.opacity,
-                'zIndex': -1 // #4929, IE8 added halo above everything
+                'fill-opacity': haloOptions.opacity
             }, haloOptions.attributes));
             
 
@@ -1091,11 +1093,12 @@ extend(Series.prototype, /** @lends Highcharts.Series.prototype */ {
         if (ignoreHiddenSeries) {
             chart.isDirtyBox = true;
         }
+
+        fireEvent(series, showOrHide);
+
         if (redraw !== false) {
             chart.redraw();
         }
-
-        fireEvent(series, showOrHide);
     },
 
     /**

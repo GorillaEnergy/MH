@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  *
  * (c) 2009-2017 Torstein Honsi
  *
@@ -9,6 +9,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -27,10 +31,10 @@
 		 * - avoid data labels, when data labels above, show series label below.
 		 * - add more options (connector, format, formatter)
 		 *
-		 * http://jsfiddle.net/highcharts/L2u9rpwr/
-		 * http://jsfiddle.net/highcharts/y5A37/
-		 * http://jsfiddle.net/highcharts/264Nm/
-		 * http://jsfiddle.net/highcharts/y5A37/
+		 * https://jsfiddle.net/highcharts/L2u9rpwr/
+		 * https://jsfiddle.net/highcharts/y5A37/
+		 * https://jsfiddle.net/highcharts/264Nm/
+		 * https://jsfiddle.net/highcharts/y5A37/
 		 */
 
 
@@ -126,7 +130,7 @@
 		                 * An array of boxes to avoid when laying out the labels. Each
 		                 * item has a `left`, `right`, `top` and `bottom` property.
 		                 *
-		                 * @type {Array.<Object>}
+		                 * @type {Array<Object>}
 		                 */
 		                boxesToAvoid: []
 		            }
@@ -155,10 +159,10 @@
 		 */
 		function boxIntersectLine(x, y, w, h, x1, y1, x2, y2) {
 		    return (
-		        intersectLine(x, y, x + w, y,         x1, y1, x2, y2) || // top of label
+		        intersectLine(x, y, x + w, y, x1, y1, x2, y2) || // top of label
 		        intersectLine(x + w, y, x + w, y + h, x1, y1, x2, y2) || // right
 		        intersectLine(x, y + h, x + w, y + h, x1, y1, x2, y2) || // bottom
-		        intersectLine(x, y, x, y + h,         x1, y1, x2, y2)   // left of label
+		        intersectLine(x, y, x, y + h, x1, y1, x2, y2)   // left of label
 		    );
 		}
 
@@ -282,7 +286,7 @@
 		                point.chartCenterY = paneTop + (
 		                    point.plotY +
 		                    pick(point.yBottom, translatedThreshold)
-		                ) /    2;
+		                ) / 2;
 		            }
 
 		            // Add interpolated points
@@ -560,6 +564,12 @@
 		                y >= paneTop && y <= paneTop + paneHeight - bBox.height;
 		        }
 
+		        function destroyLabel() {
+		            if (label) {
+		                series.labelBySeries = label.destroy();
+		            }
+		        }
+
 		        if (series.visible && !series.isSeriesBoosting && points) {
 		            if (!label) {
 		                series.labelBySeries = label = chart.renderer
@@ -758,9 +768,11 @@
 
 		                }
 
-		            } else if (label) {
-		                series.labelBySeries = label.destroy();
+		            } else {
+		                destroyLabel();
 		            }
+		        } else {
+		            destroyLabel();
 		        }
 		    });
 		    // console.timeEnd('drawSeriesLabels');
@@ -839,4 +851,8 @@
 		addEvent(Chart, 'render', drawLabels);
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

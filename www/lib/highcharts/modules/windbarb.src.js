@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v6.1.0 (2018-04-13)
+ * @license  Highcharts JS v6.1.2 (2018-08-31)
  * Wind barb series module
  *
  * (c) 2010-2017 Torstein Honsi
@@ -10,6 +10,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -187,7 +191,7 @@
 		 * graphical form. Wind direction is given by the stem direction, and wind speed
 		 * by the number and shape of barbs.
 		 *
-		 * @extends {plotOptions.column}
+		 * @extends plotOptions.column
 		 * @excluding boostThreshold,marker,connectEnds,connectNulls,cropThreshold,
 		 *            dashStyle,gapSize,gapUnit,dataGrouping,linecap,shadow,stacking,
 		 *            step
@@ -545,4 +549,8 @@
 		 */
 
 	}(Highcharts, onSeriesMixin));
+	return (function () {
+
+
+	}());
 }));

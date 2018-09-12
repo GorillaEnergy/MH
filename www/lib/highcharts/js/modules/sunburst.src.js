@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  *
  * (c) 2016 Highsoft AS
  * Authors: Jon Arild Nygard
@@ -10,6 +10,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -303,6 +307,7 @@
 		    getColor = mixinTreeSeries.getColor,
 		    getLevelOptions = mixinTreeSeries.getLevelOptions,
 		    grep = H.grep,
+		    isArray = H.isArray,
 		    isBoolean = function (x) {
 		        return typeof x === 'boolean';
 		    },
@@ -338,7 +343,7 @@
 		 *
 		 * @sample highcharts/demo/treemap-large-dataset/ Treemap
 		 *
-		 * @extends {plotOptions.scatter}
+		 * @extends plotOptions.scatter
 		 * @excluding marker
 		 * @product highcharts
 		 * @optionparent plotOptions.treemap
@@ -350,7 +355,8 @@
 		     * zoom in on its children.
 		     *
 		     * @type {Boolean}
-		     * @sample {highcharts} highcharts/plotoptions/treemap-allowdrilltonode/ Enabled
+		     * @sample {highcharts} highcharts/plotoptions/treemap-allowdrilltonode/
+		     *         Enabled
 		     * @default false
 		     * @since 4.1.0
 		     * @product highcharts
@@ -381,8 +387,12 @@
 		     * be false by default.
 		     *
 		     * @type {Boolean}
-		     * @sample {highcharts} highcharts/plotoptions/treemap-interactbyleaf-false/ False
-		     * @sample {highcharts} highcharts/plotoptions/treemap-interactbyleaf-true-and-allowdrilltonode/ InteractByLeaf and allowDrillToNode is true
+		     * @sample {highcharts}
+		     *         highcharts/plotoptions/treemap-interactbyleaf-false/
+		     *         False
+		     * @sample {highcharts}
+		     *         highcharts/plotoptions/treemap-interactbyleaf-true-and-allowdrilltonode/
+		     *         InteractByLeaf and allowDrillToNode is true
 		     * @since 4.1.2
 		     * @product highcharts
 		     * @apioption plotOptions.treemap.interactByLeaf
@@ -392,7 +402,8 @@
 		     * The sort index of the point inside the treemap level.
 		     *
 		     * @type {Number}
-		     * @sample {highcharts} highcharts/plotoptions/treemap-sortindex/ Sort by years
+		     * @sample {highcharts} highcharts/plotoptions/treemap-sortindex/
+		     *         Sort by years
 		     * @since 4.1.10
 		     * @product highcharts
 		     * @apioption plotOptions.treemap.sortIndex
@@ -473,12 +484,21 @@
 		     *
 		     * @validvalue ["sliceAndDice", "stripes", "squarified", "strip"]
 		     * @type {String}
-		     * @see [How to write your own algorithm](http://www.highcharts.com/docs/chart-
-		     * and-series-types/treemap)
-		     * @sample {highcharts} highcharts/plotoptions/treemap-layoutalgorithm-sliceanddice/ SliceAndDice by default
-		     * @sample {highcharts} highcharts/plotoptions/treemap-layoutalgorithm-stripes/ Stripes
-		     * @sample {highcharts} highcharts/plotoptions/treemap-layoutalgorithm-squarified/ Squarified
-		     * @sample {highcharts} highcharts/plotoptions/treemap-layoutalgorithm-strip/ Strip
+		     * @see [How to write your own algorithm](
+		     * https://www.highcharts.com/docs/chart-and-series-types/treemap).
+		     *
+		     * @sample  {highcharts}
+		     *          highcharts/plotoptions/treemap-layoutalgorithm-sliceanddice/
+		     *          SliceAndDice by default
+		     * @sample  {highcharts}
+		     *          highcharts/plotoptions/treemap-layoutalgorithm-stripes/
+		     *          Stripes
+		     * @sample  {highcharts}
+		     *          highcharts/plotoptions/treemap-layoutalgorithm-squarified/
+		     *          Squarified
+		     * @sample  {highcharts}
+		     *          highcharts/plotoptions/treemap-layoutalgorithm-strip/
+		     *          Strip
 		     * @default sliceAndDice
 		     * @since 4.1.0
 		     * @product highcharts
@@ -503,7 +523,9 @@
 		     * direction will always be the opposite of the previous.
 		     *
 		     * @type {Boolean}
-		     * @sample {highcharts} highcharts/plotoptions/treemap-alternatestartingdirection-true/ Enabled
+		     * @sample  {highcharts}
+		     *          highcharts/plotoptions/treemap-alternatestartingdirection-true/
+		     *          Enabled
 		     * @default false
 		     * @since 4.1.0
 		     * @product highcharts
@@ -702,39 +724,32 @@
 		// Prototype members
 		}, {
 		    pointArrayMap: ['value'],
-		    axisTypes: seriesTypes.heatmap ?
-		        ['xAxis', 'yAxis', 'colorAxis'] :
-		        ['xAxis', 'yAxis'],
 		    directTouch: true,
 		    optionalAxis: 'colorAxis',
 		    getSymbol: noop,
 		    parallelArrays: ['x', 'y', 'value', 'colorValue'],
 		    colorKey: 'colorValue', // Point color option key
-		    translateColors: (
-		        seriesTypes.heatmap &&
-		        seriesTypes.heatmap.prototype.translateColors
-		    ),
-		    colorAttribs: (
-		        seriesTypes.heatmap &&
-		        seriesTypes.heatmap.prototype.colorAttribs
-		    ),
 		    trackerGroups: ['group', 'dataLabelsGroup'],
 		    /**
 		     * Creates an object map from parent id to childrens index.
 		     * @param {Array} data List of points set in options.
 		     * @param {string} data[].parent Parent id of point.
-		     * @param {Array} ids List of all point ids.
+		     * @param {Array} existingIds List of all point ids.
 		     * @return {Object} Map from parent id to children index in data.
 		     */
-		    getListOfParents: function (data, ids) {
-		        var listOfParents = reduce(data || [], function (prev, curr, i) {
-		            var parent = pick(curr.parent, '');
-		            if (prev[parent] === undefined) {
-		                prev[parent] = [];
-		            }
-		            prev[parent].push(i);
-		            return prev;
-		        }, {});
+		    getListOfParents: function (data, existingIds) {
+		        var arr = isArray(data) ? data : [],
+		            ids = isArray(existingIds) ? existingIds : [],
+		            listOfParents = reduce(arr, function (prev, curr, i) {
+		                var parent = pick(curr.parent, '');
+		                if (prev[parent] === undefined) {
+		                    prev[parent] = [];
+		                }
+		                prev[parent].push(i);
+		                return prev;
+		            }, {
+		                '': [] // Root of tree
+		            });
 
 		        // If parent does not exist, hoist parent to root of tree.
 		        eachObject(listOfParents, function (children, parent, list) {
@@ -761,7 +776,16 @@
 		        return series.buildNode('', -1, 0, parentList, null);
 		    },
 		    init: function (chart, options) {
-		        var series = this;
+		        var series = this,
+		            colorSeriesMixin = H.colorSeriesMixin;
+
+		        // If color series logic is loaded, add some properties
+		        if (H.colorSeriesMixin) {
+		            this.translateColors = colorSeriesMixin.translateColors;
+		            this.colorAttribs = colorSeriesMixin.colorAttribs;
+		            this.axisTypes = colorSeriesMixin.axisTypes;
+		        }
+
 		        Series.prototype.init.call(series, chart, options);
 		        if (series.options.allowDrillToNode) {
 		            H.addEvent(series, 'click', series.onClickDrillToNode);
@@ -1838,13 +1862,17 @@
 		        x = parent.x,
 		        y = parent.y,
 		        radius = (
-		            isObject(options.levelSize) && isNumber(options.levelSize.value) ?
+		            (
+		                options &&
+		                isObject(options.levelSize) &&
+		                isNumber(options.levelSize.value)
+		            ) ?
 		            options.levelSize.value :
 		            0
 		        ),
 		        innerRadius = parent.r,
 		        outerRadius = innerRadius + radius,
-		        slicedOffset = isNumber(options.slicedOffset) ?
+		        slicedOffset = options && isNumber(options.slicedOffset) ?
 		            options.slicedOffset :
 		            0;
 
@@ -1870,7 +1898,8 @@
 
 		var getDlOptions = function getDlOptions(params) {
 		    // Set options to new object to avoid problems with scope
-		    var shape = isObject(params.shapeArgs) ? params.shapeArgs : {},
+		    var point = params.point,
+		        shape = isObject(params.shapeArgs) ? params.shapeArgs : {},
 		        optionsPoint = (
 		            isObject(params.optionsPoint) ?
 		            params.optionsPoint.dataLabels :
@@ -1882,29 +1911,74 @@
 		            {}
 		        ),
 		        options = merge({
-		            rotationMode: 'perpendicular',
-		            style: {
-		                width: shape.radius
-		            }
+		            style: {}
 		        }, optionsLevel, optionsPoint),
 		        rotationRad,
-		        rotation;
+		        rotation,
+		        rotationMode = options.rotationMode;
+
 		    if (!isNumber(options.rotation)) {
-		        rotationRad = (shape.end - (shape.end - shape.start) / 2);
+		        if (rotationMode === 'auto') {
+		            if (
+		                point.innerArcLength < 1 &&
+		                point.outerArcLength > shape.radius
+		            ) {
+		                rotationRad = 0;
+		            } else if (
+		                point.innerArcLength > 1 &&
+		                point.outerArcLength > 1.5 * shape.radius
+		            ) {
+		                rotationMode = 'parallel';
+		            } else {
+		                rotationMode = 'perpendicular';
+		            }
+		        }
+
+		        if (rotationMode !== 'auto') {
+		            rotationRad = (shape.end - (shape.end - shape.start) / 2);
+		        }
+
+		        if (rotationMode === 'parallel') {
+		            options.style.width = Math.min(
+		                shape.radius * 2.5,
+		                (point.outerArcLength + point.innerArcLength) / 2
+		            );
+		        } else {
+		            options.style.width = shape.radius;
+		        }
+
+		        if (
+		            rotationMode === 'perpendicular' &&
+		            point.series.chart.renderer.fontMetrics(options.style.fontSize).h >
+		            point.outerArcLength
+		        ) {
+		            options.style.width = 1;
+		        }
+
+		        // Apply padding (#8515)
+		        options.style.width = Math.max(
+		            options.style.width - 2 * (options.padding || 0),
+		            1
+		        );
+
 		        rotation = (rotationRad * rad2deg) % 180;
-		        if (options.rotationMode === 'parallel') {
+		        if (rotationMode === 'parallel') {
 		            rotation -= 90;
 		        }
-		        // Data labels should not rotate beyond 90 degrees, for readability.
+
+		        // Prevent text from rotating upside down
 		        if (rotation > 90) {
 		            rotation -= 180;
+		        } else if (rotation < -90) {
+		            rotation += 180;
 		        }
+
 		        options.rotation = rotation;
 		    }
 		    // NOTE: alignDataLabel positions the data label differntly when rotation is
 		    // 0. Avoiding this by setting rotation to a small number.
 		    if (options.rotation === 0) {
-		        options.rotation =  0.001;
+		        options.rotation = 0.001;
 		    }
 		    return options;
 		};
@@ -2027,7 +2101,7 @@
 		 * represented by a circle. The center represents the root node of the tree.
 		 * The visualization bears a resemblance to both treemap and pie charts.
 		 *
-		 * @extends {plotOptions.pie}
+		 * @extends plotOptions.pie
 		 * @sample highcharts/demo/sunburst Sunburst chart
 		 * @excluding allAreas, clip, colorAxis, compare, compareBase,
 		 *            dataGrouping, depth, endAngle, gapSize, gapUnit,
@@ -2149,22 +2223,26 @@
 		    colorByPoint: false,
 		    /**
 		     * @extends plotOptions.series.dataLabels
-		     * @excluding align,allowOverlap,staggerLines,step
+		     * @excluding align,allowOverlap,distance,staggerLines,step
 		     */
 		    dataLabels: {
+		        allowOverlap: true,
 		        defer: true,
 		        style: {
 		            textOverflow: 'ellipsis'
 		        },
 		        /**
-		         * Decides how the data label will be rotated according to the perimeter
-		         * of the sunburst. It can either be parallel or perpendicular to the
-		         * perimeter.
-		         * `series.rotation` takes precedence over `rotationMode`.
+		         * Decides how the data label will be rotated relative to the perimeter
+		         * of the sunburst. Valid values are `auto`, `parallel` and
+		         * `perpendicular`. When `auto`, the best fit will be computed for the
+		         * point.
+		         *
+		         * The `series.rotation` option takes precedence over `rotationMode`.
+		         *
 		         * @since 6.0.0
-		         * @validvalue ["perpendicular", "parallel"]
+		         * @validvalue ["auto", "perpendicular", "parallel"]
 		         */
-		        rotationMode: 'perpendicular'
+		        rotationMode: 'auto'
 		    },
 		    /**
 		     * Which point to use as a root in the visualization.
@@ -2230,7 +2308,7 @@
 		            shapeRoot = series.shapeRoot,
 		            group = series.group,
 		            hasRendered = series.hasRendered,
-		            idRoot = series.rootId,
+		            idRoot = series.rootNode,
 		            idPreviousRoot = series.idPreviousRoot,
 		            nodeMap = series.nodeMap,
 		            nodePreviousRoot = nodeMap[idPreviousRoot],
@@ -2313,6 +2391,7 @@
 		                isNull: !visible // used for dataLabels & point.draw
 		            });
 		            point.dlOptions = getDlOptions({
+		                point: point,
 		                level: level,
 		                optionsPoint: point.options,
 		                shapeArgs: shape
@@ -2400,7 +2479,7 @@
 
 		            child.shapeArgs = merge(values, {
 		                plotX: center.x,
-		                plotY: center.y
+		                plotY: center.y + 4 * Math.abs(Math.cos(angle))
 		            });
 		            child.values = merge(values, {
 		                val: val
@@ -2609,4 +2688,8 @@
 		);
 
 	}(Highcharts, draw, result));
+	return (function () {
+
+
+	}());
 }));

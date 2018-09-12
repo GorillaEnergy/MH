@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v6.1.0 (2018-04-13)
+ * @license Highcharts JS v6.1.2 (2018-08-31)
  * Highstock as a plugin for Highcharts
  *
  * (c) 2017 Torstein Honsi
@@ -10,6 +10,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -78,9 +82,14 @@
 		        tickPixelIntervalOption = this.options.tickPixelInterval,
 		        time = this.chart.time;
 
-		    // The positions are not always defined, for example for ordinal positions when data
-		    // has regular interval (#1557, #2090)
-		    if ((!this.options.ordinal && !this.options.breaks) || !positions || positions.length < 3 || min === undefined) {
+		    // The positions are not always defined, for example for ordinal positions
+		    // when data has regular interval (#1557, #2090)
+		    if (
+		        (!this.options.ordinal && !this.options.breaks) ||
+		        !positions ||
+		        positions.length < 3 ||
+		        min === undefined
+		    ) {
 		        return proceed.call(this, normalizedInterval, min, max, startOfWeek);
 		    }
 
@@ -233,6 +242,7 @@
 		        var axis = this,
 		            len,
 		            ordinalPositions = [],
+		            uniqueOrdinalPositions,
 		            useOrdinal = false,
 		            dist,
 		            extremes = axis.getExtremes(),
@@ -246,7 +256,8 @@
 		            overscrollPointsRange = Number.MAX_VALUE,
 		            ignoreHiddenSeries = axis.chart.options.chart.ignoreHiddenSeries,
 		            isNavigatorAxis = axis.options.className === 'highcharts-navigator-xaxis',
-		            i;
+		            i,
+		            hasBoostedSeries;
 
 		        if (
 		            axis.options.overscroll &&
@@ -274,6 +285,7 @@
 		        if (isOrdinal || hasBreaks) { // #4167 YAxis is never ordinal ?
 
 		            each(axis.series, function (series, i) {
+		                uniqueOrdinalPositions = [];
 
 		                if (
 		                    (!ignoreHiddenSeries || series.visible !== false) &&
@@ -299,16 +311,41 @@
 		                    );
 
 		                    if (len) {
-		                        i = len - 1;
-		                        while (i--) {
-		                            if (ordinalPositions[i] === ordinalPositions[i + 1]) {
-		                                ordinalPositions.splice(i, 1);
+
+		                        i = 0;
+		                        while (i < len - 1) {
+		                            if (
+		                                ordinalPositions[i] !== ordinalPositions[i + 1]
+		                            ) {
+		                                uniqueOrdinalPositions.push(
+		                                    ordinalPositions[i + 1]
+		                                );
 		                            }
+		                            i++;
 		                        }
+
+		                        // Check first item:
+		                        if (
+		                            uniqueOrdinalPositions[0] !== ordinalPositions[0]
+		                        ) {
+		                            uniqueOrdinalPositions.unshift(
+		                                ordinalPositions[0]
+		                            );
+		                        }
+
+		                        ordinalPositions = uniqueOrdinalPositions;
 		                    }
 		                }
 
+		                if (series.isSeriesBoosting) {
+		                    hasBoostedSeries = true;
+		                }
+
 		            });
+
+		            if (hasBoostedSeries) {
+		                ordinalPositions.length = 0;
+		            }
 
 		            // cache the length
 		            len = ordinalPositions.length;
@@ -668,7 +705,7 @@
 		     * Make the tick intervals closer because the ordinal gaps make the ticks spread out or cluster
 		     */
 		    postProcessTickInterval: function (tickInterval) {
-		        // Problem: http://jsfiddle.net/highcharts/FQm4E/1/
+		        // Problem: https://jsfiddle.net/highcharts/FQm4E/1/
 		        // This is a case where this algorithm doesn't work optimally. In this case, the
 		        // tick labels are spread out per week, but all the gaps reside within weeks. So
 		        // we have a situation where the labels are courser than the ordinal gaps, and
@@ -1310,7 +1347,8 @@
 		 * the `groupPixelWidth` option.
 		 *
 		 * If data grouping is applied, the grouping information of grouped
-		 * points can be read from the [Point.dataGroup](#Point.dataGroup).
+		 * points can be read from the [Point.dataGroup](
+		 * /class-reference/Highcharts.Point#.dataGroup).
 		 *
 		 * @product highstock
 		 * @apioption plotOptions.series.dataGrouping
@@ -2231,7 +2269,7 @@
 		 *         Chart#redraw}.
 		 *
 		 * @function setDataGrouping
-		 * @memberOf Axis.prototype
+		 * @memberof Axis.prototype
 		 */
 		Axis.prototype.setDataGrouping = function (dataGrouping, redraw) {
 		    var i;
@@ -2299,7 +2337,7 @@
 		 * point.
 		 *
 		 * @sample stock/demo/ohlc/ OHLC chart
-		 * @extends {plotOptions.column}
+		 * @extends plotOptions.column
 		 * @excluding borderColor,borderRadius,borderWidth,crisp
 		 * @product highstock
 		 * @optionparent plotOptions.ohlc
@@ -2364,6 +2402,18 @@
 		        }
 		    },
 
+		    /**
+		     * Determines which one of `open`, `high`, `low`, `close` values should be
+		     * represented as `point.y`, which is later used to set dataLabel position.
+		     *
+		     * @type       {String}
+		     * @validvalue ["open", "high", "low", "close"]
+		     * @product    highstock
+		     * @sample     {highstock} stock/plotoptions/ohlc-pointvalkey/
+		     *             Possible values
+		     * @default    close
+		     * @apioption  plotOptions.ohlc.pointValKey
+		     */
 
 		    /**
 		     * Line color for up points.
@@ -2649,7 +2699,7 @@
 		 *
 		 * @sample stock/demo/candlestick/ Candlestick chart
 		 *
-		 * @extends {plotOptions.ohlc}
+		 * @extends plotOptions.ohlc
 		 * @excluding borderColor,borderRadius,borderWidth
 		 * @product highstock
 		 * @optionparent plotOptions.candlestick
@@ -2694,7 +2744,7 @@
 		    },
 
 		    /**
-		     * @extends {plotOptions.ohlc.tooltip}
+		     * @extends plotOptions.ohlc.tooltip
 		     */
 		    tooltip: defaultPlotOptions.ohlc.tooltip,
 
@@ -2799,7 +2849,8 @@
 		    drawPoints: function () {
 		        var series = this,
 		            points = series.points,
-		            chart = series.chart;
+		            chart = series.chart,
+		            reversedYAxis = series.yAxis.reversed;
 
 
 		        each(points, function (point) {
@@ -2840,9 +2891,12 @@
 		                topBox = Math.min(plotOpen, plotClose);
 		                bottomBox = Math.max(plotOpen, plotClose);
 		                halfWidth = Math.round(point.shapeArgs.width / 2);
-		                hasTopWhisker =
+		                hasTopWhisker = reversedYAxis ?
+		                    bottomBox !== point.yBottom :
 		                    Math.round(topBox) !== Math.round(point.plotHigh);
-		                hasBottomWhisker = bottomBox !== point.yBottom;
+		                hasBottomWhisker = reversedYAxis ?
+		                    Math.round(topBox) !== Math.round(point.plotHigh) :
+		                    bottomBox !== point.yBottom;
 		                topBox = Math.round(topBox) + crispCorr;
 		                bottomBox = Math.round(bottomBox) + crispCorr;
 
@@ -2866,13 +2920,19 @@
 		                    crispX, topBox,
 		                    'L',
 		                    // #460, #2094
-		                    crispX, hasTopWhisker ? Math.round(point.plotHigh) : topBox,
+		                    crispX, hasTopWhisker ?
+		                        Math.round(
+		                            reversedYAxis ? point.yBottom : point.plotHigh
+		                        ) :
+		                        topBox,
 		                    'M',
 		                    crispX, bottomBox,
 		                    'L',
 		                    // #460, #2094
 		                    crispX, hasBottomWhisker ?
-		                        Math.round(point.yBottom) :
+		                        Math.round(
+		                            reversedYAxis ? point.plotHigh : point.yBottom
+		                        ) :
 		                        bottomBox
 		                );
 
@@ -3187,7 +3247,7 @@
 
 		    /**
 		     * The shape of the marker. Can be one of "flag", "circlepin", "squarepin",
-		     * or an image on the format `url(/path-to-image.jpg)`. Individual
+		     * or an image of the format `url(/path-to-image.jpg)`. Individual
 		     * shapes can also be set for each point.
 		     *
 		     * @validvalue ["flag", "circlepin", "squarepin"]
@@ -3262,6 +3322,27 @@
 		     * @since     1.3
 		     * @product   highstock
 		     * @apioption plotOptions.flags.useHTML
+		     */
+
+		    /**
+		     * Fixed width of the flag's shape. By default, width is autocalculated
+		     * according to the flag's title.
+		     *
+		     * @type      {Number}
+		     * @default   undefined
+		     * @product   highstock
+		     * @sample    {highstock} stock/demo/flags-shapes/ Flags with fixed width
+		     * @apioption plotOptions.flags.width
+		     */
+
+		     /**
+		     * Fixed height of the flag's shape. By default, height is autocalculated
+		     * according to the flag's title.
+		     *
+		     * @type      {Number}
+		     * @default   undefined
+		     * @product   highstock
+		     * @apioption plotOptions.flags.height
 		     */
 
     
@@ -3527,7 +3608,16 @@
 		                        x: box.pos,
 		                        anchorX: point.anchorX
 		                    });
-		                    point.graphic.isNew = false;
+		                    // Hide flag when its box position is not specified (#8573)
+		                    if (!box.pos) {
+		                        point.graphic.attr({
+		                            x: -9999,
+		                            anchorX: -9999
+		                        });
+		                        point.graphic.isNew = true;
+		                    } else {
+		                        point.graphic.isNew = false;
+		                    }
 		                }
 		            });
 		        }
@@ -3604,7 +3694,7 @@
 		// create the flag icon with anchor
 		symbols.flag = function (x, y, w, h, options) {
 		    var anchorX = (options && options.anchorX) || x,
-		        anchorY = (options &&  options.anchorY) || y;
+		        anchorY = (options && options.anchorY) || y;
 
 		    return symbols.circle(anchorX - 1, anchorY - 1, 2, 2).concat(
 		        [
@@ -3626,7 +3716,7 @@
 		    symbols[shape + 'pin'] = function (x, y, w, h, options) {
 
 		        var anchorX = options && options.anchorX,
-		            anchorY = options &&  options.anchorY,
+		            anchorY = options && options.anchorY,
 		            path,
 		            labelTopOrBottomY;
 
@@ -3748,7 +3838,6 @@
 		 *
 		 * License: www.highcharts.com/license
 		 */
-		/* eslint max-len: 0 */
 		var addEvent = H.addEvent,
 		    Axis = H.Axis,
 		    correctFloat = H.correctFloat,
@@ -3762,208 +3851,314 @@
 		    merge = H.merge,
 		    pick = H.pick,
 		    removeEvent = H.removeEvent,
-		    svg = H.svg,
-		    wrap = H.wrap,
 		    swapXY;
 
 		/**
 		 *
 		 * The scrollbar is a means of panning over the X axis of a stock chart.
+		 * Scrollbars can  also be applied to other types of axes.
+		 *
+		 * Another approach to scrollable charts is the [chart.scrollablePlotArea](
+		 * https://api.highcharts.com/highcharts/chart.scrollablePlotArea) option that
+		 * is especially suitable for simpler cartesian charts on mobile.
 		 *
 		 * In styled mode, all the presentational options for the
 		 * scrollbar are replaced by the classes `.highcharts-scrollbar-thumb`,
 		 * `.highcharts-scrollbar-arrow`, `.highcharts-scrollbar-button`,
 		 * `.highcharts-scrollbar-rifles` and `.highcharts-scrollbar-track`.
 		 *
+		 * @sample stock/yaxis/inverted-bar-scrollbar/
+		 *         A scrollbar on a simple bar chart
+		 *
 		 * @product highstock
 		 * @optionparent scrollbar
 		 */
-		var defaultScrollbarOptions =  {
+		var defaultScrollbarOptions = {
 
 		    /**
 		     * The height of the scrollbar. The height also applies to the width
 		     * of the scroll arrows so that they are always squares. Defaults to
 		     * 20 for touch devices and 14 for mouse devices.
 		     *
-		     * @type {Number}
-		     * @sample {highstock} stock/scrollbar/height/ A 30px scrollbar
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/height/
+		     *         A 30px scrollbar
+		     *
+		     * @type       {number}
+		     * @default    20/14
+		     * @product    highstock
+		     * @apioption  scrollbar.height
 		     */
 		    height: isTouchDevice ? 20 : 14,
 
 		    /**
 		     * The border rounding radius of the bar.
 		     *
-		     * @type {Number}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default 0
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {number}
+		     * @default    0
+		     * @product    highstock
+		     * @apioption  scrollbar.barBorderRadius
 		     */
 		    barBorderRadius: 0,
 
 		    /**
 		     * The corner radius of the scrollbar buttons.
 		     *
-		     * @type {Number}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default 0
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {number}
+		     * @default    0
+		     * @product    highstock
+		     * @apioption  scrollbar.buttonBorderRadius
 		     */
 		    buttonBorderRadius: 0,
+
+		    /**
+		     * Enable or disable the scrollbar.
+		     *
+		     * @type       {boolean}
+		     * @sample     {highstock} stock/scrollbar/enabled/
+		     *             Disable the scrollbar, only use navigator
+		     * @default    true
+		     * @product    highstock
+		     * @apioption  scrollbar.enabled
+		     */
 
 		    /**
 		     * Whether to redraw the main chart as the scrollbar or the navigator
 		     * zoomed window is moved. Defaults to `true` for modern browsers and
 		     * `false` for legacy IE browsers as well as mobile devices.
 		     *
-		     * @type {Boolean}
-		     * @since 1.3
-		     * @product highstock
+		     * @type       {boolean}
+		     * @since      1.3
+		     * @product    highstock
+		     * @apioption  scrollbar.liveRedraw
 		     */
-		    liveRedraw: svg && !isTouchDevice,
+		    liveRedraw: undefined,
 
 		    /**
 		     * The margin between the scrollbar and its axis when the scrollbar is
 		     * applied directly to an axis.
+		     *
+		     * @type       {number}
+		     * @default    10
+		     * @apioption  scrollbar.margin
 		     */
 		    margin: 10,
 
 		    /**
 		     * The minimum width of the scrollbar.
 		     *
-		     * @type {Number}
-		     * @default 6
-		     * @since 1.2.5
-		     * @product highstock
+		     * @type       {number}
+		     * @default    6
+		     * @since      1.2.5
+		     * @product    highstock
+		     * @apioption  scrollbar.minWidth
 		     */
 		    minWidth: 6,
 
+		    /**
+		     * Whether to show or hide the scrollbar when the scrolled content is
+		     * zoomed out to it full extent.
+		     *
+		     * @type       {boolean}
+		     * @default    true
+		     * @product    highstock
+		     * @apioption  scrollbar.showFull
+		     */
+
+		    /**
+		     * @type       {number}
+		     * @default    0.2
+		     * @apioption  scrollbar.step
+		     */
 		    step: 0.2,
 
 		    /**
 		     * The z index of the scrollbar group.
+		     *
+		     * @type       {number}
+		     * @default    3
+		     * @apioption  scrollbar.zIndex
 		     */
 		    zIndex: 3,
+
     
 
 		    /**
 		     * The background color of the scrollbar itself.
 		     *
-		     * @type {Color}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default #cccccc
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {Highcharts.ColorString}
+		     * @default    #cccccc
+		     * @product    highstock
+		     * @apioption  scrollbar.barBackgroundColor
 		     */
 		    barBackgroundColor: '#cccccc',
 
 		    /**
 		     * The width of the bar's border.
 		     *
-		     * @type {Number}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default 1
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {number}
+		     * @default    1
+		     * @product    highstock
+		     * @apioption  scrollbar.barBorderWidth
 		     */
 		    barBorderWidth: 1,
 
 		    /**
 		     * The color of the scrollbar's border.
 		     *
-		     * @type {Color}
-		     * @default #cccccc
-		     * @product highstock
+		     * @type       {Highcharts.ColorString}
+		     * @default    #cccccc
+		     * @product    highstock
+		     * @apioption  scrollbar.barBorderColor
 		     */
 		    barBorderColor: '#cccccc',
 
 		    /**
 		     * The color of the small arrow inside the scrollbar buttons.
 		     *
-		     * @type {Color}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default #333333
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {Highcharts.ColorString}
+		     * @default    #333333
+		     * @product    highstock
+		     * @apioption  scrollbar.buttonArrowColor
 		     */
 		    buttonArrowColor: '#333333',
 
 		    /**
 		     * The color of scrollbar buttons.
 		     *
-		     * @type {Color}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default #e6e6e6
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {Highcharts.ColorString}
+		     * @default    #e6e6e6
+		     * @product    highstock
+		     * @apioption  scrollbar.buttonBackgroundColor
 		     */
 		    buttonBackgroundColor: '#e6e6e6',
 
 		    /**
 		     * The color of the border of the scrollbar buttons.
 		     *
-		     * @type {Color}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default #cccccc
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {Highcharts.ColorString}
+		     * @default    #cccccc
+		     * @product    highstock
+		     * @apioption  scrollbar.buttonBorderColor
 		     */
 		    buttonBorderColor: '#cccccc',
 
 		    /**
 		     * The border width of the scrollbar buttons.
 		     *
-		     * @type {Number}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default 1
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {number}
+		     * @default    1
+		     * @product    highstock
+		     * @apioption  scrollbar.buttonBorderWidth
 		     */
 		    buttonBorderWidth: 1,
 
 		    /**
 		     * The color of the small rifles in the middle of the scrollbar.
 		     *
-		     * @type {Color}
-		     * @default #333333
-		     * @product highstock
+		     * @type       {Highcharts.ColorString}
+		     * @default    #333333
+		     * @product    highstock
+		     * @apioption  scrollbar.rifleColor
 		     */
 		    rifleColor: '#333333',
 
 		    /**
 		     * The color of the track background.
 		     *
-		     * @type {Color}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default #f2f2f2
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {Highcharts.ColorString}
+		     * @default    #f2f2f2
+		     * @product    highstock
+		     * @apioption  scrollbar.trackBackgroundColor
 		     */
 		    trackBackgroundColor: '#f2f2f2',
 
 		    /**
 		     * The color of the border of the scrollbar track.
 		     *
-		     * @type {Color}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default #f2f2f2
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {Highcharts.ColorString}
+		     * @default    #f2f2f2
+		     * @product    highstock
+		     * @apioption  scrollbar.trackBorderColor
 		     */
 		    trackBorderColor: '#f2f2f2',
 
 		    /**
+		     * The corner radius of the border of the scrollbar track.
+		     *
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {number}
+		     * @default    0
+		     * @product    highstock
+		     * @apioption  scrollbar.trackBorderRadius
+		     */
+
+		    /**
 		     * The width of the border of the scrollbar track.
 		     *
-		     * @type {Number}
-		     * @sample {highstock} stock/scrollbar/style/ Scrollbar styling
-		     * @default 1
-		     * @product highstock
+		     * @sample {highstock} stock/scrollbar/style/
+		     *         Scrollbar styling
+		     *
+		     * @type       {number}
+		     * @default    1
+		     * @product    highstock
+		     * @apioption  scrollbar.trackBorderWidth
 		     */
 		    trackBorderWidth: 1
     
 		};
 
-		defaultOptions.scrollbar = merge(true, defaultScrollbarOptions, defaultOptions.scrollbar);
+		defaultOptions.scrollbar = merge(
+		    true,
+		    defaultScrollbarOptions,
+		    defaultOptions.scrollbar
+		);
 
 		/**
-		* When we have vertical scrollbar, rifles and arrow in buttons should be rotated.
-		* The same method is used in Navigator's handles, to rotate them.
-		* @param {Array} path - path to be rotated
-		* @param {Boolean} vertical - if vertical scrollbar, swap x-y values
-		*/
+		 * When we have vertical scrollbar, rifles and arrow in buttons should be
+		 * rotated. The same method is used in Navigator's handles, to rotate them.
+		 *
+		 * @function Highcharts.swapXY
+		 *
+		 * @param  {Array<number|string>} path
+		 *         Path to be rotated.
+		 *
+		 * @param  {boolean} vertical
+		 *         If vertical scrollbar, swap x-y values.
+		 *
+		 * @return {Array<number|string>}
+		 */
 		H.swapXY = swapXY = function (path, vertical) {
 		    var i,
 		        len = path.length,
@@ -3984,10 +4179,13 @@
 		 * A reusable scrollbar, internally used in Highstock's navigator and optionally
 		 * on individual axes.
 		 *
-		 * @class
-		 * @param {Object} renderer
-		 * @param {Object} options
-		 * @param {Object} chart
+		 * @class Highcharts.Scrollbar
+		 *
+		 * @param {Highcharts.SVGRenderer} renderer
+		 *
+		 * @param {Highcharts.ScrollbarOptions} options
+		 *
+		 * @param {Highcharts.Chart} chart
 		 */
 		function Scrollbar(renderer, options, chart) { // docs
 		    this.init(renderer, options, chart);
@@ -3995,6 +4193,17 @@
 
 		Scrollbar.prototype = {
 
+		    /**
+		     * @function Highcharts.Scrollbar#init
+		     *
+		     * @param  {Highcharts.SVGRenderer} renderer
+		     *
+		     * @param  {Highcharts.ScrollbarOptions} options
+		     *
+		     * @param  {Highcharts.Chart} chart
+		     *
+		     * @return {void}
+		     */
 		    init: function (renderer, options, chart) {
 
 		        this.scrollbarButtons = [];
@@ -4006,7 +4215,8 @@
 
 		        this.chart = chart;
 
-		        this.size = pick(this.options.size, this.options.height); // backward compatibility
+		        // backward compatibility
+		        this.size = pick(this.options.size, this.options.height);
 
 		        // Init
 		        if (options.enabled) {
@@ -4018,6 +4228,10 @@
 
 		    /**
 		    * Render scrollbar with all required items.
+		    *
+		    * @function Highcharts.Scrollbar#render
+		    *
+		    * @return {void}
 		    */
 		    render: function () {
 		        var scroller = this,
@@ -4107,11 +4321,24 @@
 		    },
 
 		    /**
-		     * Position the scrollbar, method called from a parent with defined dimensions
-		     * @param {Number} x - x-position on the chart
-		     * @param {Number} y - y-position on the chart
-		     * @param {Number} width - width of the scrollbar
-		     * @param {Number} height - height of the scorllbar
+		     * Position the scrollbar, method called from a parent with defined
+		     * dimensions.
+		     *
+		     * @function Highcharts.Scrollbar#position
+		     *
+		     * @param  {number} x
+		     *         x-position on the chart
+		     *
+		     * @param  {number} y
+		     *         y-position on the chart
+		     *
+		     * @param  {number} width
+		     *         width of the scrollbar
+		     *
+		     * @param  {number} height
+		     *         height of the scorllbar
+		     *
+		     * @return {void}
 		     */
 		    position: function (x, y, width, height) {
 		        var scroller = this,
@@ -4135,7 +4362,8 @@
 		            scroller.barWidth = height - width * 2; // width without buttons
 		            scroller.x = x = x + scroller.options.margin;
 		        } else {
-		            scroller.height = scroller.xOffset = height = xOffset = scroller.size;
+		            scroller.height = scroller.xOffset = height = xOffset =
+		                scroller.size;
 		            scroller.barWidth = width - height * 2; // width without buttons
 		            scroller.y = scroller.y + scroller.options.margin;
 		        }
@@ -4161,7 +4389,13 @@
 
 		    /**
 		     * Draw the scrollbar buttons with arrows
-		     * @param {Number} index 0 is left, 1 is right
+		     *
+		     * @function Highcharts.Scrollbar#drawScrollbarButton
+		     *
+		     * @param  {number} index
+		     *         0 is left, 1 is right
+		     *
+		     * @return {void}
 		     */
 		    drawScrollbarButton: function (index) {
 		        var scroller = this,
@@ -4223,8 +4457,16 @@
 
 		    /**
 		    * Set scrollbar size, with a given scale.
-		    * @param {Number} from - scale (0-1) where bar should start
-		    * @param {Number} to - scale (0-1) where bar should end
+		    *
+		    * @function Highcharts.Scrollbar#setRange
+		    *
+		    * @param  {number} from
+		    *         scale (0-1) where bar should start
+		    *
+		    * @param  {number} to
+		    *         scale (0-1) where bar should end
+		    *
+		    * @return {void}
 		    */
 		    setRange: function (from, to) {
 		        var scroller = this,
@@ -4237,7 +4479,11 @@
 		            newPos,
 		            newSize,
 		            newRiflesPos,
-		            method = this.rendered && !this.hasDragged ? 'animate' : 'attr';
+		            method = (
+		                this.rendered &&
+		                !this.hasDragged &&
+		                !(this.chart.navigator && this.chart.navigator.hasDragged)
+		            ) ? 'animate' : 'attr';
 
 		        if (!defined(fullWidth)) {
 		            return;
@@ -4306,6 +4552,13 @@
 
 		    /**
 		    * Init events methods, so we have an access to the Scrollbar itself
+		    *
+		    * @function Highcharts.Scrollbar#initEvents
+		    *
+		    * @return {void}
+		    *
+		    * @todo
+		    * Make events official: Fires the event `changed`.
 		    */
 		    initEvents: function () {
 		        var scroller = this;
@@ -4321,16 +4574,26 @@
 		                chartPosition,
 		                change;
 
-		            // In iOS, a mousemove event with e.pageX === 0 is fired when holding the finger
-		            // down in the center of the scrollbar. This should be ignored.
-		            if (scroller.grabbedCenter && (!e.touches || e.touches[0][direction] !== 0)) { // #4696, scrollbar failed on Android
-		                chartPosition = scroller.cursorToScrollbarPosition(normalizedEvent)[direction];
+		            // In iOS, a mousemove event with e.pageX === 0 is fired when
+		            // holding the finger down in the center of the scrollbar. This
+		            // should be ignored.
+		            if (
+		                scroller.grabbedCenter &&
+		                // #4696, scrollbar failed on Android
+		                (!e.touches || e.touches[0][direction] !== 0)
+		            ) {
+		                chartPosition = scroller.cursorToScrollbarPosition(
+		                    normalizedEvent
+		                )[direction];
 		                scrollPosition = scroller[direction];
 
 		                change = chartPosition - scrollPosition;
 
 		                scroller.hasDragged = true;
-		                scroller.updatePosition(initPositions[0] + change, initPositions[1] + change);
+		                scroller.updatePosition(
+		                    initPositions[0] + change,
+		                    initPositions[1] + change
+		                );
 
 		                if (scroller.hasDragged) {
 		                    fireEvent(scroller, 'changed', {
@@ -4357,12 +4620,17 @@
 		                    DOMEvent: e
 		                });
 		            }
-		            scroller.grabbedCenter = scroller.hasDragged = scroller.chartX = scroller.chartY = null;
+		            scroller.grabbedCenter =
+		                scroller.hasDragged =
+		                scroller.chartX =
+		                scroller.chartY = null;
 		        };
 
 		        scroller.mouseDownHandler = function (e) {
 		            var normalizedEvent = scroller.chart.pointer.normalize(e),
-		                mousePosition = scroller.cursorToScrollbarPosition(normalizedEvent);
+		                mousePosition = scroller.cursorToScrollbarPosition(
+		                    normalizedEvent
+		                );
 
 		            scroller.chartX = mousePosition.chartX;
 		            scroller.chartY = mousePosition.chartY;
@@ -4372,8 +4640,12 @@
 		        };
 
 		        scroller.buttonToMinClick = function (e) {
-		            var range = correctFloat(scroller.to - scroller.from) * scroller.options.step;
-		            scroller.updatePosition(correctFloat(scroller.from - range), correctFloat(scroller.to - range));
+		            var range = correctFloat(scroller.to - scroller.from) *
+		                scroller.options.step;
+		            scroller.updatePosition(
+		                correctFloat(scroller.from - range),
+		                correctFloat(scroller.to - range)
+		            );
 		            fireEvent(scroller, 'changed', {
 		                from: scroller.from,
 		                to: scroller.to,
@@ -4399,13 +4671,21 @@
 		                top = scroller.y + scroller.scrollbarTop,
 		                left = scroller.x + scroller.scrollbarLeft;
 
-		            if ((scroller.options.vertical && normalizedEvent.chartY > top) ||
-		                (!scroller.options.vertical && normalizedEvent.chartX > left)) {
+		            if (
+		                (scroller.options.vertical && normalizedEvent.chartY > top) ||
+		                (!scroller.options.vertical && normalizedEvent.chartX > left)
+		            ) {
 		                // On the top or on the left side of the track:
-		                scroller.updatePosition(scroller.from + range, scroller.to + range);
+		                scroller.updatePosition(
+		                    scroller.from + range,
+		                    scroller.to + range
+		                );
 		            } else {
 		                // On the bottom or the right side of the track:
-		                scroller.updatePosition(scroller.from - range, scroller.to - range);
+		                scroller.updatePosition(
+		                    scroller.from - range,
+		                    scroller.to - range
+		                );
 		            }
 
 		            fireEvent(scroller, 'changed', {
@@ -4419,22 +4699,40 @@
 
 		    /**
 		     * Get normalized (0-1) cursor position over the scrollbar
-		     * @param {Event} normalizedEvent - normalized event, with chartX and chartY values
-		     * @return {Object} Local position {chartX, chartY}
+		     *
+		     * @function Highcharts.Scrollbar#cursorToScrollbarPosition
+		     *
+		     * @param  {*} normalizedEvent
+		     *         normalized event, with chartX and chartY values
+		     *
+		     * @return {*}
+		     *         Local position {chartX, chartY}
 		     */
 		    cursorToScrollbarPosition: function (normalizedEvent) {
 		        var scroller = this,
 		            options = scroller.options,
-		            minWidthDifference = options.minWidth > scroller.calculatedWidth ? options.minWidth : 0; // minWidth distorts translation
+		            minWidthDifference = options.minWidth > scroller.calculatedWidth ?
+		                options.minWidth :
+		                0; // minWidth distorts translation
 
 		        return {
-		            chartX: (normalizedEvent.chartX - scroller.x - scroller.xOffset) / (scroller.barWidth - minWidthDifference),
-		            chartY: (normalizedEvent.chartY - scroller.y - scroller.yOffset) / (scroller.barWidth - minWidthDifference)
+		            chartX: (normalizedEvent.chartX - scroller.x - scroller.xOffset) /
+		                (scroller.barWidth - minWidthDifference),
+		            chartY: (normalizedEvent.chartY - scroller.y - scroller.yOffset) /
+		                (scroller.barWidth - minWidthDifference)
 		        };
 		    },
 
 		    /**
 		    * Update position option in the Scrollbar, with normalized 0-1 scale
+		    *
+		    * @function Highcharts.Scrollbar#updatePosition
+		    *
+		    * @param  {number} from
+		    *
+		    * @param  {number} to
+		    *
+		    * @return {void}
 		    */
 		    updatePosition: function (from, to) {
 		        if (to > 1) {
@@ -4453,14 +4751,28 @@
 
 		    /**
 		     * Update the scrollbar with new options
+		     *
+		     * @function Highcharts.Scrollbar#update
+		     *
+		     * @param  {Highcharts.ScrollbarOptions} options
+		     *
+		     * @return {void}
 		     */
 		    update: function (options) {
 		        this.destroy();
-		        this.init(this.chart.renderer, merge(true, this.options, options), this.chart);
+		        this.init(
+		            this.chart.renderer,
+		            merge(true, this.options, options),
+		            this.chart
+		        );
 		    },
 
 		    /**
 		     * Set up the mouse and touch events for the Scrollbar
+		     *
+		     * @function Highcharts.Scrollbar#addEvents
+		     *
+		     * @return {void}
 		     */
 		    addEvents: function () {
 		        var buttonsOrder = this.options.inverted ? [1, 0] : [0, 1],
@@ -4500,6 +4812,10 @@
 
 		    /**
 		     * Removes the event handlers attached previously with addEvents.
+		     *
+		     * @function Highcharts.Scrollbar#removeEvents
+		     *
+		     * @return {void}
 		     */
 		    removeEvents: function () {
 		        each(this._events, function (args) {
@@ -4510,6 +4826,10 @@
 
 		    /**
 		     * Destroys allocated elements.
+		     *
+		     * @function Highcharts.Scrollbar#destroy
+		     *
+		     * @return {void}
 		     */
 		    destroy: function () {
 
@@ -4519,13 +4839,24 @@
 		        this.removeEvents();
 
 		        // Destroy properties
-		        each(['track', 'scrollbarRifles', 'scrollbar', 'scrollbarGroup', 'group'], function (prop) {
-		            if (this[prop] && this[prop].destroy) {
-		                this[prop] = this[prop].destroy();
-		            }
-		        }, this);
+		        each(
+		            [
+		                'track',
+		                'scrollbarRifles',
+		                'scrollbar',
+		                'scrollbarGroup',
+		                'group'
+		            ],
+		            function (prop) {
+		                if (this[prop] && this[prop].destroy) {
+		                    this[prop] = this[prop].destroy();
+		                }
+		            },
+		            this
+		        );
 
-		        if (scroller && this === scroller.scrollbar) { // #6421, chart may have more scrollbars
+		        // #6421, chart may have more scrollbars
+		        if (scroller && this === scroller.scrollbar) {
 		            scroller.scrollbar = null;
 
 		            // Destroy elements in collection
@@ -4534,32 +4865,47 @@
 		    }
 		};
 
-		/**
-		* Wrap axis initialization and create scrollbar if enabled:
-		*/
-		wrap(Axis.prototype, 'init', function (proceed) {
+		/*
+		 * Wrap axis initialization and create scrollbar if enabled:
+		 */
+		addEvent(Axis, 'afterInit', function () {
 		    var axis = this;
-		    proceed.apply(axis, Array.prototype.slice.call(arguments, 1));
 
 		    if (axis.options.scrollbar && axis.options.scrollbar.enabled) {
 		        // Predefined options:
 		        axis.options.scrollbar.vertical = !axis.horiz;
 		        axis.options.startOnTick = axis.options.endOnTick = false;
 
-		        axis.scrollbar = new Scrollbar(axis.chart.renderer, axis.options.scrollbar, axis.chart);
+		        axis.scrollbar = new Scrollbar(
+		            axis.chart.renderer,
+		            axis.options.scrollbar,
+		            axis.chart
+		        );
 
 		        addEvent(axis.scrollbar, 'changed', function (e) {
-		            var unitedMin = Math.min(pick(axis.options.min, axis.min), axis.min, axis.dataMin),
-		                unitedMax = Math.max(pick(axis.options.max, axis.max), axis.max, axis.dataMax),
+		            var unitedMin = Math.min(
+		                    pick(axis.options.min, axis.min),
+		                    axis.min,
+		                    axis.dataMin
+		                ),
+		                unitedMax = Math.max(
+		                    pick(axis.options.max, axis.max),
+		                    axis.max,
+		                    axis.dataMax
+		                ),
 		                range = unitedMax - unitedMin,
 		                to,
 		                from;
 
-		            if ((axis.horiz && !axis.reversed) || (!axis.horiz && axis.reversed)) {
+		            if (
+		                (axis.horiz && !axis.reversed) ||
+		                (!axis.horiz && axis.reversed)
+		            ) {
 		                to = unitedMin + range * this.to;
 		                from = unitedMin + range * this.from;
 		            } else {
-		                // y-values in browser are reversed, but this also applies for reversed horizontal axis:
+		                // y-values in browser are reversed, but this also applies for
+		                // reversed horizontal axis:
 		                to = unitedMin + range * (1 - this.from);
 		                from = unitedMin + range * (1 - this.to);
 		            }
@@ -4569,10 +4915,10 @@
 		    }
 		});
 
-		/**
-		* Wrap rendering axis, and update scrollbar if one is created:
-		*/
-		wrap(Axis.prototype, 'render', function (proceed) {
+		/*
+		 * Wrap rendering axis, and update scrollbar if one is created:
+		 */
+		addEvent(Axis, 'afterRender', function () {
 		    var axis = this,
 		        scrollMin = Math.min(
 		            pick(axis.options.min, axis.min),
@@ -4589,8 +4935,6 @@
 		        offsetsIndex,
 		        from,
 		        to;
-
-		    proceed.apply(axis, Array.prototype.slice.call(arguments, 1));
 
 		    if (scrollbar) {
 
@@ -4625,13 +4969,23 @@
 		                axis.scrollbar.size + axis.scrollbar.options.margin;
 		        }
 
-		        if (isNaN(scrollMin) || isNaN(scrollMax) || !defined(axis.min) || !defined(axis.max)) {
-		            scrollbar.setRange(0, 0); // default action: when there is not extremes on the axis, but scrollbar exists, make it full size
+		        if (
+		            isNaN(scrollMin) ||
+		            isNaN(scrollMax) ||
+		            !defined(axis.min) ||
+		            !defined(axis.max)
+		        ) {
+		            // default action: when there is not extremes on the axis, but
+		            // scrollbar exists, make it full size
+		            scrollbar.setRange(0, 0);
 		        } else {
 		            from = (axis.min - scrollMin) / (scrollMax - scrollMin);
 		            to = (axis.max - scrollMin) / (scrollMax - scrollMin);
 
-		            if ((axis.horiz && !axis.reversed) || (!axis.horiz && axis.reversed)) {
+		            if (
+		                (axis.horiz && !axis.reversed) ||
+		                (!axis.horiz && axis.reversed)
+		            ) {
 		                scrollbar.setRange(from, to);
 		            } else {
 		                scrollbar.setRange(1 - to, 1 - from); // inverse vertical axis
@@ -4640,31 +4994,19 @@
 		    }
 		});
 
-		/**
-		* Make space for a scrollbar
-		*/
-		wrap(Axis.prototype, 'getOffset', function (proceed) {
+		/*
+		 * Make space for a scrollbar
+		 */
+		addEvent(Axis, 'afterGetOffset', function () {
 		    var axis = this,
 		        index = axis.horiz ? 2 : 1,
 		        scrollbar = axis.scrollbar;
 
-		    proceed.apply(axis, Array.prototype.slice.call(arguments, 1));
-
 		    if (scrollbar) {
 		        axis.chart.scrollbarsOffsets = [0, 0]; // reset scrollbars offsets
-		        axis.chart.axisOffset[index] += scrollbar.size + scrollbar.options.margin;
+		        axis.chart.axisOffset[index] +=
+		            scrollbar.size + scrollbar.options.margin;
 		    }
-		});
-
-		/**
-		* Destroy scrollbar when connected to the specific axis
-		*/
-		wrap(Axis.prototype, 'destroy', function (proceed) {
-		    if (this.scrollbar) {
-		        this.scrollbar = this.scrollbar.destroy();
-		    }
-
-		    proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 		});
 
 		H.Scrollbar = Scrollbar;
@@ -4677,36 +5019,6 @@
 		 * License: www.highcharts.com/license
 		 */
 
-
-		/**
-		 * Options for the corresponding navigator series if `showInNavigator`
-		 * is `true` for this series. Available options are the same as any
-		 * series, documented at [plotOptions](#plotOptions.series) and
-		 * [series](#series).
-		 *
-		 *
-		 * These options are merged with options in [navigator.series](
-		 * #navigator.series), and will take precedence if the same option is defined
-		 * both places.
-		 *
-		 * @type {Object}
-		 * @see [navigator.series](#navigator.series)
-		 * @default undefined
-		 * @since 5.0.0
-		 * @product highstock
-		 * @apioption plotOptions.series.navigatorOptions
-		 */
-
-		/**
-		 * Whether or not to show the series in the navigator. Takes precedence
-		 * over [navigator.baseSeries](#navigator.baseSeries) if defined.
-		 *
-		 * @type {Boolean}
-		 * @default undefined
-		 * @since 5.0.0
-		 * @product highstock
-		 * @apioption plotOptions.series.showInNavigator
-		 */
 
 		var addEvent = H.addEvent,
 		    Axis = H.Axis,
@@ -4725,6 +5037,7 @@
 		    isArray = H.isArray,
 		    isNumber = H.isNumber,
 		    isObject = H.isObject,
+		    isTouchDevice = H.isTouchDevice,
 		    merge = H.merge,
 		    pick = H.pick,
 		    removeEvent = H.removeEvent,
@@ -4765,24 +5078,85 @@
 		     * @optionparent navigator
 		     */
 		    navigator: {
+
+		        /**
+		         * Whether the navigator and scrollbar should adapt to updated data
+		         * in the base X axis. When loading data async, as in the demo below,
+		         * this should be `false`. Otherwise new data will trigger navigator
+		         * redraw, which will cause unwanted looping. In the demo below, the
+		         * data in the navigator is set only once. On navigating, only the main
+		         * chart content is updated.
+		         *
+		         * @sample {highstock} stock/demo/lazy-loading/
+		         *         Set to false with async data loading
+		         *
+		         * @type       {boolean}
+		         * @default    true
+		         * @product    highstock
+		         * @apioption  navigator.adaptToUpdatedData
+		         */
+
+		        /**
+		         * An integer identifying the index to use for the base series, or a
+		         * string representing the id of the series.
+		         *
+		         * **Note**: As of Highcharts 5.0, this is now a deprecated option.
+		         * Prefer [series.showInNavigator](#plotOptions.series.showInNavigator).
+		         *
+		         * @see [series.showInNavigator](#plotOptions.series.showInNavigator)
+		         *
+		         * @deprecated
+		         * @type       {*}
+		         * @default    0
+		         * @product    highstock
+		         * @apioption  navigator.baseSeries
+		         */
+
+		        /**
+		         * Enable or disable the navigator.
+		         *
+		         * @sample {highstock} stock/navigator/enabled/ Disable the navigator
+		         *
+		         * @type       {boolean}
+		         * @default    true
+		         * @product    highstock
+		         * @apioption  navigator.enabled
+		         */
+
+		        /**
+		         * When the chart is inverted, whether to draw the navigator on the
+		         * opposite side.
+		         *
+		         * @type       {boolean}
+		         * @default    false
+		         * @since      5.0.8
+		         * @product    highstock
+		         * @apioption  navigator.opposite
+		         */
+
 		        /**
 		         * The height of the navigator.
 		         *
-		         * @type {Number}
-		         * @sample {highstock} stock/navigator/height/ A higher navigator
-		         * @default 40
-		         * @product highstock
+		         * @sample {highstock} stock/navigator/height/
+		         *         A higher navigator
+		         *
+		         * @type       {number}
+		         * @default    40
+		         * @product    highstock
+		         * @apioption  navigator.height
 		         */
 		        height: 40,
 
 		        /**
 		         * The distance from the nearest element, the X axis or X axis labels.
 		         *
-		         * @type {Number}
 		         * @sample {highstock} stock/navigator/margin/
 		         *         A margin of 2 draws the navigator closer to the X axis labels
-		         * @default 25
-		         * @product highstock
+		         *
+		         * @type       {number}
+		         * @default    25
+		         * @product    highstock
+		         * @apioption  navigator.margin
 		         */
 		        margin: 25,
 
@@ -4790,44 +5164,53 @@
 		         * Whether the mask should be inside the range marking the zoomed
 		         * range, or outside. In Highstock 1.x it was always `false`.
 		         *
-		         * @type {Boolean}
 		         * @sample {highstock} stock/navigator/maskinside-false/
 		         *         False, mask outside
-		         * @default true
-		         * @since 2.0
-		         * @product highstock
+		         *
+		         * @type       {boolean}
+		         * @default    true
+		         * @since      2.0
+		         * @product    highstock
+		         * @apioption  navigator.maskInside
 		         */
 		        maskInside: true,
 
 		        /**
 		         * Options for the handles for dragging the zoomed area.
 		         *
-		         * @type {Object}
-		         * @sample {highstock} stock/navigator/handles/ Colored handles
-		         * @product highstock
+		         * @sample {highstock} stock/navigator/handles/
+		         *         Colored handles
+		         *
+		         * @type       {*}
+		         * @product    highstock
+		         * @apioption  navigator.handles
 		         */
 		        handles: {
 		            /**
 		             * Width for handles.
 		             *
-		             * @type {Number}
-		             * @default 7
-		             * @product highstock
 		             * @sample {highstock} stock/navigator/styled-handles/
 		             *         Styled handles
-		             * @since 6.0.0
+		             *
+		             * @type       {number}
+		             * @default    7
+		             * @since      6.0.0
+		             * @product    highstock
+		             * @apioption  navigator.handles.width
 		             */
 		            width: 7,
 
 		            /**
 		             * Height for handles.
 		             *
-		             * @type {Number}
-		             * @default 15
-		             * @product highstock
 		             * @sample {highstock} stock/navigator/styled-handles/
 		             *         Styled handles
-		             * @since 6.0.0
+		             *
+		             * @type       {number}
+		             * @default    15
+		             * @since      6.0.0
+		             * @product    highstock
+		             * @apioption  navigator.handles.height
 		             */
 		            height: 15,
 
@@ -4844,22 +5227,25 @@
 		             * `Highcharts.SVGRenderer.prototype.symbols`. The callback is then
 		             * used by its method name, as shown in the demo.
 		             *
-		             * @type {Array}
-		             * @default ['navigator-handle', 'navigator-handle']
-		             * @product highstock
 		             * @sample {highstock} stock/navigator/styled-handles/
 		             *         Styled handles
-		             * @since 6.0.0
+		             *
+		             * @type       {Array<string>}
+		             * @default    ['navigator-handle', 'navigator-handle']
+		             * @since      6.0.0
+		             * @product    highstock
+		             * @apioption  navigator.handles.symbols
 		             */
 		            symbols: ['navigator-handle', 'navigator-handle'],
 
 		            /**
 		             * Allows to enable/disable handles.
 		             *
-		             * @type {Boolean}
-		             * @default true
-		             * @product highstock
-		             * @since 6.0.0
+		             * @type       {boolean}
+		             * @default    true
+		             * @since      6.0.0
+		             * @product    highstock
+		             * @apioption  navigator.handles.enabled
 		             */
 		            enabled: true,
 
@@ -4867,28 +5253,32 @@
 		            /**
 		             * The width for the handle border and the stripes inside.
 		             *
-		             * @type {Number}
-		             * @default 7
-		             * @product highstock
 		             * @sample {highstock} stock/navigator/styled-handles/
 		             *         Styled handles
-		             * @since 6.0.0
+		             *
+		             * @type       {number}
+		             * @default    7
+		             * @since      6.0.0
+		             * @product    highstock
+		             * @apioption  navigator.handles.lineWidth
 		             */
 		            lineWidth: 1,
 
 		            /**
 		             * The fill for the handle.
 		             *
-		             * @type {Color}
-		             * @product highstock
+		             * @type       {Highcharts.ColorString}
+		             * @product    highstock
+		             * @apioption  navigator.handles.backgroundColor
 		             */
 		            backgroundColor: '#f2f2f2',
 
 		            /**
 		             * The stroke for the handle border and the stripes inside.
 		             *
-		             * @type {Color}
-		             * @product highstock
+		             * @type       {Highcharts.ColorString}
+		             * @product    highstock
+		             * @apioption  navigator.handles.borderColor
 		             */
 		            borderColor: '#999999'
 
@@ -4902,14 +5292,17 @@
 		         * that are currently not visible in the main series. The default
 		         * color is bluish with an opacity of 0.3 to see the series below.
 		         *
-		         * @type {Color}
-		         * @see     In styled mode, the mask is styled with the
-		         *          `.highcharts-navigator-mask` and
-		         *          `.highcharts-navigator-mask-inside` classes.
-		         * @sample  {highstock} stock/navigator/maskfill/
-		         *          Blue, semi transparent mask
-		         * @default rgba(102,133,194,0.3)
-		         * @product highstock
+		         * @see In styled mode, the mask is styled with the
+		         *      `.highcharts-navigator-mask` and
+		         *      `.highcharts-navigator-mask-inside` classes.
+		         *
+		         * @sample {highstock} stock/navigator/maskfill/
+		         *         Blue, semi transparent mask
+		         *
+		         * @type       {Highcharts.ColorString}
+		         * @default    rgba(102,133,194,0.3)
+		         * @product    highstock
+		         * @apioption  navigator.maskFill
 		         */
 		        maskFill: color('#6685c2').setOpacity(0.3).get(),
 
@@ -4917,10 +5310,13 @@
 		         * The color of the line marking the currently zoomed area in the
 		         * navigator.
 		         *
-		         * @type {Color}
-		         * @sample {highstock} stock/navigator/outline/ 2px blue outline
-		         * @default #cccccc
-		         * @product highstock
+		         * @sample {highstock} stock/navigator/outline/
+		         *         2px blue outline
+		         *
+		         * @type       {Highcharts.ColorString}
+		         * @default    #cccccc
+		         * @product    highstock
+		         * @apioption  navigator.outlineColor
 		         */
 		        outlineColor: '#cccccc',
 
@@ -4928,12 +5324,16 @@
 		         * The width of the line marking the currently zoomed area in the
 		         * navigator.
 		         *
-		         * @type {Number}
 		         * @see In styled mode, the outline stroke width is set with the
-		         * `.highcharts-navigator-outline` class.
-		         * @sample {highstock} stock/navigator/outline/ 2px blue outline
-		         * @default 2
-		         * @product highstock
+		         *      `.highcharts-navigator-outline` class.
+		         *
+		         * @sample {highstock} stock/navigator/outline/
+		         *         2px blue outline
+		         *
+		         * @type       {number}
+		         * @default    2
+		         * @product    highstock
+		         * @apioption  navigator.outlineWidth
 		         */
 		        outlineWidth: 1,
         
@@ -4960,14 +5360,17 @@
 		         *     }
 		         * }</pre>
 		         *
-		         * @type {Object}
 		         * @see In styled mode, the navigator series is styled with the
 		         *      `.highcharts-navigator-series` class.
+		         *
 		         * @sample {highstock} stock/navigator/series-data/
 		         *         Using a separate data set for the navigator
 		         * @sample {highstock} stock/navigator/series/
 		         *         A green navigator series
-		         * @product highstock
+		         *
+		         * @type       {*}
+		         * @product    highstock
+		         * @apioption  navigator.series
 		         */
 		        series: {
 
@@ -4975,7 +5378,9 @@
 		             * The type of the navigator series. Defaults to `areaspline` if
 		             * defined, otherwise `line`.
 		             *
-		             * @type {String}
+		             * @type       {string}
+		             * @default    areaspline
+		             * @apioption  navigator.series.type
 		             */
 		            type: defaultSeriesType,
             
@@ -4983,11 +5388,19 @@
 
 		            /**
 		             * The fill opacity of the navigator series.
+		             *
+		             * @type       {number}
+		             * @default    0.05
+		             * @apioption  navigator.series.fillOpacity
 		             */
 		            fillOpacity: 0.05,
 
 		            /**
 		             * The pixel line width of the navigator series.
+		             *
+		             * @type       {number}
+		             * @default    1
+		             * @apioption  navigator.series.lineWidth
 		             */
 		            lineWidth: 1,
             
@@ -5000,7 +5413,9 @@
 		            /**
 		             * Data grouping options for the navigator series.
 		             *
-		             * @extends {plotOptions.series.dataGrouping}
+		             * @type       {*}
+		             * @extends    plotOptions.series.dataGrouping
+		             * @apioption  navigator.series.dataGrouping
 		             */
 		            dataGrouping: {
 		                approximation: 'average',
@@ -5014,7 +5429,9 @@
 		             * Data label options for the navigator series. Data labels are
 		             * disabled by default on the navigator series.
 		             *
-		             * @extends {plotOptions.series.dataLabels}
+		             * @type       {*}
+		             * @extends    plotOptions.series.dataLabels
+		             * @apioption  navigator.series.dataLabels
 		             */
 		            dataLabels: {
 		                enabled: false,
@@ -5028,7 +5445,9 @@
 		             * Line color for the navigator series. Allows setting the color
 		             * while disallowing the default candlestick setting.
 		             *
-		             * @type {Color}
+		             * @type       {Highcharts.ColorString|null}
+		             * @default    null
+		             * @apioption  navigator.series.lineColor
 		             */
 		            lineColor: null, // #4602
 
@@ -5040,7 +5459,10 @@
 		            /**
 		             * The threshold option. Setting it to 0 will make the default
 		             * navigator area series draw its area from the 0 value and up.
-		             * @type {Number}
+		             *
+		             * @type       {number|null}
+		             * @default    null
+		             * @apioption  navigator.series.threshold
 		             */
 		            threshold: null
 		        },
@@ -5064,11 +5486,12 @@
 		         *     }
 		         * }</pre>
 		         *
-		         * @type {Object}
-		         * @extends {xAxis}
-		         * @excluding linkedTo,maxZoom,minRange,opposite,range,scrollbar,
-		         *          showEmpty,maxRange
-		         * @product highstock
+		         * @type       {*}
+		         * @extends    xAxis
+		         * @excluding  linkedTo,maxZoom,minRange,opposite,range,scrollbar,
+		         *             showEmpty,maxRange
+		         * @product    highstock
+		         * @apioption  navigator.xAxis
 		         */
 		        xAxis: {
 		            /**
@@ -5076,11 +5499,11 @@
 		             * xAxis.maxPadding, but value is set in milliseconds.
 		             * Can be set for both, main xAxis and navigator's xAxis.
 		             *
-		             * @type {Number}
-		             * @default 0
-		             * @since 6.0.0
-		             * @product highstock
-		             * @apioption xAxis.overscroll
+		             * @type       {number}
+		             * @default    0
+		             * @since      6.0.0
+		             * @product    highstock
+		             * @apioption  navigator.xAxis.overscroll
 		             */
 		            overscroll: 0,
 
@@ -5130,11 +5553,12 @@
 		         *     tickWidth: 0
 		         * }</pre>
 		         *
-		         * @type {Object}
-		         * @extends {yAxis}
-		         * @excluding height,linkedTo,maxZoom,minRange,ordinal,range,showEmpty,
-		         *          scrollbar,top,units,maxRange,minLength,maxLength,resize
-		         * @product highstock
+		         * @type       {*}
+		         * @extends    yAxis
+		         * @excluding  height,linkedTo,maxZoom,minRange,ordinal,range,showEmpty,
+		         *             scrollbar,top,units,maxRange,minLength,maxLength,resize
+		         * @product    highstock
+		         * @apioption  navigator.yAxis
 		         */
 		        yAxis: {
 
@@ -5163,8 +5587,14 @@
 
 		/**
 		 * Draw one of the handles on the side of the zoomed range in the navigator
-		 * @param {Boolean} inverted flag for chart.inverted
-		 * @returns {Array} Path to be used in a handle
+		 *
+		 * @function Highcharts.Renderer#symbols.navigator-handle
+		 *
+		 * @param  {boolean} inverted
+		 *         flag for chart.inverted
+		 *
+		 * @return {Array<number|string>}
+		 *         Path to be used in a handle
 		 */
 		H.Renderer.prototype.symbols['navigator-handle'] = function (
 		    x,
@@ -5201,8 +5631,11 @@
 
 		/**
 		 * The Navigator class
-		 * @param {Object} chart - Chart object
-		 * @class
+		 *
+		 * @class Highcharts.Navigator
+		 *
+		 * @param {Highcharts.Chart} chart
+		 *        Chart object
 		 */
 		function Navigator(chart) {
 		    this.init(chart);
@@ -5211,10 +5644,20 @@
 		Navigator.prototype = {
 		    /**
 		     * Draw one of the handles on the side of the zoomed range in the navigator
-		     * @param {Number} x The x center for the handle
-		     * @param {Number} index 0 for left and 1 for right
-		     * @param {Boolean} inverted flag for chart.inverted
-		     * @param {String} verb use 'animate' or 'attr'
+		     *
+		     * @function Highcharts.Navigator#drawHandle
+		     *
+		     * @param  {number} x
+		     *         The x center for the handle
+		     *
+		     * @param  {number} index
+		     *         0 for left and 1 for right
+		     * @param  {boolean} inverted
+		     *         flag for chart.inverted
+		     * @param  {string} verb
+		     *         use 'animate' or 'attr'
+		     *
+		     * @return {void}
 		     */
 		    drawHandle: function (x, index, inverted, verb) {
 		        var navigator = this,
@@ -5236,10 +5679,22 @@
 
 		    /**
 		     * Render outline around the zoomed range
-		     * @param {Number} zoomedMin in pixels position where zoomed range starts
-		     * @param {Number} zoomedMax in pixels position where zoomed range ends
-		     * @param {Boolean} inverted flag if chart is inverted
-		     * @param {String} verb use 'animate' or 'attr'
+		     *
+		     * @function Highcharts.Navigator#drawOutline
+		     *
+		     * @param  {number} zoomedMin
+		     *         in pixels position where zoomed range starts
+		     *
+		     * @param  {number} zoomedMax
+		     *         in pixels position where zoomed range ends
+		     *
+		     * @param  {boolean} inverted
+		     *         flag if chart is inverted
+		     *
+		     * @param  {string} verb
+		     *         use 'animate' or 'attr'
+		     *
+		     * @return {void}
 		     */
 		    drawOutline: function (zoomedMin, zoomedMax, inverted, verb) {
 		        var navigator = this,
@@ -5327,10 +5782,22 @@
 
 		    /**
 		     * Render outline around the zoomed range
-		     * @param {Number} zoomedMin in pixels position where zoomed range starts
-		     * @param {Number} zoomedMax in pixels position where zoomed range ends
-		     * @param {Boolean} inverted flag if chart is inverted
-		     * @param {String} verb use 'animate' or 'attr'
+		     *
+		     * @function Highcharts.Navigator#drawMasks
+		     *
+		     * @param  {number} zoomedMin
+		     *         in pixels position where zoomed range starts
+		     *
+		     * @param  {number} zoomedMax
+		     *         in pixels position where zoomed range ends
+		     *
+		     * @param  {boolean} inverted
+		     *         flag if chart is inverted
+		     *
+		     * @param  {string} verb
+		     *         use 'animate' or 'attr'
+		     *
+		     * @return {void}
 		     */
 		    drawMasks: function (zoomedMin, zoomedMax, inverted, verb) {
 		        var navigator = this,
@@ -5379,6 +5846,10 @@
 		     * - all shades
 		     * - outline
 		     * - handles
+		     *
+		     * @function Highcharts.Navigator#renderElements
+		     *
+		     * @return {void}
 		     */
 		    renderElements: function () {
 		        var navigator = this,
@@ -5466,7 +5937,13 @@
 
 		    /**
 		     * Update navigator
-		     * @param {Object} options Options to merge in when updating navigator
+		     *
+		     * @function Highcharts.Navigator#update
+		     *
+		     * @param  {Highcharts.NavigatorOptions} options
+		     *         Options to merge in when updating navigator
+		     *
+		     * @return {void}
 		     */
 		    update: function (options) {
 		        // Remove references to old navigator series in base series
@@ -5484,10 +5961,22 @@
 
 		    /**
 		     * Render the navigator
-		     * @param {Number} min X axis value minimum
-		     * @param {Number} max X axis value maximum
-		     * @param {Number} pxMin Pixel value minimum
-		     * @param {Number} pxMax Pixel value maximum
+		     *
+		     * @function Highcharts.Navigator#render
+		     *
+		     * @param  {number} min
+		     *         X axis value minimum
+		     *
+		     * @param  {number} max
+		     *         X axis value maximum
+		     *
+		     * @param  {number} pxMin
+		     *         Pixel value minimum
+		     *
+		     * @param  {number} pxMax
+		     *         Pixel value maximum
+		     *
+		     * @return {void}
 		     */
 		    render: function (min, max, pxMin, pxMax) {
 
@@ -5647,8 +6136,8 @@
 		            navigator.scrollbar.setRange(
 		                // Use real value, not rounded because range can be very small
 		                // (#1716)
-		                navigator.zoomedMin / navigatorSize,
-		                navigator.zoomedMax / navigatorSize
+		                navigator.zoomedMin / (navigatorSize || 1),
+		                navigator.zoomedMax / (navigatorSize || 1)
 		            );
 		        }
 		        navigator.rendered = true;
@@ -5656,6 +6145,10 @@
 
 		    /**
 		     * Set up the mouse and touch events for the navigator
+		     *
+		     * @function Highcharts.Navigator#addMouseEvents
+		     *
+		     * @return {void}
 		     */
 		    addMouseEvents: function () {
 		        var navigator = this,
@@ -5713,8 +6206,14 @@
 
 		    /**
 		     * Generate events for handles and masks
-		     * @param {String} eventName Event name handler, 'mousedown' or 'touchstart'
-		     * @returns {Array} An array of arrays: [DOMElement, eventName, callback].
+		     *
+		     * @function Highcharts.Navigator#getPartsEvents
+		     *
+		     * @param  {string} eventName
+		     *         Event name handler, 'mousedown' or 'touchstart'
+		     *
+		     * @return {Array<*>}
+		     *         An array of arrays: [DOMElement, eventName, callback].
 		     */
 		    getPartsEvents: function (eventName) {
 		        var navigator = this,
@@ -5740,8 +6239,15 @@
 		     * - will be stored for future drag&drop
 		     * - will directly shift to a new range
 		     *
-		     * @param {Object} e Mouse event
-		     * @param {Number} index Index of a mask in Navigator.shades array
+		     * @function Highcharts.Navigator#shadesMousedown
+		     *
+		     * @param  {*} e
+		     *         Mouse event
+		     *
+		     * @param  {number} index
+		     *         Index of a mask in Navigator.shades array
+		     *
+		     * @return {void}
 		     */
 		    shadesMousedown: function (e, index) {
 		        e = this.chart.pointer.normalize(e);
@@ -5812,8 +6318,15 @@
 		     * Mousedown on a handle mask.
 		     * Will store necessary information for drag&drop.
 		     *
-		     * @param {Object} e Mouse event
-		     * @param {Number} index Index of a handle in Navigator.handles array
+		     * @function Highcharts.Navigator#handlesMousedown
+		     *
+		     * @param  {*} e
+		     *         Mouse event
+		     *
+		     * @param  {number} index
+		     *         Index of a handle in Navigator.handles array
+		     *
+		     * @return {void}
 		     */
 		    handlesMousedown: function (e, index) {
 		        e = this.chart.pointer.normalize(e);
@@ -5842,7 +6355,13 @@
 		    },
 		    /**
 		     * Mouse move event based on x/y mouse position.
-		     * @param {Object} e Mouse event
+		     *
+		     * @function Highcharts.Navigator#onMouseMove
+		     *
+		     * @param  {*} e
+		     *         Mouse event
+		     *
+		     * @return {void}
 		     */
 		    onMouseMove: function (e) {
 		        var navigator = this,
@@ -5907,7 +6426,13 @@
 		            if (
 		                navigator.hasDragged &&
 		                navigator.scrollbar &&
-		                navigator.scrollbar.options.liveRedraw
+		                pick(
+		                    navigator.scrollbar.options.liveRedraw,
+
+		                    // By default, don't run live redraw on VML, on touch
+		                    // devices or if the chart is in boost.
+		                    H.svg && !isTouchDevice && !this.chart.isBoosting
+		                )
 		            ) {
 		                e.DOMType = e.type; // DOMType is for IE8
 		                setTimeout(function () {
@@ -5919,7 +6444,13 @@
 
 		    /**
 		     * Mouse up event based on x/y mouse position.
-		     * @param {Object} e Mouse event
+		     *
+		     * @function Highcharts.Navigator#onMouseUp
+		     *
+		     * @param  {*} e
+		     *         Mouse event
+		     *
+		     * @return {void}
 		     */
 		    onMouseUp: function (e) {
 		        var navigator = this,
@@ -5994,6 +6525,10 @@
 
 		    /**
 		     * Removes the event handlers attached previously with addEvents.
+		     *
+		     * @function Highcharts.Navigator#removeEvents
+		     *
+		     * @return {void}
 		     */
 		    removeEvents: function () {
 		        if (this.eventsToUnbind) {
@@ -6007,6 +6542,10 @@
 
 		    /**
 		     * Remove data events.
+		     *
+		     * @function Highcharts.Navigator#removeBaseSeriesEvents
+		     *
+		     * @return {void}
 		     */
 		    removeBaseSeriesEvents: function () {
 		        var baseSeries = this.baseSeries || [];
@@ -6030,6 +6569,12 @@
 
 		    /**
 		     * Initiate the Navigator object
+		     *
+		     * @function Highcharts.Navigator#init
+		     *
+		     * @param  {Highcharts.Chart} chart
+		     *
+		     * @return {void}
 		     */
 		    init: function (chart) {
 		        var chartOptions = chart.options,
@@ -6066,20 +6611,6 @@
 		            baseXaxis = baseSeries && baseSeries[0] && baseSeries[0].xAxis ||
 		                chart.xAxis[0] || { options: {} };
 
-		        // Make room for the navigator, can be placed around the chart:
-		        chart.extraMargin = {
-		            type: navigator.opposite ? 'plotTop' : 'marginBottom',
-		            value: (
-		                navigatorEnabled || !chart.inverted ?
-		                    navigator.outlineHeight :
-		                    0
-		            ) + navigatorOptions.margin
-		        };
-		        if (chart.inverted) {
-		            chart.extraMargin.type = navigator.opposite ?
-		                'marginRight' :
-		                'plotLeft';
-		        }
 		        chart.isDirtyBox = true;
 
 		        if (navigator.navigatorEnabled) {
@@ -6094,6 +6625,7 @@
 		                isX: true,
 		                type: 'datetime',
 		                index: xAxisIndex,
+		                isInternal: true,
 		                offset: 0,
 		                keepOrdinalPadding: true, // #2436
 		                startOnTick: false,
@@ -6114,6 +6646,7 @@
 		                alignTicks: false,
 		                offset: 0,
 		                index: yAxisIndex,
+		                isInternal: true,
 		                zoomEnabled: false
 		            }, chart.inverted ? {
 		                width: height
@@ -6219,7 +6752,13 @@
 		    /**
 		     * Get the union data extremes of the chart - the outer data extremes of the
 		     * base X axis and the navigator axis.
-		     * @param {boolean} returnFalseOnNoBaseSeries - as the param says.
+		     *
+		     * @function Highcharts.Navigator#getUnionExtremes
+		     *
+		     * @param  {boolean} returnFalseOnNoBaseSeries
+		     *         as the param says.
+		     *
+		     * @return {*}
 		     */
 		    getUnionExtremes: function (returnFalseOnNoBaseSeries) {
 		        var baseAxis = this.chart.xAxis[0],
@@ -6259,10 +6798,16 @@
 		     * Set the base series and update the navigator series from this. With a bit
 		     * of modification we should be able to make this an API method to be called
 		     * from the outside
-		     * @param  {Object} baseSeriesOptions
+		     *
+		     * @function Highcharts.Navigator#setBaseSeries
+		     *
+		     * @param  {*} baseSeriesOptions
 		     *         Additional series options for a navigator
-		     * @param  {Boolean} [redraw]
+		     *
+		     * @param  {boolean} [redraw]
 		     *         Whether to redraw after update.
+		     *
+		     * @return {void}
 		     */
 		    setBaseSeries: function (baseSeriesOptions, redraw) {
 		        var chart = this.chart,
@@ -6299,9 +6844,17 @@
 		        }
 		    },
 
-		    /*
+		    /**
 		     * Update series in the navigator from baseSeries, adding new if does not
 		     * exist.
+		     *
+		     * @function Highcharts.Navigator.updateNavigatorSeries
+		     *
+		     * @param  {boolean} addEvents
+		     *
+		     * @param  {boolean} redraw
+		     *
+		     * @return {void}
 		     */
 		    updateNavigatorSeries: function (addEvents, redraw) {
 		        var navigator = this,
@@ -6321,8 +6874,7 @@
 		                yAxis: 'navigator-y-axis',
 		                showInLegend: false,
 		                stacking: false, // #4823
-		                isInternal: true,
-		                visible: true
+		                isInternal: true
 		            },
 		            // Remove navigator series that are no longer in the baseSeries
 		            navigatorSeries = navigator.series = H.grep(
@@ -6339,8 +6891,11 @@
 		                            );
 		                            delete base.navigatorSeries;
 		                        }
-		                        // Kill the nav series
-		                        navSeries.destroy();
+		                        // Kill the nav series. It may already have been
+		                        // destroyed (#8715).
+		                        if (navSeries.chart) {
+		                            navSeries.destroy();
+		                        }
 		                        return false;
 		                    }
 		                    return true;
@@ -6353,9 +6908,10 @@
 		            each(baseSeries, function eachBaseSeries(base) {
 		                var linkedNavSeries = base.navigatorSeries,
 		                    userNavOptions = extend(
-		                        // Grab color from base as default
+		                        // Grab color and visibility from base as default
 		                        {
-		                            color: base.color
+		                            color: base.color,
+		                            visible: base.visible
 		                        },
 		                        !isArray(chartNavigatorSeriesOptions) ?
 		                            chartNavigatorSeriesOptions :
@@ -6455,6 +7011,10 @@
 		    /**
 		     * Add data events.
 		     * For example when main series is updated we need to recalculate extremes
+		     *
+		     * @function Highcharts.Navigator#addBaseSeriesEvent
+		     *
+		     * @return {void}
 		     */
 		    addBaseSeriesEvents: function () {
 		        var navigator = this,
@@ -6510,6 +7070,10 @@
 		     * Set the navigator x axis extremes to reflect the total. The navigator
 		     * extremes should always be the extremes of the union of all series in the
 		     * chart as well as the navigator series.
+		     *
+		     * @function Highcharts.Navigator#modifyNavigatorAxisExtremes
+		     *
+		     * @return {void}
 		     */
 		    modifyNavigatorAxisExtremes: function () {
 		        var xAxis = this.xAxis,
@@ -6532,6 +7096,10 @@
 
 		    /**
 		     * Hook to modify the base axis extremes with information from the Navigator
+		     *
+		     * @function Highcharts.Navigator#modifyBaseAxisExtremes
+		     *
+		     * @return {void}
 		     */
 		    modifyBaseAxisExtremes: function () {
 		        var baseXAxis = this,
@@ -6597,6 +7165,10 @@
 		     * Handler for updated data on the base series. When data is modified, the
 		     * navigator series must reflect it. This is called from the Chart.redraw
 		     * function before axis and series extremes are computed.
+		     *
+		     * @function Highcharts.Navigator#updateDataHandler
+		     *
+		     * @return {void}
 		     */
 		    updatedDataHandler: function () {
 		        var navigator = this.chart.navigator,
@@ -6630,27 +7202,66 @@
 
 		    /**
 		     * Add chart events, like redrawing navigator, when chart requires that.
+		     *
+		     * @function Highcharts.Navigator#addChartEvents
+		     *
+		     * @return {void}
 		     */
 		    addChartEvents: function () {
-		        addEvent(this.chart, 'redraw', function () {
+		        if (!this.eventsToUnbind) {
+		            this.eventsToUnbind = [];
+		        }
+
+		        this.eventsToUnbind.push(
 		            // Move the scrollbar after redraw, like after data updata even if
 		            // axes don't redraw
-		            var navigator = this.navigator,
-		                xAxis = navigator && (
-		                    navigator.baseSeries &&
-		                    navigator.baseSeries[0] &&
-		                    navigator.baseSeries[0].xAxis ||
-		                    navigator.scrollbar && this.xAxis[0]
-		                ); // #5709
+		            addEvent(
+		                this.chart,
+		                'redraw',
+		                function () {
+		                    var navigator = this.navigator,
+		                        xAxis = navigator && (
+		                            navigator.baseSeries &&
+		                            navigator.baseSeries[0] &&
+		                            navigator.baseSeries[0].xAxis ||
+		                            navigator.scrollbar && this.xAxis[0]
+		                        ); // #5709
 
-		            if (xAxis) {
-		                navigator.render(xAxis.min, xAxis.max);
-		            }
-		        });
+		                    if (xAxis) {
+		                        navigator.render(xAxis.min, xAxis.max);
+		                    }
+		                }
+		            ),
+		            // Make room for the navigator, can be placed around the chart:
+		            addEvent(
+		                this.chart,
+		                'getMargins',
+		                function () {
+		                    var chart = this,
+		                        navigator = chart.navigator,
+		                        marginName = navigator.opposite ?
+		                            'plotTop' : 'marginBottom';
+		                    if (chart.inverted) {
+		                        marginName = navigator.opposite ?
+		                            'marginRight' : 'plotLeft';
+		                    }
+
+		                    chart[marginName] = (chart[marginName] || 0) + (
+		                        navigator.navigatorEnabled || !chart.inverted ?
+		                            navigator.outlineHeight :
+		                            0
+		                    ) + navigator.navigatorOptions.margin;
+		                }
+		            )
+		        );
 		    },
 
 		    /**
 		     * Destroys allocated elements.
+		     *
+		     * @function Highcharts.Navigator#destroy
+		     *
+		     * @return {void}
 		     */
 		    destroy: function () {
 
@@ -6712,7 +7323,10 @@
 		            (rangeSelector && rangeSelector.enabled))) {
 		        // For x only zooming, fool the chart.zoom method not to create the zoom
 		        // button because the property already exists
-		        if (zoomType === 'x' || pinchType === 'x') {
+		        if (
+		            (!isTouchDevice && zoomType === 'x') ||
+		            (isTouchDevice && pinchType === 'x')
+		        ) {
 		            chart.resetZoomButton = 'blocked';
 
 		        // For y only zooming, ignore the X axis completely
@@ -6724,7 +7338,10 @@
 		        // should apply only if the chart is initialized with a range (#6612),
 		        // otherwise zoom all the way out.
 		        } else if (
-		            (zoomType === 'xy' || pinchType === 'xy') &&
+		            (
+		                (!isTouchDevice && zoomType === 'xy') ||
+		                (isTouchDevice && pinchType === 'xy')
+		            ) &&
 		            this.options.range
 		        ) {
 
@@ -6815,6 +7432,34 @@
 		    }
 		});
 
+		// Merge options, if no scrolling exists yet
+		addEvent(Chart, 'update', function (e) {
+
+		    var navigatorOptions = (e.options.navigator || {}),
+		        scrollbarOptions = (e.options.scrollbar || {});
+
+		    if (!this.navigator && !this.scroller &&
+		        (navigatorOptions.enabled || scrollbarOptions.enabled)
+		    ) {
+		        merge(true, this.options.navigator, navigatorOptions);
+		        merge(true, this.options.scrollbar, scrollbarOptions);
+		        delete e.options.navigator;
+		        delete e.options.scrollbar;
+		    }
+
+		});
+
+		// Initiate navigator, if no scrolling exists yet
+		addEvent(Chart, 'afterUpdate', function () {
+
+		    if (!this.navigator && !this.scroller &&
+		        (this.options.navigator.enabled || this.options.scrollbar.enabled)
+		    ) {
+		        this.scroller = this.navigator = new Navigator(this);
+		    }
+
+		});
+
 		// Pick up badly formatted point options to addPoint
 		wrap(Series.prototype, 'addPoint', function (
 		    proceed,
@@ -6869,7 +7514,6 @@
 		 *
 		 * License: www.highcharts.com/license
 		 */
-		/* eslint max-len: 0 */
 		var addEvent = H.addEvent,
 		    Axis = H.Axis,
 		    Chart = H.Chart,
@@ -6904,20 +7548,201 @@
 		     * @optionparent rangeSelector
 		     */
 		    rangeSelector: {
-		        // allButtonsEnabled: false,
-		        // enabled: true,
-		        // buttons: {Object}
-		        // buttonSpacing: 0,
 
 		        /**
-		         * The vertical alignment of the rangeselector box. Allowed properties are `top`,
-		         * `middle`, `bottom`.
+		         * Whether to enable all buttons from the start. By default buttons are
+		         * only enabled if the corresponding time range exists on the X axis,
+		         * but enabling all buttons allows for dynamically loading different
+		         * time ranges.
 		         *
-		         * @since 6.0.0
+		         * @sample {highstock} stock/rangeselector/allbuttonsenabled-true/
+		         *         All buttons enabled
 		         *
-		         * @sample {highstock} stock/rangeselector/vertical-align-middle/ Middle
+		         * @type       {boolean}
+		         * @default    false
+		         * @since      2.0.3
+		         * @product    highstock
+		         * @apioption  rangeSelector.allButtonsEnabled
+		         */
+
+		        /**
+		         * An array of configuration objects for the buttons.
 		         *
-		         * @sample {highstock} stock/rangeselector/vertical-align-bottom/ Bottom
+		         * Defaults to
+		         *
+		         * <pre>buttons: [{
+		         *     type: 'month',
+		         *     count: 1,
+		         *     text: '1m'
+		         * }, {
+		         *     type: 'month',
+		         *     count: 3,
+		         *     text: '3m'
+		         * }, {
+		         *     type: 'month',
+		         *     count: 6,
+		         *     text: '6m'
+		         * }, {
+		         *     type: 'ytd',
+		         *     text: 'YTD'
+		         * }, {
+		         *     type: 'year',
+		         *     count: 1,
+		         *     text: '1y'
+		         * }, {
+		         *     type: 'all',
+		         *     text: 'All'
+		         * }]</pre>
+		         *
+		         * @sample {highstock} stock/rangeselector/datagrouping/
+		         *         Data grouping by buttons
+		         *
+		         * @type       {Array<*>}
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttons
+		         */
+
+		        /**
+		         * How many units of the defined type the button should span. If `type`
+		         * is "month" and `count` is 3, the button spans three months.
+		         *
+		         * @type       {number}
+		         * @default    1
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttons.count
+		         */
+
+		        /**
+		         * Fires when clicking on the rangeSelector button. One parameter,
+		         * event, is passed to the function, containing common event
+		         * information.
+		         *
+		         * <pre>
+		         * click: function(e) {
+		         *   console.log(this);
+		         * }
+		         * </pre>
+		         *
+		         * Return false to stop default button's click action.
+		         *
+		         * @sample {highstock} stock/rangeselector/button-click/
+		         *         Click event on the button
+		         *
+		         * @type       {Function}
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttons.events.click
+		         */
+
+		        /**
+		         * Additional range (in milliseconds) added to the end of the calculated
+		         * time span.
+		         *
+		         * @sample {highstock} stock/rangeselector/min-max-offsets/
+		         *         Button offsets
+		         *
+		         * @type       {number}
+		         * @default    0
+		         * @since      6.0.0
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttons.offsetMax
+		         */
+
+		        /**
+		         * Additional range (in milliseconds) added to the start of the
+		         * calculated time span.
+		         *
+		         * @sample {highstock} stock/rangeselector/min-max-offsets/
+		         *         Button offsets
+		         *
+		         * @type       {number}
+		         * @default    0
+		         * @since      6.0.0
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttons.offsetMin
+		         */
+
+		        /**
+		         * When buttons apply dataGrouping on a series, by deafault zooming
+		         * in/out will deselect buttons and unset dataGrouping. Enable this
+		         * option to keep buttons selected when extremes change.
+		         *
+		         * @sample {highstock} stock/rangeselector/preserve-datagrouping/
+		         *         Different preserveDataGrouping settings
+		         *
+		         * @type       {boolean}
+		         * @since      6.1.2
+		         * @default    false
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttons.preserveDataGrouping
+		         */
+
+		        /**
+		         * A custom data grouping object for each button.
+		         *
+		         * @see [series.dataGrouping](#plotOptions.series.dataGrouping)
+		         *
+		         * @sample {highstock} stock/rangeselector/datagrouping/
+		         *         Data grouping by range selector buttons
+		         *
+		         * @type       {*}
+		         * @extends    plotOptions.series.dataGrouping
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttons.dataGrouping
+		         */
+
+		        /**
+		         * The text for the button itself.
+		         *
+		         * @type       {string}
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttons.text
+		         */
+
+		        /**
+		         * Defined the time span for the button. Can be one of `millisecond`,
+		         * `second`, `minute`, `hour`, `day`, `week`, `month`, `ytd`, `all`.
+		         *
+		         * @type       {string}
+		         * @product    highstock
+		         * @validvalue ["millisecond", "second", "minute", "day", "week", "month", "ytd", "all"]
+		         * @apioption  rangeSelector.buttons.type
+		         */
+
+		        /**
+		         * The space in pixels between the buttons in the range selector.
+		         *
+		         * @type       {number}
+		         * @default    0
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttonSpacing
+		         */
+
+		        /**
+		         * Enable or disable the range selector.
+		         *
+		         * @sample {highstock} stock/rangeselector/enabled/
+		         *         Disable the range selector
+		         *
+		         * @type       {boolean}
+		         * @default    true
+		         * @product    highstock
+		         * @apioption  rangeSelector.enabled
+		         */
+
+		        /**
+		         * The vertical alignment of the rangeselector box. Allowed properties
+		         * are `top`, `middle`, `bottom`.
+		         *
+		         * @sample {highstock} stock/rangeselector/vertical-align-middle/
+		         *         Middle
+		         * @sample {highstock} stock/rangeselector/vertical-align-bottom/
+		         *         Bottom
+		         *
+		         * @type       {string}
+		         * @default    top
+		         * @since      6.0.0
+		         * @validvalue ["top", "middle", "bottom"]
+		         * @apioption  rangeSelector.verticalAlign
 		         */
 		        verticalAlign: 'top',
 
@@ -6926,8 +7751,9 @@
 		         * attributes like `fill`, `stroke`, `stroke-width`, as well as `style`,
 		         * a collection of CSS properties for the text.
 		         *
-		         * The object can also be extended with states, so you can set presentational
-		         * options for `hover`, `select` or `disabled` button states.
+		         * The object can also be extended with states, so you can set
+		         * presentational options for `hover`, `select` or `disabled` button
+		         * states.
 		         *
 		         * CSS styles for the text label.
 		         *
@@ -6935,9 +7761,12 @@
 		         * `.highcharts-range-selector-buttons .highcharts-button` rule with its
 		         * different states.
 		         *
-		         * @type {Object}
-		         * @sample {highstock} stock/rangeselector/styling/ Styling the buttons and inputs
-		         * @product highstock
+		         * @sample {highstock} stock/rangeselector/styling/
+		         *         Styling the buttons and inputs
+		         *
+		         * @type       {Highcharts.CSSObject}
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttonTheme
 		         */
 		        buttonTheme: {
 		            'stroke-width': 0,
@@ -6954,8 +7783,12 @@
 		         * @sample {highstock} stock/rangeselector/floating/
 		         *         Placing the range selector between the plot area and the
 		         *         navigator
-		         * @since 6.0.0
-		         * @product highstock
+		         *
+		         * @type       {boolean}
+		         * @default    false
+		         * @since      6.0.0
+		         * @product    highstock
+		         * @apioption  rangeSelector.floating
 		         */
 		        floating: false,
 
@@ -6963,8 +7796,11 @@
 		         * The x offset of the range selector relative to its horizontal
 		         * alignment within `chart.spacingLeft` and `chart.spacingRight`.
 		         *
-		         * @since 6.0.0
-		         * @product highstock
+		         * @type       {number}
+		         * @default    0
+		         * @since      6.0.0
+		         * @product    highstock
+		         * @apioption  rangeSelector.x
 		         */
 		        x: 0,
 
@@ -6972,8 +7808,11 @@
 		         * The y offset of the range selector relative to its horizontal
 		         * alignment within `chart.spacingLeft` and `chart.spacingRight`.
 		         *
-		         * @since 6.0.0
-		         * @product highstock
+		         * @type       {number}
+		         * @default    0
+		         * @since      6.0.0
+		         * @product    highstock
+		         * @apioption  rangeSelector.y
 		         */
 		        y: 0,
 
@@ -6981,78 +7820,245 @@
 		         * Deprecated. The height of the range selector. Currently it is
 		         * calculated dynamically.
 		         *
-		         * @type {Number}
-		         * @default undefined
-		         * @since 2.1.9
-		         * @product highstock
-		         * @deprecated true
+		         * @deprecated
+		         * @type       {number}
+		         * @default    undefined
+		         * @since      2.1.9
+		         * @product    highstock
+		         * @apioption  rangeSelector.height
 		         */
 		        height: undefined, // reserved space for buttons and input
+
+		        /**
+		         * The border color of the date input boxes.
+		         *
+		         * @sample {highstock} stock/rangeselector/styling/
+		         *         Styling the buttons and inputs
+		         *
+		         * @type       {Highcharts.ColorString}
+		         * @default    #cccccc
+		         * @since      1.3.7
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputBoxBorderColor
+		         */
+
+		        /**
+		         * The pixel height of the date input boxes.
+		         *
+		         * @sample {highstock} stock/rangeselector/styling/
+		         *         Styling the buttons and inputs
+		         *
+		         * @type       {number}
+		         * @default    17
+		         * @since      1.3.7
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputBoxHeight
+		         */
+
+		        /**
+		         * CSS for the container DIV holding the input boxes. Deprecated as
+		         * of 1.2.5\. Use [inputPosition](#rangeSelector.inputPosition) instead.
+		         *
+		         * @sample {highstock} stock/rangeselector/styling/
+		         *         Styling the buttons and inputs
+		         *
+		         * @deprecated
+		         * @type       {Highcharts.CSSObject}
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputBoxStyle
+		         */
+
+		        /**
+		         * The pixel width of the date input boxes.
+		         *
+		         * @sample {highstock} stock/rangeselector/styling/
+		         *         Styling the buttons and inputs
+		         *
+		         * @type       {number}
+		         * @default    90
+		         * @since      1.3.7
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputBoxWidth
+		         */
+
+		        /**
+		         * The date format in the input boxes when not selected for editing.
+		         * Defaults to `%b %e, %Y`.
+		         *
+		         * @sample {highstock} stock/rangeselector/input-format/
+		         *         Milliseconds in the range selector
+		         *
+		         * @type       {string}
+		         * @default    %b %e %Y,
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputDateFormat
+		         */
+
+		        /**
+		         * A custom callback function to parse values entered in the input boxes
+		         * and return a valid JavaScript time as milliseconds since 1970.
+		         *
+		         * @sample {highstock} stock/rangeselector/input-format/
+		         *         Milliseconds in the range selector
+		         *
+		         * @type       {Function}
+		         * @since      1.3.3
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputDateParser
+		         */
+
+		        /**
+		         * The date format in the input boxes when they are selected for
+		         * editing. This must be a format that is recognized by JavaScript
+		         * Date.parse.
+		         *
+		         * @sample {highstock} stock/rangeselector/input-format/
+		         *         Milliseconds in the range selector
+		         *
+		         * @type       {string}
+		         * @default    %Y-%m-%d
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputEditDateFormat
+		         */
+
+		        /**
+		         * Enable or disable the date input boxes. Defaults to enabled when
+		         * there is enough space, disabled if not (typically mobile).
+		         *
+		         * @sample {highstock} stock/rangeselector/input-datepicker/
+		         *         Extending the input with a jQuery UI datepicker
+		         *
+		         * @type       {boolean}
+		         * @default    true
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputEnabled
+		         */
 
 		        /**
 		         * Positioning for the input boxes. Allowed properties are `align`,
 		         *  `x` and `y`.
 		         *
-		         * @type {Object}
-		         * @default { align: "right" }
-		         * @since 1.2.4
-		         * @product highstock
+		         * @type       {*}
+		         * @since      1.2.4
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputPosition
 		         */
 		        inputPosition: {
 		            /**
 		             * The alignment of the input box. Allowed properties are `left`,
 		             * `center`, `right`.
-		              * @validvalue ["left", "center", "right"]
-		              * @sample {highstock} stock/rangeselector/input-button-position/
-		              *         Alignment
-		              * @since 6.0.0
+		             *
+		             * @sample {highstock} stock/rangeselector/input-button-position/
+		             *         Alignment
+		             *
+		             * @type       {string}
+		             * @default    right
+		             * @since      6.0.0
+		             * @validvalue ["left", "center", "right"]
+		             * @apioption  rangeSelector.inputPosition.align
 		             */
 		            align: 'right',
+
+		            /**
+		             * X offset of the input row.
+		             *
+		             * @type       {number}
+		             * @default    0
+		             * @apioption  rangeSelector.inputPosition.x
+		             */
 		            x: 0,
+
+		            /**
+		             * Y offset of the input row.
+		             *
+		             * @type       {number}
+		             * @default    0
+		             * @apioption  rangeSelector.inputPosition.y
+		             */
 		            y: 0
 		        },
+
+		        /**
+		         * The index of the button to appear pre-selected.
+		         *
+		         * @type       {number}
+		         * @product    highstock
+		         * @apioption  rangeSelector.selected
+		         */
 
 		        /**
 		         * Positioning for the button row.
 		         *
-		         * @since 1.2.4
-		         * @product highstock
+		         * @type       {*}
+		         * @since      1.2.4
+		         * @product    highstock
+		         * @apioption  rangeSelector.buttonPosition
 		         */
 		        buttonPosition: {
+
 		            /**
 		             * The alignment of the input box. Allowed properties are `left`,
 		             * `center`, `right`.
-		              *
-		              * @validvalue ["left", "center", "right"]
-		              * @sample {highstock} stock/rangeselector/input-button-position/
-		              *         Alignment
-		              * @since 6.0.0
+		             *
+		             * @sample {highstock} stock/rangeselector/input-button-position/
+		             *         Alignment
+		             *
+		             * @type       {string}
+		             * @default    left
+		             * @since      6.0.0
+		             * @validvalue ["left", "center", "right"]
+		             * @apioption  rangeSelector.buttonPosition.align
 		             */
 		            align: 'left',
+
 		            /**
 		             * X offset of the button row.
+		             *
+		             * @type       {number}
+		             * @default    0
+		             * @apioption  rangeSelector.buttonPosition.x
 		             */
 		            x: 0,
+
 		            /**
 		             * Y offset of the button row.
+		             *
+		             * @type       {number}
+		             * @default    0
+		             * @apioption  rangeSelector.buttonPosition.y
 		             */
 		            y: 0
 		        },
-		        // inputDateFormat: '%b %e, %Y',
-		        // inputEditDateFormat: '%Y-%m-%d',
-		        // inputEnabled: true,
-		        // selected: undefined,
+
         
-		        // inputStyle: {},
+
+		        /**
+		         * CSS for the HTML inputs in the range selector.
+		         *
+		         * In styled mode, the inputs are styled by the
+		         * `.highcharts-range-input text` rule in SVG mode, and
+		         * `input.highcharts-range-selector` when active.
+		         *
+		         * @sample {highstock} stock/rangeselector/styling/
+		         *         Styling the buttons and inputs
+		         *
+		         * @type       {Highcharts.CSSObject}
+		         * @product    highstock
+		         * @apioption  rangeSelector.inputStyle
+		         */
 
 		        /**
 		         * CSS styles for the labels - the Zoom, From and To texts.
 		         *
-		         * In styled mode, the labels are styled by the `.highcharts-range-label` class.
+		         * In styled mode, the labels are styled by the
+		         * `.highcharts-range-label` class.
 		         *
-		         * @type {CSSObject}
-		         * @sample {highstock} stock/rangeselector/styling/ Styling the buttons and inputs
-		         * @product highstock
+		         * @sample {highstock} stock/rangeselector/styling/
+		         *         Styling the buttons and inputs
+		         *
+		         * @type       {Highcharts.CSSObject}
+		         * @product    highstock
+		         * @apioption  rangeSelector.labelStyle
 		         */
 		        labelStyle: {
 		            color: '#666666'
@@ -7090,9 +8096,10 @@
 		        /**
 		         * The text for the label for the range selector buttons.
 		         *
-		         * @type {String}
-		         * @default Zoom
-		         * @product highstock
+		         * @type       {string}
+		         * @default    Zoom
+		         * @product    highstock
+		         * @apioption  lang.rangeSelectorZoom
 		         */
 		        rangeSelectorZoom: 'Zoom',
 
@@ -7100,18 +8107,20 @@
 		         * The text for the label for the "from" input box in the range
 		         * selector.
 		         *
-		         * @type {String}
-		         * @default From
-		         * @product highstock
+		         * @type       {string}
+		         * @default    From
+		         * @product    highstock
+		         * @apioption  lang.rangeSelectorFrom
 		         */
 		        rangeSelectorFrom: 'From',
 
 		        /**
 		         * The text for the label for the "to" input box in the range selector.
 		         *
-		         * @type {String}
-		         * @default To
-		         * @product highstock
+		         * @type       {string}
+		         * @default    To
+		         * @product    highstock
+		         * @apioption  lang.rangeSelectorTo
 		         */
 		        rangeSelectorTo: 'To'
 		    }
@@ -7119,8 +8128,10 @@
 
 		/**
 		 * The range selector.
-		 * @class
-		 * @param {Object} chart
+		 *
+		 * @class Highcharts.RangeSelector
+		 *
+		 * @param {Highcharts.Chart} chart
 		 */
 		function RangeSelector(chart) {
 
@@ -7130,21 +8141,32 @@
 
 		RangeSelector.prototype = {
 		    /**
-		     * The method to run when one of the buttons in the range selectors is clicked
-		     * @param {Number} i The index of the button
-		     * @param {Object} rangeOptions
-		     * @param {Boolean} redraw
+		     * The method to run when one of the buttons in the range selectors is
+		     * clicked
+		     *
+		     * @function Highcharts.RangeSelector#clickButton
+		     *
+		     * @param  {number} i
+		     *         The index of the button
+		     *
+		     * @param  {boolean} redraw
+		     *
+		     * @return {void}
 		     */
 		    clickButton: function (i, redraw) {
 		        var rangeSelector = this,
 		            chart = rangeSelector.chart,
 		            rangeOptions = rangeSelector.buttonOptions[i],
 		            baseAxis = chart.xAxis[0],
-		            unionExtremes = (chart.scroller && chart.scroller.getUnionExtremes()) || baseAxis || {},
+		            unionExtremes = (
+		                    chart.scroller && chart.scroller.getUnionExtremes()
+		                ) || baseAxis || {},
 		            dataMin = unionExtremes.dataMin,
 		            dataMax = unionExtremes.dataMax,
 		            newMin,
-		            newMax = baseAxis && Math.round(Math.min(baseAxis.max, pick(dataMax, baseAxis.max))), // #1568
+		            newMax = baseAxis && Math.round(
+		                Math.min(baseAxis.max, pick(dataMax, baseAxis.max))
+		            ), // #1568
 		            type = rangeOptions.type,
 		            baseXAxisOptions,
 		            range = rangeOptions._range,
@@ -7155,7 +8177,8 @@
 		            ytdExtremes,
 		            dataGrouping = rangeOptions.dataGrouping;
 
-		        if (dataMin === null || dataMax === null) { // chart has no data, base series is removed
+		        // chart has no data, base series is removed
+		        if (dataMin === null || dataMax === null) {
 		            return;
 		        }
 
@@ -7165,14 +8188,20 @@
 		        // Apply dataGrouping associated to button
 		        if (dataGrouping) {
 		            this.forcedDataGrouping = true;
-		            Axis.prototype.setDataGrouping.call(baseAxis || { chart: this.chart }, dataGrouping, false);
+		            Axis.prototype.setDataGrouping.call(
+		                baseAxis || { chart: this.chart },
+		                dataGrouping,
+		                false
+		            );
+
+		            this.frozenStates = rangeOptions.preserveDataGrouping;
 		        }
 
 		        // Apply range
 		        if (type === 'month' || type === 'year') {
 		            if (!baseAxis) {
-		                // This is set to the user options and picked up later when the axis is instantiated
-		                // so that we know the min and max.
+		                // This is set to the user options and picked up later when the
+		                // axis is instantiated so that we know the min and max.
 		                range = rangeOptions;
 		            } else {
 		                ctx = {
@@ -7195,18 +8224,20 @@
 
 		        } else if (type === 'ytd') {
 
-		            // On user clicks on the buttons, or a delayed action running from the beforeRender
-		            // event (below), the baseAxis is defined.
+		            // On user clicks on the buttons, or a delayed action running from
+		            // the beforeRender event (below), the baseAxis is defined.
 		            if (baseAxis) {
-		                // When "ytd" is the pre-selected button for the initial view, its calculation
-		                // is delayed and rerun in the beforeRender event (below). When the series
-		                // are initialized, but before the chart is rendered, we have access to the xData
-		                // array (#942).
+		                // When "ytd" is the pre-selected button for the initial view,
+		                // its calculation is delayed and rerun in the beforeRender
+		                // event (below). When the series are initialized, but before
+		                // the chart is rendered, we have access to the xData array
+		                // (#942).
 		                if (dataMax === undefined) {
 		                    dataMin = Number.MAX_VALUE;
 		                    dataMax = Number.MIN_VALUE;
 		                    each(chart.series, function (series) {
-		                        var xData = series.xData; // reassign it to the last item
+		                        // reassign it to the last item
+		                        var xData = series.xData;
 		                        dataMin = Math.min(xData[0], dataMin);
 		                        dataMax = Math.max(xData[xData.length - 1], dataMax);
 		                    });
@@ -7220,8 +8251,9 @@
 		                newMin = rangeMin = ytdExtremes.min;
 		                newMax = ytdExtremes.max;
 
-		            // "ytd" is pre-selected. We don't yet have access to processed point and extremes data
-		            // (things like pointStart and pointInterval are missing), so we delay the process (#942)
+		            // "ytd" is pre-selected. We don't yet have access to processed
+		            // point and extremes data (things like pointStart and pointInterval
+		            // are missing), so we delay the process (#942)
 		            } else {
 		                addEvent(chart, 'beforeRender', function () {
 		                    rangeSelector.clickButton(i);
@@ -7269,6 +8301,12 @@
 		    /**
 		     * Set the selected option. This method only sets the internal flag, it
 		     * doesn't update the buttons or the actual zoomed range.
+		     *
+		     * @function Highcharts.RangeSelector#setSelected
+		     *
+		     * @param  {boolean} selected
+		     *
+		     * @return {void}
 		     */
 		    setSelected: function (selected) {
 		        this.selected = this.options.selected = selected;
@@ -7303,6 +8341,12 @@
 
 		    /**
 		     * Initialize the range selector
+		     *
+		     * @function Highcharts.RangeSelector#init
+		     *
+		     * @param  {Highcharts.Chart} chart
+		     *
+		     * @return {void}
 		     */
 		    init: function (chart) {
 		        var rangeSelector = this,
@@ -7351,7 +8395,8 @@
 		                        this.max - this.min !== chart.fixedRange &&
 		                        e.trigger !== 'rangeSelectorButton' &&
 		                        e.trigger !== 'updatedData' &&
-		                        rangeSelector.forcedDataGrouping
+		                        rangeSelector.forcedDataGrouping &&
+		                        !rangeSelector.frozenStates
 		                    ) {
 		                        this.setDataGrouping(false, false);
 		                    }
@@ -7363,6 +8408,10 @@
 		    /**
 		     * Dynamically update the range selector buttons after a new range has been
 		     * set
+		     *
+		     * @function Highcharts.RangeSelector#updateButtonStates
+		     *
+		     * @return {void}
 		     */
 		    updateButtonStates: function () {
 		        var rangeSelector = this,
@@ -7450,7 +8499,8 @@
 		            );
 		            select = (
 		                (isSelected && isSameRange) ||
-		                (isSameRange && !selectedExists && !isYTDButNotSelected)
+		                (isSameRange && !selectedExists && !isYTDButNotSelected) ||
+		                (isSelected && rangeSelector.frozenStates)
 		            );
 
 		            if (disable) {
@@ -7469,6 +8519,12 @@
 
 		    /**
 		     * Compute and cache the range for an individual button
+		     *
+		     * @function Highcharts.RangeSelector#computeButtonRange
+		     *
+		     * @param  {Highcharts.RangeSelectorOptions} rangeOptions
+		     *
+		     * @return {void}
 		     */
 		    computeButtonRange: function (rangeOptions) {
 		        var type = rangeOptions.type,
@@ -7501,8 +8557,14 @@
 
 		    /**
 		     * Set the internal and displayed value of a HTML input for the dates
-		     * @param {String} name
-		     * @param {Number} inputTime
+		     *
+		     * @function Highcharts.RangeSelector#setInputValue
+		     *
+		     * @param  {string} name
+		     *
+		     * @param  {number} inputTime
+		     *
+		     * @return {void}
 		     */
 		    setInputValue: function (name, inputTime) {
 		        var options = this.chart.options.rangeSelector,
@@ -7526,6 +8588,13 @@
 		        });
 		    },
 
+		    /**
+		     * @function Highcharts.RangeSelector#showInput
+		     *
+		     * @param  {string} name
+		     *
+		     * @return {void}
+		     */
 		    showInput: function (name) {
 		        var inputGroup = this.inputGroup,
 		            dateBox = this[name + 'DateBox'];
@@ -7539,6 +8608,13 @@
 		        });
 		    },
 
+		    /**
+		     * @function Highcharts.RangeSelector#hideInput
+		     *
+		     * @param  {string} name
+		     *
+		     * @return {void}
+		     */
 		    hideInput: function (name) {
 		        css(this[name + 'Input'], {
 		            border: 0,
@@ -7550,7 +8626,12 @@
 
 		    /**
 		     * Draw either the 'from' or the 'to' HTML input box of the range selector
-		     * @param {Object} name
+		     *
+		     * @function Highcharts.RangeSelector#drawInput
+		     *
+		     * @param  {string} name
+		     *
+		     * @return {void}
 		     */
 		    drawInput: function (name) {
 		        var rangeSelector = this,
@@ -7570,27 +8651,35 @@
 		            var inputValue = input.value,
 		                value = (options.inputDateParser || Date.parse)(inputValue),
 		                chartAxis = chart.xAxis[0],
-		                dataAxis = chart.scroller && chart.scroller.xAxis ? chart.scroller.xAxis : chartAxis,
+		                dataAxis = chart.scroller && chart.scroller.xAxis ?
+		                    chart.scroller.xAxis :
+		                    chartAxis,
 		                dataMin = dataAxis.dataMin,
 		                dataMax = dataAxis.dataMax;
 		            if (value !== input.previousValue) {
 		                input.previousValue = value;
-		                // If the value isn't parsed directly to a value by the browser's Date.parse method,
-		                // like YYYY-MM-DD in IE, try parsing it a different way
+		                // If the value isn't parsed directly to a value by the
+		                // browser's Date.parse method, like YYYY-MM-DD in IE, try
+		                // parsing it a different way
 		                if (!isNumber(value)) {
 		                    value = inputValue.split('-');
-		                    value = Date.UTC(pInt(value[0]), pInt(value[1]) - 1, pInt(value[2]));
+		                    value = Date.UTC(
+		                        pInt(value[0]),
+		                        pInt(value[1]) - 1,
+		                        pInt(value[2])
+		                    );
 		                }
 
 		                if (isNumber(value)) {
 
 		                    // Correct for timezone offset (#433)
 		                    if (!chart.time.useUTC) {
-		                        value = value + new Date().getTimezoneOffset() * 60 * 1000;
+		                        value =
+		                            value + new Date().getTimezoneOffset() * 60 * 1000;
 		                    }
 
-		                    // Validate the extremes. If it goes beyound the data min or max, use the
-		                    // actual data extreme (#2438).
+		                    // Validate the extremes. If it goes beyound the data min or
+		                    // max, use the actual data extreme (#2438).
 		                    if (isMin) {
 		                        if (value > rangeSelector.maxInput.HCTime) {
 		                            value = undefined;
@@ -7620,7 +8709,10 @@
 		        }
 
 		        // Create the text label
-		        this[name + 'Label'] = label = renderer.label(lang[isMin ? 'rangeSelectorFrom' : 'rangeSelectorTo'], this.inputGroup.offset)
+		        this[name + 'Label'] = label = renderer.label(
+		                lang[isMin ? 'rangeSelectorFrom' : 'rangeSelectorTo'],
+		                this.inputGroup.offset
+		            )
 		            .addClass('highcharts-range-label')
 		            .attr({
 		                padding: 2
@@ -7628,28 +8720,31 @@
 		            .add(inputGroup);
 		        inputGroup.offset += label.width + 5;
 
-		        // Create an SVG label that shows updated date ranges and and records click events that
-		        // bring in the HTML input.
+		        // Create an SVG label that shows updated date ranges and and records
+		        // click events that bring in the HTML input.
 		        this[name + 'DateBox'] = dateBox = renderer.label('', inputGroup.offset)
 		            .addClass('highcharts-range-input')
 		            .attr({
 		                padding: 2,
 		                width: options.inputBoxWidth || 90,
 		                height: options.inputBoxHeight || 17,
-		                stroke: options.inputBoxBorderColor || '#cccccc',
+		                stroke:
+		                    options.inputBoxBorderColor || '#cccccc',
 		                'stroke-width': 1,
 		                'text-align': 'center'
 		            })
 		            .on('click', function () {
-		                rangeSelector.showInput(name); // If it is already focused, the onfocus event doesn't fire (#3713)
+		                // If it is already focused, the onfocus event doesn't fire
+		                // (#3713)
+		                rangeSelector.showInput(name);
 		                rangeSelector[name + 'Input'].focus();
 		            })
 		            .add(inputGroup);
 		        inputGroup.offset += dateBox.width + (isMin ? 10 : 0);
 
 
-		        // Create the HTML input element. This is rendered as 1x1 pixel then set to the right size
-		        // when focused.
+		        // Create the HTML input element. This is rendered as 1x1 pixel then set
+		        // to the right size when focused.
 		        this[name + 'Input'] = input = createElement('input', {
 		            name: name,
 		            className: 'highcharts-range-selector',
@@ -7700,12 +8795,19 @@
 		    },
 
 		    /**
-		     * Get the position of the range selector buttons and inputs. This can be overridden from outside for custom positioning.
+		     * Get the position of the range selector buttons and inputs. This can be
+		     * overridden from outside for custom positioning.
+		     *
+		     * @function Highcharts.RangeSelector#getPosition
+		     *
+		     * @return {Highcharts.Dictionary<number>}
 		     */
 		    getPosition: function () {
 		        var chart = this.chart,
 		            options = chart.options.rangeSelector,
-		            top = (options.verticalAlign) === 'top' ? chart.plotTop - chart.axisOffset[0] : 0; // set offset only for varticalAlign top
+		            top = options.verticalAlign === 'top' ?
+		                chart.plotTop - chart.axisOffset[0] :
+		                0; // set offset only for varticalAlign top
 
 		        return {
 		            buttonTop: top + options.buttonPosition.y,
@@ -7713,20 +8815,27 @@
 		        };
 		    },
 		    /**
-		     * Get the extremes of YTD.
-		     * Will choose dataMax if its value is lower than the current timestamp.
-		     * Will choose dataMin if its value is higher than the timestamp for
-		     *     the start of current year.
+		     * Get the extremes of YTD. Will choose dataMax if its value is lower than
+		     * the current timestamp. Will choose dataMin if its value is higher than
+		     * the timestamp for the start of current year.
+		     *
+		     * @function Highcharts.RangeSelector#getYTDExtremes
+		     *
 		     * @param  {number} dataMax
+		     *
 		     * @param  {number} dataMin
-		     * @return {object} Returns min and max for the YTD
+		     *
+		     * @return {*}
+		     *         Returns min and max for the YTD
 		     */
 		    getYTDExtremes: function (dataMax, dataMin, useUTC) {
 		        var time = this.chart.time,
 		            min,
 		            now = new time.Date(dataMax),
 		            year = time.get('FullYear', now),
-		            startOfYear = useUTC ? time.Date.UTC(year, 0, 1) : +new time.Date(year, 0, 1); // eslint-disable-line new-cap
+		            startOfYear = useUTC ?
+		                time.Date.UTC(year, 0, 1) : // eslint-disable-line new-cap
+		                +new time.Date(year, 0, 1);
 		        min = Math.max(dataMin || 0, startOfYear);
 		        now = now.getTime();
 		        return {
@@ -7736,11 +8845,19 @@
 		    },
 
 		    /**
-		     * Render the range selector including the buttons and the inputs. The first time render
-		     * is called, the elements are created and positioned. On subsequent calls, they are
-		     * moved and updated.
-		     * @param {Number} min X axis minimum
-		     * @param {Number} max X axis maximum
+		     * Render the range selector including the buttons and the inputs. The first
+		     * time render is called, the elements are created and positioned. On
+		     * subsequent calls, they are moved and updated.
+		     *
+		     * @function Highcharts.RangeSelector#render
+		     *
+		     * @param  {number} min
+		     *         X axis minimum
+		     *
+		     * @param  {number} max
+		     *         X axis maximum
+		     *
+		     * @return {void}
 		     */
 		    render: function (min, max) {
 
@@ -7749,8 +8866,12 @@
 		            renderer = chart.renderer,
 		            container = chart.container,
 		            chartOptions = chart.options,
-		            navButtonOptions = chartOptions.exporting && chartOptions.exporting.enabled !== false &&
-		                chartOptions.navigation && chartOptions.navigation.buttonOptions,
+		            navButtonOptions = (
+		                chartOptions.exporting &&
+		                chartOptions.exporting.enabled !== false &&
+		                chartOptions.navigation &&
+		                chartOptions.navigation.buttonOptions
+		            ),
 		            lang = defaultOptions.lang,
 		            div = rangeSelector.div,
 		            options = chartOptions.rangeSelector,
@@ -7774,6 +8895,7 @@
 		            buttonPositionY = buttonPosition.y,
 		            inputPositionY = inputPosition.y,
 		            animate = rendered || false,
+		            verb = animate ? 'animate' : 'attr',
 		            exportingX = 0,
 		            alignTranslateY,
 		            legendHeight,
@@ -7794,29 +8916,35 @@
 		                })
 		                .add();
 
-		            rangeSelector.buttonGroup = buttonGroup = renderer.g('range-selector-buttons').add(group);
+		            rangeSelector.buttonGroup = buttonGroup =
+		                renderer.g('range-selector-buttons').add(group);
 
-		            rangeSelector.zoomText = renderer.text(lang.rangeSelectorZoom, pick(plotLeft + buttonPosition.x, plotLeft), 15)
+		            rangeSelector.zoomText = renderer.text(
+		                    lang.rangeSelectorZoom,
+		                    0,
+		                    15
+		                )
 		                .css(options.labelStyle)
 		                .add(buttonGroup);
-
-		            // button start position
-		            buttonLeft = pick(plotLeft + buttonPosition.x, plotLeft) + rangeSelector.zoomText.getBBox().width + 5;
 
 		            each(rangeSelector.buttonOptions, function (rangeOptions, i) {
 
 		                buttons[i] = renderer.button(
 		                        rangeOptions.text,
-		                        buttonLeft,
+		                        0,
 		                        0,
 		                        function () {
 
 		                            // extract events from button object and call
-		                            var buttonEvents = rangeOptions.events && rangeOptions.events.click,
+		                            var buttonEvents = (
+		                                    rangeOptions.events &&
+		                                    rangeOptions.events.click
+		                                ),
 		                                callDefaultEvent;
 
 		                            if (buttonEvents) {
-		                                callDefaultEvent = buttonEvents.call(rangeOptions);
+		                                callDefaultEvent =
+		                                    buttonEvents.call(rangeOptions);
 		                            }
 
 		                            if (callDefaultEvent !== false) {
@@ -7834,9 +8962,6 @@
 		                        'text-align': 'center'
 		                    })
 		                    .add(buttonGroup);
-
-		                // increase button position for the next button
-		                buttonLeft += buttons[i].width + pick(options.buttonSpacing, 5);
 		            });
 
 		            // first create a wrapper outside the container in order to make
@@ -7851,14 +8976,30 @@
 		                container.parentNode.insertBefore(div, container);
 
 		                // Create the group to keep the inputs
-		                rangeSelector.inputGroup = inputGroup = renderer.g('input-group')
-		                    .add(group);
+		                rangeSelector.inputGroup = inputGroup =
+		                    renderer.g('input-group').add(group);
 		                inputGroup.offset = 0;
 
 		                rangeSelector.drawInput('min');
 		                rangeSelector.drawInput('max');
 		            }
 		        }
+
+		        // #8769, allow dynamically updating margins
+		        rangeSelector.zoomText[verb]({
+		            x: pick(plotLeft + buttonPosition.x, plotLeft)
+		        });
+		        // button start position
+		        buttonLeft = pick(plotLeft + buttonPosition.x, plotLeft) +
+		            rangeSelector.zoomText.getBBox().width + 5;
+		        each(rangeSelector.buttonOptions, function (rangeOptions, i) {
+
+		            buttons[i][verb]({ x: buttonLeft });
+
+		            // increase button position for the next button
+		            buttonLeft += buttons[i].width + pick(options.buttonSpacing, 5);
+		        });
+
 
 		        plotLeft = chart.plotLeft - chart.spacing[3];
 		        rangeSelector.updateButtonStates();
@@ -7912,7 +9053,11 @@
 		                    inputPosition.align === 'right' &&
 		                    (
 		                        (inputPosition.y - inputGroup.getBBox().height - 12) <
-		                        ((navButtonOptions.y || 0) + navButtonOptions.height + chart.spacing[0])
+		                        (
+		                            (navButtonOptions.y || 0) +
+		                            navButtonOptions.height +
+		                            chart.spacing[0]
+		                        )
 		                    )
 		                ) {
 		                exportingX = -40;
@@ -7923,7 +9068,7 @@
 		            if (inputPosition.align === 'left') {
 		                translateX = plotLeft;
 		            } else if (inputPosition.align === 'right') {
-		                translateX = -Math.max(chart.axisOffset[1], -exportingX); // yAxis offset
+		                translateX = -Math.max(chart.axisOffset[1], -exportingX);
 		            }
 
 		            // Update the alignment to the updated spacing box
@@ -7931,30 +9076,45 @@
 		                y: inputPosition.y,
 		                width: inputGroup.getBBox().width,
 		                align: inputPosition.align,
-		                x: inputPosition.x + translateX - 2 // fix wrong getBBox() value on right align
+		                // fix wrong getBBox() value on right align
+		                x: inputPosition.x + translateX - 2
 		            }, true, chart.spacingBox);
 
 		            // detect collision
-		            inputGroupX = inputGroup.alignAttr.translateX + inputGroup.alignOptions.x -
-		                            exportingX + inputGroup.getBBox().x + 2; // getBBox for detecing left margin, 2px padding to not overlap input and label
+		            inputGroupX = (
+		                inputGroup.alignAttr.translateX +
+		                inputGroup.alignOptions.x -
+		                exportingX +
+		                // getBBox for detecing left margin
+		                inputGroup.getBBox().x +
+		                // 2px padding to not overlap input and label
+		                2
+		            );
 
 		            inputGroupWidth = inputGroup.alignOptions.width;
 
-		            buttonGroupX = buttonGroup.alignAttr.translateX + buttonGroup.getBBox().x;
-		            buttonGroupWidth = buttonGroup.getBBox().width + 20; // 20 is minimal spacing between elements
+		            buttonGroupX = buttonGroup.alignAttr.translateX +
+		                buttonGroup.getBBox().x;
+		            // 20 is minimal spacing between elements
+		            buttonGroupWidth = buttonGroup.getBBox().width + 20;
 
 		            if (
 		                    (inputPosition.align === buttonPosition.align) ||
 		                    (
 		                        (buttonGroupX + buttonGroupWidth > inputGroupX) &&
 		                        (inputGroupX + inputGroupWidth > buttonGroupX) &&
-		                        (buttonPositionY < (inputPositionY + inputGroup.getBBox().height))
+		                        (
+		                            buttonPositionY <
+		                            (inputPositionY + inputGroup.getBBox().height)
+		                        )
 		                    )
-		                )  {
+		                ) {
 
 		                inputGroup.attr({
-		                    translateX: inputGroup.alignAttr.translateX + (chart.axisOffset[1] >= -exportingX ? 0 : -exportingX),
-		                    translateY: inputGroup.alignAttr.translateY + buttonGroup.getBBox().height + 10
+		                    translateX: inputGroup.alignAttr.translateX +
+		                        (chart.axisOffset[1] >= -exportingX ? 0 : -exportingX),
+		                    translateY: inputGroup.alignAttr.translateY +
+		                        buttonGroup.getBBox().height + 10
 		                });
 
 		            }
@@ -7978,11 +9138,22 @@
 
 		        // calculate bottom position
 		        if (verticalAlign === 'bottom') {
-		            legendHeight = legendOptions && legendOptions.verticalAlign === 'bottom' && legendOptions.enabled &&
-		                            !legendOptions.floating ? legend.legendHeight + pick(legendOptions.margin, 10) : 0;
+		            legendHeight = (
+		                legendOptions &&
+		                legendOptions.verticalAlign === 'bottom' &&
+		                legendOptions.enabled &&
+		                !legendOptions.floating ?
+		                    legend.legendHeight + pick(legendOptions.margin, 10) :
+		                    0
+		            );
 
 		            groupHeight = groupHeight + legendHeight - 20;
-		            translateY = alignTranslateY - groupHeight - (floating ? 0 : options.y) - 10; // 10 spacing
+		            translateY = (
+		                alignTranslateY -
+		                groupHeight -
+		                (floating ? 0 : options.y) -
+		                10 // 10 spacing
+		            );
 
 		        }
 
@@ -8020,8 +9191,10 @@
 
 		        // translate HTML inputs
 		        if (inputEnabled !== false) {
-		            rangeSelector.minInput.style.marginTop = rangeSelector.group.translateY + 'px';
-		            rangeSelector.maxInput.style.marginTop = rangeSelector.group.translateY + 'px';
+		            rangeSelector.minInput.style.marginTop =
+		                rangeSelector.group.translateY + 'px';
+		            rangeSelector.maxInput.style.marginTop =
+		                rangeSelector.group.translateY + 'px';
 		        }
 
 		        rangeSelector.rendered = true;
@@ -8029,7 +9202,11 @@
 
 		    /**
 		     * Extracts height of range selector
-		     * @return {Number} Returns rangeSelector height
+		     *
+		     * @function Highcharts.RangeSelector#getHeight
+		     *
+		     * @return {number}
+		     *         Returns rangeSelector height
 		     */
 		    getHeight: function () {
 		        var rangeSelector = this,
@@ -8043,7 +9220,10 @@
 		            rangeSelectorHeight = 0,
 		            minPosition;
 
-		        rangeSelectorHeight = rangeSelectorGroup ? (rangeSelectorGroup.getBBox(true).height) + 13 + yPosition : 0; // 13px to keep back compatibility
+		        rangeSelectorHeight = rangeSelectorGroup ?
+		            // 13px to keep back compatibility
+		            (rangeSelectorGroup.getBBox(true).height) + 13 + yPosition :
+		            0;
 
 		        minPosition = Math.min(inputPositionY, buttonPositionY);
 
@@ -8059,8 +9239,13 @@
 
 		    /**
 		     * Detect collision with title or subtitle
-		     * @param {object} chart
-		     * @return {Boolean} Returns collision status
+		     *
+		     * @function Highcharts.RangeSelector#titleCollision
+		     *
+		     * @param  {Highcharts.Chart} chart
+		     *
+		     * @return {boolean}
+		     *         Returns collision status
 		     */
 		    titleCollision: function (chart) {
 		        return !(chart.options.title.text || chart.options.subtitle.text);
@@ -8068,7 +9253,12 @@
 
 		    /**
 		     * Update the range selector with new options
-		     * @param {object} options
+		     *
+		     * @function Highcharts.RangeSelector#update
+		     *
+		     * @param  {Highcharts.RangeSelectorOptions} options
+		     *
+		     * @return {void}
 		     */
 		    update: function (options) {
 		        var chart = this.chart;
@@ -8081,6 +9271,10 @@
 
 		    /**
 		     * Destroys allocated elements.
+		     *
+		     * @function Highcharts.RangeSelector#destroy
+		     *
+		     * @return {void}
 		     */
 		    destroy: function () {
 		        var rSelector = this,
@@ -8118,7 +9312,20 @@
 		};
 
 		/**
-		 * Add logic to normalize the zoomed range in order to preserve the pressed state of range selector buttons
+		 * Add logic to normalize the zoomed range in order to preserve the pressed
+		 * state of range selector buttons
+		 *
+		 * @function Highcharts.Axis#toFixedRange
+		 *
+		 * @param  {number} pxMin
+		 *
+		 * @param  {number} pxMax
+		 *
+		 * @param  {number} fixedMin
+		 *
+		 * @param  {number} fixedMax
+		 *
+		 * @return {*}
 		 */
 		Axis.prototype.toFixedRange = function (pxMin, pxMax, fixedMin, fixedMax) {
 		    var fixedRange = this.chart && this.chart.fixedRange,
@@ -8126,9 +9333,9 @@
 		        newMax = pick(fixedMax, this.translate(pxMax, true, !this.horiz)),
 		        changeRatio = fixedRange && (newMax - newMin) / fixedRange;
 
-		    // If the difference between the fixed range and the actual requested range is
-		    // too great, the user is dragging across an ordinal gap, and we need to release
-		    // the range selector button.
+		    // If the difference between the fixed range and the actual requested range
+		    // is too great, the user is dragging across an ordinal gap, and we need to
+		    // release the range selector button.
 		    if (changeRatio > 0.7 && changeRatio < 1.3) {
 		        if (fixedMax) {
 		            newMin = newMax - fixedRange;
@@ -8152,7 +9359,10 @@
 		 * selected range is a multiple of months or years, it is compensated for
 		 * various month lengths.
 		 *
-		 * @return {number} The new minimum value.
+		 * @function Highcharts.Axis#minFromRange
+		 *
+		 * @return {number}
+		 *         The new minimum value.
 		 */
 		Axis.prototype.minFromRange = function () {
 		    var rangeOptions = this.range,
@@ -8249,19 +9459,35 @@
 
 		    var chart = this,
 		        options = e.options,
+		        optionsRangeSelector = options.rangeSelector,
 		        rangeSelector = chart.rangeSelector,
-		        verticalAlign;
+		        verticalAlign,
+		        extraBottomMarginWas = this.extraBottomMargin,
+		        extraTopMarginWas = this.extraTopMargin;
+
+		    if (
+		        optionsRangeSelector &&
+		        optionsRangeSelector.enabled &&
+		        !defined(rangeSelector)
+		    ) {
+		        this.options.rangeSelector.enabled = true;
+		        this.rangeSelector = new RangeSelector(this);
+		    }
+
 
 		    this.extraBottomMargin = false;
 		    this.extraTopMargin = false;
-		    this.isDirtyBox = true; //    #7684 - ignored spacingBottom after update
 
 		    if (rangeSelector) {
 
 		        rangeSelector.render();
 
-		        verticalAlign = (options.rangeSelector && options.rangeSelector.verticalAlign) ||
-		                        (rangeSelector.options && rangeSelector.options.verticalAlign);
+		        verticalAlign = (
+		            optionsRangeSelector &&
+		            optionsRangeSelector.verticalAlign
+		        ) || (
+		            rangeSelector.options && rangeSelector.options.verticalAlign
+		        );
 
 		        if (!rangeSelector.options.floating) {
 		            if (verticalAlign === 'bottom') {
@@ -8269,6 +9495,13 @@
 		            } else if (verticalAlign !== 'middle') {
 		                this.extraTopMargin = true;
 		            }
+		        }
+
+		        if (
+		            this.extraBottomMargin !== extraBottomMarginWas ||
+		            this.extraTopMargin !== extraTopMarginWas
+		        ) {
+		            this.isDirtyBox = true;
 		        }
 
 		    }
@@ -8295,12 +9528,11 @@
 		    proceed.call(this, options, callback);
 		});
 
-		Chart.prototype.adjustPlotArea = function () {
-		    var chart = this,
-		        rangeSelector = chart.rangeSelector,
+		addEvent(Chart, 'getMargins', function () {
+		    var rangeSelector = this.rangeSelector,
 		        rangeSelectorHeight;
 
-		    if (this.rangeSelector) {
+		    if (rangeSelector) {
 		        rangeSelectorHeight = rangeSelector.getHeight();
 
 		        if (this.extraTopMargin) {
@@ -8311,7 +9543,7 @@
 		            this.marginBottom += rangeSelectorHeight;
 		        }
 		    }
-		};
+		});
 
 		Chart.prototype.callbacks.push(function (chart) {
 		    var extremes,
@@ -8402,11 +9634,12 @@
 		 * zero value in the visible range. The y axis will show percentage
 		 * or absolute change depending on whether `compare` is set to `"percent"`
 		 * or `"value"`. When this is applied to multiple series, it allows
-		 * comparing the development of the series against each other.
+		 * comparing the development of the series against each other. Adds
+		 * a `change` field to every point object.
 		 *
 		 * @type {String}
 		 * @see [compareBase](#plotOptions.series.compareBase),
-		 *      [Axis.setCompare()](#Axis.setCompare())
+		 *      [Axis.setCompare()](/class-reference/Highcharts.Axis#setCompare)
 		 * @sample {highstock} stock/plotoptions/series-compare-percent/ Percent
 		 * @sample {highstock} stock/plotoptions/series-compare-value/ Value
 		 * @default undefined
@@ -8416,7 +9649,7 @@
 		 */
 
 		/**
-		 * Defines if comparisson should start from the first point within the visible
+		 * Defines if comparison should start from the first point within the visible
 		 * range or should start from the first point <b>before</b> the range.
 		 * In other words, this flag determines if first point within the visible range
 		 * will have 0% (`compareStart=true`) or should have been already calculated
@@ -8449,7 +9682,7 @@
 		 * Chart} object with different default options than the basic Chart.
 		 *
 		 * @function #stockChart
-		 * @memberOf Highcharts
+		 * @memberof Highcharts
 		 *
 		 * @param  {String|HTMLDOMElement} renderTo
 		 *         The DOM element to render to, or its id.
@@ -8755,7 +9988,7 @@
 		            inArray(axis2, uniqueAxes) === -1 &&
 		            // Do not draw on axis which overlap completely. #5424
 		            !H.find(uniqueAxes, function (unique) {
-		                return unique.pos === axis2.pos && unique.len && axis2.len;
+		                return unique.pos === axis2.pos && unique.len === axis2.len;
 		            })
 		        ) {
 		            uniqueAxes.push(axis2);
@@ -8884,7 +10117,18 @@
 		        offset = 0,
 		        // Use last available event (#5287)
 		        e = event.e || (this.cross && this.cross.e),
-		        point = event.point;
+		        point = event.point,
+		        lin2log = this.lin2log,
+		        min,
+		        max;
+
+		    if (this.isLog) {
+		        min = lin2log(this.min);
+		        max = lin2log(this.max);
+		    } else {
+		        min = this.min;
+		        max = this.max;
+		    }
 
 		    align = (horiz ? 'center' : opposite ?
 		        (this.labelAlign === 'right' ? 'right' : 'left') :
@@ -8957,7 +10201,7 @@
 		        x: posx,
 		        y: posy,
 		        // Crosshair should be rendered within Axis range (#7219)
-		        visibility: value < this.min || value > this.max ? 'hidden' : 'visible'
+		        visibility: value < min || value > max ? 'hidden' : 'visible'
 		    });
 
 		    crossBox = crossLabel.getBBox();
@@ -9036,7 +10280,7 @@
 		 * series.
 		 *
 		 * @function setCompare
-		 * @memberOf Series.prototype
+		 * @memberof Series.prototype
 		 *
 		 * @param  {String} compare
 		 *         Can be one of `null`, `"percent"` or `"value"`.
@@ -9166,7 +10410,7 @@
 		 *         Chart#redraw},
 		 *
 		 * @function setCompare
-		 * @memberOf Axis.prototype
+		 * @memberof Axis.prototype
 		 *
 		 * @see    {@link https://api.highcharts.com/highstock/series.plotOptions.compare|
 		 *         series.plotOptions.compare}
@@ -9214,6 +10458,7 @@
 		 * this feature (#2754).
 		 */
 		wrap(Series.prototype, 'render', function (proceed) {
+		    var clipHeight;
 		    // Only do this on not 3d (#2939, #5904) nor polar (#6057) charts, and only
 		    // if the series type handles clipping in the animate method (#2975).
 		    if (
@@ -9222,23 +10467,27 @@
 		        this.xAxis &&
 		        !this.xAxis.isRadial // Gauge, #6192
 		    ) {
+		        // Include xAxis line width, #8031
+		        clipHeight = this.yAxis.len - (this.xAxis.axisLine ?
+		            Math.floor(this.xAxis.axisLine.strokeWidth() / 2) :
+		            0);
 
 		        // First render, initial clip box
 		        if (!this.clipBox && this.animate) {
 		            this.clipBox = merge(this.chart.clipBox);
 		            this.clipBox.width = this.xAxis.len;
-		            this.clipBox.height = this.yAxis.len;
+		            this.clipBox.height = clipHeight;
 
 		        // On redrawing, resizing etc, update the clip rectangle
 		        } else if (this.chart[this.sharedClipKey]) {
 		            this.chart[this.sharedClipKey].attr({
 		                width: this.xAxis.len,
-		                height: this.yAxis.len
+		                height: clipHeight
 		            });
 		        // #3111
 		        } else if (this.clipBox) {
 		            this.clipBox.width = this.xAxis.len;
-		            this.clipBox.height = this.yAxis.len;
+		            this.clipBox.height = clipHeight;
 		        }
 		    }
 		    proceed.call(this);
@@ -9271,4 +10520,8 @@
 		});
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));

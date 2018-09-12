@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v6.1.0 (2018-04-13)
+ * @license  Highcharts JS v6.1.2 (2018-08-31)
  * Tilemap module
  *
  * (c) 2010-2017 Highsoft AS
@@ -10,6 +10,10 @@
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
+	} else if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory;
+		});
 	} else {
 		factory(Highcharts);
 	}
@@ -637,7 +641,7 @@
 
 		                // Store points for halo creation
 		                point.tileEdges = {
-		                    x1: x1, x2: x2, x3: x3,    x4: x4, y1: y1, y2: y2, y3: y3
+		                    x1: x1, x2: x2, x3: x3, x4: x4, y1: y1, y2: y2, y3: y3
 		                };
 
 		                // Finally set the shape for this point
@@ -729,7 +733,7 @@
 		                    // We calculate the point padding of the midpoints to
 		                    // preserve the angles of the shape.
 		                    midPointPadding = pointPadding *
-		                        Math.abs(x2 - x1) /    Math.abs(y3 - y2),
+		                        Math.abs(x2 - x1) / Math.abs(y3 - y2),
 		                    xPointPadding = xAxis.reversed ?
 		                        -midPointPadding : midPointPadding,
 		                    yPointPadding = yAxis.reversed ?
@@ -935,7 +939,7 @@
 		                series.getSeriesPixelPadding(axis);
 		        }), function (a, b) {
 		            return (a && a.padding) > (b && b.padding) ? a : b;
-		        }) || {
+		        }, undefined) || {
 		            padding: 0,
 		            axisLengthFactor: 1
 		        },
@@ -957,7 +961,7 @@
 		/**
 		 * A tilemap series is a type of heatmap where the tile shapes are configurable.
 		 *
-		 * @extends {plotOptions.heatmap}
+		 * @extends plotOptions.heatmap
 		 * @product highcharts highmaps
 		 * @sample highcharts/demo/honeycomb-usa/
 		 *         Honeycomb tilemap, USA
@@ -1221,4 +1225,8 @@
 		   */
 
 	}(Highcharts));
+	return (function () {
+
+
+	}());
 }));
