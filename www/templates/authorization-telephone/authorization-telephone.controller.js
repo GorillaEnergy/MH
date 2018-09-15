@@ -18,8 +18,8 @@
 
     vm.countryCodes = countries;
      if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
-     vm.phone = '';
-   //  vm.phone = '3311225544';
+     // vm.phone = '';
+    vm.phone = '8877665544';
 
 
     // if (countries.length) { vm.countryCode = countries[235].code,vm.phone='' } //country be default Ukraine

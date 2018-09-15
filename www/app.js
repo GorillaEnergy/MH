@@ -46,6 +46,15 @@
             }
 
 
+            // if (window.device.platform === 'iOS') {
+            //     cordova.plugins.iosrtc.registerGlobals();
+            // }
+
+
+            $timeout(function () {
+                 console.log(navigator.mediaDevices);
+            }, 5000)
+
             document.addEventListener("pause", function () {
               console.log('pause');
               // firebase.database().ref('/WebRTC/users/' + userService.getUser().id + '/online').set(false);
