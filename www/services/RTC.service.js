@@ -42,14 +42,22 @@
     function onlineChanger() {
       console.log('onlineChanger()');
       document.addEventListener("pause", function () {
+        console.log("pause");
+        autoHangup();
         firebase.database().ref('/WebRTC/users/' + $localStorage.user.id + '/online').set(false);
       }, false);
 
       document.addEventListener("resume", function () {
+        console.log("resume");
+        autoHangup();
         firebase.database().ref('/WebRTC/users/' + $localStorage.user.id + '/online').set(true);
       }, false);
 
       initFB();
+    }
+
+    function autoHangup() {
+        $rootScope.$broadcast('pubnub-auto-hangup', true);
     }
 
     function initFB() {
@@ -227,10 +235,10 @@
         errWrap(login, your_name);
 
         if (type === 'joinRTC') {
-          $timeout(function () {
+          // $timeout(function () {
             // console.log('makeCall to ', opponent_nick);
             errWrap(makeCall, opponent_nick);
-          }, 3000)
+          // }, 3000)
         }
       }, 1000);
 
@@ -293,17 +301,24 @@
       });
 
       ctrl.receive(function(session){
-        // session.connected(function(session){ video_out.appendChild(session.video); addLog(session.number + " has joined."); vidCount++; });
-        // session.ended(function(session) { ctrl.getVideoElement(session.number).remove(); addLog(session.number + " has left.");    vidCount--;});
+
         session.connected(function(session){
-          video_out.appendChild(session.video);
+          console.log('session.connected');
+
+          session.video.addEventListener('canplay', function () {
+            console.log('canplay');
+             video_out.appendChild(session.video);
+          });
+
           addLog(session.number + " has joined.");
+          // video_out.appendChild(session.video);
           activityCalc(session.number, true);
         });
 
         session.ended(function(session) {
-          ctrl.getVideoElement(session.number).remove();
+          console.log('session.ended');
           addLog(session.number + " has left.");
+          ctrl.getVideoElement(session.number).remove();
           activityCalc(session.number, false);
         });
       });

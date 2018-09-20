@@ -204,10 +204,12 @@
       }
 
       function add_to_stream(number){
+          console.log('add_to_stream');
         phone.dial(number);
       }
 
       function add_to_group(number){
+        console.log('add_to_group');
         var session = phone.dial(number, get_xirsys_servers()); // Dial Number
         if (!session) return; 	// No Dupelicate Dialing Allowed
       }
@@ -251,8 +253,8 @@
           case "userLeave":
             var idx = findWithAttr(userArray, "number", m.data);
             if (idx != -1) userArray.splice(idx, 1)[0];
-            console.log('some idx ', idx);
-            console.log('some user arr', userArray);
+            // console.log('some idx ', idx);
+            // console.log('some user arr', userArray);
             break;
           case "userVideo":
             var idx = findWithAttr(userArray, "number", m.data.user);

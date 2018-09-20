@@ -53,6 +53,14 @@
         </custom-config-file>
     </platform>
     <platform name="ios">
+        <config-file parent="NSMainNibFile" platform="ios" target="*-Info.plist">
+            <string />
+        </config-file>
+    </platform>
+    <platform name="ios">
+        <config-file parent="NSMainNibFile~ipad" platform="ios" target="*-Info.plist">
+            <string />
+        </config-file>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <hook src="plugins/cordova-plugin-iosrtc/extra/hooks/iosrtc-swift-support.js" type="after_platform_add" />
@@ -75,18 +83,6 @@
         <icon height="58" src="resources/ios/icon/icon-small@2x.png" width="58" />
         <icon height="87" src="resources/ios/icon/icon-small@3x.png" width="87" />
         <icon height="1024" src="resources/ios/icon/icon-1024.png" width="1024" />
-        <splash height="1136" src="resources/ios/splash/Default-568h@2x~iphone.png" width="640" />
-        <splash height="1334" src="resources/ios/splash/Default-667h.png" width="750" />
-        <splash height="2208" src="resources/ios/splash/Default-736h.png" width="1242" />
-        <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
-        <splash height="2732" src="resources/ios/splash/Default-Landscape@_ipadpro" width="2732" />
-        <splash height="1242" src="resources/ios/splash/Default-Landscape-736h.png" width="1228" />
-        <splash height="960" src="resources/ios/splash/Default@2x_universal_anyany.png" width="640" />
-        <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
-        <splash height="2048" src="resources/ios/splash/Default-Portrait@2x~ipad.png" width="1536" />
-        <splash height="2732" src="resources/ios/splash/Default-Portrait@~ipadpro.png" width="2048" />
-        <splash height="1024" src="resources/ios/splash/Default-Portrait~ipad.png" width="768" />
-        <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
             <string>Blink uses your camera to make video calls.</string>
         </config-file>
@@ -100,6 +96,14 @@
         <config-file parent="NSMainNibFile" platform="ios" target="*-Info.plist">
             <string />
         </config-file>
+        <splash height="1136" src="resources/ios/splash/Default-568h@2x~iphone.png" width="640" />
+        <splash height="1334" src="resources/ios/splash/Default-667h.png" width="750" />
+        <splash height="2208" src="resources/ios/splash/Default-736h.png" width="1242" />
+        <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
+        <splash height="2732" src="resources/ios/splash/Default-Landscape@_ipadpro" width="2732" />
+        <splash height="1242" src="resources/ios/splash/Default-Landscape-736h.png" width="1228" />
+        <splash height="960" src="resources/ios/splash/Default@2x_universal_anyany.png" width="640" />
+        <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <allow-navigation href="http://192.168.1.108:8100" />
     <allow-navigation href="http://192.168.42.106:8100" />

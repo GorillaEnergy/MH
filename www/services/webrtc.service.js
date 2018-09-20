@@ -135,6 +135,9 @@
       // Add/Get Conversation - Creates a new PC or Returns Existing PC
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function get_conversation(number, isAnswer) {
+        console.log('get_conversation');
+        // console.log(number, isAnswer);
+
         var talk = conversations[number] || (function(number){
           var talk = {
             number  : number,
@@ -152,7 +155,10 @@
           };
 
           // Setup Event Methods
-          talk.pc.onaddstream    = config.onaddstream || onaddstream;
+
+
+          // talk.pc.onaddstream    = config.onaddstream || onaddstream;
+          talk.pc.onaddstream    = onaddstream;
           talk.pc.onicecandidate = onicecandidate;
           talk.pc.number         = number;
 
@@ -253,6 +259,8 @@
       // Make Call - Create new PeerConnection
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       PHONE.dial = function(number, servers) {
+        console.log('dial');
+
         if (!!servers) add_servers(servers);
         var talk = get_conversation(number);
         var pc   = talk.pc;
@@ -314,28 +322,57 @@
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       // Auto-hangup on Leave
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-      PUBNUB.bind( 'unload,beforeunload', window, function() {
+        $rootScope.$on('pubnub-auto-hangup', function (event) {
+            pubnubBind
+        });
+
+      function pubnubBind() {
+        console.log('unload,beforeunload');
         if (PHONE.goodbye) return true;
         PHONE.goodbye = true;
 
         PUBNUB.each( conversations, function( number, talk ) {
-          var mynumber = config.number;
-          var packet   = { hangup:true };
-          var message  = { packet:packet, id:sessionid, number:mynumber };
-          var client   = new XMLHttpRequest();
-          var url      = 'http://pubsub.pubnub.com/publish/'
-            + pubkey + '/'
-            + subkey + '/0/'
-            + number + '/0/'
-            + JSON.stringify(message);
+            var mynumber = config.number;
+            var packet   = { hangup:true };
+            var message  = { packet:packet, id:sessionid, number:mynumber };
+            var client   = new XMLHttpRequest();
+            var url      = 'http://pubsub.pubnub.com/publish/'
+                + pubkey + '/'
+                + subkey + '/0/'
+                + number + '/0/'
+                + JSON.stringify(message);
 
-          client.open( 'GET', url, false );
-          client.send();
-          talk.hangup();
+            client.open( 'GET', url, false );
+            client.send();
+            talk.hangup();
         } );
 
         return true;
-      } );
+      }
+
+      // PUBNUB.bind( 'unload,beforeunload', window, function() {
+      //   console.log('unload,beforeunload');
+      //   if (PHONE.goodbye) return true;
+      //   PHONE.goodbye = true;
+      //
+      //   PUBNUB.each( conversations, function( number, talk ) {
+      //     var mynumber = config.number;
+      //     var packet   = { hangup:true };
+      //     var message  = { packet:packet, id:sessionid, number:mynumber };
+      //     var client   = new XMLHttpRequest();
+      //     var url      = 'http://pubsub.pubnub.com/publish/'
+      //       + pubkey + '/'
+      //       + subkey + '/0/'
+      //       + number + '/0/'
+      //       + JSON.stringify(message);
+      //
+      //     client.open( 'GET', url, false );
+      //     client.send();
+      //     talk.hangup();
+      //   } );
+      //
+      //   return true;
+      // } );
 
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       // Grab Local Video Snapshot
@@ -373,9 +410,15 @@
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function onaddstream(obj) {
         var vid    = document.createElement('video');
+
         var stream = obj.stream;
-        var number = (obj.srcElement || obj.target).number;
+        // var number = (obj.srcElement || obj.target).number;
+        var number = '8mhuser';
         var talk   = get_conversation(number);
+
+        // Tell the plugin to monitor it.
+        console.log('cordova.plugins.iosrtc.observeVideo');
+        cordova.plugins.iosrtc.observeVideo(vid);
 
         vid.setAttribute( 'autoplay', 'autoplay' );
         vid.setAttribute( 'data-number', number );
@@ -389,6 +432,7 @@
       // On ICE Route Candidate Discovery
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function onicecandidate(event) {
+        console.log('onicecandidate');
         if (!event.candidate) return;
         transmit( this.number, event.candidate );
       };
@@ -447,6 +491,8 @@
       // Send SDP Call Offers/Answers and ICE Candidates to Peer
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function transmit( phone, packet, times, time ) {
+        console.log('transmit');
+
         if (!packet) return;
         var number  = config.number;
         var message = { packet : packet, id : sessionid, number : number };
@@ -550,9 +596,12 @@
       // Add ICE Candidate Routes
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function add_ice_route(message) {
+        console.log('add ice route');
         // Leave if Non-good ICE Packet
         if (!message.packet)           return;
+        console.log('1');
         if (!message.packet.candidate) return;
+        console.log('2');
 
         // Get Call Reference
         var talk = get_conversation(message.number);
