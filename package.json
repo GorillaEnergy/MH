@@ -16,14 +16,15 @@
     "android-versions": "^1.2.1",
     "cordova": "^8.0.0",
     "cordova-android": "6.3.0",
-    "cordova-ios": "4.5.5",
+    "cordova-ios": "^4.5.5",
     "cordova-opentok-android-permissions": "^1.0.1",
     "cordova-plugin-android-permissions": "^1.0.0",
+    "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-inapppurchase": "^1.2.0",
-    "cordova-plugin-ionic-keyboard": "^2.1.2",
+    "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-iosrtc": "^4.0.2",
     "cordova-plugin-settings-hook": "^0.2.7",
     "cordova-plugin-splashscreen": "^4.1.0",
@@ -52,11 +53,13 @@
       "cordova-opentok-android-permissions": {},
       "cordova.plugins.diagnostic": {},
       "cordova-plugin-iosrtc": {},
-      "cordova-plugin-swift-support": {}
+      "cordova-plugin-swift-support": {},
+      "cordova-plugin-camera": {}
     },
     "platforms": [
       "android",
-      "windows"
+      "windows",
+      "ios"
     ]
   }
 }
