@@ -4,9 +4,9 @@
     angular.module('service.RTCService', [])
         .service('RTCService', RTCService);
 
-    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state'];
+    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading'];
 
-    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state) {
+    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading) {
         console.log('RTCService start');
 
         let user;
@@ -321,6 +321,10 @@
 
                     session.video.addEventListener('canplay', function () {
                         console.log('canplay');
+                        session.video.style.width = "100%";
+                        video_out.style.width = "100%";
+                        session.video.style.height = "150px";
+                        video_out.style.height = "150px";
                         video_out.appendChild(session.video);
                     });
 
@@ -350,6 +354,9 @@
             function activityCalc(name, join) {
                 console.log(name, join);
                 let index;
+                if (join) {
+                    $ionicLoading.hide()
+                }
 
                 search(name);
 

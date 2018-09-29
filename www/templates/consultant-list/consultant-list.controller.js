@@ -4,10 +4,10 @@
     angular.module('app')
         .controller('ConsultantListController', ConsultantListController);
 
-    ConsultantListController.$inject = ['$state', '$window', '$timeout', '$localStorage', 'RTCService', 'consultants'];
+    ConsultantListController.$inject = ['$state', '$window', '$timeout', '$localStorage', 'RTCService', 'consultants', '$ionicLoading'];
 
 
-    function ConsultantListController($state, $window, $timeout, $localStorage, RTCService, consultants) {
+    function ConsultantListController($state, $window, $timeout, $localStorage, RTCService, consultants, $ionicLoading) {
         const vm = this;
 
         vm.consultants = consultants;
@@ -55,6 +55,11 @@
 
         ///////////////////////////////////////////////////////////////////
         function call(user) {
+            $ionicLoading.show({
+                template: 'Calling...',
+            }).then(function () {
+                console.log("The loading indicator is now displayed");
+            });
             RTCService.callTo(user);
         }
 
