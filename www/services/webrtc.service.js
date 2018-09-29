@@ -4,9 +4,9 @@
   angular.module('service.webrtc', [])
     .service('webrtc', webrtc);
 
-  webrtc.$inject = ['$rootScope'];
+  webrtc.$inject = ['$rootScope', '$localStorage'];
 
-  function webrtc($rootScope) {
+  function webrtc($rootScope, $localStorage) {
     console.log('webrtc start');
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -70,11 +70,11 @@
               },
               optional: []
           },*/
-        iceServers : [{ "url" :
+        iceServers : [
+          { "url" :
             navigator.mozGetUserMedia    ? "stun:stun.services.mozilla.com" :
               navigator.webkitGetUserMedia ? "stun:stun.l.google.com:19302"   :
-                "stun:23.21.150.121"
-        },
+                "stun:23.21.150.121"},
           {url: "stun:stun.l.google.com:19302"},
           {url: "stun:stun1.l.google.com:19302"},
           {url: "stun:stun2.l.google.com:19302"},
@@ -101,6 +101,7 @@
       // Custom STUN Options
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function add_servers(servers) {
+        // console.log('add_servers ', servers);
         if (servers.constructor === Array)
           [].unshift.apply(rtcconfig.iceServers, servers);
         else rtcconfig.iceServers.unshift(servers);
@@ -135,6 +136,7 @@
       // Add/Get Conversation - Creates a new PC or Returns Existing PC
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function get_conversation(number, isAnswer) {
+        // console.log('get_conversation ', number);
         var talk = conversations[number] || (function(number){
           var talk = {
             number  : number,
@@ -217,6 +219,7 @@
       // Remove Conversation
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function close_conversation(number) {
+        // console.log('close_conversation');
         conversations[number] = null;
         delete conversations[number];
       }
@@ -225,6 +228,7 @@
       // Notify of Call Status Events
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function update_conversation( talk, status ) {
+        // console.log('update_conversation');
         talk.status = status;
         callstatuscb(talk);
         return talk;
@@ -253,6 +257,7 @@
       // Make Call - Create new PeerConnection
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       PHONE.dial = function(number, servers) {
+        // console.log('PHONE.dial ', number);
         if (!!servers) add_servers(servers);
         var talk = get_conversation(number);
         var pc   = talk.pc;
@@ -276,6 +281,7 @@
       // Send Image Snap - Send Image Snap to All Calls or a Specific Call
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       PHONE.snap = function( message, number ) {
+        // console.log('PHONE.snap ', number);
         if (number) return get_conversation(number).snap(message);
         var pic = {};
         PUBNUB.each( conversations, function( number, talk ) {
@@ -288,6 +294,7 @@
       // Send Message - Send Message to All Calls or a Specific Call
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       PHONE.send = function( message, number ) {
+        // console.log('PHONE.send ', number);
         if (number) return get_conversation(number).send(message);
         PUBNUB.each( conversations, function( number, talk ) {
           talk.send(message);
@@ -298,6 +305,7 @@
       // End Call - Close All Calls or a Specific Call
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       PHONE.hangup = function(number) {
+        // console.log('PHONE.hangup ', number);
         if (number) return get_conversation(number).hangup();
         PUBNUB.each( conversations, function( number, talk ) {
           talk.hangup();
@@ -315,6 +323,7 @@
       // Auto-hangup on Leave
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       PUBNUB.bind( 'unload,beforeunload', window, function() {
+        // console.log('----------------> unload, beforeunload <----------------');
         if (PHONE.goodbye) return true;
         PHONE.goodbye = true;
 
@@ -341,6 +350,7 @@
       // Grab Local Video Snapshot
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function snapshots_setup(stream) {
+        // console.log('snapshots_setup');
         var video   = myvideo;
         var canvas  = document.createElement('canvas');
         var context = canvas.getContext("2d");
@@ -379,6 +389,7 @@
 
         vid.setAttribute( 'autoplay', 'autoplay' );
         vid.setAttribute( 'data-number', number );
+        vid.setAttribute( 'id', number );
         vid.src = URL.createObjectURL(stream);
 
         talk.video = vid;
@@ -389,9 +400,10 @@
       // On ICE Route Candidate Discovery
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function onicecandidate(event) {
+        // console.log('onicecandidate');
         if (!event.candidate) return;
         transmit( this.number, event.candidate );
-      };
+      }
 
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       // Listen For New Incoming Calls
@@ -412,6 +424,7 @@
       // When Ready to Receive Calls
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function onready(subscribed) {
+        // console.log('onready');
         if (subscribed) myconnection = true;
         if (!((mystream || oneway) && myconnection)) return;
 
@@ -423,6 +436,7 @@
       // Prepare Local Media Camera and Mic
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function getusermedia() { //Do something if not requesting any media?
+        // console.log('getusermedia');
         if (oneway && !broadcast){
           if (!PeerConnection){ return unablecb(); }
           onready();
@@ -446,6 +460,7 @@
       // Send SDP Call Offers/Answers and ICE Candidates to Peer
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function transmit( phone, packet, times, time ) {
+        // console.log('transmit ', phone);
         if (!packet) return;
         var number  = config.number;
         var message = { packet : packet, id : sessionid, number : number };
@@ -465,6 +480,7 @@
       // SDP Offers & ICE Candidates Receivable Processing
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function receive(message) {
+        // console.log('receive ', message);
         // Debug Callback of Data to Watch
         debugcb(message);
 
@@ -501,6 +517,7 @@
       // Create Remote Friend Thumbnail
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function create_thumbnail(message) {
+        // console.log('create_thumbnail');
         var talk       = get_conversation(message.number);
         talk.image.src = message.packet.thumbnail;
 
@@ -514,6 +531,7 @@
       // Add SDP Offer/Answers
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function add_sdp_offer(message) {
+        // console.log('add_sdp_offer');
         // Get Call Reference
         var talk = get_conversation(message.number, message.packet.type=='answer');
         var pc   = talk.pc;
@@ -549,6 +567,7 @@
       // Add ICE Candidate Routes
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function add_ice_route(message) {
+        // console.log('add_ice_route');
         // Leave if Non-good ICE Packet
         if (!message.packet)           return;
         if (!message.packet.candidate) return;

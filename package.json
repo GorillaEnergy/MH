@@ -69,8 +69,8 @@
       "cordova-plugin-android-volume": {}
     },
     "platforms": [
-      "android",
-      "windows"
+      "windows",
+      "android"
     ]
   }
 }

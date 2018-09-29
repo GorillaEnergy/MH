@@ -77,11 +77,12 @@
         video.play();
         video.setAttribute( 'autoplay', 'autoplay' );
         video.setAttribute( 'data-number', phone.number() );
+        video.setAttribute( 'id', phone.number() );
         vid.style.cssText ="-moz-transform: scale(-1, 1); \
 						 	-webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); \
 							transform: scale(-1, 1); filter: FlipH;";
         vid.appendChild(video);
-      };
+      }
 
       function stream_subscribe(name){
         var ch = (name ? name : phone.number()) + "-stream";
@@ -95,19 +96,19 @@
 
       CONTROLLER.stream = function(){
         stream_subscribe();
-      }
+      };
 
       CONTROLLER.joinStream = function(name){
         stream_subscribe(name);
         publishCtrl(controlChannel(name), "userJoin", phone.number());
-      }
+      };
 
       CONTROLLER.leaveStream = function(name){
         var ch = (name ? name : phone.number()) + "-stream";
         pubnub.unsubscribe({
           channel    : ch,
         });
-      }
+      };
 
       CONTROLLER.send = function( message, number ) {
         if (phone.oneway) return stream_message(message);
@@ -186,7 +187,7 @@
 
       CONTROLLER.getVideoElement = function(number){
         return $('*[data-number="'+number+'"]');
-      }
+      };
 
       function manage_users(session){
         if (session.number == phone.number()) return; 	// Do nothing if it is self.
@@ -238,8 +239,8 @@
       }
 
       function receive(m){
-        console.log('receive');
-        console.log(m);
+        console.log('receive', m);
+
         switch(m.type) {
           case "userCall":
             callAuth(m.data);
@@ -251,8 +252,6 @@
           case "userLeave":
             var idx = findWithAttr(userArray, "number", m.data);
             if (idx != -1) userArray.splice(idx, 1)[0];
-            console.log('some idx ', idx);
-            console.log('some user arr', userArray);
             break;
           case "userVideo":
             var idx = findWithAttr(userArray, "number", m.data.user);
@@ -265,7 +264,6 @@
             if (idx != -1) audiotogglecb(userArray[idx], audEnabled);
             break;
         }
-        // console.log(m);
       }
 
       function findWithAttr(array, attr, value) {
@@ -298,9 +296,9 @@
           secure: 1,
         },
         success: function(res) {
-          console.log(res);
           res = JSON.parse(res);
           if (!res.e) servers = res.d.iceServers;
+          console.log('get_xirsys_servers()', servers);
         },
         async: false
       });

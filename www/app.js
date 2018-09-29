@@ -17,10 +17,6 @@
     function run($ionicPlatform, $timeout, $state, toastr, fcm, userService, $ionicSideMenuDelegate,
                  purchaseService, notificationService, webrtc, rtcController, RTCService, volumeService) {
 
-        // if (ionic.Platform.platform() == 'ios') {
-        //   $ionicConfigProvider.views.swipeBackEnabled(false);
-        // }
-
         // Initialize Firebase
         let config = {
           apiKey: "AIzaSyCPyHbouuqslfJIbAynfdeCHlJb_2tJw9M",
@@ -42,6 +38,8 @@
             //     // remove the status bar on iOS or change it to use white instead of dark colors.
                 StatusBar.styleDefault();
             }
+
+            // console.log(navigator);
 
             volumeService.init();
 

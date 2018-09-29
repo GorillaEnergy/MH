@@ -4,9 +4,9 @@
   angular.module('service.RTCService', [])
     .service('RTCService', RTCService);
 
-  RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state'];
+  RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading'];
 
-  function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state) {
+  function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading) {
     console.log('RTCService start');
 
     let user;
@@ -205,7 +205,6 @@
     function dialing(type, your_name, opponent_nick, opponent_name) {
       popup = true;
       //joinRTC  initRTC
-      console.log(user);
 
       let scope = $rootScope.$new(true);
 
@@ -292,27 +291,22 @@
       var ctrl = window.ctrl = CONTROLLER(phone);
 
       ctrl.ready(function(){
-        ctrl.addLocalStream(vid_thumb);
+        // ctrl.addLocalStream(vid_thumb);
+        ctrl.addLocalStream(video_out);
         addLog("Logged in as " + username);
       });
 
       ctrl.receive(function(session){
-        // session.connected(function(session){
-        // video_out.appendChild(session.video);
-        // addLog(session.number + " has joined.");
-        // vidCount++;
-        // });
-
-        // session.ended(function(session) {
-        // ctrl.getVideoElement(session.number).remove();
-        // addLog(session.number + " has left.");
-        // vidCount--;
-        // });
+        console.log('ctrl.receive');
 
         session.connected(function(session){
-          video_out.appendChild(session.video);
-          addLog(session.number + " has joined.");
+          console.log('session.connected');
+
           activityCalc(session.number, true);
+          // video_out.appendChild(session.video);
+          vidCount > 1 ? video_out.appendChild(session.video) : vid_thumb.appendChild(session.video);
+          $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
+          addLog(session.number + " has joined.");
         });
 
         session.ended(function(session) {
@@ -333,13 +327,16 @@
       });
 
       function activityCalc(name, join) {
-        console.log(name, join);
+        // console.log(name, join);
         let index;
+        if (join) {
+          $ionicLoading.hide()
+        }
 
         search(name);
         function search(name) {
           for (let i=0; i < userActivityArr.length; i++) {
-            if (userActivityArr[i].name == name) {
+            if (userActivityArr[i].user == name) {
               index = i;
               console.log('index = ' + i);
               break
@@ -351,7 +348,8 @@
           if (join) {
             userActivityArr.push({ user: name })
           } else {
-            userActivityArr.splice(index, 1)
+            userActivityArr.splice(index, 1);
+            if (userActivityArr.length && index === 0) { transferVideoElem(userActivityArr[0].user) }
           }
 
           vidCalc(name)
@@ -359,17 +357,22 @@
         function vidCalc(name) {
           vidCount = userActivityArr.length;
 
-          $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
-
           console.log('User arr', userActivityArr);
           console.log('User count', vidCount);
           if (!vidCount) {
-            remoteStream = false;
-            channelName = null;
+            end();
           } else {
             remoteStream = name;
           }
         }
+      }
+      function transferVideoElem(id) {
+        let itm = document.getElementById(id);
+        let cln = itm.cloneNode(true);
+
+        vid_thumb.appendChild(cln);
+        video_out.removeChild(itm);
+        $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
       }
       return false;
     }
@@ -410,8 +413,8 @@
 
     function end(){
       // $("vid-box").empty();
-      $window.location.reload();
       ctrl.hangup();
+      $window.location.reload();
     }
     function softEnd(){
       // $("vid-box").empty();

@@ -107,11 +107,11 @@
           http.get(url.auth.logout).then(function (res) {
             if (res.status === 'success') {
               toastr.success(res.message);
-              firebase.database().ref('/WebRTC/users/' + getUser().id + '/online').set(false);
-              $localStorage.$reset();
-              $sessionStorage.$reset();
-              $state.go('authorization')
             }
+            firebase.database().ref('/WebRTC/users/' + getUser().id + '/online').set(false);
+            $localStorage.$reset();
+            $sessionStorage.$reset();
+            $state.go('authorization')
           });
         }
 
