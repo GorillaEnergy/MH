@@ -1,40 +1,5 @@
 ;(function () {
-<<<<<<< HEAD
     'use strict';
-=======
-  'use strict';
-
-  angular.module('service.RTCService', [])
-    .service('RTCService', RTCService);
-
-  RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading'];
-
-  function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading) {
-    console.log('RTCService start');
-
-    let user;
-    let localStream;
-    let remoteStream;
-    let channelName;
-    let reconnectAccess = true;
-    let reconnect;
-    let popup;
-
-    UserChecker();
-    function UserChecker() {
-      let userTimer = setInterval(timer, 1000);
-      function timer() {
-        if ($localStorage.user) {
-          user = $localStorage.user;
-          onlineChanger();
-          myStopFunction()
-        }
-      }
-      function myStopFunction() {
-        clearInterval(userTimer);
-      }
-    }
->>>>>>> 5bb25e8389d17525b91788e7aae7e172c72c3b9f
 
     angular.module('service.RTCService', [])
         .service('RTCService', RTCService);
@@ -286,53 +251,6 @@
                 popup = false;
                 end();
             }
-<<<<<<< HEAD
-=======
-          } else if (snapshot.val() === 'chat') {
-            console.log('to kid chat');
-            offAnswerWatcher(opponent_id);
-            $localStorage.consultant = {id: opponent_id};
-            $state.go('kid-chat')
-          }
-        })
-      });
-    }
-    function offAnswerWatcher(id) {
-      firebase.database().ref('/WebRTC/users/' + id + '/metadata/answer').off();
-    }
-    function dialing(type, your_name, opponent_nick, opponent_name) {
-      popup = true;
-      //joinRTC  initRTC
-
-      let scope = $rootScope.$new(true);
-
-      let conversationPopup = $ionicPopup.show({
-        title: opponent_name,
-        templateUrl: './components/conversation/conversation.html',
-        cssClass: 'conversation',
-        scope: scope,
-        buttons: [
-          {
-            text: 'Hang Up',
-            type: 'button-positive',
-            onTap: function (e) { hangUp(); }
-          }]
-      });
-
-      $timeout(function () {
-        video_out = document.getElementById("vid-box");
-        vid_thumb = document.getElementById("vid-thumb");
-
-        console.log(your_name, opponent_nick, opponent_name);
-
-        errWrap(login, your_name);
-
-        if (type === 'joinRTC') {
-          $timeout(function () {
-            // console.log('makeCall to ', opponent_nick);
-            errWrap(makeCall, opponent_nick);
-          }, 3000)
->>>>>>> 5bb25e8389d17525b91788e7aae7e172c72c3b9f
         }
 
 
@@ -384,7 +302,6 @@
                 ssl: true
             });
 
-<<<<<<< HEAD
             var ctrl = window.ctrl = CONTROLLER(phone);
 
             ctrl.ready(function () {
@@ -479,83 +396,10 @@
                         remoteStream = name;
                     }
                 }
-=======
-    ///////////////////////////////////////////////////////////////////////////////////////////
-
-    var video_out;
-    var vid_thumb;
-    let vidCount  = 0;
-    let userActivityArr = [];
-
-    function login(username) {
-      console.log('login function');
-      var phone = window.phone = PHONE({
-        number        : username || "Anonymous", // listen on username line else Anonymous
-        publish_key   : 'pub-c-561a7378-fa06-4c50-a331-5c0056d0163c', // Your Pub Key
-        subscribe_key : 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe', // Your Sub Key
-        // subscribe_key : 'sub-c-0d440624-9fdc-11e8-b377-126307b646dc', // Your Sub Key
-        // publish_key   : 'pub-c-7ea57229-5447-4f4e-ba45-0baa9734f35e', // Your Pub Key
-        ssl: true
-      });
-
-      var ctrl = window.ctrl = CONTROLLER(phone);
-
-      ctrl.ready(function(){
-        // ctrl.addLocalStream(vid_thumb);
-        ctrl.addLocalStream(video_out);
-        addLog("Logged in as " + username);
-      });
-
-      ctrl.receive(function(session){
-        console.log('ctrl.receive');
-
-        session.connected(function(session){
-          console.log('session.connected');
-
-          activityCalc(session.number, true);
-          // video_out.appendChild(session.video);
-          vidCount > 1 ? video_out.appendChild(session.video) : vid_thumb.appendChild(session.video);
-          $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
-          addLog(session.number + " has joined.");
-        });
-
-        session.ended(function(session) {
-          ctrl.getVideoElement(session.number).remove();
-          addLog(session.number + " has left.");
-          activityCalc(session.number, false);
-        });
-      });
-
-      ctrl.videoToggled(function(session, isEnabled){
-        ctrl.getVideoElement(session.number).toggle(isEnabled);
-        addLog(session.number+": video enabled - " + isEnabled);
-      });
-
-      ctrl.audioToggled(function(session, isEnabled){
-        ctrl.getVideoElement(session.number).css("opacity",isEnabled ? 1 : 0.75);
-        addLog(session.number+": audio enabled - " + isEnabled);
-      });
-
-      function activityCalc(name, join) {
-        // console.log(name, join);
-        let index;
-        if (join) {
-          $ionicLoading.hide()
-        }
-
-        search(name);
-        function search(name) {
-          for (let i=0; i < userActivityArr.length; i++) {
-            if (userActivityArr[i].user == name) {
-              index = i;
-              console.log('index = ' + i);
-              break
->>>>>>> 5bb25e8389d17525b91788e7aae7e172c72c3b9f
             }
 
             return false;
         }
-<<<<<<< HEAD
 
         function makeCall(opponent_nick) {
             console.log('makeCall function', 'call to ', opponent_nick);
@@ -590,40 +434,6 @@
             if (!audio) $("#mute").html("Unmute");
             else $("#mute").html("Mute");
         }
-=======
-        function change(name) {
-          if (join) {
-            userActivityArr.push({ user: name })
-          } else {
-            userActivityArr.splice(index, 1);
-            if (userActivityArr.length && index === 0) { transferVideoElem(userActivityArr[0].user) }
-          }
-
-          vidCalc(name)
-        }
-        function vidCalc(name) {
-          vidCount = userActivityArr.length;
-
-          console.log('User arr', userActivityArr);
-          console.log('User count', vidCount);
-          if (!vidCount) {
-            end();
-          } else {
-            remoteStream = name;
-          }
-        }
-      }
-      function transferVideoElem(id) {
-        let itm = document.getElementById(id);
-        let cln = itm.cloneNode(true);
-
-        vid_thumb.appendChild(cln);
-        video_out.removeChild(itm);
-        $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
-      }
-      return false;
-    }
->>>>>>> 5bb25e8389d17525b91788e7aae7e172c72c3b9f
 
         function end() {
             // $("vid-box").empty();
@@ -646,22 +456,10 @@
             return $('*[data-number="' + number + '"]');
         }
 
-<<<<<<< HEAD
         function addLog(log) {
             // $('#logs').append("<p>"+log+"</p>");
             console.log(log);
         }
-=======
-    function end(){
-      // $("vid-box").empty();
-      ctrl.hangup();
-      $window.location.reload();
-    }
-    function softEnd(){
-      // $("vid-box").empty();
-      ctrl.hangup();
-    }
->>>>>>> 5bb25e8389d17525b91788e7aae7e172c72c3b9f
 
         function errWrap(fxn, form) {
             try {
