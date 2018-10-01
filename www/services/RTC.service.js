@@ -323,8 +323,8 @@
                         console.log('canplay');
                         session.video.style.width = "100%";
                         video_out.style.width = "100%";
-                        session.video.style.height = "150px";
-                        video_out.style.height = "150px";
+                        session.video.style.height = "70vh";
+                        video_out.style.height = "70vh";
                         video_out.appendChild(session.video);
                     });
 

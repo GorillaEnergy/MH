@@ -1,12 +1,11 @@
 .conversation {
   background-color: #4d4d4d;
 
-
   .popup {
-    width: 100%!important;
-    height: 100%!important;
-    max-width: 100%!important;
-    max-height: 100%!important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
   }
 
   .bodyDiv {
@@ -17,18 +16,19 @@
     .video1 {
       width: 100%;
       video {
-        width: 100%!important;
+        width: 100% !important;
       }
     }
     .video2 {
       position: absolute;
       z-index: 99;
-      bottom: 0;
+      bottom: 50px;
       right: 0;
-      width: 150px;
+      width: 200px;
+      height: 150px;
 
       video {
-        width: 100%!important;
+        width: 100% !important;
       }
     }
   }
