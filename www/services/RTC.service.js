@@ -317,20 +317,16 @@
             ctrl.receive(function (session) {
 
                 session.connected(function (session) {
-                    console.log('session.connected');
-
-                    session.video.addEventListener('canplay', function () {
-                        console.log('canplay');
-                        session.video.style.width = "100%";
-                        video_out.style.width = "100%";
-                        session.video.style.height = "70vh";
-                        video_out.style.height = "70vh";
-                        video_out.appendChild(session.video);
-                    });
-
-                    addLog(session.number + " has joined.");
-                    // video_out.appendChild(session.video);
-                    activityCalc(session.number, true);
+                    $ionicLoading.hide()
+                    // session.video.addEventListener('canplay', function () {
+                    console.log('canplay');
+                    session.video.style.width = "100%";
+                    video_out.style.width = "100%";
+                    session.video.style.height = "70vh";
+                    video_out.style.height = "70vh";
+                    session.video.style.top = "10px";
+                    video_out.appendChild(session.video);
+                    // });
                 });
 
                 session.ended(function (session) {
@@ -354,10 +350,6 @@
             function activityCalc(name, join) {
                 console.log(name, join);
                 let index;
-                if (join) {
-                    $ionicLoading.hide()
-                }
-
                 search(name);
 
                 function search(name) {

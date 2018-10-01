@@ -56,7 +56,7 @@
         ///////////////////////////////////////////////////////////////////
         function call(user) {
             $ionicLoading.show({
-                template: 'Calling...',
+                template: '<ion-spinner icon="lines" class="spinner-energized"></ion-spinner> <br/> Calling',
             }).then(function () {
                 console.log("The loading indicator is now displayed");
             });

@@ -109,7 +109,8 @@
                 video.style.width = "200px";
                 vid.style.zIndex = 999999;
                 vid.style.width = "200px";
-                vid.style.bottom = "50px";
+                vid.style.height = "150";
+                vid.style.bottom = "70px";
                 vid.appendChild(video);
             };
 
