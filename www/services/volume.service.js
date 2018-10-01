@@ -14,7 +14,7 @@
 
     $rootScope.$on('video-conference-user-arr', function (e, data) {
       userArr = data;
-      change(userArr, volume_level);
+      change(userArr, volume_level, true);
     });
 
 
@@ -84,8 +84,11 @@
       }
     }
 
-    function change(arr, volume) {
-      window.androidVolume.setMusic(volume, true, success, error);
+    function change(arr, volume, hide_toast) {
+      // window.androidVolume.setMusic(volume, true, success, error);
+      let show_level;
+      hide_toast ? show_level = false : show_level = true ;
+      window.androidVolume.setMusic(volume, show_level, success, error);
 
       function success(level) { setLocalLevel(level); }
       function error(err) { console.log(err); }

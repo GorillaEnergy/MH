@@ -89,6 +89,7 @@
               console.log('processSuccessBuy');
             }).catch(function (err) {
               // $ionicLoading.hide();
+              // alert(JSON.stringify(err));
               errorPopup(5, err);
             });
         }

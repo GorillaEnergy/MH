@@ -72,23 +72,25 @@
   }
 
   .live-now-main-block {
-    display: flex;
+    //display: flex;
     //overflow: -webkit-paged-y;
-    overflow-y: hidden;
-    overflow-x: auto;
-    width: auto;
-    padding-left: 10px;
+    //overflow-y: hidden;
+    //overflow-x: auto;
+    height:200px;
+    padding: 0 10px;
     box-sizing: border-box;
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
+  .swiper-pagination{ display:none; }
   .event-block:last-child {
     margin-right: 10px;
   }
   .event-block {
-    margin-right: 6px;
+    //margin-right: 6px;
     height: 196px;
-    width: 261px;
+    width: 100%;
     position: relative;
     border: 1px solid #0b1138;
     box-sizing: border-box;
@@ -131,7 +133,7 @@
     }
     .event-bg {
       height: 195px;
-      width: 259px;
+      width: 100%;
     }
     .play {
       position: absolute;
