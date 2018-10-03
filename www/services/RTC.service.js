@@ -184,6 +184,7 @@
                         offAnswerWatcher(opponent_id);
                         dialing('joinRTC', call_from_user, call_to_user, opponent_name)
                     } else if (snapshot.val() === false) {
+                        $ionicLoading.hide();
                         offAnswerWatcher(opponent_id);
                     } else if (snapshot.val() === 'add') {
                         offAnswerWatcher(opponent_id);
