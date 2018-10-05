@@ -4,21 +4,37 @@
   angular.module('app')
     .controller('ConversationController', ConversationController);
 
-  ConversationController.$inject = ['$scope', 'RTCService'];
+  ConversationController.$inject = ['$scope', '$rootScope'];
 
-  function ConversationController($scope, RTCService) {
+  function ConversationController($scope, $rootScope) {
     console.log('ConversationController start');
 
-    $scope.closeStream = closeStream;
-    $scope.signalLost = signalLost;
+    $rootScope.$on('conversation-view', function (e, number) {
+      changeView(number);
+    });
 
 
-    function signalLost() {
-      RTCService.signalLost()
+    function changeView(number) {
+      let body = document.getElementById('body-div');
+
+      if (number < 3) {
+        removeClasses();
+        body.classList.add('less-than-two');
+      } else if (number < 4) {
+        removeClasses();
+        body.classList.add('less-than-three');
+      } else {
+        removeClasses();
+        body.classList.add('more');
+      }
+
+      function removeClasses() {
+        body.classList.remove('less-than-two');
+        body.classList.remove('less-than-three');
+        body.classList.remove('more');
+      }
     }
-    function closeStream() {
-      RTCService.closeStream()
-    }
+
   }
 
 })();

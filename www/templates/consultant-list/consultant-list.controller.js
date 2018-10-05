@@ -15,6 +15,7 @@
 
         vm.consultants = consultants;
 
+        vm.toHeroSelection = toHeroSelection;
         vm.call = call;
         vm.reload = reload;
 
@@ -58,6 +59,11 @@
         }
 
         ///////////////////////////////////////////////////////////////////
+        function toHeroSelection() {
+          console.log('to hero-selection');
+          $state.go('hero-selection')
+        }
+
         function call(user) {
             $ionicLoading.show({
                 template: '<ion-spinner icon="lines" class="spinner-energized"></ion-spinner> <br/> Calling',

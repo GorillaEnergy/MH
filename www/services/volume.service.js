@@ -13,6 +13,7 @@
     let userArr = [];
 
     $rootScope.$on('video-conference-user-arr', function (e, data) {
+      console.log('$rootScope.$on', data);
       userArr = data;
       change(userArr, volume_level, true);
     });
@@ -28,11 +29,10 @@
       VolumeControl = cordova.plugins.VolumeControl;
 
       if (ionic.Platform.platform() === 'android') {
+        console.log('ionic.Platform.platform() === \'android\'');
         detectVolumeLevel();
         document.addEventListener("volumedownbutton", onVolumeDown);
         document.addEventListener("volumeupbutton", onVolumeUp);
-      } else {
-        console.log('stupid iOS');
       }
     }
 
@@ -85,6 +85,7 @@
     }
 
     function change(arr, volume, hide_toast) {
+      console.log(arr);
       // window.androidVolume.setMusic(volume, true, success, error);
       let show_level;
       hide_toast ? show_level = false : show_level = true ;

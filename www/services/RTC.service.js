@@ -216,7 +216,7 @@
             let scope = $rootScope.$new(true);
 
             let conversationPopup = $ionicPopup.show({
-                title: opponent_name,
+                // title: opponent_name,
                 templateUrl: './components/conversation/conversation.html',
                 cssClass: 'conversation',
                 scope: scope,
@@ -305,35 +305,35 @@
             var ctrl = window.ctrl = CONTROLLER(phone);
 
             ctrl.ready(function () {
-                ctrl.addLocalStream(vid_thumb);
+                // ctrl.addLocalStream(vid_thumb);
+                ctrl.addLocalStream(video_out);
                 addLog("Logged in as " + username);
             });
 
             ctrl.receive(function (session) {
-                // session.connected(function(session){
-                // video_out.appendChild(session.video);
-                // addLog(session.number + " has joined.");
-                // vidCount++;
-                // });
 
-                // session.ended(function(session) {
-                // ctrl.getVideoElement(session.number).remove();
-                // addLog(session.number + " has left.");
-                // vidCount--;
-                // });
-
-                session.connected(function (session) {
-                    $ionicLoading.hide()
-                    // session.video.addEventListener('canplay', function () {
-                        console.log('canplay');
-                        session.video.style.width = "100%";
-                        video_out.style.width = "100%";
-                        session.video.style.height = "70vh";
-                        video_out.style.height = "70vh";
-                        session.video.style.top = "10px";
-                        video_out.appendChild(session.video);
-                    // });
+                session.connected(function(session){
+                  $ionicLoading.hide();
+                  console.log('session.connected');
+                  activityCalc(session.number, true);
+                  // video_out.appendChild(session.video);
+                  vidCount > 1 ? video_out.appendChild(session.video) : vid_thumb.appendChild(session.video);
+                  $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
+                  addLog(session.number + " has joined.");
                 });
+
+                // session.connected(function (session) {
+                //     $ionicLoading.hide();
+                //     // session.video.addEventListener('canplay', function () {
+                //         console.log('canplay');
+                //         session.video.style.width = "100%";
+                //         video_out.style.width = "100%";
+                //         session.video.style.height = "70vh";
+                //         video_out.style.height = "70vh";
+                //         session.video.style.top = "10px";
+                //         video_out.appendChild(session.video);
+                //     // });
+                // });
 
                 session.ended(function (session) {
                     ctrl.getVideoElement(session.number).remove();
@@ -385,6 +385,7 @@
                 function vidCalc(name) {
                     vidCount = userActivityArr.length;
 
+                    $rootScope.$broadcast('conversation-view', vidCount);
                     $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
 
                     console.log('User arr', userActivityArr);
