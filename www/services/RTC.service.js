@@ -375,6 +375,8 @@
 
                 function vidCalc(name) {
                     vidCount = userActivityArr.length;
+                    $rootScope.$broadcast('conversation-view', vidCount);
+                    $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
 
                     console.log('User arr', userActivityArr);
                     console.log('User count', vidCount);

@@ -102,9 +102,6 @@
                 video.play();
                 video.setAttribute('autoplay', 'autoplay');
                 video.setAttribute('data-number', phone.number());
-                vid.style.cssText = "-moz-transform: scale(-1, 1); \
-						 	-webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); \
-							transform: scale(-1, 1); filter: FlipH;";
                 video.style.zIndex = 999999;
                 video.style.width = "200px";
                 vid.style.zIndex = 999999;

@@ -1,8 +1,11 @@
+
 <ion-view class="consultant-list">
   <ion-content>
 
     <div class="user-panel">
       <div class="title" ng-click="vm.reload()">consultant list</div>
+      <img src="./img/kid/back_arrow.png" class="back-arrow" ng-click="vm.toHeroSelection()">
+
       <div ng-repeat="consultant in vm.consultants track by $index" class="user-block">
         <div style="display: flex; flex-direction: row;">
           <img src="./img/consultant-list/profile-ico.png" class="man-ico">
@@ -14,6 +17,7 @@
                ng-if="vm.accesToCall($index)">
         </div>
       </div>
+      <!--<volume-slider></volume-slider>-->
     </div>
 
   </ion-content>

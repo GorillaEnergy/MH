@@ -4,14 +4,18 @@
     angular.module('app')
         .controller('ConsultantListController', ConsultantListController);
 
-    ConsultantListController.$inject = ['$state', '$window', '$timeout', '$localStorage', 'RTCService', 'consultants', '$ionicLoading'];
+
+    ConsultantListController.$inject = ['$state', '$window', '$timeout', '$localStorage', 'RTCService', 'consultants',
+        '$ionicLoading'];
 
 
-    function ConsultantListController($state, $window, $timeout, $localStorage, RTCService, consultants, $ionicLoading) {
+    function ConsultantListController($state, $window, $timeout, $localStorage, RTCService, consultants,
+                                      $ionicLoading) {
         const vm = this;
 
         vm.consultants = consultants;
 
+        vm.toHeroSelection = toHeroSelection;
         vm.call = call;
         vm.reload = reload;
 
@@ -32,6 +36,7 @@
         }
 
         function accesToCall(index) {
+
             if (vm.userOnlineStatusArr[index]) {
                 return true;
             } else {
@@ -54,17 +59,24 @@
         }
 
         ///////////////////////////////////////////////////////////////////
+        function toHeroSelection() {
+            console.log('to hero-selection');
+            $state.go('hero-selection')
+        }
+
         function call(user) {
             $ionicLoading.show({
                 template: '<ion-spinner icon="lines" class="spinner-energized"></ion-spinner> <br/> Calling',
             }).then(function () {
                 console.log("The loading indicator is now displayed");
             });
+
             RTCService.callTo(user);
         }
 
         function reload() {
             // $state.reload();
+            // window.location.reload(true);
             $window.location.reload();
         }
     }
