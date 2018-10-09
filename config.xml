@@ -24,6 +24,9 @@
     <preference name="Orientation" value="portrait" />
     <preference name="showmessageinnotification" value="true" />
     <preference name="defaultnotificationmessage" value="New message has arrived!" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="StatusBarStyle" value="lightcontent" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
