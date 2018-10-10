@@ -102,6 +102,7 @@
                 video.volume = 0.0;
                 video.play();
                 video.setAttribute('autoplay', 'autoplay');
+                video.setAttribute('background', 'black');
                 video.setAttribute('data-number', phone.number());
                 // vid.style.cssText = "-moz-transform: scale(-1, 1); \
 					      //-webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); \

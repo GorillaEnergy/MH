@@ -1,8 +1,9 @@
 .conversation {
-  background-color: #4d4d4d;
+  background-color: #000;
 
 
   .popup {
+    background-color: #000;
     width: 100%!important;
     height: 100%!important;
     max-width: 100%!important;
@@ -10,6 +11,7 @@
 
     .popup-head {
       padding: 5px 0;
+      background-color: #eee;
     }
     .popup-body {
       padding: 0 10px;
@@ -23,7 +25,7 @@
 
     height: calc(100vh - 75px);
     width: 100%;
-    background-color: #ababab;
+    background-color: #000;
     position: relative;
 
     .vid-common {
@@ -40,14 +42,14 @@
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
-      background-color: #ccc;
+      background-color: #000;
       height: 100%;
       width: 100%;
 
       video {
         height: 100%;
         width: 100%;
-        background-color: #ccc;
+        background-color: #000;
       }
     }
     .video2 {
@@ -67,7 +69,7 @@
       video {
         height: 100%;
         width: 50%;
-        background-color: #b2b2b2;
+        background-color: #000;
       }
     }
   }
@@ -80,12 +82,12 @@
       box-sizing: border-box;
       height: 100%;
       width: 100%;
-      background-color: #ccc;
+      background-color: #000;
 
       video {
         height: 100%;
         width: 100%;
-        background-color: #ccc;
+        background-color: #000;
       }
     }
     .video2 {
@@ -104,7 +106,7 @@
       video {
         height: 100%;
         width: calc(100% / 3);
-        background-color: #b2b2b2;
+        background-color: #000;
       }
     }
   }
@@ -116,12 +118,12 @@
       box-sizing: border-box;
       height: calc(100% - ((100vw - 20px) / 3 * 2));
       width: 100%;
-      background-color: #ccc;
+      background-color: #000;
 
       video {
         height: 100%;
         width: 100%;
-        background-color: #ccc;
+        background-color: #000;
       }
     }
     .video2 {
@@ -142,7 +144,7 @@
       video {
         height: 50%;
         width: calc(100% / 3);
-        background-color: #b2b2b2;
+        background-color: #000;
       }
     }
   }
