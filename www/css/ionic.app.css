@@ -13005,12 +13005,20 @@ p {
   width: 100%;
   height: 100%;
   padding: 0 10px;
-  border-left: 1px solid #0b1138; }
+  border-left: 1px solid #0b1138;
+  position: relative; }
   .consultant-list .user-panel .title {
-    box-sizing: border-box;
-    font-size: 100%;
-    padding: 10px 0;
-    text-align: center; }
+    text-align: center;
+    font-family: American;
+    font-size: 32px;
+    padding: 43px 0 29px;
+    color: #0b1138; }
+  .consultant-list .user-panel .back-arrow {
+    position: absolute;
+    padding: 10px;
+    height: 45px;
+    top: 30px;
+    left: 11px; }
   .consultant-list .user-panel .user-block {
     width: 100%;
     display: flex;
@@ -13294,25 +13302,117 @@ ul#ion-segment[dark] li:hover:not(.active) {
     justify-content: space-between; }
 
 .conversation {
-  background-color: #4d4d4d; }
+  background-color: #000; }
   .conversation .popup {
+    background-color: #000;
     width: 100% !important;
     height: 100% !important;
     max-width: 100% !important;
     max-height: 100% !important; }
+    .conversation .popup .popup-head {
+      padding: 5px 0;
+      background: #eee;
+      z-index: 999999 !important; }
+    .conversation .popup .popup-body {
+      padding: 0 10px; }
   .conversation .bodyDiv {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: calc(100vh - 75px);
     width: 100%;
-    height: 70%;
+    background-color: #000;
     position: relative; }
-    .conversation .bodyDiv .video1 {
+    .conversation .bodyDiv .vid-common {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      background-color: #000;
       width: 100%; }
-      .conversation .bodyDiv .video1 video {
-        width: 100% !important; }
-    .conversation .bodyDiv .video2 {
-      position: absolute;
-      z-index: 99;
-      bottom: 0;
-      right: 0;
-      width: 150px; }
-      .conversation .bodyDiv .video2 video {
-        width: 100% !important; }
+  .conversation .less-than-two .video1 {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #ccc;
+    height: 100%;
+    width: 100%; }
+    .conversation .less-than-two .video1 video {
+      height: 100%;
+      width: 100%;
+      background-color: #ccc; }
+  .conversation .less-than-two .video2 {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: calc((100vw - 20px) / 2);
+    width: calc(100vw - 20px);
+    position: absolute;
+    z-index: 99;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row-reverse; }
+    .conversation .less-than-two .video2 video {
+      height: 100%;
+      width: 50%;
+      background-color: #b2b2b2; }
+  .conversation .less-than-three .video1 {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    background-color: #ccc; }
+    .conversation .less-than-three .video1 video {
+      height: 100%;
+      width: 100%;
+      background-color: #ccc; }
+  .conversation .less-than-three .video2 {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: calc((100vw - 20px) / 3);
+    width: calc(100vw - 20px);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row-reverse; }
+    .conversation .less-than-three .video2 video {
+      height: 100%;
+      width: calc(100% / 3);
+      background-color: #b2b2b2; }
+  .conversation .more .video1 {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: calc(100% - ((100vw - 20px) / 3 * 2));
+    width: 100%;
+    background-color: #ccc; }
+    .conversation .more .video1 video {
+      height: 100%;
+      width: 100%;
+      background-color: #ccc; }
+  .conversation .more .video2 {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: calc((100vw - 20px) / 3 * 2);
+    width: calc(100% - 20px);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    overflow-y: scroll; }
+    .conversation .more .video2 video {
+      height: 50%;
+      width: calc(100% / 3);
+      background-color: #b2b2b2; }
+  .conversation .video2 video {
+    background-color: #000 !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #0b1138; }

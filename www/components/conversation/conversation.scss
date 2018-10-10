@@ -1,8 +1,10 @@
 .conversation {
-  background-color: #4d4d4d;
+  //background-color: #4d4d4d;
+  background-color: #000;
 
 
   .popup {
+    background-color: #000;
     width: 100%!important;
     height: 100%!important;
     max-width: 100%!important;
@@ -10,6 +12,9 @@
 
     .popup-head {
       padding: 5px 0;
+      background: #eee;
+      z-index: 999999 !important;
+
     }
     .popup-body {
       padding: 0 10px;
@@ -23,13 +28,14 @@
 
     height: calc(100vh - 75px);
     width: 100%;
-    background-color: #ababab;
+    background-color: #000;
     position: relative;
 
     .vid-common {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
+      background-color: #000;
       width: 100%;
     }
   }
@@ -147,6 +153,7 @@
     }
   }
   .video2 video {
+    background-color: #000 !important;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;

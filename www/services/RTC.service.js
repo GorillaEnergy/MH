@@ -334,6 +334,8 @@
                         session.video.style.height = "50vh";
                         // video_out.style.height = "70vh";
                         session.video.style.top = "10px";
+                        session.video.style.zIndex = "99995";
+                        session.video.style.background = "black";
                         video_out.appendChild(session.video);
                     }
                 });
@@ -366,7 +368,7 @@
                         if (userActivityArr[i].name == name) {
                             index = i;
                             console.log('index = ' + i);
-                            break
+                            break;
                         }
                     }
                     change(name);
