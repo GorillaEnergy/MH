@@ -85,6 +85,7 @@
         function checkPermissions(opponent_name, opponent_id, connection_type) {
             let camera;
             let micro;
+            // dialing(); for debugg
             cameraAndMicroPermissions();
 
             function cameraAndMicroPermissions() {
@@ -297,6 +298,8 @@
         let userActivityArr = [];
 
         function login(username) {
+            var isDoctorHere = false;
+            var vid = document.getElementById('video-child');
             console.log('login function');
             var phone = window.phone = PHONE({
                 number: username || "Anonymous", // listen on username line else Anonymous
@@ -315,18 +318,24 @@
             });
 
             ctrl.receive(function (session) {
-
                 session.connected(function (session) {
-                    $ionicLoading.hide()
-                    // session.video.addEventListener('canplay', function () {
-                    console.log('canplay');
-                    session.video.style.width = "100%";
-                    video_out.style.width = "100%";
-                    session.video.style.height = "70vh";
-                    video_out.style.height = "70vh";
-                    session.video.style.top = "10px";
-                    video_out.appendChild(session.video);
-                    // });
+                    if (isDoctorHere) {
+                        session.video.style.float = "left";
+                        session.video.style.width = "30vw";
+                        session.video.style.height = "30vw";
+                        session.video.style.background = "black";
+                        vid.appendChild(session.video);
+                    } else {
+                        $ionicLoading.hide();
+                        isDoctorHere = true;
+                        var video_out = document.getElementById('video-doctor');
+                        session.video.style.width = "100%";
+                        // video_out.style.width = "100%";
+                        session.video.style.height = "50vh";
+                        // video_out.style.height = "70vh";
+                        session.video.style.top = "10px";
+                        video_out.appendChild(session.video);
+                    }
                 });
 
                 session.ended(function (session) {

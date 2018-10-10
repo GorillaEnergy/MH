@@ -97,17 +97,19 @@
             };
 
             function broadcast(vid) {
+                var vid = document.getElementById('video-child');
                 var video = document.createElement('video');
                 video.src = URL.createObjectURL(phone.mystream);
                 video.play();
                 video.setAttribute('autoplay', 'autoplay');
                 video.setAttribute('data-number', phone.number());
-                video.style.zIndex = 999999;
-                video.style.width = "200px";
+                video.style.float = "left";
+                video.style.width = "30vw";
+                video.style.height = "30vw";
                 vid.style.zIndex = 999999;
-                vid.style.width = "200px";
-                vid.style.height = "150";
-                vid.style.bottom = "70px";
+                // vid.style.width = "200px";
+                // vid.style.height = "150";
+                // vid.style.bottom = "70px";
                 vid.appendChild(video);
             };
 
