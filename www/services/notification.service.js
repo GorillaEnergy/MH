@@ -16,33 +16,18 @@
         return model;
 
         function token() {
-          if (typeof FCMPlugin !== 'undefined') {
-            FCMPlugin.getToken(function (token) {
-              if(token !== "") {
-                $localStorage.token_device = token;
-                let credentials = {
-                  token_device: token
-                };
-                // console.log(token);
-                // subscribe(credentials)
-              } else {
-                return false;
-              }
-
-            });
-
-            let fcmCheck = setInterval(() => {
-              if (typeof FCMPlugin != 'undefined') {
-                FCMPlugin.onTokenRefresh(function (token) {
-                  // alert(token);
-                  console.log(token);
-                  $localStorage.token_device = token;
-                  //change token device on backend here
-                  clearInterval(fcmCheck)
+            if (typeof window.FCMPlugin !== 'undefined') {
+                window.FCMPlugin.getToken(function (token) {
+                        if (token !== "") {
+                            $localStorage.token_device = token;
+                        }
+                    }
+                );
+                window.FCMPlugin.onTokenRefresh(function (token) {
+                    console.log(token);
+                    $localStorage.token_device = token;
                 });
-              }
-            }, 1000);
-          }
+            }
         }
 
         function subscribe(credentials) {
@@ -67,7 +52,6 @@
         function customSend(credentials) {
             return http.post(url.notification.customSend, credentials)
         }
-
 
     }
 

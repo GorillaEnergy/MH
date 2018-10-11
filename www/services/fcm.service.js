@@ -10,10 +10,23 @@
     let model = {};
 
     model.subscribe = subscribe;
-
+    model.init = init;
 
     return model;
 
+
+      function init(){
+          // Initialize Firebase
+          let config = {
+              apiKey: "AIzaSyCPyHbouuqslfJIbAynfdeCHlJb_2tJw9M",
+              authDomain: "mind-hero-96b57.firebaseapp.com",
+              databaseURL: "https://mind-hero-96b57.firebaseio.com",
+              projectId: "mind-hero-96b57",
+              storageBucket: "mind-hero-96b57.appspot.com",
+              messagingSenderId: "19872374786"
+          };
+          window.firebase.initializeApp(config);
+      }
 
     function subscribe() {
       if (typeof FCMPlugin !== 'undefined') {
