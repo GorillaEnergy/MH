@@ -212,6 +212,6 @@
     <plugin name="cordova-plugin-android-volume" spec="0.0.12" />
     <allow-navigation href="http://192.168.1.117:8100" />
     <allow-navigation href="http://192.168.42.103:8100" />
-    <engine name="windows" spec="^6.0.0" />
     <engine name="android" spec="^6.3.0" />
+    <engine name="windows" spec="^6.0.1" />
 </widget>
