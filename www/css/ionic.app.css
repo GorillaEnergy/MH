@@ -13310,6 +13310,7 @@ ul#ion-segment[dark] li:hover:not(.active) {
     max-width: 100% !important;
     max-height: 100% !important; }
     .conversation .popup .popup-head {
+      display: none !important;
       padding: 5px 0;
       background: #eee;
       z-index: 999999 !important; }

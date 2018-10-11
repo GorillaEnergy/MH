@@ -320,7 +320,7 @@
             ctrl.receive(function (session) {
                 session.connected(function (session) {
                     if (isDoctorHere) {
-                        session.video.style.float = "left";
+                        session.video.style.display = "inline-block";
                         session.video.style.width = "30vw";
                         session.video.style.height = "30vw";
                         session.video.style.background = "black";
@@ -332,8 +332,9 @@
                         session.video.style.width = "100%";
                         // video_out.style.width = "100%";
                         session.video.style.height = "50vh";
+                        session.video.style.marginBottom = "10px";
                         // video_out.style.height = "70vh";
-                        session.video.style.top = "10px";
+                        session.video.style.top = "0px";
                         session.video.style.zIndex = "99995";
                         session.video.style.background = "black";
                         video_out.appendChild(session.video);

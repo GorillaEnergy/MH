@@ -103,7 +103,7 @@
                 video.play();
                 video.setAttribute('autoplay', 'autoplay');
                 video.setAttribute('data-number', phone.number());
-                video.style.float = "left";
+                video.style.display = "inline-block";
                 video.style.width = "30vw";
                 video.style.height = "30vw";
                 video.style.background = "black";
