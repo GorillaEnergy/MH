@@ -491,14 +491,7 @@
 
 
         /////////////////////////////////////////////////
-        let model = {};
 
-        model.incomingCallMsg = incomingCallMsg;
-        model.callTo = callTo;
-        model.signalLost = signalLost;
-        model.closeStream = closeStream;
-
-        return model;
 
 
         function incomingCallMsg(opponent_name) {
@@ -557,6 +550,14 @@
         function closeStream() {
             console.log('closeStream');
         }
+
+        let model = {};
+        model.incomingCallMsg = incomingCallMsg;
+        model.callTo = callTo;
+        model.signalLost = signalLost;
+        model.closeStream = closeStream;
+
+        return model;
 
     }
 })();

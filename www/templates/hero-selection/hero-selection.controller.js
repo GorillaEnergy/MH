@@ -28,6 +28,7 @@
           console.log('to kid-main-page');
           $state.go('kid-main-page')
         }
+
         function toCall() {
           console.log('to call');
           $state.go('consultant-list');

@@ -29,11 +29,11 @@
       }
 
     function subscribe() {
-      if (typeof FCMPlugin !== 'undefined') {
+      if (typeof window.FCMPlugin !== 'undefined') {
 
-        FCMPlugin.onNotification(function (data) {
+        window.FCMPlugin.onNotification(function (data) {
             console.log(data);
-            if (data.type == 'log' && data.status == 'emergency') {
+            if (data.type === 'log' && data.status === 'emergency') {
 
               let kids = angular.copy($localStorage.kids);
               for (let i = 0; i < kids.length; i++) {
@@ -47,7 +47,7 @@
               console.log('to logs -->');
               $state.go('logs')
 
-            } else if (data.type == 'log' && data.status == 'normal') {
+            } else if (data.type === 'log' && data.status === 'normal') {
               toastr.success(JSON.stringify(data.message));   //green
             }
 
