@@ -30,17 +30,13 @@
 
         $ionicPlatform.ready(function () {
             $timeout(function() {
-                navigator.splashscreen.hide();
-            }, 2000);
-
+               if(navigator.splashscreen){
+                   navigator.splashscreen.hide();
+               }
+            }, 3000);
             if (window.StatusBar) {
-            //     // Set the statusbar to use the default style, tweak this to
-            //     // remove the status bar on iOS or change it to use white instead of dark colors.
                 StatusBar.styleDefault();
             }
-
-            // console.log(navigator);
-
             volumeService.init();
 
             document.addEventListener("pause", function () {
@@ -50,10 +46,6 @@
             document.addEventListener("resume", function () {
               console.log('resume');
             }, false);
-
-            // setInterval(function () {
-            //   console.log('Online = ', navigator.onLine);
-            // }, 5000)
 
             notificationService.token()
         })

@@ -28,7 +28,7 @@
             <!--<img src="./img/additional-content/play.png" class="play">-->
           <!--</div>-->
 
-          <ion-slides  options="options" show-pager="false">
+          <ion-slides  options="sliderOptions" slider="sliderDelegate">
             <ion-slide-page ng-repeat="(key, live_event) in vm.live_content" class="event-block">
               <div class="event-description">
               <p class="event-title">{{live_event.title}}</p>

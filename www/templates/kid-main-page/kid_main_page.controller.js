@@ -4,16 +4,24 @@
     angular.module('app')
         .controller('KidMainPageController', KidMainPageController);
 
-    KidMainPageController.$inject = ['$state', '$timeout', 'userService', 'live_content', 'consultants'];
+    KidMainPageController.$inject = ['$scope','$state', '$timeout', 'userService', 'live_content', 'consultants'];
 
 
-    function KidMainPageController($state, $timeout, userService, live_content, consultants) {
+    function KidMainPageController($scope, $state, $timeout, userService, live_content, consultants) {
         const vm = this;
 
         vm.toChat = toChat;
         vm.toCall = toCall;
         vm.toMenu = toMenu;
 
+        $scope.sliderOptions = {
+            initialSlide: 0,
+            showPager: false,
+            direction: 'horizontal', //or vertical
+            speed: 300 //0.3s transition
+        };
+
+        $scope.sliderDelegate = null;
 
         // $state.go('test');
 
