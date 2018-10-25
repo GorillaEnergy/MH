@@ -6,7 +6,7 @@
 
   ConversationController.$inject = ['$scope', '$rootScope'];
 
-  function ConversationController($scope, $rootScope) {
+  function ConversationController($scope) {
     console.log('ConversationController start');
 
     $rootScope.$on('conversation-view', function (e, number) {

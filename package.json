@@ -20,6 +20,7 @@
     "cordova-opentok-android-permissions": "^1.0.1",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-android-volume": "0.0.12",
+    "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-crosswalk-webview": "^2.4.0",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^1.1.7",
@@ -54,13 +55,14 @@
         "XWALK_MULTIPLEAPK": "true"
       },
       "cordova-android-support-gradle-release": {
-        "ANDROID_SUPPORT_VERSION": "27.+"
+        "ANDROID_SUPPORT_VERSION": "26.+"
       },
       "cordova-opentok-android-permissions": {},
       "cordova.plugins.diagnostic": {},
       "cordova-plugin-volume-control": {},
       "cordova-plugin-vibration": {},
-      "cordova-plugin-android-volume": {}
+      "cordova-plugin-android-volume": {},
+      "cordova-plugin-compat": {}
     },
     "platforms": [
       "android"

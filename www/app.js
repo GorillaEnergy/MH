@@ -17,8 +17,16 @@
     function run($ionicPlatform, $timeout, $state, toastr, fcm, userService, $ionicSideMenuDelegate,
                  purchaseService, notificationService, webrtc, rtcController, RTCService, volumeService) {
 
-
-        fcm.init();
+        // Initialize Firebase
+        let config = {
+          apiKey: "AIzaSyCPyHbouuqslfJIbAynfdeCHlJb_2tJw9M",
+          authDomain: "mind-hero-96b57.firebaseapp.com",
+          databaseURL: "https://mind-hero-96b57.firebaseio.com",
+          projectId: "mind-hero-96b57",
+          storageBucket: "mind-hero-96b57.appspot.com",
+          messagingSenderId: "19872374786"
+        };
+        firebase.initializeApp(config);
 
         $ionicPlatform.ready(function () {
             $timeout(function() {
@@ -26,9 +34,15 @@
                    navigator.splashscreen.hide();
                }
             }, 3000);
+
             if (window.StatusBar) {
+            //     // Set the statusbar to use the default style, tweak this to
+            //     // remove the status bar on iOS or change it to use white instead of dark colors.
                 StatusBar.styleDefault();
             }
+
+            // console.log(navigator);
+
             volumeService.init();
 
             document.addEventListener("pause", function () {
@@ -38,6 +52,10 @@
             document.addEventListener("resume", function () {
               console.log('resume');
             }, false);
+
+            // setInterval(function () {
+            //   console.log('Online = ', navigator.onLine);
+            // }, 5000)
 
             notificationService.token()
         })

@@ -29,9 +29,9 @@
       }
 
     function subscribe() {
-      if (typeof window.FCMPlugin !== 'undefined') {
+      if (typeof FCMPlugin !== 'undefined') {
 
-        window.FCMPlugin.onNotification(function (data) {
+        FCMPlugin.onNotification(function (data) {
             console.log(data);
             if (data.type === 'log' && data.status === 'emergency') {
 
