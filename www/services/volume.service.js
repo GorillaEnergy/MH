@@ -18,7 +18,6 @@
       change(userArr, volume_level, true);
     });
 
-
     let model = {};
 
     model.init = init;
@@ -26,13 +25,17 @@
     return model;
 
     function init() {
-      VolumeControl = cordova.plugins.VolumeControl;
+      try {
+          VolumeControl = cordova.plugins.VolumeControl;
 
-      if (ionic.Platform.platform() === 'android') {
-        console.log('ionic.Platform.platform() === \'android\'');
-        detectVolumeLevel();
-        document.addEventListener("volumedownbutton", onVolumeDown);
-        document.addEventListener("volumeupbutton", onVolumeUp);
+          if (ionic.Platform.platform() === 'android') {
+              console.log('ionic.Platform.platform() === \'android\'');
+              detectVolumeLevel();
+              document.addEventListener("volumedownbutton", onVolumeDown);
+              document.addEventListener("volumeupbutton", onVolumeUp);
+          }
+      } catch(e){
+        console.log('Running on browser!');
       }
     }
 

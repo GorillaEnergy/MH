@@ -15,5 +15,9 @@
         'service.rtcController',
         'service.dateConverter',
         'service.volumeService',
+        'service.firebaseSvc',
+        'service.firebaseDataSvc',
+        'service.modalSvc',
+        'service.utilsSvc',
     ]);
 })();
