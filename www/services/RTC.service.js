@@ -93,13 +93,10 @@
                 cameraPermission();
 
                 function cameraPermission() {
-
                     if (ionic.Platform.platform() === 'android') {
-
                         cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
                             audioPermission();
                             console.log(status);
-
                             if (status === 'GRANTED') {
                                 camera = true;
                             }
@@ -107,7 +104,6 @@
                         }, function (error) {
                             console.error(error);
                         }, cordova.plugins.diagnostic.permission.CAMERA);
-
                     } else {
                         cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
                             console.log(status);
@@ -124,18 +120,15 @@
                 function audioPermission() {
                     cordova.plugins.diagnostic.requestMicrophoneAuthorization(function (status) {
                         console.log(status);
-
                         if (ionic.Platform.platform() === 'android') {
                             if (status === "GRANTED") {
                                 micro = true;
                             }
-
                         } else {
                             if (status === "authorized") {
                                 micro = true;
                             }
                         }
-
                         accessToStartStream()
                     }, function (error) {
                         console.error(error);
@@ -150,11 +143,9 @@
                         if (connection_type === 'initRTC') {
                             firebaseDataSvc.setAnswer(user.id, true);
                         }
-
                         $timeout(function () {
                             firebaseDataSvc.remove(user.id);
                         }, 3000);
-
                         if (connection_type === 'initRTC') {
                             console.log('initRTC');
                             dialing(connection_type, user.id + 'mhuser', null, opponent_name);
@@ -162,8 +153,6 @@
                             console.log('sendInvite');
                             sendInvite(opponent_name, opponent_id)
                         }
-
-
                     } else if (counter > 1) {
                         console.log('access denied, insufficient rights');
                         alert('access denied, insufficient rights');
@@ -269,8 +258,6 @@
 
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
 
         function login(username) {
             console.log('login function');
@@ -281,9 +268,7 @@
                 ctrl.addLocalStream(video_out);
                 addLog("Logged in as " + username);
             });
-
             ctrl.receive(function (session) {
-
                 session.connected(function (session) {
                     $ionicLoading.hide();
                     console.log('session.connected');
@@ -334,13 +319,9 @@
                 search(name);
 
                 function search(name) {
-                    for (let i = 0; i < userActivityArr.length; i++) {
-                        if (userActivityArr[i].name == name) {
-                            index = i;
-                            console.log('index = ' + i);
-                            break
-                        }
-                    }
+                    index = userActivityArr.findIndex((v, k) => {
+                        return v.name == name;
+                    });
                     change(name);
                 }
 
@@ -350,16 +331,13 @@
                     } else {
                         userActivityArr.splice(index, 1)
                     }
-
                     vidCalc(name)
                 }
 
                 function vidCalc(name) {
                     vidCount = userActivityArr.length;
-
                     $rootScope.$broadcast('conversation-view', vidCount);
                     $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
-
                     console.log('User arr', userActivityArr);
                     console.log('User count', vidCount);
                     if (!vidCount) {
@@ -370,7 +348,6 @@
                     }
                 }
             }
-
             return false;
         }
 
@@ -443,8 +420,6 @@
             }
         }
 
-        //////////////// Script isogram? ////////////////
-
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
@@ -461,59 +436,11 @@
         ga('create', 'UA-46933211-3', 'auto');
         ga('send', 'pageview');
 
-
-        /////////////////////////////////////////////////
-
-
-        function incomingCallMsg(opponent_name) {
-            let scope = $rootScope.$new(true);
-            scope.user_name = opponent_name;
-
-            let incomingCallPopup = $ionicPopup.show({
-                title: 'Incoming call',
-                templateUrl: './components/incoming-call/incoming-call.html',
-                // templateUrl: '../components/conversation/conversation.html',
-                // cssClass: 'conversation',
-                scope: scope,
-                buttons: [
-                    {
-                        text: 'Accept',
-                        type: 'button-positive',
-                        onTap: function (e) {
-                            accept(opponent_name);
-                        }
-                    }, {
-                        text: 'Reject',
-                        type: 'button-default',
-                        onTap: function (e) {
-                            reject();
-                        }
-                    }]
-            });
-
-            function accept() {
-                console.log("accept");
-                checkPermissions(opponent_name, null, 'initRTC');
-            }
-
-            function reject() {
-                let fb = firebase.database();
-                console.log("reject");
-                fb.ref('/WebRTC/users/' + user.id + '/metadata/answer').set(false);
-                $timeout(function () {
-                    fb.ref('/WebRTC/users/' + user.id + '/metadata').remove();
-                })
-            }
-
-        }
-
         function callTo(opponent) {
             console.log(opponent);
             checkPermissions(opponent.name, opponent.id, 'joinRTC');
         }
 
-
-        ////////////////////////////////////////////////////////
         function signalLost() {
             console.log('signalLost');
         }
@@ -523,7 +450,6 @@
         }
 
         let model = {};
-        model.incomingCallMsg = incomingCallMsg;
         model.callTo = callTo;
         model.signalLost = signalLost;
         model.closeStream = closeStream;
