@@ -18,7 +18,7 @@
                  purchaseService, notificationService, webrtc, rtcController, RTCService, volumeService, firebaseSvc, utilsSvc) {
 
         utilsSvc.init();
-
+        firebaseSvc.init();
 
         $ionicPlatform.ready(function () {
             $timeout(function() {

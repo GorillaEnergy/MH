@@ -28,7 +28,9 @@
 
         function init() {
             if (check()) {
-                fbase = window.firebase.initializeApp(config);
+                if (!firebase.apps.length) {
+                    window.firebase.initializeApp(config);
+                }
                 handlerDB = window.firebase.database();
             } else {
                 toastr.error('Firebase not available!');

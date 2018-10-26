@@ -23,9 +23,9 @@
       var myvideo       = document.createElement('video');
       var myconnection  = false;
       var mediaconf     = config.media || { audio : true, video: {
-              width: {max: 680},
+              width: {max: 640},
               height: {max: 480},
-              frameRate: { max: 15 },
+              frameRate: { max: 5 },
           }};
       var conversations = {};
       var oneway        = config.oneway || false;

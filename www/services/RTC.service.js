@@ -25,7 +25,7 @@
         const RECONNECT_TIME = 30 * 1000;
         const RESET_RECONNECT_PERMISSION_TIME = 5 * 1000;
         const PUB_CONFIG = {
-            number: username || "Anonymous", // listen on username line else Anonymous
+            number: "Anonymous", // listen on username line else Anonymous
             publish_key: 'pub-c-561a7378-fa06-4c50-a331-5c0056d0163c', // Your Pub Key //fixme
             subscribe_key: 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe', // Your Sub Key
             // subscribe_key : 'sub-c-0d440624-9fdc-11e8-b377-126307b646dc', // Your Sub Key
@@ -67,20 +67,6 @@
             document.addEventListener("resume", function () {
                 firebaseDataSvc.setOnlineStatus($localStorage.user.id, true);
             }, false);
-
-            watchInvites();
-        }
-
-        function watchInvites() {
-            firebaseDataSvc.watchInvites(user.id, (snapshot) => {
-                $timeout(function () {
-                    if (snapshot) {
-                        firebaseDataSvc.getInviteFrom(user.id, (snapshot) => {
-                            incomingCallMsg(snapshot);
-                        });
-                    }
-                })
-            });
         }
 
         function checkPermissions(opponent_name, opponent_id, connection_type) {
@@ -144,7 +130,7 @@
                             firebaseDataSvc.setAnswer(user.id, true);
                         }
                         $timeout(function () {
-                            firebaseDataSvc.remove(user.id);
+                            firebaseDataSvc.removeMetadata(user.id);
                         }, 3000);
                         if (connection_type === 'initRTC') {
                             console.log('initRTC');
@@ -162,14 +148,11 @@
         }
 
         function sendInvite(opponent_name, opponent_id) {
-            let fb = firebase.database();
             let call_from_user = user.id + 'mhuser';
             let call_to_user = opponent_id + 'mhuser';
-
             // console.log('звонит: ' + call_from_user + ',пользователю: ' + call_to_user);
-
             firebaseDataSvc.setMetadataInvite(opponent_id, call_from_user);
-            firebaseDataSvc.setMetadataInvite(opponent_id, user.name);
+            firebaseDataSvc.setInviteFrom(opponent_id, user.name);
             firebaseDataSvc.setMetadataNumber(opponent_id, user.id);
             firebaseDataSvc.onAnswerChange(opponent_id, (snapshot) => {
                 // console.log(snapshot.val());
@@ -206,7 +189,7 @@
             popup = true;
             //joinRTC  initRTC
             console.log(user);
-            modalSvc.conversation(hangUp());
+            modalSvc.conversation(hangUp);
 
             $timeout(function () {
                 video_out = document.getElementById("vid-box");
@@ -261,6 +244,7 @@
 
         function login(username) {
             console.log('login function');
+            PUB_CONFIG.number = username;
             var phone = window.phone = PHONE(PUB_CONFIG);
             var ctrl = window.ctrl = CONTROLLER(phone);
             ctrl.ready(function () {
@@ -419,22 +403,6 @@
                 return false;
             }
         }
-
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new
-            Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-46933211-3', 'auto');
-        ga('send', 'pageview');
 
         function callTo(opponent) {
             console.log(opponent);

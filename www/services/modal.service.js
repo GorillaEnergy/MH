@@ -5,9 +5,9 @@
         .module('service.modalSvc', [])
         .service('modalSvc', modalSvc);
 
-    modalSvc.$inject = ['$ionicPopup', 'url', '$localStorage', '$state', 'toastr'];
+    modalSvc.$inject = ['$ionicPopup', 'url', '$rootScope', '$state', 'toastr'];
 
-    function modalSvc($ionicPopup, url, $localStorage, $state, toastr) {
+    function modalSvc($ionicPopup, url, $rootScope, $state, toastr) {
 
         let model = {
             conversation:conversation
@@ -28,7 +28,7 @@
                         }
                     }]
             });
-        }
+        };
 
         return model;
 

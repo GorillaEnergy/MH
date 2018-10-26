@@ -24,11 +24,11 @@
             onCheckMissedNumberPsy: onCheckMissedNumberPsy,
             onCheckMissedNumberChild: onCheckMissedNumberChild,
             onLogs: onLogs,
+            getLogs: getLogs,
             onComment: onComment,
             setOnlineStatus: setOnlineStatus,
             watchInvites: watchInvites,
             getUserMetadata: getUserMetadata,
-            getLogs: getLogs,
             setAnswer: setAnswer,
             removeMetadata: removeMetadata,
             off: off,
@@ -120,6 +120,12 @@
             });
         }
 
+        function getLogs(id, number_of_logs, callback) {
+            fb.ref('/logs/' + id).limitToLast(number_of_logs).once('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
+
         function onComment(kid_id, number_of_logs, callback) {
             fb.ref('/logs/' + kid_id).limitToLast(number_of_logs).on('value', (snapshot) => {
                 callback(snapshot.val());
@@ -169,14 +175,8 @@
             fb.ref('/WebRTC/users/' + opponent_id + '/metadata/number').set(user_id);
         }
 
-        function onAnswerChange(opponent_id) {
+        function onAnswerChange(opponent_id, callback) {
             fb.ref('/WebRTC/users/' + opponent_id + '/metadata/answer').on('value', (snapshot) => {
-                callback(snapshot.val());
-            });
-        }
-
-        function getLogs(opponent_id, limit, callback) {
-            fb.ref('/logs/' + opponent_id).limitToLast(limit).once('value', (snapshot) => {
                 callback(snapshot.val());
             });
         }
