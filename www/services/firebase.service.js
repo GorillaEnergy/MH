@@ -28,7 +28,7 @@
 
         function init() {
             if (check()) {
-                if (!firebase.apps.length) {
+                if (!window.firebase.apps.length) {
                     window.firebase.initializeApp(config);
                 }
                 handlerDB = window.firebase.database();

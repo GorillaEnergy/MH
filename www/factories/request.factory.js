@@ -5,7 +5,7 @@
         .factory('http', http);
 
     http.$inject = ['$http', '$sessionStorage', '$q', '$timeout', '$localStorage', '$ionicLoading', 'popUpMessage',
-      '$state', '$rootScope'];
+        '$state', '$rootScope'];
 
     /**
      * Wrapper over the standard http function
@@ -68,8 +68,8 @@
                 config.data = data;
             }
 
-            if(typeof token != 'undefined') {
-              config.headers.Authorization = 'Bearer ' + token;
+            if (typeof token != 'undefined') {
+                config.headers.Authorization = 'Bearer ' + token;
             }
 
             config.url = url;
@@ -136,39 +136,42 @@
                 }
                 else if (err.status === -1) {
                     if (!navigator.onLine) {
-                      // $ionicLoading.hide();
-                      $ionicLoading.show({ template: 'There is no Internet connection' });
-                      $timeout(function () {  $ionicLoading.hide(); }, 2000)
+                        // $ionicLoading.hide();
+                        $ionicLoading.show({template: 'There is no Internet connection'});
+                        $timeout(function () {
+                            $ionicLoading.hide();
+                        }, 2000)
                     } else {
-                      // $ionicLoading.hide();
-                      popUpMessage.showMessage('Server is not available');
+                        // $ionicLoading.hide();
+                        popUpMessage.showMessage('Server is not available');
                     }
                     return [];
                 }
                 else if (err.status === 0) {
                     popUpMessage.showMessage('There is no Internet connection');
-                  return [];
+                    return [];
                 }
                 else if (err.status === 400) {
                     popUpMessage.showMessage(err.data.message);
-                  return [];
+                    return [];
                 }
                 else if (err.status === 401) {
                     // $state.go('authorization');
-                  return [];
+                    $rootScope.$broadcast('logout');
+                    return [];
                 }
                 else if (err.status === 429) {
-                  // $ionicLoading.hide();
-                  popUpMessage.showMessage(err.data.message);
-                  return []
+                    // $ionicLoading.hide();
+                    popUpMessage.showMessage(err.data.message);
+                    return [];
                 }
                 else if (err.status === 500) {
                     popUpMessage.showMessage('Server error: ' + err.status + ' ' + err.data.message);
-                  return [];
+                    return [];
                 }
                 else {
                     popUpMessage.showMessage('Server error: ' + err.status + ' ' + err.statusText);
-                  return [];
+                    return [];
                 }
                 return []
                 // console.log('XHR Failed: ' + err.status);
@@ -195,7 +198,7 @@
             console.info(response);
 
             if (response.status === 200 && response.data.status === 'error' && response.data.message === 'payment error') {
-              $rootScope.$broadcast('overdue-subscription', true);
+                $rootScope.$broadcast('overdue-subscription', true);
             }
 
             if (!response.data.error) {

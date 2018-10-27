@@ -13294,13 +13294,6 @@ ul#ion-segment[dark] li:hover:not(.active) {
     height: 80px;
     margin: 0 auto; }
 
-.incoming-call {
-  padding: 10px 15px; }
-  .incoming-call .button-block {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between; }
-
 .conversation {
   background-color: #000; }
   .conversation .popup {

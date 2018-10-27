@@ -14,7 +14,7 @@
 
 
         function showMessage( message) {
-            var myPopup =$ionicPopup.show({
+            var myPopup = $ionicPopup.show({
                 template: '<h3 class="popUp-message">'+ message + '</h3>'
             });
             $timeout(function() {

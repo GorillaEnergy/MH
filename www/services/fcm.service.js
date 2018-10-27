@@ -1,66 +1,65 @@
 ;(function () {
-  'use strict';
+    'use strict';
 
-  angular.module('service.fcm', [])
-    .service('fcm', fcm);
+    angular.module('service.fcm', [])
+        .service('fcm', fcm);
 
-  fcm.$inject = ['$state', '$localStorage', 'notificationService', 'toastr'];
+    fcm.$inject = ['$state', '$localStorage', 'notificationService', 'toastr'];
 
-  function fcm($state, $localStorage, notificationService, toastr) {
-    let model = {};
+    function fcm($state, $localStorage, notificationService, toastr) {
+        let model = {};
 
-    model.subscribe = subscribe;
-    model.init = init;
+        model.subscribe = subscribe;
+        model.init = init;
 
-    return model;
+        return model;
 
 
-      function init(){
-          // Initialize Firebase
-          let config = {
-              apiKey: "AIzaSyCPyHbouuqslfJIbAynfdeCHlJb_2tJw9M",
-              authDomain: "mind-hero-96b57.firebaseapp.com",
-              databaseURL: "https://mind-hero-96b57.firebaseio.com",
-              projectId: "mind-hero-96b57",
-              storageBucket: "mind-hero-96b57.appspot.com",
-              messagingSenderId: "19872374786"
-          };
-          window.firebase.initializeApp(config);
-      }
+        function init() {
+        }
 
-    function subscribe() {
-      if (typeof FCMPlugin !== 'undefined') {
-
-        FCMPlugin.onNotification(function (data) {
-            console.log(data);
-            if (data.type === 'log' && data.status === 'emergency') {
-
-              let kids = angular.copy($localStorage.kids);
-              for (let i = 0; i < kids.length; i++) {
-                if (kids[i].id == data.kid_id) {
-                  $localStorage.log_index = i;
-                  console.log('message for kid', kids[i]);
-                  break;
+        function processEmergency(data) {
+            let kids = angular.copy($localStorage.kids);
+            for (let i = 0; i < kids.length; i++) {
+                if (String(kids[i].id) === String(data.kid_id)) {
+                    $localStorage.log_index = i;
+                    console.log('message for kid', kids[i]);
+                    break;
                 }
-              }
-              toastr.error(JSON.stringify(data.message));     //red
-              console.log('to logs -->');
-              $state.go('logs')
-
-            } else if (data.type === 'log' && data.status === 'normal') {
-              toastr.success(JSON.stringify(data.message));   //green
             }
+            toastr.error(JSON.stringify(data.message));     //red
+            console.log('to logs -->');
+            $state.go('logs')
+        }
 
-          },
-          function (msg) {
-            console.log('Success callback ' + msg);
-          },
-          function (err) {
-            console.log('Error callback ' + err);
-          });
+        function processNormal(data) {
+            toastr.success(JSON.stringify(data.message));
+        }
 
-      }
+        function processNotification(data) {
+            console.log(data);
+            if (data.type === 'log') {
+                if (data.status === 'emergency') {
+                    processEmergency(data);
+                } else if (data.status === 'normal') {
+                    processNormal(data);
+                }
+            }
+        }
+
+        function subscribe() {
+            if (typeof window.FCMPlugin !== 'undefined') {
+
+                window.FCMPlugin.onNotification(processNotification,
+                    function (msg) {
+                        console.log('Success callback ' + msg);
+                    },
+                    function (err) {
+                        console.log('Error callback ' + err);
+                    });
+
+            }
+        }
     }
-  }
 
 })();

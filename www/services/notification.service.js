@@ -28,7 +28,6 @@
                     } else {
                         return false;
                     }
-
                 });
 
                 let fcmCheck = setInterval(() => {
@@ -67,8 +66,6 @@
         function customSend(credentials) {
             return http.post(url.notification.customSend, credentials)
         }
-
-
     }
 
 })();
