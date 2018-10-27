@@ -19,5 +19,6 @@
         'service.firebaseDataSvc',
         'service.modalSvc',
         'service.utilsSvc',
+        'service.constSvc',
     ]);
 })();

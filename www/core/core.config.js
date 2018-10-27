@@ -22,10 +22,10 @@
         controller: 'AuthorizationController',
         controllerAs: 'vm',
         resolve: {
-          security: function ($timeout, securityService) {
+          security: function ($timeout, userService) {
             // return securityService.authorization();
             return $timeout(function () {
-              securityService.authorization();
+                userService.autologin();
             });
           },
           countries: function (countryCodes) {
