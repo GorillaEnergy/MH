@@ -9,7 +9,6 @@
 
     function KidMessagesController($state, $localStorage, $timeout, userService, dateConverter, consultants, firebaseDataSvc) {
         const vm = this;
-
         vm.toKidMainPage = toKidMainPage;
         vm.toChat = toChat;
         let kid_id = userService.getUser().id;

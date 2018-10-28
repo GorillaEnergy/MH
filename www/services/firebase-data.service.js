@@ -27,6 +27,10 @@
             onCheckMissedNumberChild: onCheckMissedNumberChild,
             onLogs: onLogs,
             getLogs: getLogs,
+            getLogs2: getLogs2,
+            onLogsEvent: onLogsEvent,
+            onRemoveLogs: onRemoveLogs,
+            onLogsAdded: onLogsAdded,
             onComment: onComment,
             setOnlineStatus: setOnlineStatus,
             watchInvites: watchInvites,
@@ -147,8 +151,22 @@
             });
         }
 
+        //Logs -------------------------------------------------------------------------------
+
+        function onRemoveLogs(kid_id, callback) {
+            fb.ref('/logs/' + kid_id).on('child_removed', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
+
         function onLogs(kid_id, number_of_logs, callback) {
             fb.ref('/logs/' + kid_id).limitToLast(number_of_logs).on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
+
+        function onLogsEvent(kid_id, callback) {
+            fb.ref('/logs/' + kid_id).limitToLast(1).on('child_added', (snapshot) => {
                 callback(snapshot.val());
             });
         }
@@ -161,6 +179,18 @@
 
         function onComment(kid_id, number_of_logs, callback) {
             fb.ref('/logs/' + kid_id).limitToLast(number_of_logs).on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
+
+        function getLogs2(kid_id, last, coutn, callback) {
+            fb.ref('/logs/' + kid_id).orderByChild("id").endAt(last).limitToLast(count).once('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
+
+        function onLogsAdded(kid_id, callback) {
+            fb.ref('/logs/' + kid_id).on('child_changed', (snapshot) => {
                 callback(snapshot.val());
             });
         }

@@ -16,7 +16,8 @@
             permissionAudio: permissionAudio,
             permissionVideo: permissionVideo,
             timestamToHHMM: timestamToHHMM,
-            timestamToDate: timestamToDate
+            timestamToDate: timestamToDate,
+            timestampToDateBySymbol:timestampToDateBySymbol
         };
 
         return model;
@@ -113,6 +114,19 @@
             let month = date.getMonth();
             let year = date.getFullYear();
             return day + ' ' + monthList[month] + ' ' + year;
+        }
+
+        function timestampToDateBySymbol(timestamp, symbol) {
+            let day = new Date(timestamp).getDate();
+            let month = new Date(timestamp).getMonth() + 1;
+            let year = new Date(timestamp).getFullYear();
+            if (day < 10) {
+                day = '0' + String(day);
+            }
+            if (month < 10) {
+                month = '0' + String(month);
+            }
+            return day + symbol + month + symbol + year;
         }
 
         function objToArr(obj) {

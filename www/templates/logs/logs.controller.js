@@ -5,11 +5,11 @@
         .controller('LogsController', LogsController);
 
     LogsController.$inject = ['$ionicModal', '$state', '$scope', '$timeout', '$localStorage', 'userService', 'consultants',
-        'rights_to_kid', '$ionicLoading', 'firebaseDateSvc'];
+        'rights_to_kid', '$ionicLoading', 'firebaseDateSvc', 'utilsSvc'];
 
 
     function LogsController($ionicModal, $state, $scope, $timeout, $localStorage, userService, consultants,
-                            rights_to_kid, $ionicLoading, firebaseDateSvc) {
+                            rights_to_kid, $ionicLoading, firebaseDateSvc, utilsSvc) {
         const vm = this;
 
         vm.toMainPage = toMainPage;
@@ -33,7 +33,6 @@
         vm.editRights = rights_to_kid;
         vm.logs = [];
 
-        let fb = firebase.database();
         let kid_id = kid.id;
         let number_of_logs = 30;
         let download_more = 30;
@@ -57,8 +56,7 @@
         // console.log('rights to edit kid', rights_to_kid);
 
         function getKidName() {
-            let full_name = kid.name;
-            return full_name;
+            return kid.name;
             // let first_name = full_name.split(' ')[0];
             // return first_name;
         }
@@ -72,9 +70,7 @@
             // for(let i = 0; i < kids.length; i++) {
             //   if (kid.id === kids[i].id) { $localStorage.kid_index = i; break;}
             // }
-
             $localStorage.kid_index = angular.copy($localStorage.log_index);
-
             console.log('to kid page');
             delete $localStorage.outgoing_from_settings;
             $state.go('kid');
@@ -112,35 +108,11 @@
         }
 
         function dateConverter(log) {
-            let timestamp = log.created_at * 1000;
-
-            let day = new Date(timestamp).getDate();
-            let month = new Date(timestamp).getMonth() + 1;
-            let year = new Date(timestamp).getFullYear();
-
-            if (day < 10) {
-                day = '0' + String(day);
-            }
-            if (month < 10) {
-                month = '0' + String(month);
-            }
-
-            return day + '/' + month + '/' + year;
+            return utilsSvc.timestampToDateBySymbol(log.created_at * 1000, '/');
         }
 
         function timeConverter(log) {
-            let timestamp = log.created_at;
-
-            let hours = new Date(timestamp).getHours();
-            let minutes = new Date(timestamp).getMinutes();
-            if (hours < 10) {
-                hours = '0' + String(hours);
-            }
-            if (minutes < 10) {
-                minutes = '0' + String(minutes);
-            }
-
-            return hours + ':' + minutes;
+            return utilsSvc.timestamToHHMM(log.created_at);
         }
 
         function showAllInfo(index) {
@@ -148,11 +120,7 @@
         }
 
         function fullEmergencyLog(index) {
-            if (vm.pushView[index] && vm.logs[index].status == 'emergency') {
-                return true;
-            } else {
-                return false
-            }
+            return !!(vm.pushView[index] && vm.logs[index].status == 'emergency');
         }
 
         function showAllNormalStatus(index) {
@@ -178,22 +146,18 @@
                 res.push(data[key]);
                 pushView.push(false);
             });
-
             res.reverse();
             pushView.reverse();
-
             // console.log(vm.pushView);
             if (res.length < number_of_logs) {
                 log_is_last = true
             }
             console.log('log_is_last', log_is_last);
-
             if (!log_is_last) {
                 addScrollEvent()
             } else {
                 destroyScrollEvent()
             }
-
             if (type === 'primary_loading') {
                 vm.pushView = pushView;
                 return res;
@@ -205,10 +169,9 @@
             }
         }
 
-
         function downloadLogs() {
             firebaseDateSvc.getLogs(kid_id, number_of_logs, (snapshot) => {
-                vm.logs =  snapshot ? convertToArray(snapshot, 'primary_loading') : [];
+                vm.logs = snapshot ? convertToArray(snapshot, 'primary_loading') : [];
                 console.log(vm.logs);
             });
         }
@@ -217,9 +180,9 @@
             $ionicLoading.show({template: 'Loading...'});
             let last = vm.logs[vm.logs.length - 1].id;
             console.log(last);
-            fb.ref('/logs/' + kid_id).orderByChild("id").endAt(last).limitToLast(download_more + 1).once('value', (snapshot) => {
-                if (snapshot.val()) {
-                    vm.logs = convertToArray(snapshot.val(), 'secondary_loading')
+            firebaseDateSvc.getLogs2(kid_id, last, download_more + 1, (snapshot) => {
+                if (snapshot) {
+                    vm.logs = convertToArray(snapshot, 'secondary_loading')
                 }
                 $ionicLoading.hide();
             })
@@ -228,11 +191,11 @@
         function addLogsEvent() {
             let access = false;
             console.log('addLogsEvent');
-            fb.ref('/logs/' + kid_id).limitToLast(1).on('child_added', (snapshot) => {
+            firebaseDateSvc.onLogsEvent(kid_id, (snapshot) => {
                 $timeout(function () {
                     if (access) {
-                        console.log(snapshot.val());
-                        vm.logs.unshift(snapshot.val());
+                        console.log(snapshot);
+                        vm.logs.unshift(snapshot);
                         vm.pushView.unshift(false);
                     } else {
                         access = true;
@@ -243,11 +206,10 @@
 
         function removeLogsEvent() {
             console.log('removeLogsEvent');
-            fb.ref('/logs/' + kid_id).on('child_removed', (snapshot) => {
+            firebaseDateSvc.onRemoveLogs(kid_id, (snapshot) => {
                 $timeout(function () {
-                    let changed_log = snapshot.val();
                     for (let i = 0; i < vm.logs.length; i++) {
-                        if (vm.logs[i].id === changed_log.id) {
+                        if (vm.logs[i].id === snapshot.id) {
                             vm.logs.splice(i, 1);
                             vm.pushView.splice(i, 1);
                             break;
@@ -259,12 +221,11 @@
 
         function changeLogsEvent() {
             console.log('changeLogsEvent');
-            fb.ref('/logs/' + kid_id).on('child_changed', (snapshot) => {
+           firebaseDateSvc.onLOgsAdded(kid_id, (snapshot) => {
                 $timeout(function () {
-                    let changed_log = snapshot.val();
                     for (let i = 0; i < vm.logs.length; i++) {
-                        if (vm.logs[i].id === changed_log.id) {
-                            vm.logs[i] = changed_log;
+                        if (vm.logs[i].id === snapshot.id) {
+                            vm.logs[i] = snapshot;
                             break;
                         }
                     }
