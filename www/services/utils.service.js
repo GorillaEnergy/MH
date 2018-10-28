@@ -14,7 +14,9 @@
             totalTime: totalTime,
             init: init,
             permissionAudio: permissionAudio,
-            permissionVideo: permissionVideo
+            permissionVideo: permissionVideo,
+            timestamToHHMM: timestamToHHMM,
+            timestamToDate: timestamToDate
         };
 
         return model;
@@ -69,7 +71,6 @@
                     } else {
                         defered.reject();
                     }
-                    // audioPermission();
                 }, function (error) {
                     defered.reject();
                     console.error(error);
@@ -89,6 +90,29 @@
             total_minutes = total_minutes < 10 ? '0' + total_minutes : total_minutes;
             total_hours = total_hours < 10 ? '0' + total_hours : total_hours;
             return total_hours + ':' + total_minutes;
+        }
+
+        function timestamToHHMM(timestamp) {
+            let date = new Date(timestamp);
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            if (hours < 10) {
+                hours = '0' + String(hours);
+            }
+            if (minutes < 10) {
+                minutes = '0' + String(minutes);
+            }
+            return hours + ':' + minutes;
+        }
+
+        function timestamToDate(timestamp) {
+            let monthList = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            let date = new Date(timestamp);
+            let day = date.getDate();
+            let month = date.getMonth();
+            let year = date.getFullYear();
+            return day + ' ' + monthList[month] + ' ' + year;
         }
 
         function objToArr(obj) {

@@ -9,6 +9,8 @@
 
     function firebaseDataSvc(http, url, toastr, firebaseSvc) {
         var model = {
+            onTotalUnreadPsy: onTotalUnreadPsy,
+            onTotalUnreadKid: onTotalUnreadKid,
             psychologAccess: psychologAccess,
             watchOnline: watchOnline,
             setTotalUnreadKid: setTotalUnreadKid,
@@ -39,10 +41,26 @@
             setMetadataNumber: setMetadataNumber,
             onAnswerChange: onAnswerChange,
             setMetadataCancel: setMetadataCancel,
-            onMetadataCancel: onMetadataCancel
+            onMetadataCancel: onMetadataCancel,
+            setAccess: setAccess,
+            pushMessages: pushMessages
         };
 
         var fb = firebaseSvc.db();
+
+        function pushMessages(kid_id, psy_id, messages) {
+            fb.ref('/chats/' + kid_id + '/' + psy_id).push(messages);
+        }
+
+        function setAccess(kid_id, psy_id, status) {
+            fb.ref('/chats/' + kid_id + '/' + psy_id + '/access').set(status);
+        }
+
+        function onTotalUnreadKid(kid_id, spy_id, callback) {
+            fb.ref('/chats/' + kid_id + '/' + psy_id + '/total_unread_kid').on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
 
         function psychologAccess(kid_id, psy_id, callback) {
             fb.ref('/chats/' + kid_id + '/' + psy_id + '/access').on('value', (snapshot) => {
@@ -60,6 +78,12 @@
 
         function setTotalUnreadPsy(kid_id, psy_id, total) {
             fb.ref('/chats/' + kid_id + '/' + psy_id + '/total_unread_psy').set(total);
+        }
+
+        function onTotalUnreadPsy(kid_id, psy_id, callback) {
+            fb.ref('/chats/' + kid_id + '/' + psy_id + '/total_unread_psy').on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
         }
 
         function setMarkAsRead(kid_id, psy_id, key) {
@@ -199,11 +223,11 @@
             fb.ref('/WebRTC/users/' + id + '/metadata/answer').off();
         }
 
-        function setMetadataCancel(id){
+        function setMetadataCancel(id) {
             fb.ref('/WebRTC/users/' + id + '/metadata/cancel').set(true);
         }
 
-        function onMetadataCancel(id, callback){
+        function onMetadataCancel(id, callback) {
             fb.ref('/WebRTC/users/' + id + '/metadata/cancel').on('value', (snapshot) => {
                 callback(snapshot.val());
             });
