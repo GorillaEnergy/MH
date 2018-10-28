@@ -70,81 +70,15 @@
         }
 
         function checkPermissions(opponent_name, opponent_id, connection_type) {
-            let camera;
-            let micro;
-            cameraAndMicroPermissions();
+            utilsSvc.permissionVideo().then(function () {
+                return utilsSvc.permissionAudio().then(function () {
+                    sendInvite(opponent_name, opponent_id);
+                });
+            }).catch(errorPermission);
+        }
 
-            function cameraAndMicroPermissions() {
-                let counter = 0;
-                cameraPermission();
-
-                function cameraPermission() {
-                    if (ionic.Platform.platform() === 'android') {
-                        cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
-                            audioPermission();
-                            console.log(status);
-                            if (status === 'GRANTED') {
-                                camera = true;
-                            }
-                            accessToStartStream();
-                        }, function (error) {
-                            console.error(error);
-                        }, cordova.plugins.diagnostic.permission.CAMERA);
-                    } else {
-                        cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
-                            console.log(status);
-                            if (status === "authorized") {
-                                camera = true;
-                            }
-                            audioPermission();
-                        }, function (error) {
-                            console.error(error);
-                        });
-                    }
-                }
-
-                function audioPermission() {
-                    cordova.plugins.diagnostic.requestMicrophoneAuthorization(function (status) {
-                        console.log(status);
-                        if (ionic.Platform.platform() === 'android') {
-                            if (status === "GRANTED") {
-                                micro = true;
-                            }
-                        } else {
-                            if (status === "authorized") {
-                                micro = true;
-                            }
-                        }
-                        accessToStartStream()
-                    }, function (error) {
-                        console.error(error);
-                    });
-                }
-
-                function accessToStartStream() {
-                    console.log(camera, micro);
-                    counter++;
-                    if (camera && micro) {
-                        console.log('access granted');
-                        if (connection_type === 'initRTC') {
-                            firebaseDataSvc.setAnswer(user.id, true);
-                        }
-                        $timeout(function () {
-                            firebaseDataSvc.removeMetadata(user.id);
-                        }, 3000);
-                        if (connection_type === 'initRTC') {
-                            console.log('initRTC');
-                            dialing(connection_type, user.id + 'mhuser', null, opponent_name);
-                        } else {
-                            console.log('sendInvite');
-                            sendInvite(opponent_name, opponent_id)
-                        }
-                    } else if (counter > 1) {
-                        console.log('access denied, insufficient rights');
-                        alert('access denied, insufficient rights');
-                    }
-                }
-            }
+        function errorPermission() {
+            alert('Access denied, insufficient rights');
         }
 
         function sendInvite(opponent_name, opponent_id) {
@@ -332,6 +266,7 @@
                     }
                 }
             }
+
             return false;
         }
 

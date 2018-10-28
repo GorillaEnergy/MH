@@ -6,28 +6,27 @@
 
 
     ConsultantListController.$inject = ['$state', '$window', '$timeout', '$localStorage', 'RTCService', 'consultants',
-        '$ionicLoading'];
+        '$ionicLoading', 'firebaseDataSvc', 'modalSvc'];
 
 
     function ConsultantListController($state, $window, $timeout, $localStorage, RTCService, consultants,
-                                      $ionicLoading) {
+                                      $ionicLoading, firebaseDataSvc, modalSvc) {
         const vm = this;
-
-        vm.consultants = consultants;
-
+        const CALL_TIMEOUT = 60000;
         vm.toHeroSelection = toHeroSelection;
         vm.call = call;
         vm.reload = reload;
-
         vm.userOnlineStatus = userOnlineStatus;
         vm.accesToCall = accesToCall;
-
-        let fb = firebase.database();
-
-        //////////////// Users list and online status////////////////
+        vm.consultants = consultants;
         vm.users = $localStorage.user;
         vm.userOnlineStatusArr = [];
-        watchOnline(consultants);
+
+        init();
+
+        function init() {
+            watchOnline(consultants);
+        }
 
         function userOnlineStatus(index) {
             if (vm.userOnlineStatusArr[index]) {
@@ -36,42 +35,31 @@
         }
 
         function accesToCall(index) {
-
-            if (vm.userOnlineStatusArr[index]) {
-                return true;
-            } else {
-                return false;
-            }
+            return !!vm.userOnlineStatusArr[index];
         }
 
         function watchOnline(users) {
             angular.forEach(users, function (user, key) {
-                fb.ref('/WebRTC/users/' + user.id + '/online').on('value', (snapshot) => {
+                firebaseDataSvc.watchOnline(user.id, (snapshot) => {
                     $timeout(function () {
-                        if (snapshot.val()) {
-                            vm.userOnlineStatusArr[key] = true;
-                        } else {
-                            vm.userOnlineStatusArr[key] = false;
-                        }
-                    })
+                        vm.userOnlineStatusArr[key] = !!snapshot;
+                    });
                 });
             });
         }
-
-        ///////////////////////////////////////////////////////////////////
+        
         function toHeroSelection() {
-          console.log('to hero-selection');
-          $state.go('hero-selection')
+            console.log('to hero-selection');
+            $state.go('hero-selection')
         }
 
         function call(user) {
-            $ionicLoading.show({
-                template: '<ion-spinner icon="lines" class="spinner-energized"></ion-spinner> <br/> Calling',
-            }).then(function () {
-                console.log("The loading indicator is now displayed");
-            });
-
+            modalSvc.call(cancelCallback);
             RTCService.callTo(user);
+        }
+        
+        function cancelCallback() {
+            
         }
 
         function reload() {

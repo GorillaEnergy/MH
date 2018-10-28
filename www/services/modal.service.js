@@ -10,7 +10,8 @@
     function modalSvc($ionicPopup, url, $rootScope, $state, toastr) {
 
         let model = {
-            conversation:conversation
+            conversation:conversation,
+            call:call
         };
 
         function conversation(cb) {
@@ -28,7 +29,22 @@
                         }
                     }]
             });
-        };
+        }
+
+        function call(cancelCallback) {
+            return $ionicPopup.show({
+                template: '<div class="text-center"><ion-spinner icon="lines" class="spinner-energized"></ion-spinner> <br/> Calling</div>',
+                scope:  $rootScope.$new(true),
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            cancelCallback();
+                        }
+                    }]
+            });
+        }
 
         return model;
 
