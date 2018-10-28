@@ -43,10 +43,17 @@
             setMetadataCancel: setMetadataCancel,
             onMetadataCancel: onMetadataCancel,
             setAccess: setAccess,
-            pushMessages: pushMessages
+            pushMessages: pushMessages,
+            onLastMessages: onLastMessages
         };
 
         var fb = firebaseSvc.db();
+
+        function onLastMessages(kid_id, psy_id, count, callback) {
+            fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').limitToLast(count).on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
 
         function pushMessages(kid_id, psy_id, messages) {
             fb.ref('/chats/' + kid_id + '/' + psy_id).push(messages);
