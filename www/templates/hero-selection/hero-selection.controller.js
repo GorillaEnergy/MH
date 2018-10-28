@@ -17,11 +17,7 @@
         vm.heroes = [0,1,2,3,4,5,6,7];
 
         function heroBG(index) {
-          if (index < 7) {
-            return index
-          } else {
-            return 7
-          }
+          return index < 7? index: 7;
         }
 
         function toMain() {

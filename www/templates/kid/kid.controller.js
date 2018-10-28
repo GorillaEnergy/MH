@@ -5,11 +5,11 @@
     .controller('KidController', KidController);
 
   KidController.$inject = ['$ionicPopup', '$ionicModal', '$state', '$scope', 'countryCodes', 'userService',
-    '$localStorage', '$timeout', 'kids', 'followers', 'countries', 'toastr'];
+    '$localStorage', '$timeout', 'kids', 'followers', 'countries', 'toastr', 'utilsSvc'];
 
 
   function KidController($ionicPopup, $ionicModal, $state, $scope, countryCodes, userService,
-                         $localStorage, $timeout, kids, followers, countries, toastr) {
+                         $localStorage, $timeout, kids, followers, countries, toastr, utilsSvc) {
     const vm = this;
 
     vm.kidPosition = kidPosition;
@@ -353,11 +353,9 @@
         let kids = userService.getKids();
         console.log(vm.kids);
         console.log(kids);
-
         if (vm.kids.length && permissionToSend) {
           for (let i = 0; i < kids.length; i++) {
             let kid = kids[i];
-
             if (i !== $localStorage.kid_index) {
               if (kid.id_number == vm.id_number || kid.phone.phone == vm.phone) {
                 permissionToSend = false;
@@ -368,7 +366,6 @@
             }
           }
         }
-
         if (coincidence) {
           showKidMatchModal();
         }
@@ -383,16 +380,13 @@
           id_number: vm.id_number,
           grade: vm.grade
         };
-
         if (angular.isDefined($localStorage.kid_index)) {
           data.kid_id = kid.id;
           data.phone = {phone: vm.phone, code: vm.countryCode};
-
           userService.updateKid(data).then(function (res) {
             console.log(res);
             if (res.status === 'success') {
               toastr.success('Successfully updated');
-
               let kidsList = $localStorage.kids;
               kidsList[$localStorage.kid_index] = res.data;
               $localStorage.kids = angular.copy(kidsList);
@@ -417,7 +411,6 @@
             console.log(res);
             if (res.status === 'success') {
               toastr.success('Successfully added');
-
               let kidsList = $localStorage.kids;
               if (!kidsList) {
                 kidsList = [];
@@ -480,9 +473,11 @@
         }
       })
     }
+
     function followerPhone(follower) {
       return follower.phone.code + ' ' + follower.phone.phone;
     }
+
     function removeFollower(follower, index) {
       console.log('removeFollower');
       console.log(follower);
@@ -501,7 +496,6 @@
           console.log('add follower error');
         }
       })
-
     }
 
     $ionicModal.fromTemplateUrl('kid-country-modal', {
@@ -530,7 +524,7 @@
 
 
     function accessing() {
-      return vm.access == '1';
+      return String(vm.access) === '1';
     }
 
     function changeAccessRight(access) {
@@ -538,12 +532,10 @@
       let data = {};
       data.kid_id = vm.kids[0].id;
       data.access = access ? 1 : 0;
-
       userService.changeAccess(data).then(function (res) {
         console.log(res.data.access);
         if (res.status === 'success') {
           vm.access = res.data.access;
-
           console.log('vm.access = ', vm.access);
         }
       })
@@ -562,17 +554,7 @@
     }
 
     function dateConverter(date) {
-      let timestamp = date * 1;
-
-      let day = new Date(timestamp).getDate();
-      let month = new Date(timestamp).getMonth() + 1;
-      let year = new Date(timestamp).getFullYear();
-
-      if (day < 10) { day = '0' + String(day); }
-      if (month < 10) { month = '0' + String(month); }
-
-      return day + '-' + month + '-' + year;
-      // return year + '-' + month + '-' + day;
+      return utilsSvc.timestampToDateBySymbol(date * 1, '-');
     }
   }
 })();
