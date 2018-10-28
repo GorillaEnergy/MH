@@ -98,7 +98,6 @@
 
         }
 
-
         function findIndexPolyfill() {
             if (!Array.prototype.findIndex) {
                 Array.prototype.findIndex = function (predicate) {
@@ -123,7 +122,6 @@
                 };
             }
         }
-
 
     }
 })();

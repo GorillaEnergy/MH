@@ -37,7 +37,9 @@
             setMetadataInvite: setMetadataInvite,
             setInviteFrom: setInviteFrom,
             setMetadataNumber: setMetadataNumber,
-            onAnswerChange: onAnswerChange
+            onAnswerChange: onAnswerChange,
+            setMetadataCancel: setMetadataCancel,
+            onMetadataCancel: onMetadataCancel
         };
 
         var fb = firebaseSvc.db();
@@ -195,6 +197,16 @@
 
         function removeAnswerWatch(id) {
             fb.ref('/WebRTC/users/' + id + '/metadata/answer').off();
+        }
+
+        function setMetadataCancel(id){
+            fb.ref('/WebRTC/users/' + id + '/metadata/cancel').set(true);
+        }
+
+        function onMetadataCancel(id, callback){
+            fb.ref('/WebRTC/users/' + id + '/metadata/cancel').on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
         }
 
         return model;

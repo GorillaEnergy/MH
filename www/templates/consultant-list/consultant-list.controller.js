@@ -12,9 +12,8 @@
     function ConsultantListController($state, $window, $timeout, $localStorage, RTCService, consultants,
                                       $ionicLoading, firebaseDataSvc, modalSvc) {
         const vm = this;
-        const CALL_TIMEOUT = 60000;
         vm.toHeroSelection = toHeroSelection;
-        vm.call = call;
+        vm.call = RTCService.callTo;
         vm.reload = reload;
         vm.userOnlineStatus = userOnlineStatus;
         vm.accesToCall = accesToCall;
@@ -53,14 +52,6 @@
             $state.go('hero-selection')
         }
 
-        function call(user) {
-            modalSvc.call(cancelCallback);
-            RTCService.callTo(user);
-        }
-        
-        function cancelCallback() {
-            
-        }
 
         function reload() {
             // $state.reload();

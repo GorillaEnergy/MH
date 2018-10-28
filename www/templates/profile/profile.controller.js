@@ -5,11 +5,11 @@
     .controller('ProfileController', ProfileController);
 
   ProfileController.$inject = ['$ionicPopup', '$state', '$scope', '$stateParams', 'userService', '$timeout', '$ionicModal',
-                               '$localStorage', 'user', 'toastr', '$ionicSlideBoxDelegate'];
+                               '$localStorage', 'user', 'toastr', '$ionicSlideBoxDelegate', 'constSvc'];
 
 
   function ProfileController($ionicPopup, $state, $scope, $stateParams, userService, $timeout, $ionicModal,
-                             $localStorage, user, toastr, $ionicSlideBoxDelegate) {
+                             $localStorage, user, toastr, $ionicSlideBoxDelegate, constSvc) {
     const vm = this;
 
     vm.save = save;
@@ -93,9 +93,9 @@
             email: vm.email
           };
 
-          if (user.role_id === 2) {
+          if (user.role_id === constSvc.ROLE.PARENT) {
             data.type = "parent";
-          } else if (user.role_id === 1) {
+          } else if (user.role_id === constSvc.ROLE.KID) {
             data.type = 'kid';
           }
 
@@ -106,21 +106,19 @@
               status = true;
               if (res.status === "success") {
                 userService.setUser(res.data);
-
                 if (toastrType === 'new') {
                   toastr.success('Successfully added');
                 } else {
                   toastr.success('Successfully updated');
                 }
-
                 let toKidsPage = true;
                 if (angular.isDefined($localStorage.kids)) {
                   let kids = $localStorage.kids;
                   for (let i = 0; i < kids.length; i++) {
-                    if ( kids[i].register == '1' ) { toKidsPage = false; break; }
+                    if (String(kids[i].register) === '1' ) {
+                      toKidsPage = false; break; }
                   }
                 }
-
                 if (toKidsPage) {
                   delete $localStorage.kid_index;
                   delete $localStorage.outgoing_from_settings;

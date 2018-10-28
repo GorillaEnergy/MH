@@ -93,23 +93,23 @@
                 $timeout(function () {
                     if (snapshot === true) {
                         offAnswerWatcher(opponent_id);
-                        dialing('joinRTC', call_from_user, call_to_user, opponent_name)
+                        dialing('joinRTC', call_from_user, call_to_user, opponent_name);
                     } else if (snapshot === false) {
                         offAnswerWatcher(opponent_id);
                     } else if (snapshot === 'add') {
                         offAnswerWatcher(opponent_id);
                         console.log(vidCount, remoteStream);
                         if (!vidCount || remoteStream) {
-                            dialing('joinRTC', call_from_user, call_to_user, opponent_name)
+                            dialing('joinRTC', call_from_user, call_to_user, opponent_name);
                         } else {
                             softEnd();
-                            dialing('joinRTC', call_from_user, call_to_user, opponent_name)
+                            dialing('joinRTC', call_from_user, call_to_user, opponent_name);
                         }
                     } else if (snapshot === 'chat') {
                         console.log('to kid chat');
                         offAnswerWatcher(opponent_id);
                         $localStorage.consultant = {id: opponent_id};
-                        $state.go('kid-chat')
+                        $state.go('kid-chat');
                     }
                 })
             });
@@ -293,7 +293,6 @@
                         alert("User if Offline");
                     }
                 }
-
             });
             return false;
         }
@@ -339,10 +338,33 @@
             }
         }
 
+
         function callTo(opponent) {
-            console.log(opponent);
+            callProcess(opponent);
             checkPermissions(opponent.name, opponent.id, 'joinRTC');
         }
+
+        function callProcess(opponent) {
+           var callModal = modalSvc.call(cancelCallback);
+            console.log(opponent);
+            watchCancelPsy(opponent);
+
+            function cancelCallback() {
+                callModal.close();
+                firebaseDataSvc.setMetadataCancel(opponent.id);
+                offAnswerWatcher(opponent.id);
+            }
+
+            function watchCancelPsy(opponent){
+                firebaseDataSvc.onAnswerChange(opponent.id, function (snapshot) {
+                    if(snapshot === false){
+                        callModal.close();
+                        offAnswerWatcher(opponent.id);
+                    }
+                });
+            }
+        }
+
 
         function signalLost() {
             console.log('signalLost');

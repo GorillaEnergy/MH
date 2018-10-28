@@ -22,14 +22,11 @@
 
         function dateConverter(date) {
           let timestamp = date * 1000;
-
           let day = new Date(timestamp).getDate();
           let month = new Date(timestamp).getMonth() + 1;
           let year = new Date(timestamp).getFullYear();
-
           if (day < 10) { day = '0' + String(day); }
           if (month < 10) { month = '0' + String(month); }
-
           return day + '/' + month + '/' + year;
         }
     }
