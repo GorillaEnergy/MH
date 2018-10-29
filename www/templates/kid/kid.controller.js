@@ -11,7 +11,6 @@
   function KidController($ionicPopup, $ionicModal, $state, $scope, countryCodes, userService,
                          $localStorage, $timeout, kids, followers, countries, toastr, utilsSvc) {
     const vm = this;
-
     vm.kidPosition = kidPosition;
     vm.kidColorAnimation = kidColorAnimation;
     vm.continue = toPayment;
@@ -19,11 +18,9 @@
     vm.addAnotherKid = addAnotherKid;
     vm.removeKid = removeKid;
     vm.removeKidModal = removeKidModal;
-
     vm.addFollower = addFollower;
     vm.followerPhone = followerPhone;
     vm.removeFollower = removeFollower;
-
     vm.showCountryModal = showCountryModal;
     vm.hideCountryModal = hideCountryModal;
     vm.showKidMatchModal = showKidMatchModal;
@@ -32,15 +29,12 @@
     vm.hideKidRemoveModal = hideKidRemoveModal;
     vm.showFollowerModal = showFollowerModal;
     vm.hideFollowerModal = hideFollowerModal;
-
     vm.openList = openList;
     vm.closeList = closeList;
     vm.editKid = editKid;
     vm.accessing = accessing;
     vm.changeAccessRight = changeAccessRight;
-
     vm.dateConverter = dateConverter;
-
     vm.toMainPage = toMainPage;
     vm.backToSettingsAccess = backToSettingsAccess;
     vm.backToSettings = backToSettings;
@@ -48,7 +42,6 @@
 
     vm.viewType = {new_kid: false, edit_registered_kid: false, edit_unregistered_kid: false};
     vm.warning = {name: false, date: false, id_number: false, grade: false, phone: false};
-
     vm.kids = kidFilter();
     vm.followers = followers;
     vm.countryCodes = countries;
