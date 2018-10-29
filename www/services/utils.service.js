@@ -28,54 +28,63 @@
 
         function permissionAudio() {
             let defered = $q.defer();
-            cordova.plugins.diagnostic.requestMicrophoneAuthorization(function (status) {
-                console.log(status);
-                if (ionic.Platform.platform() === 'android') {
-                    if (status === "GRANTED") {
-                        defered.resolve();
-                    } else {
-                        defered.reject();
-                    }
-                } else { // IOS
-                    if (status === "authorized") {
-                        defered.resolve();
-                    } else {
-                        defered.reject();
-                    }
-                }
-            }, function (error) {
-                defered.reject();
-                console.error(error);
-            });
-            return defered.promise;
-        }
-
-        function permissionVideo() {
-            let defered = $q.defer();
-            if (ionic.Platform.platform() === 'android') {
-                cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
+            if (window.cordova) {
+                cordova.plugins.diagnostic.requestMicrophoneAuthorization(function (status) {
                     console.log(status);
-                    if (status === 'GRANTED') {
-                        defered.resolve();
-                    } else {
-                        defered.reject();
-                    }
-                }, function (error) {
-                    console.error(error);
-                    defered.reject();
-                }, cordova.plugins.diagnostic.permission.CAMERA);
-            } else {
-                cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
-                    console.log(status);
-                    if (status === "authorized") {
-                        defered.resolve();
-                    } else {
-                        defered.reject();
+                    if (ionic.Platform.platform() === 'android') {
+                        if (status === "GRANTED") {
+                            defered.resolve();
+                        } else {
+                            defered.reject();
+                        }
+                    } else { // IOS
+                        if (status === "authorized") {
+                            defered.resolve();
+                        } else {
+                            defered.reject();
+                        }
                     }
                 }, function (error) {
                     defered.reject();
                     console.error(error);
                 });
+            } else {
+                return $q.when(true);
+            }
+            return defered.promise;
+        }
+
+        function permissionVideo() {
+            let defered = $q.defer();
+            if (window.cordova) {
+                if (ionic.Platform.platform() === 'android') {
+                    cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
+                        console.log(status);
+                        if (status === 'GRANTED') {
+                            defered.resolve();
+                        } else {
+                            defered.reject();
+                        }
+                    }, function (error) {
+                        console.error(error);
+                        defered.reject();
+                    }, cordova.plugins.diagnostic.permission.CAMERA);
+                } else {
+                    cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
+                        console.log(status);
+                        if (status === "authorized") {
+                            defered.resolve();
+                        } else {
+                            defered.reject();
+                        }
+                        // audioPermission();
+                    }, function (error) {
+                        defered.reject();
+                        console.error(error);
+                    });
+                }
+            } else {
+                return $q.when(true);
             }
             return defered.promise;
         }
@@ -117,9 +126,10 @@
         }
 
         function timestampToDateBySymbol(timestamp, symbol) {
-            let day = new Date(timestamp).getDate();
-            let month = new Date(timestamp).getMonth() + 1;
-            let year = new Date(timestamp).getFullYear();
+            let data = new Date(timestamp);
+            let day = data.getDate();
+            let month = data.getMonth() + 1;
+            let year = data.getFullYear();
             if (day < 10) {
                 day = '0' + String(day);
             }
