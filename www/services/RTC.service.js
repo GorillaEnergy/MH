@@ -16,6 +16,7 @@
         let reconnectAccess = true;
         let reconnect;
         let popup;
+        let callModal;
 
         var video_out;
         var vid_thumb;
@@ -344,7 +345,7 @@
         }
 
         function callProcess(opponent) {
-           var callModal = modalSvc.call(cancelCallback);
+           callModal = modalSvc.call(cancelCallback);
             console.log(opponent);
             watchCancelPsy(opponent);
 
