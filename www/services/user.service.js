@@ -48,7 +48,7 @@
             }
 
             function autologin() {
-                if (getToken()) {
+                if ( getToken() && getUser() ) {
                     return checkRole();
                 }
             }
@@ -85,7 +85,7 @@
             }
 
             function checkRole(res) {
-                let user = angular.copy($localStorage.user);
+                let user = angular.copy(getUser());
                 console.log(user);
                 if (user.role_id === constSvc.ROLE.PARENT) {
                     return http.get(url.kid.uploadKids).then(function (res) {
