@@ -11365,18 +11365,31 @@ a.button {
     background-size: 100%;
     margin-bottom: -1px;
     display: flex;
+    align-items: center;
     flex-direction: row;
     overflow: hidden;
     justify-content: space-around;
     padding-top: 19px; }
   .hero-selection .main-block .hero-name {
     font-family: AmericanPatrius;
-    font-size: 16px;
-    margin-top: 5px; }
+    font-size: 16px; }
   .hero-selection .main-block .arrow-next {
-    height: 36px;
-    margin-left: -10px;
-    margin-top: -5px; }
+    height: 30px;
+    margin-left: -10px; }
+
+@media screen and (min-width: 1023px) {
+  .hero-selection .main-block .arrow-next {
+    height: 65px; }
+  .hero-selection .main-block .hero-name {
+    font-size: 30px; } }
+
+@media screen and (max-width: 321px) {
+  .hero-selection .main-block .title {
+    font-size: 20px; }
+  .hero-selection .main-block .arrow-next {
+    height: 20px; }
+  .hero-selection .main-block .hero-name {
+    font-size: 14px; } }
 
 .profile .main-block {
   height: 100vh;
