@@ -23,8 +23,8 @@
       var myvideo       = document.createElement('video');
       var myconnection  = false;
       var mediaconf     = config.media || { audio : true, video: {
-              width: {max: 480},
-              height: {max: 480},
+              width: {max: 480 },
+              height: {max: 480 },
               frameRate: { max: 15 },
           }};
       var conversations = {};
@@ -74,7 +74,7 @@
               },
               optional: []
           },*/
-        iceServers : [
+          iceServers : [
           { "url" :
             navigator.mozGetUserMedia    ? "stun:stun.services.mozilla.com" :
               navigator.webkitGetUserMedia ? "stun:stun.l.google.com:19302"   :
@@ -428,10 +428,9 @@
       // When Ready to Receive Calls
       // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       function onready(subscribed) {
-        // console.log('onready');
+        console.log('onready');
         if (subscribed) myconnection = true;
         if (!((mystream || oneway) && myconnection)) return;
-
         connectcb();
         readycb();
       }

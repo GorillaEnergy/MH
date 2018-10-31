@@ -129,18 +129,15 @@
             $timeout(function () {
                 video_out = document.getElementById("vid-box");
                 vid_thumb = document.getElementById("vid-thumb");
-
                 console.log(your_name, opponent_nick, opponent_name);
-
-                errWrap(login, your_name);
-
-                if (type === 'joinRTC') {
-                    $timeout(function () {
-                        // console.log('makeCall to ', opponent_nick);
-                        errWrap(makeCall, opponent_nick);
-                    }, 3000)
-                }
-            }, 1000);
+                errWrap(login, your_name, opponent_nick);
+                // if (type === 'joinRTC') {
+                //     $timeout(function () {
+                //         // console.log('makeCall to ', opponent_nick);
+                //         errWrap(makeCall, opponent_nick);
+                //     }, 3000);
+                // }
+            }, 1500);
 
             function hangUp() {
                 console.log('hangUp');
@@ -177,7 +174,7 @@
         }
 
 
-        function login(username) {
+        function login(username, opponent_nick) {
             console.log('login function');
             PUB_CONFIG.number = username;
             var phone = window.phone = PHONE(PUB_CONFIG);
@@ -186,6 +183,7 @@
                 // ctrl.addLocalStream(vid_thumb);
                 ctrl.addLocalStream(video_out);
                 addLog("Logged in as " + username);
+                errWrap(makeCall, opponent_nick);
             });
             ctrl.receive(function (session) {
                 session.connected(function (session) {
@@ -329,9 +327,9 @@
             console.log(log);
         }
 
-        function errWrap(fxn, form) {
+        function errWrap(fxn, form, opponent) {
             try {
-                return fxn(form);
+                return fxn(form, opponent);
             } catch (err) {
                 alert(err);
                 return false;

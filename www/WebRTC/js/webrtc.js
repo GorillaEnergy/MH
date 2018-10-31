@@ -371,8 +371,12 @@ var PHONE = window.PHONE = function(config) {
 
         vid.setAttribute( 'autoplay', 'autoplay' );
         vid.setAttribute( 'data-number', number );
-        vid.src = URL.createObjectURL(stream);
-
+        // vid.src = URL.createObjectURL(stream);
+        try {
+            vid.srcObject = stream;
+        } catch (error) {
+            vid.src = URL.createObjectURL(stream);
+        }
         talk.video = vid;
         talk.connect(talk);
     }

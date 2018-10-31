@@ -17,10 +17,41 @@
             permissionVideo: permissionVideo,
             timestamToHHMM: timestamToHHMM,
             timestamToDate: timestamToDate,
-            timestampToDateBySymbol:timestampToDateBySymbol
+            timestampToDateBySymbol: timestampToDateBySymbol,
+            isBrowser: isBrowser
         };
 
         return model;
+
+        function isBrowser() {
+            return {
+                opera: function () {
+                    return (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+                },
+
+                firefox: function () {
+                    return typeof InstallTrigger !== 'undefined';
+                },
+                safari: function () {
+                    return /constructor/i.test(window.HTMLElement) || (function (p) {
+                        return p.toString() === "[object SafariRemoteNotification]";
+                    })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+                },
+                ie: function () {
+                    return /*@cc_on!@*/false || !!document.documentMode;
+                },
+                edge: function () {
+                    return !isIE && !!window.StyleMedia;
+                },
+                chrome: function () {
+                    return !!window.chrome && !!window.chrome.webstore;
+                },
+                blink: function () {
+                    return (isChrome || isOpera) && !!window.CSS;
+                }
+            }
+        }
+
 
         function init() {
             findIndexPolyfill();

@@ -56,6 +56,7 @@
             };
 
             phone.ready(function () {
+                console.log('Phone ready!!!!');
                 readycb()
             });
             phone.unable(function () {
