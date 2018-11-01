@@ -31,7 +31,8 @@
             subscribe_key: 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe', // Your Sub Key
             // subscribe_key : 'sub-c-0d440624-9fdc-11e8-b377-126307b646dc', // Your Sub Key
             // publish_key   : 'pub-c-7ea57229-5447-4f4e-ba45-0baa9734f35e', // Your Pub Key
-            ssl: true
+            ssl: true,
+            autocam: true
         };
 
         init();
@@ -237,7 +238,7 @@
 
                 function search(name) {
                     index = userActivityArr.findIndex((v, k) => {
-                        return v.name == name;
+                        return v.user == name;
                     });
                     change(name);
                 }

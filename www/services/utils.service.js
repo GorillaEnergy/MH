@@ -18,10 +18,22 @@
             timestamToHHMM: timestamToHHMM,
             timestamToDate: timestamToDate,
             timestampToDateBySymbol: timestampToDateBySymbol,
-            isBrowser: isBrowser
+            isBrowser: isBrowser,
+            getSupportCameraParam:getSupportCameraParam
         };
 
         return model;
+
+        function getSupportCameraParam() {
+            var param = {};
+            let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+            for (let constraint in supportedConstraints) {
+                if (supportedConstraints.hasOwnProperty(constraint)) {
+                    param[(''+constraint).toLowerCase()] = true;
+                }
+            }
+            return param;
+        }
 
         function isBrowser() {
             return {
