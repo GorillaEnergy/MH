@@ -4,9 +4,9 @@
     angular.module('service.RTCService', [])
         .service('RTCService', RTCService);
 
-    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading', 'firebaseDataSvc', 'modalSvc', 'utilsSvc'];
+    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading', 'firebaseDataSvc', 'modalSvc', 'utilsSvc','faceRecognitionService'];
 
-    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading, firebaseDataSvc, modalSvc, utilsSvc) {
+    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading, firebaseDataSvc, modalSvc, utilsSvc, faceRecognitionService) {
         console.log('RTCService start');
 
         let user;
@@ -17,7 +17,7 @@
         let reconnect;
         let popup;
         let callModal;
-
+        let currentPsy;
         var video_out;
         var vid_thumb;
         let vidCount = 0;
@@ -86,6 +86,7 @@
         function sendInvite(opponent_name, opponent_id) {
             let call_from_user = user.id + 'mhuser';
             let call_to_user = opponent_id + 'mhuser';
+            currentPsy = opponent_id;
             // console.log('звонит: ' + call_from_user + ',пользователю: ' + call_to_user);
             firebaseDataSvc.setMetadataInvite(opponent_id, call_from_user);
             firebaseDataSvc.setInviteFrom(opponent_id, user.name);
@@ -192,7 +193,15 @@
                     console.log('session.connected');
                     activityCalc(session.number, true);
                     // video_out.appendChild(session.video);
-                    vidCount > 1 ? video_out.appendChild(session.video) : vid_thumb.appendChild(session.video);
+
+                    if (vidCount > 1) {
+                        video_out.appendChild(session.video);
+                    }
+                    else {
+                        vid_thumb.appendChild(session.video);
+                        faceRecognitionService.init(currentPsy);
+                    }
+
                     $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
                     addLog(session.number + " has joined.");
                 });

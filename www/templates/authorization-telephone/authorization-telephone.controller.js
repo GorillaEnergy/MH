@@ -18,11 +18,13 @@
         vm.countryCodes = countries;
         // if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
         if (countries.length) {
-            vm.countryCode = countries[235].code;
+            // vm.countryCode = countries[235].code;
+            vm.countryCode = null;
         } //country be default Ukraine
         // vm.phone = '';
         // vm.phone = '3311225544';
-        vm.phone = '8877665544';
+        // vm.phone = '8877665544';
+        vm.phone = '';
         vm.phoneNumberFull = '';
         vm.approvalCode = '';
         vm.isAgreePrivacy = false;

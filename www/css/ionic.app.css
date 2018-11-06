@@ -13295,7 +13295,8 @@ ul#ion-segment[dark] li:hover:not(.active) {
     margin: 0 auto; }
 
 .conversation {
-  background-color: #000; }
+  background-color: #000;
+  position: relative; }
   .conversation .popup {
     background-color: #000;
     width: 100% !important;
@@ -13327,9 +13328,11 @@ ul#ion-segment[dark] li:hover:not(.active) {
     box-sizing: border-box;
     background-color: #000;
     height: 100%;
-    width: 100%; }
+    position: relative; }
     .conversation .less-than-two .video1 video {
-      height: 100%;
+      transform: translateY(-50%);
+      top: 50%;
+      position: absolute;
       width: 100%;
       background-color: #000; }
   .conversation .less-than-two .video2 {
@@ -13354,9 +13357,12 @@ ul#ion-segment[dark] li:hover:not(.active) {
     box-sizing: border-box;
     height: 100%;
     width: 100%;
-    background-color: #000; }
+    background-color: #000;
+    position: relative; }
     .conversation .less-than-three .video1 video {
-      height: 100%;
+      transform: translateY(-50%);
+      top: 50%;
+      position: absolute;
       width: 100%;
       background-color: #000; }
   .conversation .less-than-three .video2 {

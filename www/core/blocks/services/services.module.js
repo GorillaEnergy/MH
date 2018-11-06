@@ -20,5 +20,6 @@
         'service.modalSvc',
         'service.utilsSvc',
         'service.constSvc',
+        'service.faceRecognition'
     ]);
 })();

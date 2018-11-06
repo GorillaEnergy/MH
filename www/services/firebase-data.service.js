@@ -48,10 +48,27 @@
             onMetadataCancel: onMetadataCancel,
             setAccess: setAccess,
             pushMessages: pushMessages,
-            onLastMessages: onLastMessages
+            onLastMessages: onLastMessages,
+            offMask: offMask,
+            setMask: setMask,
+            onMask: onMask
         };
 
         var fb = firebaseSvc.db();
+
+        function offMask(psyId) {
+            fb.ref('/WebRTC/users/' + psyId + '/mask').off();
+        }
+
+        function setMask(psyId, maskObj) {
+            fb.ref('/WebRTC/users/' + psyId + '/mask').set(maskObj);
+        }
+
+        function onMask(psyId, callback) {
+            fb.ref('/WebRTC/users/' + psyId + '/mask').on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
 
         function onLastMessages(kid_id, psy_id, count, callback) {
             fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').limitToLast(count).on('value', (snapshot) => {
@@ -67,7 +84,7 @@
             fb.ref('/chats/' + kid_id + '/' + psy_id + '/access').set(status);
         }
 
-        function onTotalUnreadKid(kid_id, spy_id, callback) {
+        function onTotalUnreadKid(kid_id, psy_id, callback) {
             fb.ref('/chats/' + kid_id + '/' + psy_id + '/total_unread_kid').on('value', (snapshot) => {
                 callback(snapshot.val());
             });

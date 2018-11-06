@@ -1,5 +1,6 @@
 .conversation {
   background-color: #000;
+  position: relative;
 
 
   .popup {
@@ -45,10 +46,13 @@
       box-sizing: border-box;
       background-color: #000;
       height: 100%;
-      width: 100%;
+      position: relative;
 
       video {
-        height: 100%;
+        //height: 100%;
+        transform: translateY(-50%);
+        top: 50%;
+        position: absolute;
         width: 100%;
         background-color: #000;
       }
@@ -84,9 +88,13 @@
       height: 100%;
       width: 100%;
       background-color: #000;
+      position: relative;
 
       video {
-        height: 100%;
+        //height: 100%;
+        transform: translateY(-50%);
+        top: 50%;
+        position: absolute;
         width: 100%;
         background-color: #000;
       }
