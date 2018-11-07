@@ -4,9 +4,9 @@
     angular.module('service.RTCService', [])
         .service('RTCService', RTCService);
 
-    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading'];
+    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading', 'faceRecognitionService'];
 
-    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading) {
+    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading, faceRecognitionService) {
         console.log('RTCService start');
 
         let user;
@@ -16,6 +16,7 @@
         let reconnectAccess = true;
         let reconnect;
         let popup;
+        let currentPsy;
 
         UserChecker();
 
@@ -173,6 +174,7 @@
         }
 
         function sendInvite(opponent_name, opponent_id) {
+            currentPsy = opponent_id;
             let fb = firebase.database();
             let call_from_user = user.id + 'mhuser';
             let call_to_user = opponent_id + 'mhuser';
@@ -249,7 +251,7 @@
                     errWrap(makeCall, opponent_nick);
                     // }, 3000)
                 }
-            }, 1000);
+            }, 1500);
 
             function hangUp() {
                 console.log('hangUp');
@@ -335,6 +337,7 @@
                         // video_out.style.height = "70vh";
                         session.video.style.top = "10px";
                         video_out.appendChild(session.video);
+                        faceRecognitionService.init(currentPsy);
                     }
                 });
 
@@ -363,7 +366,7 @@
 
                 function search(name) {
                     for (let i = 0; i < userActivityArr.length; i++) {
-                        if (userActivityArr[i].name == name) {
+                        if (userActivityArr[i].user == name) {
                             index = i;
                             console.log('index = ' + i);
                             break
