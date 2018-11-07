@@ -4,9 +4,9 @@
     angular.module('service.faceRecognition', [])
         .service('faceRecognitionService', faceRecognitionService);
 
-    faceRecognitionService.$inject = ['$timeout', 'firebaseDataSvc'];
+    faceRecognitionService.$inject = ['$timeout'];
 
-    function faceRecognitionService($timeout, firebaseDataSvc) {
+    function faceRecognitionService($timeout) {
 
         let imageDataSizes;
         let videoResolutions;

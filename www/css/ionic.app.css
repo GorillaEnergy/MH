@@ -13303,6 +13303,10 @@ ul#ion-segment[dark] li:hover:not(.active) {
 
 .conversation {
   background-color: #000; }
+  .conversation video {
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden; }
   .conversation .popup {
     background-color: #000;
     width: 100% !important;

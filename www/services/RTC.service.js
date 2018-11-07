@@ -333,12 +333,13 @@
                         var video_out = document.getElementById('video-doctor');
                         session.video.style.width = "100%";
                         // video_out.style.width = "100%";
-                        session.video.style.height = "50vh";
+                        session.video.style.height = "40vh";
                         session.video.style.marginBottom = "10px";
                         // video_out.style.height = "70vh";
                         session.video.style.top = "0px";
-                        session.video.style.zIndex = "99995";
+                        session.video.style.zIndex = "99";
                         session.video.style.background = "black";
+                        session.video.style.position = "relative";
                         video_out.appendChild(session.video);
                         faceRecognitionService.init(currentPsy);
                     }

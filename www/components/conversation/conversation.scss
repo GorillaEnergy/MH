@@ -2,7 +2,11 @@
   //background-color: #4d4d4d;
   background-color: #000;
 
-
+video {
+  -webkit-transform-style:preserve-3d;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
   .popup {
     background-color: #000;
     width: 100%!important;
