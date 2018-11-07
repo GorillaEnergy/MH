@@ -29,7 +29,11 @@
             outerScaleX = imageDataSizes.width / videoResolutions.width;
             outerScaleY = imageDataSizes.width * 0.75 / videoResolutions.height;
             firebaseDataSvc.onMask(psyId, function (maskObj) {
-                handleTrackingResults(maskObj);
+                setTimeout(function () {
+                    window.requestAnimFrame(function () {
+                        handleTrackingResults(maskObj);
+                    });
+                }, 40);
             });
         }
 
