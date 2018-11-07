@@ -13302,14 +13302,18 @@ ul#ion-segment[dark] li:hover:not(.active) {
     justify-content: space-between; }
 
 .conversation {
-  background-color: #4d4d4d; }
+  background-color: #000; }
   .conversation .popup {
+    background-color: #000;
     width: 100% !important;
     height: 100% !important;
     max-width: 100% !important;
     max-height: 100% !important; }
     .conversation .popup .popup-head {
-      padding: 5px 0; }
+      display: none !important;
+      padding: 5px 0;
+      background: #eee;
+      z-index: 999999 !important; }
     .conversation .popup .popup-body {
       padding: 0 10px; }
   .conversation .bodyDiv {
@@ -13318,12 +13322,13 @@ ul#ion-segment[dark] li:hover:not(.active) {
     box-sizing: border-box;
     height: calc(100vh - 75px);
     width: 100%;
-    background-color: #ababab;
+    background-color: #000;
     position: relative; }
     .conversation .bodyDiv .vid-common {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
+      background-color: #000;
       width: 100%; }
   .conversation .less-than-two .video1 {
     -webkit-box-sizing: border-box;
@@ -13407,6 +13412,7 @@ ul#ion-segment[dark] li:hover:not(.active) {
       width: calc(100% / 3);
       background-color: #b2b2b2; }
   .conversation .video2 video {
+    background-color: #000 !important;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
