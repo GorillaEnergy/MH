@@ -20,6 +20,7 @@
     "cordova-opentok-android-permissions": "^1.0.1",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-camera": "^4.0.3",
+    "cordova-plugin-crosswalk-webview": "^2.4.0",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-fcm": "^2.1.2",
@@ -55,7 +56,8 @@
       "cordova.plugins.diagnostic": {},
       "cordova-plugin-iosrtc": {},
       "cordova-plugin-swift-support": {},
-      "cordova-plugin-camera": {}
+      "cordova-plugin-camera": {},
+      "cordova-plugin-crosswalk-webview": {}
     },
     "platforms": [
       "android",

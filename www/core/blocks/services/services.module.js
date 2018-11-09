@@ -14,6 +14,8 @@
         'service.webrtc',
         'service.rtcController',
         'service.dateConverter',
-        'service.faceRecognition'
+        'service.faceRecognition',
+        'service.RTCService',
+        'service.utilsSvc'
     ]);
 })();

@@ -99,7 +99,10 @@
             function broadcast(vid) {
                 var vid = document.getElementById('video-child');
                 var video = document.createElement('video');
-                video.src = URL.createObjectURL(phone.mystream);
+
+                // video.src = URL.createObjectURL(phone.mystream);
+                video.srcObject = phone.mystream;
+
                 video.play();
                 video.setAttribute('autoplay', 'autoplay');
                 video.setAttribute('data-number', phone.number());

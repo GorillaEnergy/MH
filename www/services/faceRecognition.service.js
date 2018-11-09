@@ -73,6 +73,8 @@
                 // Resize the canvas to match the webcam video size.
                 resolution.width = webcam.videoWidth;   // 640
                 resolution.height = webcam.videoHeight; // 480
+                webcam.style.zIndex = 5;
+                cordova.plugins.iosrtc.refreshVideos();
                 onMaskEvent(currentPsyId);
             }
         }
