@@ -1,6 +1,24 @@
 .conversation {
   //background-color: #4d4d4d;
-  background-color: #000;
+  background-color: transparent;
+
+  #video-child {
+    background: black;
+    position: relative;
+  }
+  #video-child:after {
+    content: '';
+    position: absolute;
+    background: #000;
+    width: 100vw;
+    height:25px;
+    z-index: 1001;
+    top: 25px;
+  }
+
+  #video-doctor video {
+    width: 100vw;
+  }
 
 video {
   -webkit-transform-style:preserve-3d;
@@ -22,7 +40,7 @@ video {
 
     }
     .popup-body {
-      padding: 0 10px;
+      padding: 0px;
     }
   }
 
@@ -165,4 +183,14 @@ video {
     border: 1px solid #0b1138;
     //object-fit: contain;
   }
+}
+
+.popup-container.conversation .popup,
+.popup-container.conversation .popup-body,
+.backdrop.visible.active {
+  background: transparent !important;
+}
+
+.popup-container.conversation .popup-buttons {
+  background: #000;
 }

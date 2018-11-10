@@ -13302,7 +13302,20 @@ ul#ion-segment[dark] li:hover:not(.active) {
     justify-content: space-between; }
 
 .conversation {
-  background-color: #000; }
+  background-color: transparent; }
+  .conversation #video-child {
+    background: black;
+    position: relative; }
+  .conversation #video-child:after {
+    content: '';
+    position: absolute;
+    background: #000;
+    width: 100vw;
+    height: 25px;
+    z-index: 1001;
+    top: 25px; }
+  .conversation #video-doctor video {
+    width: 100vw; }
   .conversation video {
     -webkit-transform-style: preserve-3d;
     -webkit-transform: translateZ(0);
@@ -13319,7 +13332,7 @@ ul#ion-segment[dark] li:hover:not(.active) {
       background: #eee;
       z-index: 999999 !important; }
     .conversation .popup .popup-body {
-      padding: 0 10px; }
+      padding: 0px; }
   .conversation .bodyDiv {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -13421,3 +13434,11 @@ ul#ion-segment[dark] li:hover:not(.active) {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border: 1px solid #0b1138; }
+
+.popup-container.conversation .popup,
+.popup-container.conversation .popup-body,
+.backdrop.visible.active {
+  background: transparent !important; }
+
+.popup-container.conversation .popup-buttons {
+  background: #000; }

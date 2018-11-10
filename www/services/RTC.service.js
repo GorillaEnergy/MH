@@ -84,56 +84,132 @@
         }
 
         function checkPermissions(opponent_name, opponent_id, connection_type) {
-            utilsSvc.permissionVideo().then(function () {
-                return utilsSvc.permissionAudio().then(function () {
-                    sendInvite(opponent_name, opponent_id);
-                });
-            }).catch(errorPermission);
+            let camera;
+            let micro;
+            // dialing(); for debugg
+            cameraAndMicroPermissions();
 
-            function errorPermission() {
-                alert('Access denied, insufficient rights');
-            }
+            function cameraAndMicroPermissions() {
+                let counter = 0;
+                cameraPermission();
 
+                function cameraPermission() {
 
-            function sendInvite(opponent_name, opponent_id) {
-                currentPsy = opponent_id;
-                let fb = firebase.database();
-                let call_from_user = user.id + 'mhuser';
-                let call_to_user = opponent_id + 'mhuser';
-                currentPsy = opponent_id;
-                // console.log('звонит: ' + call_from_user + ',пользователю: ' + call_to_user);
+                    if (ionic.Platform.platform() === 'android') {
 
-                fb.ref('/WebRTC/users/' + opponent_id + '/metadata/invite').set(call_from_user);
-                fb.ref('/WebRTC/users/' + opponent_id + '/metadata/invite_from').set(user.name);
-                fb.ref('/WebRTC/users/' + opponent_id + '/metadata/number').set(user.id);
-                fb.ref('/WebRTC/users/' + opponent_id + '/metadata/answer').on('value', (snapshot) => {
-                    // console.log(snapshot.val());
-                    $timeout(function () {
-                        if (snapshot.val() === true) {
-                            offAnswerWatcher(opponent_id);
-                            dialing('joinRTC', call_from_user, call_to_user, opponent_name)
-                        } else if (snapshot.val() === false) {
-                            offAnswerWatcher(opponent_id);
-                        } else if (snapshot.val() === 'add') {
-                            offAnswerWatcher(opponent_id);
-                            console.log(vidCount, remoteStream);
-                            if (!vidCount || remoteStream) {
-                                dialing('joinRTC', call_from_user, call_to_user, opponent_name)
-                            } else {
-                                softEnd();
-                                dialing('joinRTC', call_from_user, call_to_user, opponent_name)
+                        cordova.plugins.diagnostic.requestRuntimePermission(function (status) {
+                            audioPermission();
+
+                            if (status.CAMERA === 'GRANTED') {
+                                camera = true;
                             }
-                        } else if (snapshot.val() === 'chat') {
-                            console.log('to kid chat');
-                            offAnswerWatcher(opponent_id);
-                            $localStorage.consultant = {id: opponent_id};
-                            $state.go('kid-chat')
-                        }
+                            accessToStartStream();
+                        }, function (error) {
+                            console.error(error);
+                        }, cordova.plugins.diagnostic.permission.CAMERA);
+
+                    } else {
+
+                        cordova.plugins.diagnostic.requestCameraAuthorization(function (status) {
+                            if (status === "authorized") {
+                                camera = true;
+                            }
+                            audioPermission();
+                        }, function (error) {
+                            console.error(error);
+                        });
                     }
-            )
-            })
-                ;
+                }
+
+                function audioPermission() {
+                    cordova.plugins.diagnostic.requestMicrophoneAuthorization(function (status) {
+
+                        if (ionic.Platform.platform() === 'android') {
+                            if (status.RECORD_AUDIO === "GRANTED") {
+                                micro = true;
+                            }
+
+                        } else {
+                            if (status === "authorized") {
+                                micro = true;
+                            }
+                        }
+
+                        accessToStartStream()
+                    }, function (error) {
+                        console.error(error);
+                    });
+                }
+
+                function accessToStartStream() {
+                    counter++;
+                    if (camera && micro) {
+                        console.log('access granted');
+
+                        let fb = firebase.database();
+                        if (connection_type === 'initRTC') {
+                            fb.ref('/WebRTC/users/' + user.id + '/metadata/answer').set(true);
+                        }
+
+                        $timeout(function () {
+                            fb.ref('/WebRTC/users/' + user.id + '/metadata').remove();
+                        }, 3000);
+
+                        if (connection_type === 'initRTC') {
+                            console.log('initRTC');
+                            dialing(connection_type, user.id + 'mhuser', null, opponent_name);
+                        } else {
+                            console.log('sendInvite');
+                            sendInvite(opponent_name, opponent_id)
+                        }
+
+
+                    } else if (counter > 1) {
+                        console.log('access denied, insufficient rights');
+                        alert('access denied, insufficient rights');
+                        // console.log('if calling you, close room and dialog!!!');
+                    }
+                }
             }
+        }
+
+        function sendInvite(opponent_name, opponent_id) {
+            currentPsy = opponent_id;
+            let fb = firebase.database();
+            let call_from_user = user.id + 'mhuser';
+            let call_to_user = opponent_id + 'mhuser';
+
+            // console.log('звонит: ' + call_from_user + ',пользователю: ' + call_to_user);
+
+            fb.ref('/WebRTC/users/' + opponent_id + '/metadata/invite').set(call_from_user);
+            fb.ref('/WebRTC/users/' + opponent_id + '/metadata/invite_from').set(user.name);
+            fb.ref('/WebRTC/users/' + opponent_id + '/metadata/number').set(user.id);
+            fb.ref('/WebRTC/users/' + opponent_id + '/metadata/answer').on('value', (snapshot) => {
+                // console.log(snapshot.val());
+                $timeout(function () {
+                    if (snapshot.val() === true) {
+                        offAnswerWatcher(opponent_id);
+                        dialing('joinRTC', call_from_user, call_to_user, opponent_name)
+                    } else if (snapshot.val() === false) {
+                        offAnswerWatcher(opponent_id);
+                    } else if (snapshot.val() === 'add') {
+                        offAnswerWatcher(opponent_id);
+                        console.log(vidCount, remoteStream);
+                        if (!vidCount || remoteStream) {
+                            dialing('joinRTC', call_from_user, call_to_user, opponent_name)
+                        } else {
+                            softEnd();
+                            dialing('joinRTC', call_from_user, call_to_user, opponent_name)
+                        }
+                    } else if (snapshot.val() === 'chat') {
+                        console.log('to kid chat');
+                        offAnswerWatcher(opponent_id);
+                        $localStorage.consultant = {id: opponent_id};
+                        $state.go('kid-chat')
+                    }
+                })
+            });
+        }
 
             function offAnswerWatcher(id) {
                 firebase.database().ref('/WebRTC/users/' + id + '/metadata/answer').off();
@@ -255,21 +331,21 @@
                         } else {
                             $ionicLoading.hide();
                             isDoctorHere = true;
-                            console.log('SESSION:', session);
-                            // var video_out = document.getElementById('video-doctor');
-                            var video_out = document.querySelector('#video-doctor video');
-                            video_out.srcObject = session.__stream;
-                            // session.video.style.width = "100%";
-                            // session.video.style.height = "40vh";
+
+                            var video_out = document.getElementById('video-doctor');
+
+                            session.video.style.width = "100vw";
+                            session.video.style.height = "40vh";
                             // session.video.style.marginBottom = "10px";
-                            // session.video.style.top = "0px";
-                            // session.video.style.zIndex = "10";
-                            // session.video.style.background = "black";
-                            // session.video.style.position = "absolute";
-                            // video_out.appendChild(session.video);
-                            video_out.setAttribute('autoplay', 'autoplay');
-                            video_out.setAttribute('data-number', session.number);
+                            session.video.style.top = "0px";
+                            session.video.style.zIndex = "-1";
+                            session.video.style.background = "transparent";
+                            session.video.style.position = "absolute";
+                            session.video.setAttribute('playsinline','');
+                            video_out.appendChild(session.video);
+
                             faceRecognitionService.init(currentPsy);
+
                             cordova.plugins.iosrtc.refreshVideos();
                         }
                     });
@@ -375,10 +451,29 @@
                 // $("vid-box").empty();
                 // $window.location.reload();
                 ctrl.hangup();
+
+                var navEl = document.getElementById('navCont');
+                var navEl2 = document.getElementById('convPopup');
+                var navCont = document.querySelector('.popup-container.conversation');
+                var body = document.querySelector('body');
+                // navCont.style.opacity = "0";
+                navEl.style.opacity = "1";
+                // navEl2.style.opacity = "0";
+                navCont.style.backgroundColor = "transparent";
+                body.style.backgroundColor = 'transparent';
             }
 
             function softEnd() {
                 // $("vid-box").empty();
+                var navEl = document.getElementById('navCont');
+                var navEl2 = document.getElementById('convPopup');
+                var navCont = document.querySelector('.popup-container.conversation');
+                var body = document.querySelector('body');
+                // navCont.style.opacity = "0";
+                navEl.style.opacity = "1";
+                // navEl2.style.opacity = "0";
+                navCont.style.backgroundColor = "transparent";
+                body.style.backgroundColor = 'transparent';
                 ctrl.hangup();
             }
 
