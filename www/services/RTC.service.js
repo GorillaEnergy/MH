@@ -23,7 +23,7 @@
         let vidCount = 0;
         let userActivityArr = [];
 
-        const RECONNECT_TIME = 30 * 1000;
+        const RECONNECT_TIME = 60 * 1000;
         const RESET_RECONNECT_PERMISSION_TIME = 5 * 1000;
         const PUB_CONFIG = {
             number: "Anonymous", // listen on username line else Anonymous

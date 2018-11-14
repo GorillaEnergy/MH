@@ -22,18 +22,15 @@
         let webcam = null;
         let mask = null;
 
-
         function onMaskEvent(psyId) {
             imageDataSizes = webcam.getBoundingClientRect();
             videoResolutions = resolution;
             outerScaleX = imageDataSizes.width / videoResolutions.width;
             outerScaleY = imageDataSizes.width * 0.75 / videoResolutions.height;
             firebaseDataSvc.onMask(psyId, function (maskObj) {
-                setTimeout(function () {
-                    window.requestAnimFrame(function () {
-                        handleTrackingResults(maskObj);
-                    });
-                }, 40);
+                window.requestAnimFrame(function () {
+                    handleTrackingResults(maskObj);
+                });
             });
         }
 
@@ -63,7 +60,7 @@
             //webcam.style.display = 'none';
             console.log("onStreamDimensionsAvailable: " + (webcam.videoWidth !== 0));
             if (webcam.videoWidth === 0) {
-                $timeout(onStreamDimensionsAvailable, 100);
+                $timeout(onStreamDimensionsAvailable, 200);
             } else {
                 // Resize the canvas to match the webcam video size.
                 resolution.width = webcam.videoWidth;   // 640
