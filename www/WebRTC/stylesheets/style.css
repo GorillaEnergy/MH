@@ -141,7 +141,7 @@
 	width: 100%;
 	height: auto;
     max-height: 50vh;
-    max-width: auto;
+    /*max-width: auto;*/
     
 }
 body{
@@ -167,7 +167,8 @@ and (max-width : 800px){
         width: 100%;
         height: auto;
     }
-    body{background-color: yellow:}
+    body{background-color: yellow;
+	}
 }
 
 

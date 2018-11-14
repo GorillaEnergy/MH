@@ -4,9 +4,9 @@
     angular.module('service.faceRecognition', [])
         .service('faceRecognitionService', faceRecognitionService);
 
-    faceRecognitionService.$inject = ['$timeout'];
+    faceRecognitionService.$inject = ['$timeout', 'RTCExtService'];
 
-    function faceRecognitionService($timeout) {
+    function faceRecognitionService($timeout, RTCExtService) {
 
         let imageDataSizes;
         let videoResolutions;
@@ -43,7 +43,7 @@
         }
 
         function offMaskEvent(psyId) {
-            firebaseDataSvc.offMask(psyId);
+            window.firebase.database().ref('/WebRTC/users/' + (psyId || currentPsyId) + '/mask').off();
         }
 
 
@@ -73,18 +73,7 @@
                 // Resize the canvas to match the webcam video size.
                 resolution.width = webcam.videoWidth;   // 640
                 resolution.height = webcam.videoHeight; // 480
-
-
-                var navEl = document.getElementById('navCont');
-                var navEl2 = document.getElementById('convPopup');
-                var navCont = document.querySelector('.popup-container.conversation');
-                var body = document.querySelector('body');
-                // navCont.style.opacity = "0";
-                navEl.style.opacity = "0";
-                // navEl2.style.opacity = "0";
-                navCont.style.backgroundColor = "transparent";
-                body.style.backgroundColor = 'transparent';
-
+                RTCExtService.enableHackOpacity();
                 cordova.plugins.iosrtc.refreshVideos();
                 onMaskEvent(currentPsyId);
             }

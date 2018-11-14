@@ -4,9 +4,9 @@
     angular.module('service.RTCService', [])
         .service('RTCService', RTCService);
 
-    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading','utilsSvc', 'faceRecognitionService'];
+    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading','utilsSvc', 'faceRecognitionService', 'RTCExtService'];
 
-    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading,  utilsSvc,faceRecognitionService) {
+    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading,  utilsSvc,faceRecognitionService, RTCExtService) {
         console.log('RTCService start');
 
         let user;
@@ -27,12 +27,8 @@
                 if ($localStorage.user) {
                     user = $localStorage.user;
                     onlineChanger();
-                    myStopFunction()
+                    clearInterval(userTimer);
                 }
-            }
-
-            function myStopFunction() {
-                clearInterval(userTimer);
             }
         }
 
@@ -62,6 +58,7 @@
 
         function autoHangup() {
             $rootScope.$broadcast('pubnub-auto-hangup', true);
+            end();
         }
 
         function initFB() {
@@ -162,8 +159,6 @@
                             console.log('sendInvite');
                             sendInvite(opponent_name, opponent_id)
                         }
-
-
                     } else if (counter > 1) {
                         console.log('access denied, insufficient rights');
                         alert('access denied, insufficient rights');
@@ -207,7 +202,7 @@
                         $localStorage.consultant = {id: opponent_id};
                         $state.go('kid-chat')
                     }
-                })
+                });
         });
         }
 
@@ -251,7 +246,7 @@
                     errWrap(makeCall, opponent_nick);
                     // }, 3000)
                 }
-            }, 1500);
+            }, 1000);
 
             function hangUp() {
                 console.log('hangUp');
@@ -266,14 +261,14 @@
             reconnect = true;
             $timeout(function () {
                 reconnect = false;
-            }, 30000);
+            }, 60000);
 
             let timer = setInterval(timerFnc, 1000);
 
             function timerFnc() {
                 console.log(reconnect);
                 if (!reconnect) {
-                    stopTimer()
+                    stopTimer();
                 }
             }
 
@@ -289,7 +284,6 @@
             $timeout(function () {
                 reconnectAccess = true;
             }, 5000);
-
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -302,13 +296,10 @@
         function login(username) {
             var isDoctorHere = false;
             var vid = document.getElementById('video-child');
-            console.log('login function');
             var phone = window.phone = PHONE({
                 number: username || "Anonymous", // listen on username line else Anonymous
                 publish_key: 'pub-c-561a7378-fa06-4c50-a331-5c0056d0163c', // Your Pub Key
                 subscribe_key: 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe', // Your Sub Key
-                // subscribe_key : 'sub-c-0d440624-9fdc-11e8-b377-126307b646dc', // Your Sub Key
-                // publish_key   : 'pub-c-7ea57229-5447-4f4e-ba45-0baa9734f35e', // Your Pub Key
                 ssl: true
             });
 
@@ -322,28 +313,23 @@
             ctrl.receive(function (session) {
                 session.connected(function (session) {
                     if (isDoctorHere) {
-                        session.video.style.display = "inline-block";
+                        session.video.style.float = "left";
                         session.video.style.width = "30vw";
                         session.video.style.height = "30vw";
                         session.video.style.background = "black";
                         vid.appendChild(session.video);
-                        cordova.plugins.iosrtc.refreshVideos();
                     } else {
                         $ionicLoading.hide();
                         isDoctorHere = true;
                         var video_out = document.getElementById('video-doctor');
                         session.video.style.width = "100vw";
                         session.video.style.height = "40vh";
-                        // session.video.style.marginBottom = "10px";
                         session.video.style.top = "0px";
                         session.video.style.zIndex = "-1";
-                        session.video.style.background = "transparent";
-                        session.video.style.position = "absolute";
-                        session.video.setAttribute('playsinline','');
-                        session.video.style.display = "inline-block";
+                        session.video.style.backgroundColor = "transparent";
                         video_out.appendChild(session.video);
                         faceRecognitionService.init(currentPsy);
-                        cordova.plugins.iosrtc.refreshVideos();
+                        // cordova.plugins.iosrtc.refreshVideos();
                     }
                 });
 
@@ -445,33 +431,14 @@
         }
 
         function end() {
-            // $("vid-box").empty();
             // $window.location.reload();
-            ctrl.hangup();
-
-            var navEl = document.getElementById('navCont');
-            var navEl2 = document.getElementById('convPopup');
-            var navCont = document.querySelector('.popup-container.conversation');
-            var body = document.querySelector('body');
-            // navCont.style.opacity = "0";
-            navEl.style.opacity = "1";
-            // navEl2.style.opacity = "0";
-            navCont.style.backgroundColor = "transparent";
-            body.style.backgroundColor = 'transparent';
+            softEnd();
         }
 
         function softEnd() {
-            // $("vid-box").empty();
-            var navEl = document.getElementById('navCont');
-            var navEl2 = document.getElementById('convPopup');
-            var navCont = document.querySelector('.popup-container.conversation');
-            var body = document.querySelector('body');
-            // navCont.style.opacity = "0";
-            navEl.style.opacity = "1";
-            // navEl2.style.opacity = "0";
-            navCont.style.backgroundColor = "transparent";
-            body.style.backgroundColor = 'transparent';
             ctrl.hangup();
+            RTCExtService.disableHackOpacity();
+            faceRecognitionService.offMaskEvent();
         }
 
         function pause() {
@@ -498,33 +465,11 @@
             }
         }
 
-        //////////////// Script isogram? ////////////////
-
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new
-            Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-46933211-3', 'auto');
-        ga('send', 'pageview');
-
-
-        /////////////////////////////////////////////////
         let model = {};
-
         model.incomingCallMsg = incomingCallMsg;
         model.callTo = callTo;
         model.signalLost = signalLost;
         model.closeStream = closeStream;
-
         return model;
 
 
@@ -574,7 +519,6 @@
             console.log(opponent);
             checkPermissions(opponent.name, opponent.id, 'joinRTC');
         }
-
 
         ////////////////////////////////////////////////////////
         function signalLost() {

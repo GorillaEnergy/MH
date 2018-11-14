@@ -9,7 +9,6 @@
 
   function AuthorizationController($ionicPopup, $ionicModal, $state, $scope, $localStorage, countries, userService, $timeout, fcm, toastr) {
     const vm = this;
-
     vm.checkPhone = checkPhone;
     vm.checkCode = checkCode;
     vm.sendAgain = sendAgain;
@@ -18,31 +17,15 @@
 
     vm.countryCodes = countries;
      // if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
-     // vm.phone = '';
+     vm.phone = '';
       if (countries.length) { vm.countryCode = countries[235].code} //country be default Ukraine
-    vm.phone = '8877665544';
-
-
-
-
+    vm.phone = '';
     vm.phoneNumberFull = '';
     vm.approvalCode = '';
     vm.isAgreePrivacy = false;
 
     vm.show = {phoneMenu: true, codeApproval: false};
-    // let token_device = '';
     let token_device = $localStorage.token_device;
-    // $timeout(function () { getDeviceToken(); }, 2000);
-
-    // let token_device = '1111119384gh278hg92rhf982r9f829fj98rjf982h98fh298rfh892hrf89h2r98fh289rhf982hr98hr89h89rh89';
-    // console.log('token_device = ', token_device);
-
-    // vm.test = function () {
-    //   console.log('on-focus');
-    // };
-    // vm.test2 = function () {
-    //   console.log('on-blur');
-    // };
 
     vm.setPhone = ()=> {
         userService.setPhone(vm.phone);

@@ -16,6 +16,7 @@
         'service.dateConverter',
         'service.faceRecognition',
         'service.RTCService',
-        'service.utilsSvc'
+        'service.utilsSvc',
+        'service.RTCExtService'
     ]);
 })();

@@ -100,17 +100,17 @@
                 var vid = document.getElementById('video-child');
                 var video = document.createElement('video');
 
-                // video.src = URL.createObjectURL(phone.mystream);
-                video.srcObject = phone.mystream;
+                video.src = URL.createObjectURL(phone.mystream);
+                // video.srcObject = phone.mystream;
 
                 video.play();
                 video.setAttribute('autoplay', 'autoplay');
                 video.setAttribute('data-number', phone.number());
-                video.style.display = "inline-block";
+                video.style.float = "left";
                 video.style.width = "30vw";
                 video.style.height = "30vw";
                 video.style.background = "black";
-                video.style.zIndex = "99996";
+                video.style.zIndex = 999999;
                 // vid.style.width = "200px";
                 // vid.style.height = "150";
                 // vid.style.bottom = "70px";
@@ -251,7 +251,7 @@
 
             function add_to_group(number) {
                 console.log('add_to_group');
-                var session = phone.dial(number, get_xirsys_servers()); // Dial Number
+                var session = phone.dial(number, false); // Dial Number
                 if (!session) return; 	// No Dupelicate Dialing Allowed
             }
 
@@ -355,21 +355,22 @@
             return servers;
         }
 
-
-        function get_xirsys_servers() {
-            var servers;
-            $.ajax ({
-                url: "https://global.xirsys.net/_turn/default/",
-                type: "PUT",
-                async: false,
-                headers: {
-                    "Authorization": "Basic " + btoa("vadymk:1a0d31fe-dba1-11e8-a1d9-0b75046cc17f")
-                },
-                success: function (res){
-                    if(res.v.iceServers) servers = res.v.iceServers;
-                },
-            });
-            return servers;
-        }
+        // function get_xirsys_servers() {
+        //     var servers;
+        //     $.ajax ({
+        //         url: "https://global.xirsys.net/_turn/default/",
+        //         type: "PUT",
+        //         async: false,
+        //         headers: {
+        //             "Authorization": "Basic " + btoa("vadymk:1a0d31fe-dba1-11e8-a1d9-0b75046cc17f")
+        //         },
+        //         success: function (res){
+        //             console.log(res);
+        //             res = JSON.parse(res);
+        //             if (!res.e) servers = res.d.iceServers;
+        //         },
+        //     });
+        //     return servers;
+        // }
     }
 })();

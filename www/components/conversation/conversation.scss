@@ -1,190 +1,3 @@
-.conversation {
-  //background-color: #4d4d4d;
-  background-color: transparent;
-
-  #video-child {
-    background: black;
-    position: relative;
-  }
-  #video-child:after {
-    content: '';
-    position: absolute;
-    background: #000;
-    width: 100vw;
-    height:25px;
-    z-index: 1001;
-    top: 25px;
-  }
-
-  #video-doctor video {
-    width: 100vw;
-  }
-
-video {
-  -webkit-transform-style:preserve-3d;
-  -webkit-transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-}
-  .popup {
-    background-color: #000;
-    width: 100%!important;
-    height: 100%!important;
-    max-width: 100%!important;
-    max-height: 100%!important;
-
-    .popup-head {
-      display: none !important;
-      padding: 5px 0;
-      background: #eee;
-      z-index: 999999 !important;
-
-    }
-    .popup-body {
-      padding: 0px;
-    }
-  }
-
-  .bodyDiv {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-
-    height: calc(100vh - 75px);
-    width: 100%;
-    background-color: #000;
-    position: relative;
-
-    .vid-common {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      background-color: #000;
-      width: 100%;
-    }
-  }
-
-  .less-than-two {
-
-    .video1 {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      background-color: #ccc;
-      height: 100%;
-      width: 100%;
-
-      video {
-        height: 100%;
-        width: 100%;
-        background-color: #ccc;
-      }
-    }
-    .video2 {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-
-      height: calc((100vw - 20px) / 2);
-      width: calc(100vw - 20px);
-      position: absolute;
-      z-index: 99;
-      bottom: 0;
-      right: 0;
-      display: flex;
-      flex-direction: row-reverse;
-
-      video {
-        height: 100%;
-        width: 50%;
-        background-color: #b2b2b2;
-      }
-    }
-  }
-
-  .less-than-three {
-
-    .video1 {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      height: 100%;
-      width: 100%;
-      background-color: #ccc;
-
-      video {
-        height: 100%;
-        width: 100%;
-        background-color: #ccc;
-      }
-    }
-    .video2 {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-
-      height: calc((100vw - 20px) / 3);
-      width: calc(100vw - 20px);
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      display: flex;
-      flex-direction: row-reverse;
-
-      video {
-        height: 100%;
-        width: calc(100% / 3);
-        background-color: #b2b2b2;
-      }
-    }
-  }
-
-  .more {
-    .video1 {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      height: calc(100% - ((100vw - 20px) / 3 * 2));
-      width: 100%;
-      background-color: #ccc;
-
-      video {
-        height: 100%;
-        width: 100%;
-        background-color: #ccc;
-      }
-    }
-    .video2 {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-
-      height: calc((100vw - 20px) / 3 * 2);
-      width: calc(100% - 20px);
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      display: flex;
-      flex-direction: row-reverse;
-      flex-wrap: wrap;
-      overflow-y: scroll;
-
-      video {
-        height: 50%;
-        width: calc(100% / 3);
-        background-color: #b2b2b2;
-      }
-    }
-  }
-  .video2 video {
-    background-color: #000 !important;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 1px solid #0b1138;
-    //object-fit: contain;
-  }
-}
-
 .popup-container.conversation .popup,
 .popup-container.conversation .popup-body,
 .backdrop.visible.active {
@@ -193,4 +6,36 @@ video {
 
 .popup-container.conversation .popup-buttons {
   background: #000;
+}
+
+.conversation {
+  background-color: transparent;
+
+  #video-child {
+    background: #000;
+    position: relative;
+  }
+
+  #video-doctor video {
+    width: 100vw;
+  }
+
+  video {
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+  }
+
+  .popup {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    .popup-head {
+      display: none !important;
+    }
+    .popup-body {
+      padding: 0;
+    }
+  }
 }

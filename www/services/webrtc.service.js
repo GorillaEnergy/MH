@@ -444,8 +444,8 @@
                 // Video Settings
                 video.width = snap.width;
                 video.height = snap.height;
-                // video.src = URL.createObjectURL(stream);
-                video.srcObject = stream;
+                video.src = URL.createObjectURL(stream);
+                // video.srcObject = stream;
                 video.volume = 0.0;
                 video.play();
 
@@ -483,7 +483,7 @@
                 vid.setAttribute('autoplay', 'autoplay');
                 vid.setAttribute('data-number', number);
                 talk.__number = number;
-                vid.src = window.URL.createObjectURL(stream);
+                vid.src = URL.createObjectURL(stream);
                 // vid.srcObject = stream;
                 talk.__stream = stream;
                 talk.video = vid;
