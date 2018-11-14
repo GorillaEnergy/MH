@@ -331,9 +331,7 @@
                     } else {
                         $ionicLoading.hide();
                         isDoctorHere = true;
-
                         var video_out = document.getElementById('video-doctor');
-
                         session.video.style.width = "100vw";
                         session.video.style.height = "40vh";
                         // session.video.style.marginBottom = "10px";
@@ -342,10 +340,9 @@
                         session.video.style.background = "transparent";
                         session.video.style.position = "absolute";
                         session.video.setAttribute('playsinline','');
+                        session.video.style.display = "inline-block";
                         video_out.appendChild(session.video);
-
                         faceRecognitionService.init(currentPsy);
-
                         cordova.plugins.iosrtc.refreshVideos();
                     }
                 });

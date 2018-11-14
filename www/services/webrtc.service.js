@@ -483,8 +483,8 @@
                 vid.setAttribute('autoplay', 'autoplay');
                 vid.setAttribute('data-number', number);
                 talk.__number = number;
-                // vid.src = URL.createObjectURL(stream);
-                vid.srcObject = stream;
+                vid.src = window.URL.createObjectURL(stream);
+                // vid.srcObject = stream;
                 talk.__stream = stream;
                 talk.video = vid;
                 talk.connect(talk);

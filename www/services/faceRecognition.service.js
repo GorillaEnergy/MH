@@ -68,7 +68,7 @@
             //webcam.style.display = 'none';
             console.log("onStreamDimensionsAvailable: " + (webcam.videoWidth !== 0));
             if (webcam.videoWidth === 0) {
-                $timeout(onStreamDimensionsAvailable, 100);
+                $timeout(onStreamDimensionsAvailable, 400);
             } else {
                 // Resize the canvas to match the webcam video size.
                 resolution.width = webcam.videoWidth;   // 640
