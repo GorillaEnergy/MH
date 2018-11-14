@@ -42,14 +42,12 @@
         function onlineChanger() {
             console.log('onlineChanger()');
             document.addEventListener("pause", function () {
-                console.log("pause");
-                autoHangup();
+                // autoHangup();
                 firebase.database().ref('/WebRTC/users/' + $localStorage.user.id + '/online').set(false);
             }, false);
 
             document.addEventListener("resume", function () {
                 console.log("resume");
-                autoHangup();
                 firebase.database().ref('/WebRTC/users/' + $localStorage.user.id + '/online').set(true);
             }, false);
 
