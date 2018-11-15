@@ -519,7 +519,7 @@
                     subscribe();
                     return;
                 }
-                navigator.mediaDevices.getUserMedia(mediaconf).then(function (stream) {
+                navigator.getUserMedia(mediaconf, function (stream) {
                     if (!stream) return unablecb(stream);
                     mystream = stream;
                     snapshots_setup(stream);
