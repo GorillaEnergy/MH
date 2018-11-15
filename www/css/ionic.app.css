@@ -10303,7 +10303,8 @@ a.button {
   background: #fff;
   border: 2px solid #0b1138;
   border-radius: 5px;
-  line-height: 44px; }
+  line-height: 44px;
+  height: 44px; }
 
 .auth-tel .country {
   width: 34%; }
@@ -13301,140 +13302,6 @@ ul#ion-segment[dark] li:hover:not(.active) {
     flex-direction: row;
     justify-content: space-between; }
 
-.conversation {
-  background-color: transparent; }
-  .conversation #video-child {
-    background: black;
-    position: relative; }
-  .conversation #video-child:after {
-    content: '';
-    position: absolute;
-    background: #000;
-    width: 100vw;
-    height: 25px;
-    z-index: 1001;
-    top: 25px; }
-  .conversation #video-doctor video {
-    width: 100vw; }
-  .conversation video {
-    -webkit-transform-style: preserve-3d;
-    -webkit-transform: translateZ(0);
-    -webkit-backface-visibility: hidden; }
-  .conversation .popup {
-    background-color: #000;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 100% !important; }
-    .conversation .popup .popup-head {
-      display: none !important;
-      padding: 5px 0;
-      background: #eee;
-      z-index: 999999 !important; }
-    .conversation .popup .popup-body {
-      padding: 0px; }
-  .conversation .bodyDiv {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: calc(100vh - 75px);
-    width: 100%;
-    background-color: #000;
-    position: relative; }
-    .conversation .bodyDiv .vid-common {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      background-color: #000;
-      width: 100%; }
-  .conversation .less-than-two .video1 {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    background-color: #ccc;
-    height: 100%;
-    width: 100%; }
-    .conversation .less-than-two .video1 video {
-      height: 100%;
-      width: 100%;
-      background-color: #ccc; }
-  .conversation .less-than-two .video2 {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: calc((100vw - 20px) / 2);
-    width: calc(100vw - 20px);
-    position: absolute;
-    z-index: 99;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row-reverse; }
-    .conversation .less-than-two .video2 video {
-      height: 100%;
-      width: 50%;
-      background-color: #b2b2b2; }
-  .conversation .less-than-three .video1 {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: 100%;
-    width: 100%;
-    background-color: #ccc; }
-    .conversation .less-than-three .video1 video {
-      height: 100%;
-      width: 100%;
-      background-color: #ccc; }
-  .conversation .less-than-three .video2 {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: calc((100vw - 20px) / 3);
-    width: calc(100vw - 20px);
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row-reverse; }
-    .conversation .less-than-three .video2 video {
-      height: 100%;
-      width: calc(100% / 3);
-      background-color: #b2b2b2; }
-  .conversation .more .video1 {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: calc(100% - ((100vw - 20px) / 3 * 2));
-    width: 100%;
-    background-color: #ccc; }
-    .conversation .more .video1 video {
-      height: 100%;
-      width: 100%;
-      background-color: #ccc; }
-  .conversation .more .video2 {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: calc((100vw - 20px) / 3 * 2);
-    width: calc(100% - 20px);
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-    overflow-y: scroll; }
-    .conversation .more .video2 video {
-      height: 50%;
-      width: calc(100% / 3);
-      background-color: #b2b2b2; }
-  .conversation .video2 video {
-    background-color: #000 !important;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 1px solid #0b1138; }
-
 .popup-container.conversation .popup,
 .popup-container.conversation .popup-body,
 .backdrop.visible.active {
@@ -13442,3 +13309,24 @@ ul#ion-segment[dark] li:hover:not(.active) {
 
 .popup-container.conversation .popup-buttons {
   background: #000; }
+
+.conversation {
+  background-color: transparent; }
+  .conversation #video-child {
+    background: #000;
+    position: relative; }
+  .conversation #video-doctor video {
+    width: 100vw; }
+  .conversation video {
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden; }
+  .conversation .popup {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important; }
+    .conversation .popup .popup-head {
+      display: none !important; }
+    .conversation .popup .popup-body {
+      padding: 0; }
