@@ -20,6 +20,8 @@
 
         function disableHackOpacity(){
             var navEl = document.getElementById('navCont');
+            var navCont = document.querySelector('.popup-container.conversation');
+            navCont.style.backgroundColor = '#000';
             navEl.style.opacity = '1';
         }
 
