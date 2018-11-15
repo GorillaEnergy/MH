@@ -327,7 +327,7 @@
                         session.video.style.backgroundColor = "transparent";
                         video_out.appendChild(session.video);
                         faceRecognitionService.init(currentPsy);
-                        // cordova.plugins.iosrtc.refreshVideos();
+                        cordova.plugins.iosrtc.refreshVideos();
                     }
                 });
 
