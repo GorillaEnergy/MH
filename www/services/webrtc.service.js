@@ -539,13 +539,12 @@
                     subscribe();
                     return;
                 }
-                navigator.mediaDevices.getUserMedia(mediaconf, function (stream) {
+                navigator.getUserMedia(mediaconf, function (stream) {
                     if (!stream) return unablecb(stream);
                     mystream = stream;
                     phone.mystream = stream;
                     snapshots_setup(stream);
                     onready();
-
                     subscribe();
                 }, function (info) {
                     debugcb(info);
