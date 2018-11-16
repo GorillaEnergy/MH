@@ -11,10 +11,10 @@
         <img src="./img/kid/back_arrow.png" class="back-arrow" ng-click="vm.toMain()">
 
         <div class="body">
-          <div class="hero-block" ng-repeat="(key, hero) in vm.heroes" ng-click="vm.toCall()">
-            <img ng-src="./img/hero-selection/hero{{vm.heroBG(key)}}.png" class="hero-bg">
+          <div class="hero-block" ng-repeat="item in vm.allMasks" ng-click="vm.toCall(item)">
+            <img ng-src="{{item.file}}" class="hero-bg">
             <div class="hero-name-block">
-              <span class="hero-name">hero name</span>
+              <span class="hero-name">{{item.name}}</span>
               <img src="./img/hero-selection/arrow-next.png" class="arrow-next">
             </div>
           </div>
