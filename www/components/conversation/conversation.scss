@@ -4,6 +4,17 @@
   background: transparent !important;
 }
 
+.popup-container.conversation {
+  background: #000;
+}
+
+video::-webkit-media-controls {
+  display: none !important;
+}
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}
+
 .popup-container.conversation .popup-buttons {
   background: #000;
 }

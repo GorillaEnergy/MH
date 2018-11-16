@@ -482,10 +482,8 @@
 
                 vid.setAttribute('autoplay', 'autoplay');
                 vid.setAttribute('data-number', number);
-                talk.__number = number;
                 vid.src = URL.createObjectURL(stream);
-                // vid.srcObject = stream;
-                talk.__stream = stream;
+                vid.play();
                 talk.video = vid;
                 talk.connect(talk);
             }
@@ -545,6 +543,7 @@
                     phone.mystream = stream;
                     snapshots_setup(stream);
                     onready();
+
                     subscribe();
                 }, function (info) {
                     debugcb(info);
