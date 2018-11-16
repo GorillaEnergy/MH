@@ -8,6 +8,9 @@
         let baseUrl = 'https://api.mind-hero.grassbusinesslabs.tk/';
 
         return {
+          masks: {
+            getAll: baseUrl + 'api/masks'
+          },
           auth: {
             checkPhone: baseUrl + 'api/check-phone',
             login: baseUrl + 'api/login',
@@ -50,8 +53,6 @@
             reason: baseUrl + 'api/reasons',
             send: baseUrl + 'api/report/send'
           }
-
-
         }
       }]);
 })();

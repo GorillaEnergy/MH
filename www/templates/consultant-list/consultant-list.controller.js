@@ -6,11 +6,11 @@
 
 
     ConsultantListController.$inject = ['$state', '$window', '$timeout', '$localStorage', 'RTCService', 'consultants',
-        '$ionicLoading', 'firebaseDataSvc', 'modalSvc'];
+        '$ionicLoading', 'firebaseDataSvc', 'modalSvc', '$stateParams'];
 
 
     function ConsultantListController($state, $window, $timeout, $localStorage, RTCService, consultants,
-                                      $ionicLoading, firebaseDataSvc, modalSvc) {
+                                      $ionicLoading, firebaseDataSvc, modalSvc, $stateParams) {
         const vm = this;
         vm.toHeroSelection = toHeroSelection;
         vm.call = RTCService.callTo;
@@ -46,7 +46,7 @@
                 });
             });
         }
-        
+
         function toHeroSelection() {
             console.log('to hero-selection');
             $state.go('hero-selection')

@@ -10303,7 +10303,8 @@ a.button {
   background: #fff;
   border: 2px solid #0b1138;
   border-radius: 5px;
-  line-height: 44px; }
+  line-height: 44px;
+  height: 44px; }
 
 .auth-tel .country {
   width: 34%; }

@@ -4,9 +4,9 @@
     angular.module('service.faceRecognition', [])
         .service('faceRecognitionService', faceRecognitionService);
 
-    faceRecognitionService.$inject = ['$timeout', 'firebaseDataSvc'];
+    faceRecognitionService.$inject = ['$timeout', 'firebaseDataSvc', 'consultantService'];
 
-    function faceRecognitionService($timeout, firebaseDataSvc) {
+    function faceRecognitionService($timeout, firebaseDataSvc, consultantService) {
 
         let imageDataSizes;
         let videoResolutions;
@@ -21,6 +21,7 @@
         let resolution = {}; // the video stream resolution (usually 640x480)
         let webcam = null;
         let mask = null;
+        let currentMask = null;
 
         function onMaskEvent(psyId) {
             imageDataSizes = webcam.getBoundingClientRect();
@@ -71,13 +72,21 @@
 
         function init(psy_id) {
             currentPsyId = psy_id;
+            currentMask = consultantService.getMask();
             webcam = document.querySelector('#vid-thumb video');
             mask = document.querySelector('#mask');
+            processMask();
             let webcamContWidth = document.querySelector('#vid-thumb').clientWidth;
             initScale = webcamContWidth * 0.75 * 0.9 / 480; // Block width * aspect ratio * custom scale / mask height
             // only fetch the context once
             resolution = {}; // the video stream resolution (usually 640x480)
             onStreamDimensionsAvailable();
+        }
+
+        function processMask() {
+            let img = document.getElementById('maskImg');
+            img.src = currentMask.file;
+            img.style.top = (currentMask.y_offset || -240)+'.px';
         }
 
         let model = {};

@@ -9,8 +9,11 @@
 
   function consultantService(http, url, $localStorage) {
     let model = {};
-
+    let currentMask;
     model.consultantList = consultantList;
+    model.getAllMasks = getAllMasks;
+    model.setMask = setMask;
+    model.getMask = getMask;
     model.cache = [];
 
     return model;
@@ -24,6 +27,20 @@
           return res.status === 'success' ? res.data : [];
       })
     }
+
+      function getAllMasks(){
+          return http.get(url.masks.getAll).then(function (res) {
+              return res.status === 'success' ? res.data : [];
+          });
+      }
+
+      function setMask(mask) {
+          currentMask = mask;
+      }
+
+      function getMask() {
+          return currentMask;
+      }
 
   }
 })
