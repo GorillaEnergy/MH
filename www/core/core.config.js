@@ -191,7 +191,10 @@
           },
           consultants: function (consultantService) {
             return consultantService.consultantList();
-          }
+          },
+            allMasks: function (consultantService) {
+                return consultantService.getAllMasks();
+            }
         }
       })
       .state('logs', {

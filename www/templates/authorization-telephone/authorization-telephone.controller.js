@@ -18,7 +18,8 @@
     vm.countryCodes = countries;
      // if (countries.length) { vm.countryCode = countries[108].code; }//country be default Israel
      vm.phone = '';
-      if (countries.length) { vm.countryCode = countries[235].code} //country be default Ukraine
+      // if (countries.length) { vm.countryCode = countries[235].code} //country be default Ukraine
+      vm.countryCode = null;
     vm.phone = '';
     vm.phoneNumberFull = '';
     vm.approvalCode = '';

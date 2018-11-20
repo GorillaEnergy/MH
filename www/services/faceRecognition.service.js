@@ -68,7 +68,7 @@
             //webcam.style.display = 'none';
             console.log("onStreamDimensionsAvailable: " + (webcam.videoWidth !== 0));
             if (webcam.videoWidth === 0) {
-                $timeout(onStreamDimensionsAvailable, 400);
+                $timeout(onStreamDimensionsAvailable, 200);
             } else {
                 // Resize the canvas to match the webcam video size.
                 resolution.width = webcam.videoWidth;   // 640
@@ -83,11 +83,18 @@
             currentPsyId = psy_id;
             webcam = document.querySelector('#video-doctor video');
             mask = document.querySelector('#mask');
-            let webcamContWidth = document.querySelector('#video-doctor').clientWidth;
+            processMask();
+            let webcamContWidth = document.querySelector('#vid-thumb').clientWidth;
             initScale = webcamContWidth * 0.75 * 0.9 / 480; // Block width * aspect ratio * custom scale / mask height
             // only fetch the context once
             resolution = {}; // the video stream resolution (usually 640x480)
             onStreamDimensionsAvailable();
+        }
+
+        function processMask() {
+            let img = document.getElementById('maskImg');
+            img.src = currentMask.file;
+            img.style.top = (currentMask.y_offset || -240)+'.px';
         }
 
         let model = {};
