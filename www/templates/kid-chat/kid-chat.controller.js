@@ -78,7 +78,7 @@
                             firebaseDataSvc.setAccess(kid_id, psy_id, true);
                         }
                         console.log('access psy chat = ', snapshot);
-                    })
+                    });
                 });
             });
         }
