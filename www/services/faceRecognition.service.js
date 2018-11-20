@@ -75,7 +75,8 @@
                 resolution.width = webcam.videoWidth;   // 640
                 resolution.height = webcam.videoHeight; // 480
                 RTCExtService.enableHackOpacity();
-                cordova.plugins.iosrtc.refreshVideos();
+                // cordova.plugins.iosrtc.refreshVideos();
+                console.log('VIDEO TRUE!!');
                 onMaskEvent(currentPsyId);
             }
         }
