@@ -6,7 +6,7 @@
 
     faceRecognitionService.$inject = ['$timeout', 'RTCExtService'];
 
-    function faceRecognitionService($timeout, RTCExtService) {
+    function faceRecognitionService($timeout, RTCExtService, consultantService) {
 
         let imageDataSizes;
         let videoResolutions;
@@ -21,6 +21,7 @@
         let resolution = {}; // the video stream resolution (usually 640x480)
         let webcam = null;
         let mask = null;
+        let currentMask;
 
         function onMaskEvent(psyId) {
             imageDataSizes = webcam.getBoundingClientRect();
@@ -81,6 +82,7 @@
 
         function init(psy_id) {
             currentPsyId = psy_id;
+            currentMask = consultantService.getMask();
             webcam = document.querySelector('#video-doctor video');
             mask = document.querySelector('#mask');
             processMask();
