@@ -77,7 +77,7 @@
                         function create_room() {
                             firebaseDataSvc.setAccess(kid_id, psy_id, true);
                         }
-                        console.log('access psy chat = ', snapshot.val());
+                        console.log('access psy chat = ', snapshot);
                     })
                 });
             });
@@ -339,29 +339,24 @@
         }
 
         function destroyScrollEvent() {
-            console.log('destroyScrollEvent');
             angular.element(chat_body).unbind('scroll');
         }
 
         function anchorScroll(data) {
-            console.log('anchorScroll');
             $timeout(function () {
                 if (chatHeightNew) {
                     chatHeightOld = angular.copy(chatHeightNew);
                 } else {
                     chatHeightOld = angular.copy(angular.element("#chat")[0].scrollHeight);
                 }
-                // console.log('chatHeightOld = ', chatHeightOld);
                 if (data) {
                     vm.messages = convertToArray(data, 'secondary_loading')
                 }
                 $timeout(function () {
                     chatHeightNew = angular.copy(angular.element("#chat")[0].scrollHeight);
-                    // console.log('chatHeightNew = ', chatHeightNew);
                     chat_body.scrollTop = angular.copy(chatHeightNew - chatHeightOld);
-                    // console.log('chat_body.scrollTop = ', chat_body.scrollTop);
-                })
-            })
+                });
+            });
         }
 
         function focusedInput() {

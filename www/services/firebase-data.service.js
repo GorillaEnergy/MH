@@ -140,7 +140,7 @@
 
         function onMessagesEvent(kid_id, psy_id, callback) {
             fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').limitToLast(1).on('child_added', (snapshot) => {
-                callback(snapshot);
+                callback(snapshot.val());
             });
         }
 
