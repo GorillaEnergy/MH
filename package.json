@@ -10,9 +10,6 @@
     "gulp-sass": "^3.1.0"
   },
   "dependencies": {
-    "@ionic-native/date-picker": "^4.7.0",
-    "@ionic-native/fcm": "^4.7.0",
-    "@ionic/pro": "1.0.20",
     "android-versions": "^1.2.1",
     "cordova": "^8.1.2",
     "cordova-android": "6.3.0",
