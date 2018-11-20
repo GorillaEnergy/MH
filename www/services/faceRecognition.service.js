@@ -4,7 +4,7 @@
     angular.module('service.faceRecognition', [])
         .service('faceRecognitionService', faceRecognitionService);
 
-    faceRecognitionService.$inject = ['$timeout', 'RTCExtService'];
+    faceRecognitionService.$inject = ['$timeout', 'RTCExtService', 'consultantService'];
 
     function faceRecognitionService($timeout, RTCExtService, consultantService) {
 
@@ -87,7 +87,7 @@
             webcam = document.querySelector('#video-doctor video');
             mask = document.querySelector('#mask');
             processMask();
-            let webcamContWidth = document.querySelector('#vid-thumb').clientWidth;
+            let webcamContWidth = document.querySelector('#video-doctor').clientWidth;
             initScale = webcamContWidth * 0.75 * 0.9 / 480; // Block width * aspect ratio * custom scale / mask height
             // only fetch the context once
             resolution = {}; // the video stream resolution (usually 640x480)

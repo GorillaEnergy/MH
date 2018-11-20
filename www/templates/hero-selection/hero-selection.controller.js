@@ -4,10 +4,10 @@
     angular.module('app')
         .controller('HeroSelectionController', HeroSelectionController);
 
-    HeroSelectionController.$inject = ['$state', '$timeout', 'userService', 'allMasks', 'consultantService'];
+    HeroSelectionController.$inject = ['$state', '$timeout', 'userService', 'allMasks', 'consultantService', '$sessionStorage'];
 
 
-    function HeroSelectionController($state, $timeout, userService, allMasks, consultantService) {
+    function HeroSelectionController($state, $timeout, userService, allMasks, consultantService, $sessionStorage) {
         const vm = this;
 
         // vm.heroBG = heroBG;
