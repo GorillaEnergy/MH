@@ -250,7 +250,7 @@
             }
 
             function add_to_group(number) {
-                var session = phone.dial(number, get_xirsys_servers()); // Dial Number
+                var session = phone.dial(number, false); // Dial Number
                 if (!session) return; 	// No Dupelicate Dialing Allowed
             }
 

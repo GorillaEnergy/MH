@@ -1,7 +1,7 @@
 {
   "name": "MindHero",
-  "version": "0.0.1",
-  "description": "An Ionic project",
+  "version": "0.5.0",
+  "description": "MindHero projects",
   "devDependencies": {
     "@ionic/v1-toolkit": "^1.0.8",
     "gulp": "^3.9.1",
