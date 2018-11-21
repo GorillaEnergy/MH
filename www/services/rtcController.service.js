@@ -102,10 +102,11 @@
                 // video.src = URL.createObjectURL(phone.mystream);
                 video.srcObject = phone.mystream;
                 video.volume = 0.0;
-                video.play();
                 video.setAttribute('autoplay', 'autoplay');
                 video.setAttribute('background', 'black');
                 video.setAttribute('data-number', phone.number());
+                video.setAttribute('muted', '');
+                video.play();
                 // vid.style.cssText = "-moz-transform: scale(-1, 1); \
 					      //-webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); \
 					      //transform: scale(-1, 1); filter: FlipH;";

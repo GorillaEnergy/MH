@@ -463,8 +463,8 @@
                 vid.setAttribute('data-number', number);
                 vid.setAttribute('id', number);
                 vid.setAttribute('playsinline', 'playsinline');
-                // vid.src = URL.createObjectURL(stream);
-                vid.srcObject = stream;
+                vid.src = URL.createObjectURL(stream);
+                // vid.srcObject = stream;
                 talk.video = vid;
                 talk.connect(talk);
             }

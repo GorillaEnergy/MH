@@ -194,10 +194,9 @@
                     activityCalc(session.number, true);
                     // video_out.appendChild(session.video);
 
-                    if (vidCount > 1) {
+                    if ( getNumberFromString(session.number) !== currentPsy ) {
                         video_out.appendChild(session.video);
-                    }
-                    else {
+                    } else {
                         vid_thumb.appendChild(session.video);
                         faceRecognitionService.init(currentPsy);
                     }
@@ -223,6 +222,9 @@
                     ctrl.getVideoElement(session.number).remove();
                     addLog(session.number + " has left.");
                     activityCalc(session.number, false);
+                    if(getNumberFromString(session.number) == currentPsy){
+                        end();
+                    }
                 });
             });
 
@@ -278,6 +280,10 @@
             return false;
         }
 
+        function getNumberFromString(str){
+            return +(str.replace(/[^0-9\.]+/g, ""));
+        }
+
         function makeCall(opponent_nick) {
             console.log('makeCall function', 'call to ', opponent_nick);
             if (!window.phone) alert("Login First!");
@@ -312,13 +318,14 @@
         }
 
         function end() {
-            // $("vid-box").empty();
-            $window.location.reload();
-            ctrl.hangup();
+            var reloadBind = window.location.reload.bind(window.location);
+            softEnd();
+            setTimeout(function(){
+                reloadBind();
+            }, 2000);
         }
 
         function softEnd() {
-            // $("vid-box").empty();
             ctrl.hangup();
         }
 
