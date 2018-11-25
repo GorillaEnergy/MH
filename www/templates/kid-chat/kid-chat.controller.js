@@ -272,15 +272,15 @@
                 $timeout(function () {
                     let push_status = true;
                     for (let i = 0; i < vm.messages.length; i++) {
-                        if (vm.messages[i].date === snapshot.date) {
+                        if (vm.messages[i].date === snapshot.val().date) {
                             push_status = false;
                             break;
                         }
                     }
                     if (push_status) {
-                        unreadCalc(null, null, snapshot.key, snapshot);
-                        vm.messages.push(snapshot);
-                        scrollToBottom(true)
+                        unreadCalc(null, null, snapshot.key, snapshot.val());
+                        vm.messages.push(snapshot.val());
+                        scrollToBottom(true);
                     }
                 })
             })

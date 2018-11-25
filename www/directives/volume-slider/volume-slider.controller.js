@@ -6,24 +6,10 @@
 
   VolumeSliderController.$inject = ['$timeout', '$interval'];
 
-
   function VolumeSliderController($timeout, $interval) {
     const vm = this;
     console.log('VolumeSliderController start');
-
     vm.range = 75;
-
-    // $timeout(function () {
-    //   vm.range = 5;
-    // }, 3000);
-    //
-    // $timeout(function () {
-    //   vm.range = 100;
-    // }, 5000);
-
-    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // просто маяк
-    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     let counterStatus = true;
 
     // someFnc();

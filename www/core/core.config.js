@@ -351,6 +351,9 @@
         resolve: {
           consultants: function (consultantService) {
             return consultantService.consultantList();
+          },
+          preloadRtcServers: function (rtcExtSvc){
+            return rtcExtSvc.getXirsysServer();
           }
         }
       })

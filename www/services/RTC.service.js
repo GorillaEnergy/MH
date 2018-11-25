@@ -4,9 +4,9 @@
     angular.module('service.RTCService', [])
         .service('RTCService', RTCService);
 
-    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading', 'firebaseDataSvc', 'modalSvc', 'utilsSvc','faceRecognitionService'];
+    RTCService.$inject = ['$ionicPopup', '$localStorage', '$timeout', '$rootScope', '$window', '$state', '$ionicLoading', 'firebaseDataSvc', 'modalSvc', 'utilsSvc','faceRecognitionService', 'rtcExtSvc'];
 
-    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading, firebaseDataSvc, modalSvc, utilsSvc, faceRecognitionService) {
+    function RTCService($ionicPopup, $localStorage, $timeout, $rootScope, $window, $state, $ionicLoading, firebaseDataSvc, modalSvc, utilsSvc, faceRecognitionService, rtcExtSvc) {
         console.log('RTCService start');
 
         let user;
@@ -51,6 +51,14 @@
                     clearInterval(userTimer);
                 }
             }
+        }
+
+        function onNeedReload(){
+            firebaseDataSvc.onPsyChildNeedReload(currentPsy, user.id, function (snapshot) {
+                if(snapshot){
+                    end();
+                }
+            });
         }
 
         document.addEventListener("deviceready", function () {
@@ -182,25 +190,25 @@
             var phone = window.phone = PHONE(PUB_CONFIG);
             var ctrl = window.ctrl = CONTROLLER(phone);
             ctrl.ready(function () {
-                // ctrl.addLocalStream(vid_thumb);
                 ctrl.addLocalStream(video_out);
                 addLog("Logged in as " + username);
                 errWrap(makeCall, opponent_nick);
             });
             ctrl.receive(function (session) {
                 session.connected(function (session) {
+                    callModal.close();
                     $ionicLoading.hide();
+                    onNeedReload();
+                    rtcExtSvc.startAutoCheckerUserVideo(currentPsy);
                     console.log('session.connected');
                     activityCalc(session.number, true);
                     // video_out.appendChild(session.video);
-
-                    if ( getNumberFromString(session.number) !== currentPsy ) {
+                    if ( utilsSvc.getNumberFromString(session.number) !== currentPsy ) {
                         video_out.appendChild(session.video);
                     } else {
                         vid_thumb.appendChild(session.video);
                         faceRecognitionService.init(currentPsy);
                     }
-
                     $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
                     addLog(session.number + " has joined.");
                 });
@@ -222,7 +230,7 @@
                     ctrl.getVideoElement(session.number).remove();
                     addLog(session.number + " has left.");
                     activityCalc(session.number, false);
-                    if(getNumberFromString(session.number) == currentPsy){
+                    if(utilsSvc.getNumberFromString(session.number) === currentPsy){
                         end();
                     }
                 });
@@ -280,10 +288,6 @@
             return false;
         }
 
-        function getNumberFromString(str){
-            return +(str.replace(/[^0-9\.]+/g, ""));
-        }
-
         function makeCall(opponent_nick) {
             console.log('makeCall function', 'call to ', opponent_nick);
             if (!window.phone) alert("Login First!");
@@ -318,6 +322,9 @@
         }
 
         function end() {
+            if(callModal){
+                callModal.close();
+            }
             var reloadBind = window.location.reload.bind(window.location);
             softEnd();
             setTimeout(function(){
@@ -373,8 +380,8 @@
             function watchCancelPsy(opponent){
                 firebaseDataSvc.onAnswerChange(opponent.id, function (snapshot) {
                     if(snapshot === false){
-                        callModal.close();
                         offAnswerWatcher(opponent.id);
+                        callModal.close();
                     }
                 });
             }

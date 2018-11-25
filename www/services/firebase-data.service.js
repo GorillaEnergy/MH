@@ -51,10 +51,33 @@
             onLastMessages: onLastMessages,
             offMask: offMask,
             setMask: setMask,
-            onMask: onMask
+            onMask: onMask,
+            setPsyNeedReload:setPsyNeedReload,
+            onPsyChildNeedReload: onPsyChildNeedReload,
+            setPsyChildLastTime: setPsyChildLastTime,
+            setPsyChildNeedReload: setPsyChildNeedReload
         };
 
         var fb = firebaseSvc.db();
+
+
+        function setPsyNeedReload(psyId, value) {
+            fb.ref('/WebRTC/users/' + psyId + '/needReload').set(value);
+        }
+
+        function onPsyChildNeedReload(psyId, userId, callback) {
+            fb.ref('/WebRTC/users/' + psyId + '/users/'+ userId + '/needReload').on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
+
+        function setPsyChildNeedReload(psyId, userId) {
+            fb.ref('/WebRTC/users/' + psyId + '/users/'+ userId + '/needReload').set(true);
+        }
+
+        function setPsyChildLastTime(psyId, userId, time) {
+            fb.ref('/WebRTC/users/' + psyId +'/users/'+ userId + '/lastTime').set(time);
+        }
 
         function offMask(psyId) {
             fb.ref('/WebRTC/users/' + psyId + '/mask').off();
@@ -140,7 +163,7 @@
 
         function onMessagesEvent(kid_id, psy_id, callback) {
             fb.ref('/chats/' + kid_id + '/' + psy_id + '/messages').limitToLast(1).on('child_added', (snapshot) => {
-                callback(snapshot.val());
+                callback(snapshot);
             });
         }
 

@@ -27,7 +27,6 @@
     function init() {
       try {
           VolumeControl = cordova.plugins.VolumeControl;
-
           if (ionic.Platform.platform() === 'android') {
               console.log('ionic.Platform.platform() === \'android\'');
               detectVolumeLevel();
@@ -49,10 +48,8 @@
 
     function detectVolumeLevel(type) {
       window.androidVolume.getMusic(success, error);
-
       function success(level) {
         setLocalLevel(level);
-
         if (type === 'increase') {
           increaseVolume();
         } else if (type === 'decrease') {

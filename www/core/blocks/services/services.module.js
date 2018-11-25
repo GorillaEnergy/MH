@@ -20,6 +20,7 @@
         'service.modalSvc',
         'service.utilsSvc',
         'service.constSvc',
-        'service.faceRecognition'
+        'service.faceRecognition',
+        'service.rtcExtSvc'
     ]);
 })();
