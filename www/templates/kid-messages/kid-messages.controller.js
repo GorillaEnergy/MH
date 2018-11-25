@@ -90,18 +90,17 @@
                     vm.consultants[index].access = !!snapshot;
                 });
             });
-
         }
 
         function toKidMainPage() {
             console.log('to kid main page');
-            $state.go('kid-main-page')
+            $state.go('kid-main-page');
         }
 
         function toChat(consultant) {
             $localStorage.consultant = consultant;
             console.log('to kid chat');
-            $state.go('kid-chat')
+            $state.go('kid-chat');
         }
     }
 })();

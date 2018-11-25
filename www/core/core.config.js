@@ -365,7 +365,7 @@
         templateUrl: 'templates/test/test.html',
         controller: 'TestController',
         controllerAs: 'vm'
-      })
+      });
   }
 })();
 

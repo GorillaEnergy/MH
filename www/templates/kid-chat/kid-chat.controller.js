@@ -70,15 +70,13 @@
         }
 
         function psychologistAccess() {
-            firebaseDataSvc.psychologAccess(kid_id, psy_id,(snapshot) => {
+            firebaseDataSvc.psychologAccess(kid_id, psy_id, (snapshot) => {
                 $timeout(function () {
-                    $timeout(function () {
-                        snapshot === null ? create_room() : vm.blocked = snapshot;
-                        function create_room() {
-                            firebaseDataSvc.setAccess(kid_id, psy_id, true);
-                        }
-                        console.log('access psy chat = ', snapshot);
-                    });
+                    snapshot === null ? create_room() : vm.blocked = snapshot;
+                    function create_room() {
+                        firebaseDataSvc.setAccess(kid_id, psy_id, true);
+                    }
+                    console.log('access psy chat = ', snapshot);
                 });
             });
         }
@@ -184,7 +182,7 @@
                     // chat_body.scrollTop = angular.copy(chat_body.scrollHeight);
                 } else {
                     // chat_body.scrollTo(0, chat_body.scrollHeight);
-                    chat_body.scrollTop = angular.copy(chat_body.scrollHeight);
+                    chat_body.scrollTop = chat_body.scrollHeight;
                 }
             });
         }
@@ -232,8 +230,6 @@
             if (missed_messages) {
                 !soloKey ? markAsRead(unreadMsgsKeysArr) : markAsRead([soloKey]);
                 $timeout(function () {
-                    console.log(missed_messages);
-                    console.log(local_unread);
                     firebaseDataSvc.setTotalUnreadKid(kid_id, psy_id, missed_messages - local_unread);
                     local_unread = 0;
                     unreadMsgsKeysArr = [];
@@ -247,13 +243,12 @@
             })
         }
 
-
         function downloadMessages() {
             firebaseDataSvc.getMessages(kid_id, psy_id, number_of_posts, (snapshot) => {
                 $timeout(function () {
                     vm.messages = snapshot ? convertToArray(snapshot, 'primary_loading') : [];
-                    scrollToBottom()
-                })
+                    scrollToBottom();
+                });
             });
         }
 
@@ -372,7 +367,7 @@
             console.log('unfocusedInput');
             $timeout(function () {
                 chat_body.scrollTop = angular.copy(scrollPosionBeforeChange);
-            }, 300)
+            }, 300);
         }
 
         function selectedReason(index) {
