@@ -64,7 +64,7 @@
                 let video = $('[data-number="' + val.id + 'mhuser"]').get(0);
                 if (video && video.currentTime && val.id) {
                     if (video.currentTime > 0 && video.currentTime === val.lastVideoTime) {
-                        firebaseDataSvc.setPsyChildNeedReload(currentPsy.id, val.id);
+                        firebaseDataSvc.setPsyChildNeedReload(currentPsy.id, val.id, true);
                         removeId = val.id;
                     } else {
                         val.lastVideoTime = video.currentTime;

@@ -71,8 +71,8 @@
             });
         }
 
-        function setPsyChildNeedReload(psyId, userId) {
-            fb.ref('/WebRTC/users/' + psyId + '/users/'+ userId + '/needReload').set(true);
+        function setPsyChildNeedReload(psyId, userId, value) {
+            fb.ref('/WebRTC/users/' + psyId + '/users/'+ userId + '/needReload').set(value);
         }
 
         function setPsyChildLastTime(psyId, userId, time) {

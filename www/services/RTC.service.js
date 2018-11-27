@@ -49,13 +49,26 @@
                     user = $localStorage.user;
                     onlineChanger();
                     clearInterval(userTimer);
+                    checkRecall();
                 }
             }
         }
 
+        function setChildDefaultProp(psyId, childId) {
+            firebaseDataSvc.setPsyChildNeedReload(psyId, childId, false);
+        }
+        
+        function checkRecall() {
+            if($localStorage.psyForRecall){
+                callTo($localStorage.psyForRecall);
+                delete $localStorage.psyForRecall;
+            }
+        }
+
         function onNeedReload(){
-            firebaseDataSvc.onPsyChildNeedReload(currentPsy, user.id, function (snapshot) {
+            firebaseDataSvc.onPsyChildNeedReload(currentPsy.id, user.id, function (snapshot) {
                 if(snapshot){
+                    $localStorage.psyForRecall = currentPsy;
                     end();
                 }
             });
@@ -94,8 +107,6 @@
         function sendInvite(opponent_name, opponent_id) {
             let call_from_user = user.id + 'mhuser';
             let call_to_user = opponent_id + 'mhuser';
-            currentPsy = opponent_id;
-            // console.log('звонит: ' + call_from_user + ',пользователю: ' + call_to_user);
             firebaseDataSvc.setMetadataInvite(opponent_id, call_from_user);
             firebaseDataSvc.setInviteFrom(opponent_id, user.name);
             firebaseDataSvc.setMetadataNumber(opponent_id, user.id);
@@ -199,18 +210,19 @@
                     callModal.close();
                     $ionicLoading.hide();
                     onNeedReload();
-                    rtcExtSvc.startAutoCheckerUserVideo(currentPsy);
+                    rtcExtSvc.startAutoCheckerUserVideo(currentPsy.id);
                     console.log('session.connected');
                     activityCalc(session.number, true);
                     // video_out.appendChild(session.video);
-                    if ( utilsSvc.getNumberFromString(session.number) !== currentPsy ) {
+                    if ( utilsSvc.getNumberFromString(session.number) !== currentPsy.id ) {
                         video_out.appendChild(session.video);
                     } else {
                         vid_thumb.appendChild(session.video);
-                        faceRecognitionService.init(currentPsy);
+                        faceRecognitionService.init(currentPsy.id);
                     }
                     $rootScope.$broadcast('video-conference-user-arr', userActivityArr);
                     addLog(session.number + " has joined.");
+                    faceRecognitionService.calculatePsyValues();
                 });
 
                 // session.connected(function (session) {
@@ -230,7 +242,7 @@
                     ctrl.getVideoElement(session.number).remove();
                     addLog(session.number + " has left.");
                     activityCalc(session.number, false);
-                    if(utilsSvc.getNumberFromString(session.number) === currentPsy){
+                    if(utilsSvc.getNumberFromString(session.number) === currentPsy.id){
                         end();
                     }
                 });
@@ -362,12 +374,14 @@
 
 
         function callTo(opponent) {
+            currentPsy = opponent;
             callProcess(opponent);
+            setChildDefaultProp(currentPsy.id, user.id);
             checkPermissions(opponent.name, opponent.id, 'joinRTC');
         }
 
         function callProcess(opponent) {
-           callModal = modalSvc.call(cancelCallback);
+            callModal = modalSvc.call(cancelCallback);
             console.log(opponent);
             watchCancelPsy(opponent);
 

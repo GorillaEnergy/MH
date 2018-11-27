@@ -24,10 +24,7 @@
         let currentMask = null;
 
         function onMaskEvent(psyId) {
-            imageDataSizes = webcam.getBoundingClientRect();
-            videoResolutions = resolution;
-            outerScaleX = imageDataSizes.width / videoResolutions.width;
-            outerScaleY = imageDataSizes.width * 0.75 / videoResolutions.height;
+            calculatePsyValues();
             firebaseDataSvc.onMask(psyId, function (maskObj) {
                 setTimeout(function () {
                     window.requestAnimFrame(function () {
@@ -35,6 +32,13 @@
                     });
                 },30);
             });
+        }
+
+        function calculatePsyValues(){
+            imageDataSizes = webcam.getBoundingClientRect();
+            videoResolutions = resolution;
+            outerScaleX = imageDataSizes.width / videoResolutions.width;
+            outerScaleY = imageDataSizes.width * 0.75 / videoResolutions.height;
         }
 
         function offMaskEvent(psyId) {
@@ -94,6 +98,7 @@
         let model = {};
         model.init = init;
         model.onMaskEvent = onMaskEvent;
+        model.calculatePsyValues = calculatePsyValues;
         model.offMaskEvent = offMaskEvent;
         return model;
 
