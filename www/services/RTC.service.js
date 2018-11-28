@@ -28,7 +28,28 @@
                     user = $localStorage.user;
                     onlineChanger();
                     clearInterval(userTimer);
+                    checkRecall();
                 }
+            }
+        }
+
+        function setChildDefaultProp(psyId, childId) {
+            firebaseDataSvc.setPsyChildNeedReload(psyId, childId, false);
+        }
+
+        function onNeedReload(){
+            firebaseDataSvc.onPsyChildNeedReload(currentPsy.id, user.id, function (snapshot) {
+                if(snapshot){
+                    $localStorage.psyForRecall = currentPsy;
+                    end();
+                }
+            });
+        }
+
+        function checkRecall() {
+            if($localStorage.psyForRecall){
+                callTo($localStorage.psyForRecall);
+                delete $localStorage.psyForRecall;
             }
         }
 
@@ -167,7 +188,6 @@
         }
 
         function sendInvite(opponent_name, opponent_id) {
-            currentPsy = opponent_id;
             let fb = firebase.database();
             let call_from_user = user.id + 'mhuser';
             let call_to_user = opponent_id + 'mhuser';
@@ -309,15 +329,17 @@
             });
 
             ctrl.receive(function (session) {
+                onNeedReload();
                 session.connected(function (session) {
-                    if (isDoctorHere) {
+                    RTCExtService.startAutoCheckerUserVideo(currentPsy.id);
+                    $ionicLoading.hide();
+                    if (utilsSvc.getNumberFromString(session.number) !== currentPsy.id) {
                         session.video.style.float = "left";
                         session.video.style.width = "30vw";
                         session.video.style.height = "30vw";
                         session.video.style.background = "black";
                         vid.appendChild(session.video);
                     } else {
-                        $ionicLoading.hide();
                         isDoctorHere = true;
                         var video_out = document.getElementById('video-doctor');
                         session.video.style.width = "100%";
@@ -326,7 +348,7 @@
                         session.video.style.zIndex = "-1";
                         session.video.style.backgroundColor = "transparent";
                         video_out.appendChild(session.video);
-                        faceRecognitionService.init(currentPsy);
+                        faceRecognitionService.init(currentPsy.id);
                         cordova.plugins.iosrtc.refreshVideos();
                     }
                 });
@@ -336,6 +358,9 @@
                     addLog(session.number + " has left.");
                     ctrl.getVideoElement(session.number).remove();
                     activityCalc(session.number, false);
+                    if(utilsSvc.getNumberFromString(session.number) === currentPsy.id){
+                        end();
+                    }
                 });
             });
 
@@ -514,7 +539,9 @@
         }
 
         function callTo(opponent) {
+            currentPsy = opponent;
             console.log(opponent);
+            setChildDefaultProp();
             checkPermissions(opponent.name, opponent.id, 'joinRTC');
         }
 

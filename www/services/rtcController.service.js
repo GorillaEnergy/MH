@@ -105,6 +105,7 @@
 
                 video.setAttribute('autoplay', 'autoplay');
                 video.setAttribute('data-number', phone.number());
+                video.setAttribute('muted', '');
                 video.style.float = "left";
                 video.style.width = "30vw";
                 video.style.height = "30vw";

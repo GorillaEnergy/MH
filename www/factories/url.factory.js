@@ -52,9 +52,10 @@
           report : {
             reason: baseUrl + 'api/reasons',
             send: baseUrl + 'api/report/send'
+          },
+            rtc_servers: {
+              all: baseUrl + 'api/servers'
           }
-
-
         }
       }]);
 })();

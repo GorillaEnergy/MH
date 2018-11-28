@@ -24,17 +24,21 @@
         let currentMask;
 
         function onMaskEvent(psyId) {
-            imageDataSizes = webcam.getBoundingClientRect();
-            videoResolutions = resolution;
-            outerScaleX = imageDataSizes.width / videoResolutions.width;
-            outerScaleY = imageDataSizes.width * 0.75 / videoResolutions.height;
+            calculatePsyValues();
             onMask(psyId, function (maskObj) {
                 setTimeout(function () {
                     window.requestAnimFrame(function () {
                         handleTrackingResults(maskObj);
                     });
-                }, 40);
+                }, 30);
             });
+        }
+
+        function calculatePsyValues(){
+            imageDataSizes = webcam.getBoundingClientRect();
+            videoResolutions = resolution;
+            outerScaleX = imageDataSizes.width / videoResolutions.width;
+            outerScaleY = imageDataSizes.width * 0.75 / videoResolutions.height;
         }
 
         function onMask(psyId, callback) {
@@ -45,6 +49,11 @@
 
         function offMaskEvent(psyId) {
             window.firebase.database().ref('/WebRTC/users/' + (psyId || currentPsyId) + '/mask').off();
+        }
+
+
+        function setPsyChildLastTime(psyId, userId, time) {
+            window.firebase.database().ref('/WebRTC/users/' + psyId +'/users/'+ userId + '/lastTime').set(time);
         }
 
 
@@ -104,6 +113,7 @@
         model.init = init;
         model.onMaskEvent = onMaskEvent;
         model.offMaskEvent = offMaskEvent;
+        model.calculatePsyValues = calculatePsyValues;
         return model;
 
     }

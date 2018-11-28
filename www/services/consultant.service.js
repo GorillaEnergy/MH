@@ -36,10 +36,11 @@
 
       function setMask(mask) {
           currentMask = mask;
+          $localStorage.selectedMask = mask;
       }
 
       function getMask() {
-          return currentMask;
+          return currentMask || $localStorage.selectedMask;
       }
 
   }

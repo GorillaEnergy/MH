@@ -19,10 +19,15 @@
             timestamToDate: timestamToDate,
             timestampToDateBySymbol: timestampToDateBySymbol,
             isBrowser: isBrowser,
-            getSupportCameraParam:getSupportCameraParam
+            getSupportCameraParam:getSupportCameraParam,
+            getNumberFromString: getNumberFromString
         };
 
         return model;
+
+        function getNumberFromString(str) {
+            return +(str.replace(/[^0-9\.]+/g, ""));
+        }
 
         function getSupportCameraParam() {
             var param = {};
