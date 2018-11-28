@@ -242,6 +242,7 @@
                     ctrl.getVideoElement(session.number).remove();
                     addLog(session.number + " has left.");
                     activityCalc(session.number, false);
+                    rtcExtSvc.removeUserFromCheck(utilsSvc.getNumberFromString(session.number));
                     if(utilsSvc.getNumberFromString(session.number) === currentPsy.id){
                         end();
                     }
