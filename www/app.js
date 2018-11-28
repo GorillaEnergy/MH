@@ -36,7 +36,7 @@
 
         $ionicPlatform.ready(function () {
             $timeout(function() {
-                navigator.splashscreen.hide();
+                if(navigator.splashscreen) navigator.splashscreen.hide();
             }, 2000);
             // console.log(cordova.plugins.diagnostic);
             if (window.StatusBar) {
@@ -46,8 +46,8 @@
             }
 
 
-            if (window.device.platform === 'iOS') {
-                cordova.plugins.iosrtc.registerGlobals();
+            if (window.device && window.device.platform === 'iOS') {
+                window.cordova.plugins.iosrtc.registerGlobals();
             }
 
             document.addEventListener("pause", function () {

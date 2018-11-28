@@ -479,7 +479,9 @@
 
                 // Tell the plugin to monitor it.
                 console.log('cordova.plugins.iosrtc.observeVideo');
-                cordova.plugins.iosrtc.observeVideo(vid);
+                if(window.cordova){
+                    window.cordova.plugins.iosrtc.observeVideo(vid);
+                }
 
                 vid.setAttribute('autoplay', 'autoplay');
                 vid.setAttribute('data-number', number);
@@ -538,7 +540,7 @@
                     subscribe();
                     return;
                 }
-                navigator.mediaDevices.getUserMedia(mediaconf, function (stream) {
+                navigator.getUserMedia(mediaconf, function (stream) {
                     if (!stream) return unablecb(stream);
                     mystream = stream;
                     phone.mystream = stream;

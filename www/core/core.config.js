@@ -352,8 +352,8 @@
                     consultants: function (consultantService) {
                         return consultantService.consultantList();
                     },
-                    preloadRtcServers: function (rtcExtSvc) {
-                        return rtcExtSvc.getXirsysServer();
+                    preloadRtcServers: function (RTCExtService) {
+                        return RTCExtService.getXirsysServer();
                     }
                 }
             })

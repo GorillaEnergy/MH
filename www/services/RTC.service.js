@@ -17,6 +17,7 @@
         let reconnect;
         let popup;
         let currentPsy;
+        let conversationPopup;
 
         UserChecker();
 
@@ -118,7 +119,13 @@
 
             function cameraAndMicroPermissions() {
                 let counter = 0;
-                cameraPermission();
+                if(window.cordova){
+                    cameraPermission();
+                } else {
+                    camera = true;
+                    micro = true;
+                    accessToStartStream();
+                }
 
                 function cameraPermission() {
 
@@ -246,7 +253,7 @@
 
             let scope = $rootScope.$new(true);
 
-            let conversationPopup = $ionicPopup.show({
+            conversationPopup = $ionicPopup.show({
                 title: opponent_name,
                 templateUrl: './components/conversation/conversation.html',
                 cssClass: 'conversation',
@@ -360,7 +367,9 @@
                         session.video.style.backgroundColor = "transparent";
                         video_out.appendChild(session.video);
                         faceRecognitionService.init(currentPsy.id);
-                        cordova.plugins.iosrtc.refreshVideos();
+                        if(window.cordova){
+                            window.cordova.plugins.iosrtc.refreshVideos();
+                        }
                     }
                 });
 
@@ -467,13 +476,19 @@
 
         function end() {
             // $window.location.reload();
+            $ionicLoading.hide();
             softEnd();
+            $timeout(function () {
+                checkRecall();
+            },1000);
         }
 
         function softEnd() {
             ctrl.hangup();
             RTCExtService.disableHackOpacity();
             faceRecognitionService.offMaskEvent();
+            popup = false;
+            conversationPopup.close();
         }
 
         function pause() {
