@@ -65,7 +65,7 @@
                 let video = $('[data-number="' + val.id + 'mhuser"]').get(0);
                 if (video && video.currentTime && val.id) {
                     if (video.currentTime > 0 && video.currentTime === val.lastVideoTime) {
-                        firebaseDataSvc.setPsyChildNeedReload(currentPsy.id, val.id, true);
+                        setPsyChildNeedReload(currentPsy.id, val.id, true);
                         removeId = val.id;
                     } else {
                         val.lastVideoTime = video.currentTime;
@@ -79,7 +79,7 @@
             let video = $('[data-number="' + currentPsy.id + 'mhuser"]').get(0);
             if (video && video.currentTime) {
                 if (video.currentTime > 0 && video.currentTime === currentPsy.lastVideoTime) {
-                    firebaseDataSvc.setPsyNeedReload(currentPsy.id, true);
+                    setPsyNeedReload(currentPsy.id, true);
                 } else {
                     currentPsy.lastVideoTime = video.currentTime;
                 }
@@ -98,6 +98,14 @@
                 return +item.id === +userId;
             });
             currentUserList.slice(index, 1);
+        }
+
+        function setPsyChildNeedReload(psyId, userId, value) {
+            window.firebase.database().ref('/WebRTC/users/' + psyId + '/users/'+ userId + '/needReload').set(value);
+        }
+
+        function setPsyNeedReload(psyId, value) {
+            window.firebase.database().ref('/WebRTC/users/' + psyId + '/needReload').set(value);
         }
 
         function enableHackOpacity(){

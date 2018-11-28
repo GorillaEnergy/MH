@@ -33,12 +33,23 @@
             }
         }
 
+        function onPsyChildNeedReload(psyId, userId, callback) {
+            window.firebase.database().ref('/WebRTC/users/' + psyId + '/users/'+ userId + '/needReload').on('value', (snapshot) => {
+                callback(snapshot.val());
+            });
+        }
+
+        function setPsyChildNeedReload(psyId, userId, value) {
+            window.firebase.database().ref('/WebRTC/users/' + psyId + '/users/'+ userId + '/needReload').set(value);
+        }
+
+
         function setChildDefaultProp(psyId, childId) {
-            firebaseDataSvc.setPsyChildNeedReload(psyId, childId, false);
+           setPsyChildNeedReload(psyId, childId, false);
         }
 
         function onNeedReload(){
-            firebaseDataSvc.onPsyChildNeedReload(currentPsy.id, user.id, function (snapshot) {
+            onPsyChildNeedReload(currentPsy.id, user.id, function (snapshot) {
                 if(snapshot){
                     $localStorage.psyForRecall = currentPsy;
                     end();
@@ -358,6 +369,7 @@
                     addLog(session.number + " has left.");
                     ctrl.getVideoElement(session.number).remove();
                     activityCalc(session.number, false);
+                    RTCExtService.removeUserFromCheck(utilsSvc.getNumberFromString(session.number));
                     if(utilsSvc.getNumberFromString(session.number) === currentPsy.id){
                         end();
                     }

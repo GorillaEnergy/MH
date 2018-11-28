@@ -51,12 +51,6 @@
             window.firebase.database().ref('/WebRTC/users/' + (psyId || currentPsyId) + '/mask').off();
         }
 
-
-        function setPsyChildLastTime(psyId, userId, time) {
-            window.firebase.database().ref('/WebRTC/users/' + psyId +'/users/'+ userId + '/lastTime').set(time);
-        }
-
-
         function handleTrackingResults(maskObj) {
             x = maskObj.x * outerScaleX;
             y = maskObj.y * outerScaleY + imageDataSizes.top;
